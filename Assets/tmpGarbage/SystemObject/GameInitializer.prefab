@@ -45,3 +45,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_StarMakerPrefab: {fileID: 4245834145686331464, guid: 3c478e8e813d5e441b2ecb09b48f166e,
     type: 3}
+  m_Canvas: {fileID: 7518139330974355375, guid: 699760a2e480ada4f860c65c42f69d21,
+    type: 3}
+  m_PlayerCommand: {fileID: 3993350545147920050, guid: 13ced3218a867a9448c3d48e9c69e3ef,
+    type: 3}

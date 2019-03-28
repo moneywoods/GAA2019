@@ -24,6 +24,7 @@ public class PlayerCommandBehavior : MonoBehaviour
 
     private GameObject m_PlayerCharacter;
     private TakoController m_PlayerScript;
+    private GameObject m_CurrentSceneMenu;
     // public GameObject LandStarType;
 
     private void Awake()
@@ -89,10 +90,15 @@ public class PlayerCommandBehavior : MonoBehaviour
         // リセットボタン
         if( Input.GetKey( KeyCode.L ) )
         {
-
             GameObject starMaker = GameObject.FindWithTag("StarMaker");
             starMaker.GetComponent<StarMaker>().DestroyWorld();
             starMaker.GetComponent<StarMaker>().MakeWorld();
+        }
+
+        if( Input.GetKey( KeyCode.Escape))
+        {
+            m_CurrentSceneMenu.SetActive(!m_CurrentSceneMenu.activeInHierarchy);
+            
         }
     }
 
@@ -115,6 +121,13 @@ public class PlayerCommandBehavior : MonoBehaviour
         if( m_PlayerCharacter == null )
         {
             SetPlayerCharacter( GameObject.FindGameObjectWithTag("PlayerCharacter") );
+        }
+    }
+    public  void SetCurrentSceneMenu( GameObject Menu )
+    {
+        if( Menu.tag == "MenuCanvas")
+        {
+            m_CurrentSceneMenu = Menu;
         }
     }
 }

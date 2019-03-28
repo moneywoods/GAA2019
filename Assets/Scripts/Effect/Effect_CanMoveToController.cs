@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Effect_CanMoveToController : MonoBehaviour
 {
-    private Renderer m_Renderer;
     private float m_Cnt = 0.0f;
     public Vector3 m_ScaleUpperLimit;
     private Vector3 m_ScaleLowerLimit;
@@ -12,7 +11,6 @@ public class Effect_CanMoveToController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        m_Renderer = GetComponent<Renderer>();
         m_ScaleLowerLimit = transform.localScale;
     }
 

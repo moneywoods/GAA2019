@@ -12,6 +12,8 @@ TagManager:
   - MilkyWay
   - PlayerCharacter
   - AbstructEffect
+  - MenuCanvas
+  - MenuBotton
   layers:
   - Default
   - TransparentFX
