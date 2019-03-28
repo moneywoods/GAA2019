@@ -35,37 +35,37 @@ public class TakoController : MonoBehaviour
         // 星を移動する.
         GameObject newLand = null;
 
-        if (_Direction == PlayerCommandBehavior.Direction.W )
+        if (_Direction == PlayerCommandBehavior.Direction.Top )
         {
-            newLand = GetStarOnTheDirection(PlayerCommandBehavior.Direction.W);
+            newLand = GetStarOnTheDirection(PlayerCommandBehavior.Direction.Top);
         }
-        else if (_Direction == PlayerCommandBehavior.Direction.Q)
+        else if (_Direction == PlayerCommandBehavior.Direction.LeftTop)
         {
-            newLand = GetStarOnTheDirection(PlayerCommandBehavior.Direction.Q);
+            newLand = GetStarOnTheDirection(PlayerCommandBehavior.Direction.LeftTop);
         }
-        else if (_Direction == PlayerCommandBehavior.Direction.A)
+        else if (_Direction == PlayerCommandBehavior.Direction.Left)
         {
-            newLand = GetStarOnTheDirection(PlayerCommandBehavior.Direction.A);
+            newLand = GetStarOnTheDirection(PlayerCommandBehavior.Direction.Left);
         }
-        else if (_Direction == PlayerCommandBehavior.Direction.Z)
+        else if (_Direction == PlayerCommandBehavior.Direction.LeftBottom)
         {
-            newLand = GetStarOnTheDirection(PlayerCommandBehavior.Direction.Z);
+            newLand = GetStarOnTheDirection(PlayerCommandBehavior.Direction.LeftBottom);
         }
-        else if (_Direction == PlayerCommandBehavior.Direction.X)
+        else if (_Direction == PlayerCommandBehavior.Direction.Bottom)
         {
-            newLand = GetStarOnTheDirection(PlayerCommandBehavior.Direction.X);
+            newLand = GetStarOnTheDirection(PlayerCommandBehavior.Direction.Bottom);
         }
-        else if (_Direction == PlayerCommandBehavior.Direction.C)
+        else if (_Direction == PlayerCommandBehavior.Direction.RightBottom)
         {
-            newLand = GetStarOnTheDirection(PlayerCommandBehavior.Direction.C);
+            newLand = GetStarOnTheDirection(PlayerCommandBehavior.Direction.RightBottom);
         }
-        else if (_Direction == PlayerCommandBehavior.Direction.D)
+        else if (_Direction == PlayerCommandBehavior.Direction.Right)
         {
-            newLand = GetStarOnTheDirection(PlayerCommandBehavior.Direction.D);
+            newLand = GetStarOnTheDirection(PlayerCommandBehavior.Direction.Right);
         }
-        else if (_Direction == PlayerCommandBehavior.Direction.E)
+        else if (_Direction == PlayerCommandBehavior.Direction.RightTop)
         {
-            newLand = GetStarOnTheDirection(PlayerCommandBehavior.Direction.E);
+            newLand = GetStarOnTheDirection(PlayerCommandBehavior.Direction.RightTop);
         }
         // 星を渡る.
         if (newLand != null)
@@ -83,6 +83,47 @@ public class TakoController : MonoBehaviour
         }
 
         return false;
+    }
+
+    public void GetKeyCommand( KeyCode keyCode )
+    {
+        if (Input.GetKey(KeyCode.W))
+        {
+            MoveFromCurrentStar(PlayerCommandBehavior.Direction.Top);
+        }
+        else if (Input.GetKey(KeyCode.E))
+        {
+            MoveFromCurrentStar(PlayerCommandBehavior.Direction.RightTop);
+
+        }
+        else if (Input.GetKey(KeyCode.D))
+        {
+            MoveFromCurrentStar(PlayerCommandBehavior.Direction.Right);
+
+        }
+        else if (Input.GetKey(KeyCode.C))
+        {
+            MoveFromCurrentStar(PlayerCommandBehavior.Direction.RightBottom);
+
+        }
+        else if (Input.GetKey(KeyCode.X))
+        {
+            MoveFromCurrentStar(PlayerCommandBehavior.Direction.Bottom);
+
+        }
+        else if (Input.GetKey(KeyCode.Z))
+        {
+            MoveFromCurrentStar(PlayerCommandBehavior.Direction.LeftBottom);
+
+        }
+        else if (Input.GetKey(KeyCode.A))
+        {
+            MoveFromCurrentStar(PlayerCommandBehavior.Direction.LeftBottom);
+        }
+        else if (Input.GetKey(KeyCode.Q))
+        {
+            MoveFromCurrentStar(PlayerCommandBehavior.Direction.LeftTop);
+        }
     }
     public void SetCurrentStarStaying( GameObject Land )
     {
@@ -124,35 +165,35 @@ public class TakoController : MonoBehaviour
 
                 float EstimatedStarDegree = 0.0f;
 
-                if (_Direction == PlayerCommandBehavior.Direction.W)
+                if (_Direction == PlayerCommandBehavior.Direction.Top)
                 {
                     EstimatedStarDegree = 90.0f; // 下方向Y正, 右方向X正 に注意!
                 }
-                else if (_Direction == PlayerCommandBehavior.Direction.Q)
+                else if (_Direction == PlayerCommandBehavior.Direction.LeftTop)
                 {
                     EstimatedStarDegree = 135.0f;
                 }
-                else if (_Direction == PlayerCommandBehavior.Direction.A)
+                else if (_Direction == PlayerCommandBehavior.Direction.Left)
                 {
                     EstimatedStarDegree = 180.0f;
                 }
-                else if (_Direction == PlayerCommandBehavior.Direction.Z)
+                else if (_Direction == PlayerCommandBehavior.Direction.LeftBottom)
                 {
                     EstimatedStarDegree = 225.0f;
                 }
-                else if (_Direction == PlayerCommandBehavior.Direction.X)
+                else if (_Direction == PlayerCommandBehavior.Direction.Bottom)
                 {
                     EstimatedStarDegree = 270.0f;
                 }
-                else if (_Direction == PlayerCommandBehavior.Direction.C)
+                else if (_Direction == PlayerCommandBehavior.Direction.RightBottom)
                 {
                     EstimatedStarDegree = 315.0f;
                 }
-                else if (_Direction == PlayerCommandBehavior.Direction.D)
+                else if (_Direction == PlayerCommandBehavior.Direction.Right)
                 {
                     EstimatedStarDegree = 0.0f;
                 }
-                else if (_Direction == PlayerCommandBehavior.Direction.E)
+                else if (_Direction == PlayerCommandBehavior.Direction.RightTop)
                 {
                     EstimatedStarDegree = 45.0f;
                 }

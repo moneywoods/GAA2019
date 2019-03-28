@@ -45,35 +45,35 @@ public class QWEASDZXCController : MonoBehaviour
 
     public void SetQWEASDZXC(PlayerCommandBehavior.Direction direction )
     {
-        if ( direction == PlayerCommandBehavior.Direction.W)
+        if ( direction == PlayerCommandBehavior.Direction.Top)
         {
             spriteRenderer.sprite = m_W;
         }
-        else if (direction == PlayerCommandBehavior.Direction.E)
+        else if (direction == PlayerCommandBehavior.Direction.RightTop)
         {
             spriteRenderer.sprite = m_E;
         }
-        else if (direction == PlayerCommandBehavior.Direction.D)
+        else if (direction == PlayerCommandBehavior.Direction.Right)
         {
             spriteRenderer.sprite = m_D;
         }
-        else if (direction == PlayerCommandBehavior.Direction.C)
+        else if (direction == PlayerCommandBehavior.Direction.RightBottom)
         {
             spriteRenderer.sprite = m_C;
         }
-        else if (direction == PlayerCommandBehavior.Direction.X)
+        else if (direction == PlayerCommandBehavior.Direction.Bottom)
         {
             spriteRenderer.sprite = m_X;
         }
-        else if( direction == PlayerCommandBehavior.Direction.Z)
+        else if( direction == PlayerCommandBehavior.Direction.LeftBottom)
         {
             spriteRenderer.sprite = m_Z;
         }
-        else if (direction == PlayerCommandBehavior.Direction.A)
+        else if (direction == PlayerCommandBehavior.Direction.Left)
         {
             spriteRenderer.sprite = m_A;
         }
-        else if (direction == PlayerCommandBehavior.Direction.Q)
+        else if (direction == PlayerCommandBehavior.Direction.LeftTop)
         {
             spriteRenderer.sprite = m_Q;
         }
