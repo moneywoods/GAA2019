@@ -291,7 +291,7 @@ PrefabInstance:
     - target: {fileID: 684050371811413216, guid: 545876662b98320419beabdcaa72f325,
         type: 3}
       propertyPath: m_Name
-      value: GameInitializer
+      value: GameMaster
       objectReference: {fileID: 0}
     - target: {fileID: 684050371811413217, guid: 545876662b98320419beabdcaa72f325,
         type: 3}
@@ -359,6 +359,12 @@ PrefabInstance:
       propertyPath: m_Canvas
       value: 
       objectReference: {fileID: 7518139330974355375, guid: 699760a2e480ada4f860c65c42f69d21,
+        type: 3}
+    - target: {fileID: 4434732266365028694, guid: 545876662b98320419beabdcaa72f325,
+        type: 3}
+      propertyPath: m_PlayerCommand
+      value: 
+      objectReference: {fileID: 3993350545147920050, guid: 13ced3218a867a9448c3d48e9c69e3ef,
         type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 545876662b98320419beabdcaa72f325, type: 3}

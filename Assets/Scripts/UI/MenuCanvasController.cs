@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class InGameMenuController : MonoBehaviour
+public class MenuCanvasController : MonoBehaviour
 {
     void Awake()
     {
@@ -36,7 +36,7 @@ public class InGameMenuController : MonoBehaviour
             Transform obj = transform.GetChild(i);
             if( obj.tag == "MenuCanvas" )
             {
-               obj.gameObject.GetComponent<InGameMenuController>().SetActivateSelectionCursor();
+               obj.gameObject.GetComponent<MenuCanvasController>().SetActivateSelectionCursor();
             }
             else if( obj.tag == "MenuBotton" )
             {

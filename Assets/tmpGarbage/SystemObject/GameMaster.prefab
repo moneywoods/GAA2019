@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 684050371811413217}
   - component: {fileID: 4434732266365028694}
   m_Layer: 0
-  m_Name: GameInitializer
+  m_Name: GameMaster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,7 +45,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_StarMakerPrefab: {fileID: 4245834145686331464, guid: 3c478e8e813d5e441b2ecb09b48f166e,
     type: 3}
-  m_Canvas: {fileID: 7518139330974355375, guid: 699760a2e480ada4f860c65c42f69d21,
+  m_Canvas: {fileID: 5994316680908539326, guid: b2d8241d6bf37a943907181b450b7896,
     type: 3}
   m_PlayerCommand: {fileID: 3993350545147920050, guid: 13ced3218a867a9448c3d48e9c69e3ef,
     type: 3}

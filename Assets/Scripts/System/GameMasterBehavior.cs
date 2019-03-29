@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameInitializerBehavior : MonoBehaviour
+public class GameMasterBehavior : MonoBehaviour
 {
     public GameObject m_StarMakerPrefab = null;
     public GameObject m_Canvas;
