@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerCommandBehavior : MonoBehaviour
+public class PlayerCommandBehavior   : MonoBehaviour
 {
     public enum Direction
     {

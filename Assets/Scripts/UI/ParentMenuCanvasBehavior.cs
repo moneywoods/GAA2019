@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ParentMenuCanvasInGameBehavior : MenuCanvasController
+public class ParentMenuCanvasBehavior : MenuCanvasBehavior
 {
     // Start is called before the first frame update
     void Start()
     {
-        SetActivateSelectionCursor();
+        
     }
 
     // Update is called once per frame
@@ -18,7 +18,7 @@ public class ParentMenuCanvasInGameBehavior : MenuCanvasController
 
     public void SwitchActive()
     {
-        if(gameObject.activeSelf)
+        if (gameObject.activeSelf)
         {
             gameObject.SetActive(false);
         }
@@ -27,6 +27,6 @@ public class ParentMenuCanvasInGameBehavior : MenuCanvasController
             gameObject.SetActive(false);
             SetActivateSelectionCursor();
         }
-        
+
     }
 }

@@ -6,8 +6,12 @@ using UnityEngine.UI;
 public class GameMasterBehavior : MonoBehaviour
 {
     public GameObject m_StarMakerPrefab = null;
-    public GameObject m_Canvas;
     public GameObject m_PlayerCommand;
+
+    // UI
+    public GameObject m_EventObjectPrefab;
+    public GameObject m_MenuCanvas;
+
 
     private void Awake()
     {
@@ -15,9 +19,11 @@ public class GameMasterBehavior : MonoBehaviour
         GameObject starMaker = Instantiate(m_StarMakerPrefab);
         starMaker.GetComponent<StarMaker>().MakeWorld();
 
+        // Event objectを生成. UIの前に必ず生成!
+        Instantiate(m_EventObjectPrefab);
 
         // UIオブジェクトを生成.
-        GameObject menu = Instantiate(m_Canvas);
+        GameObject menu = Instantiate(m_MenuCanvas);
         menu.SetActive(false);
 
         // プレイヤーコントローラを生成し,にプレイヤーキャラクターをセット.
