@@ -137,22 +137,21 @@ public class LandStarController : MonoBehaviour
             AddStat(LANDSTAR_STAT.PLAYER_STAYING);
         }
     }
-    public bool LeaveThisLand( GameObject Character) // 自身にSTAYINGフラグを解除し,引数のcurrentStarStayingをこのオブジェクトにする.
+    public bool LeaveThisLand(GameObject Character) // 自身にSTAYINGフラグを解除し,引数のcurrentStarStayingをこのオブジェクトにする.
     {
-        if( CheckFlag( LANDSTAR_STAT.PLAYER_STAYING ) )
+        if (CheckFlag(LANDSTAR_STAT.PLAYER_STAYING))
         {
             var script = Character.GetComponent<TakoController>();
 
-            if ( script.GetCurrentStarStaying() == gameObject )
+            if (script.GetCurrentStarStaying() == gameObject)
             {
-                RemoveFlag(LANDSTAR_STAT.PLAYER_STAYING); 
+                RemoveFlag(LANDSTAR_STAT.PLAYER_STAYING);
                 return true;
             }
-            
+
         }
         return false;
     }
-
 
     // --------------------------------------------------------------------------------------------
     //

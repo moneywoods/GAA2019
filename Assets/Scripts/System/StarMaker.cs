@@ -81,8 +81,6 @@ public class StarMaker : MonoBehaviour
             }
         }
 
-        // プレイヤーコントローラにプレイヤーキャラクターをセット. // ここでやること？ほかでやること？
-        GameObject.FindGameObjectWithTag("GameController").GetComponent<PlayerCommandBehavior>().SetPlayerCharacter(GameObject.FindGameObjectWithTag("PlayerCharacter"));
 
     }
 

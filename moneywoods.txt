@@ -1,0 +1,8 @@
+・1マス5とする。
+・プレイヤーのいる☆（PlayerStar)は5 * √2のCircle Colliderを持つ。
+
+・毎フレーム当たり判定を行い、他の星が当たり判定に入る(OnTriggerEnter)とPlayerStarの隣接星リストに追加する。
+
+・プレイヤーが回転指令を出すと周囲の星のStateがWAITINGからMOVINGに変化する。
+
+・StateがMOVINGの星はPlayerStarを中心に90度回る。
