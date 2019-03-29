@@ -11,20 +11,45 @@ public class StarMaker : MonoBehaviour
     public GameObject PlayerCharacter;
     public GameObject goalStar;
 
+    public GameObject m_LoadText = null;
+
     // マップ
-    // S = スタート地点, L = 降りられる惑星, B = ブラックホール, M = 乳, 0 = 何もなし. 
-    readonly string[,] initMap = new string[6, 5] { { "0", "0", "B", "0", "G" }, 
-                                                    { "L", "0", "L", "0", "0" }, 
-                                                    { "0", "S", "B", "0", "0" }, 
-                                                    { "0", "0", "M", "0", "0" }, 
-                                                    { "B", "0", "0", "0", "0" },
-                                                    { "0", "0", "B", "0", "0" } };
-    const uint row = 6; // ここをかならずinitMapのサイズに合わせること！ 計算で出してもよい.
-    const uint col = 5;
+    // S = スタート地点, L = 降りられる惑星, B = ブラックホール, M = 乳, W = 壁, 0 = 何もなし.
+    //    readonly string[,] initMap = new string[11, 11] { { "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1" },
+    //                                                      { "-1", "W", "W", "W", "W", "W", "W", "W", "-1", "-1", "-1" },
+    //                                                      { "-1", "W", "0", "0", "B", "0", "G", "W", "-1", "-1", "-1" },
+    //                                                      { "-1", "W", "L", "0", "L", "0", "0", "W", "-1", "-1", "-1" },
+    //                                                      { "-1", "W", "0", "S", "B", "0", "0", "W", "-1", "-1", "-1" },
+    //                                                      { "-1", "W", "0", "0", "M", "0", "0", "W", "-1", "-1", "-1" },
+    //                                                      { "-1", "W", "B", "0", "0", "0", "0", "W", "-1", "-1", "-1" },
+    //                                                      { "-1", "W", "0", "0", "B", "0", "0", "W", "-1", "-1", "-1" },
+    //                                                      { "-1", "W", "W", "W", "W", "W", "W", "W", "-1", "-1", "-1" },
+    //                                                      { "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1" },
+    //                                                      { "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1" } };
+    //
+    private string[,] initMap;
+
+    private int row = 0; // テキストの行数
+    private int col = 0; // テキストの列数
     public float marginX; // 一コマ当たりの幅.
     public float marginY; // 一コマ当たりの高さ.
 
-    // Start is called before the first frame update
+    private int m_StageMax = 0;
+
+    // ステージを作るためにテキストファイル情報読み込み
+    private void LoadStage()
+    {
+        GameObject loadtext = Instantiate(m_LoadText);
+
+        //TextAsset stagetext = loadtext.GetComponent<LoadText>().GetStageText();
+
+        string a;
+        //for (int stageinfo = 0; stageinfo < stagetext.text.Length; stageinfo++)
+        //{
+        //    initMap = new string[m_StageMax, stageinfo];
+        //}
+    }
+
     private void Awake()
     {
         // MakeWorld();
@@ -33,6 +58,9 @@ public class StarMaker : MonoBehaviour
     // マップをロードし,インスタンスを生成する.
     public void MakeWorld()
     {
+        // ステージをローディング
+        LoadStage();
+
         int cntStart = 0; // スタート地点が複数個設置されていないかチェックするため.
         for( uint rc = 0; rc < row; rc++ )
         {
