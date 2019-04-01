@@ -24,7 +24,7 @@ public class ParentMenuCanvasBehavior : MenuCanvasBehavior
         }
         else
         {
-            gameObject.SetActive(false);
+            gameObject.SetActive(true);
             SetActivateSelectionCursor();
         }
 

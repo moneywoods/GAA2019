@@ -97,8 +97,8 @@ public class PlayerCommandBehavior   : MonoBehaviour
 
         if( Input.GetKey( KeyCode.Escape))
         {
-            m_CurrentSceneMenu.SetActive(!m_CurrentSceneMenu.activeInHierarchy);
-            
+            // m_CurrentSceneMenu.SetActive(!m_CurrentSceneMenu.activeInHierarchy);
+            m_CurrentSceneMenu.GetComponent<ParentMenuCanvasBehavior>().SwitchActive();
         }
     }
 
