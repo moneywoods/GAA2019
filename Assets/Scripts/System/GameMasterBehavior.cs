@@ -15,6 +15,8 @@ public class GameMasterBehavior : MonoBehaviour
 
     private void Awake()
     {
+        FadeManager.FadeIn();
+
         // 世界を作る.
         GameObject starMaker = Instantiate(m_StarMakerPrefab);
         starMaker.GetComponent<StarMaker>().MakeWorld();

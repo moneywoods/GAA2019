@@ -13,6 +13,8 @@ public class TitleMasterBehavior : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // フェードイン
+        FadeManager.FadeIn();
 
         // Event objectを生成. UIの前に必ず生成!
         Instantiate(m_EventObjectPrefab);
