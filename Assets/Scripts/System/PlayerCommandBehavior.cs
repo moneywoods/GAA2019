@@ -99,7 +99,6 @@ public class PlayerCommandBehavior : MonoBehaviour
         {
 
             GameObject starMaker = GameObject.FindWithTag("StarMaker");
-            starMaker.GetComponent<StarMaker>().DestroyWorld();
             starMaker.GetComponent<StarMaker>().ResetWorld();
         }
     }

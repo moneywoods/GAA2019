@@ -17,7 +17,7 @@ public class StarMaker : MonoBehaviour
     public float marginX; // 一コマ当たりの幅.
     public float marginY; // 一コマ当たりの高さ.
 
-    private string [,] m_CurrentMapData;
+    private char [,] m_CurrentMapData = null;
     // ステージを作るためにテキストファイル情報読み込み
     private void LoadStage()
     {
@@ -30,10 +30,13 @@ public class StarMaker : MonoBehaviour
     }
 
     // マップをロードし,インスタンスを生成する.
-    public void MakeWorld( string[ , ] mapData )
+    public void MakeWorld( char[ , ] mapData )
     {
-        m_CurrentMapData = mapData; // 現在のマップを保持.
-
+        if( m_CurrentMapData == null )
+        {
+            m_CurrentMapData = mapData; // 現在のマップを保持.
+        }
+        
         int cntStart = 0; // スタート地点が複数個設置されていないかチェックするため.
 
         int row = mapData.GetLength(0);
@@ -44,12 +47,12 @@ public class StarMaker : MonoBehaviour
         {
             for (uint cc = 0; cc < col; cc++)
             {
-                if (mapData[rc, cc] == "L")
+                if (mapData[rc, cc] == 'L')
                 {
                     // プレイヤーが乗れる星.
                     PlaceStar(landStar, rc, cc).GetComponent<LandStarController>().AddStat(LandStarController.LANDSTAR_STAT.ALIVE);
                 }
-                else if (mapData[rc, cc] == "S")
+                else if (mapData[rc, cc] == 'S')
                 {
                     // プレイヤーのスタートする星.
                     // 現状はTakoを置いてます.
@@ -63,23 +66,23 @@ public class StarMaker : MonoBehaviour
                     script.ArriveThisLand(player);
                     cntStart++;
                 }
-                else if (mapData[rc, cc] == "B")
+                else if (mapData[rc, cc] == 'B')
                 {
                     // ブラックホール.
                     PlaceStar(blackHole, rc, cc);
                 }
-                else if (mapData[rc, cc] == "M")
+                else if (mapData[rc, cc] == 'M')
                 {
                     // 乳.
                     PlaceStar(milkyWay, rc, cc);
                 }
-                else if (mapData[rc, cc] == "G")
+                else if (mapData[rc, cc] == 'G')
                 {
                     // ゴールの星.
                     GameObject star = PlaceStar(goalStar, rc, cc);
                     star.GetComponent<LandStarController>().AddStat(LandStarController.LANDSTAR_STAT.ALIVE);
                 }
-                else if(mapData[rc, cc] == "W")
+                else if(mapData[rc, cc] == 'W')
                 {
                     // 壁用のオブジェクト
                     // 実装これから
@@ -93,8 +96,6 @@ public class StarMaker : MonoBehaviour
         }
 
         // プレイヤーコントローラにプレイヤーキャラクターをセット. // ここでやること？ほかでやること？
-        GameObject.FindGameObjectWithTag("GameController").GetComponent<PlayerCommandBehavior>().SetPlayerCharacter(GameObject.FindGameObjectWithTag("PlayerCharacter"));
-
     }
 
     public void ResetWorld()
