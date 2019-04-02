@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerCommandBehavior : MonoBehaviour
+public class PlayerCommandBehavior   : MonoBehaviour
 {
     public enum Direction
     {
@@ -10,28 +10,21 @@ public class PlayerCommandBehavior : MonoBehaviour
         // A,    D,
         // Z, X, C
         // この順番になっているのはfor文で回したときにDirection型n * 45度で角度が出せるからです. 
-        D, // 右
-        E, // 右上
-        W, // 上
-        Q, // 左上
-        A, // 左
-        Z, // 左下
-        X, // 下
-        C, // 右下
-        //W, // 上
-        //E, // 右上
-        //D, // 右
-        //C, // 右下
-        //X, // 下
-        //Z, // 左下
-        //A, // 左
-        //Q,  // 左上
+        Right,
+        RightTop,
+        Top,
+        LeftTop,
+        Left,
+        LeftBottom,
+        Bottom,
+        RightBottom,
         ENUM_MAX,
         NONE
     }
 
     private GameObject m_PlayerCharacter;
     private TakoController m_PlayerScript;
+    private GameObject m_CurrentSceneMenu;
     // public GameObject LandStarType;
 
     private void Awake()
@@ -57,49 +50,54 @@ public class PlayerCommandBehavior : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.W))
             {
-                m_PlayerScript.MoveFromCurrentStar(Direction.W);
+                m_PlayerScript.MoveFromCurrentStar(Direction.Top);
             }
             else if (Input.GetKey(KeyCode.E))
             {
-                m_PlayerScript.MoveFromCurrentStar(Direction.E);
+                m_PlayerScript.MoveFromCurrentStar(Direction.RightTop);
 
             }
             else if (Input.GetKey(KeyCode.D))
             {
-                m_PlayerScript.MoveFromCurrentStar(Direction.D);
+                m_PlayerScript.MoveFromCurrentStar(Direction.Right);
 
             }
             else if (Input.GetKey(KeyCode.C))
             {
-                m_PlayerScript.MoveFromCurrentStar(Direction.C);
+                m_PlayerScript.MoveFromCurrentStar(Direction.RightBottom);
 
             }
             else if (Input.GetKey(KeyCode.X))
             {
-                m_PlayerScript.MoveFromCurrentStar(Direction.X);
+                m_PlayerScript.MoveFromCurrentStar(Direction.Bottom);
 
             }
             else if (Input.GetKey(KeyCode.Z))
             {
-                m_PlayerScript.MoveFromCurrentStar(Direction.Z);
+                m_PlayerScript.MoveFromCurrentStar(Direction.LeftBottom);
 
             }
             else if (Input.GetKey(KeyCode.A))
             {
-                m_PlayerScript.MoveFromCurrentStar(Direction.A);
+                m_PlayerScript.MoveFromCurrentStar(Direction.Left);
             }
             else if (Input.GetKey(KeyCode.Q))
             {
-                m_PlayerScript.MoveFromCurrentStar(Direction.Q);
+                m_PlayerScript.MoveFromCurrentStar(Direction.LeftTop);
             }
         }
 
         // リセットボタン
         if( Input.GetKey( KeyCode.L ) )
         {
-
             GameObject starMaker = GameObject.FindWithTag("StarMaker");
             starMaker.GetComponent<StarMaker>().ResetWorld();
+        }
+
+        if( Input.GetKey( KeyCode.Escape))
+        {
+            // m_CurrentSceneMenu.SetActive(!m_CurrentSceneMenu.activeInHierarchy);
+            m_CurrentSceneMenu.GetComponent<ParentMenuCanvasBehavior>().SwitchActive();
         }
     }
 
@@ -122,6 +120,13 @@ public class PlayerCommandBehavior : MonoBehaviour
         if( m_PlayerCharacter == null )
         {
             SetPlayerCharacter( GameObject.FindGameObjectWithTag("PlayerCharacter") );
+        }
+    }
+    public  void SetCurrentSceneMenu( GameObject Menu )
+    {
+        if( Menu.tag == "MenuCanvas")
+        {
+            m_CurrentSceneMenu = Menu;
         }
     }
 }

@@ -94,8 +94,6 @@ public class StarMaker : MonoBehaviour
 
             }
         }
-
-        // プレイヤーコントローラにプレイヤーキャラクターをセット. // ここでやること？ほかでやること？
     }
 
     public void ResetWorld()
