@@ -91,8 +91,7 @@ public class PlayerCommandBehavior   : MonoBehaviour
         if( Input.GetKey( KeyCode.L ) )
         {
             GameObject starMaker = GameObject.FindWithTag("StarMaker");
-            starMaker.GetComponent<StarMaker>().DestroyWorld();
-            starMaker.GetComponent<StarMaker>().MakeWorld();
+            starMaker.GetComponent<StarMaker>().ResetWorld();
         }
 
         if( Input.GetKey( KeyCode.Escape))
