@@ -31,9 +31,6 @@ public class MapLoaderBehavior : MonoBehaviour
 
         var data = new char[tmp.GetLength(0) - 1, tmp[0].Length];
 
-        var tmp0 = data.GetLength(0);
-        var tmp1 = data.GetLength(1);
-
         for( int row = 0; row < data.GetLength(0); row++ )
         {
             for( int col = 0; col < data.GetLength(1); col++ )

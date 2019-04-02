@@ -91,13 +91,19 @@ public class PlayerCommandBehavior   : MonoBehaviour
         if( Input.GetKey( KeyCode.L ) )
         {
             GameObject starMaker = GameObject.FindWithTag("StarMaker");
-            starMaker.GetComponent<StarMaker>().ResetWorld();
+            if( starMaker != null )
+            {
+                starMaker.GetComponent<StarMaker>().ResetWorld();
+            }
         }
 
-        if( Input.GetKey( KeyCode.Escape))
+        if( Input.GetKey( KeyCode.Escape) && m_CurrentSceneMenu != null )
         {
-            // m_CurrentSceneMenu.SetActive(!m_CurrentSceneMenu.activeInHierarchy);
-            m_CurrentSceneMenu.GetComponent<ParentMenuCanvasBehavior>().SwitchActive();
+            var menuScript = m_CurrentSceneMenu.GetComponent<ParentMenuCanvasBehavior>();
+            if( menuScript != null )
+            {
+                menuScript.SwitchActive();
+            }
         }
     }
 
