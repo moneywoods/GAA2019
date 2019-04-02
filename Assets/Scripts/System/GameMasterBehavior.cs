@@ -19,7 +19,7 @@ public class GameMasterBehavior : MonoBehaviour
     {
         // ステージ情報を書いたテキストファイルの読み込み
         GameObject loadText = Instantiate(m_MapLoaderPrefab);
-        var mapData = loadText.GetComponent<MapLoaderBehavior>().LoadMap(1, 2);
+        var mapData = loadText.GetComponent<MapLoaderBehavior>().LoadMap(1, 1);
 
         // 世界を作る.
         GameObject starMaker = Instantiate(m_StarMakerPrefab);
