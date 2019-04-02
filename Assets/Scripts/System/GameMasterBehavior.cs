@@ -17,6 +17,8 @@ public class GameMasterBehavior : MonoBehaviour
 
     private void Awake()
     {
+        FadeManager.FadeIn();
+
         // ステージ情報を書いたテキストファイルの読み込み
         GameObject loadText = Instantiate(m_MapLoaderPrefab);
         var mapData = loadText.GetComponent<MapLoaderBehavior>().LoadMap(1, 1);
