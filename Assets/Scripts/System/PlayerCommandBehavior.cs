@@ -90,7 +90,7 @@ public class PlayerCommandBehavior   : MonoBehaviour
         // リセットボタン
         if( Input.GetKey( KeyCode.L ) )
         {
-            GameObject starMaker = GameObject.FindWithTag("StarMaker");
+            GameObject starMaker = GameObject.FindWithTag(ObjectTag.StarMaker);
             if( starMaker != null )
             {
                 starMaker.GetComponent<StarMaker>().ResetWorld();
@@ -125,12 +125,12 @@ public class PlayerCommandBehavior   : MonoBehaviour
     {
         if( m_PlayerCharacter == null )
         {
-            SetPlayerCharacter( GameObject.FindGameObjectWithTag("PlayerCharacter") );
+            SetPlayerCharacter( GameObject.FindGameObjectWithTag(ObjectTag.PlayerCharacter) );
         }
     }
     public  void SetCurrentSceneMenu( GameObject Menu )
     {
-        if( Menu.tag == "MenuCanvas")
+        if( Menu.tag == ObjectTag.MenuCanvas)
         {
             m_CurrentSceneMenu = Menu;
         }

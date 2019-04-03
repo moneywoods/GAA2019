@@ -28,7 +28,7 @@ public class TakoKinetickPower : MonoBehaviour
 
             for (int i = 0; i < neighvorStarList.Count; i++)
             {
-                if( neighvorStarList[i].tag == "Land" )
+                if( neighvorStarList[i].tag == ObjectTag.Land )
                 {
 
                     LandStarController scriptNeighvor = neighvorStarList[i].GetComponent<LandStarController>();
@@ -50,7 +50,7 @@ public class TakoKinetickPower : MonoBehaviour
 
             for (int i = 0; i < neighvorStarList.Count; i++)
             {
-                if (neighvorStarList[i].tag == "Land")
+                if (neighvorStarList[i].tag == ObjectTag.Land)
                 {
                     LandStarController scriptNeighvor = neighvorStarList[i].GetComponent<LandStarController>();
 
@@ -65,7 +65,7 @@ public class TakoKinetickPower : MonoBehaviour
 
     void KinetikPower( GameObject target, float estimatedTimeToCirculate, bool isRight ) // 回すやつ. 関数名がくそすぎる. ここ関数に分ける???
     {
-        if( target.tag == "Land")
+        if( target.tag == ObjectTag.Land)
         {
             target.GetComponent<LandStarController>().SetMove(this.gameObject, estimatedTimeToCirculate, isRight);
         }

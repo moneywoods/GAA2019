@@ -25,11 +25,11 @@ public class MenuCanvasBehavior : MonoBehaviour
         for (var i = 0; i < transform.childCount; i++)
         {
             Transform obj = transform.GetChild(i);
-            if (obj.tag == "MenuCanvas")
+            if (obj.tag == ObjectTag.MenuCanvas)
             {
                 obj.gameObject.GetComponent<MenuCanvasBehavior>().SetActivateSelectionCursor();
             }
-            else if (obj.tag == "MenuBotton")
+            else if (obj.tag == ObjectTag.MenuBotton)
             {
                 EventSystem.current.SetSelectedGameObject(obj.gameObject);
                 return true;

@@ -18,7 +18,7 @@ public class BlackHoleBehavior : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if( collision.tag == "Land")
+        if( collision.tag == ObjectTag.Land)
         {
             LandStarController landScript = collision.GetComponent<LandStarController>();
             landScript.AddStat(LandStarController.LANDSTAR_STAT.DESTROYED);

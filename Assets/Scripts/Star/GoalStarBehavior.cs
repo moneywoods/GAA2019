@@ -29,7 +29,7 @@ public class GoalStarBehavior : LandStarController
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if( collision.tag == "PlayerCharacter")
+        if( collision.tag == ObjectTag.PlayerCharacter)
         {
             Debug.Log("Congratulations! Player Win. ");
             GameObject.FindWithTag("Finish").transform.position = transform.position;
