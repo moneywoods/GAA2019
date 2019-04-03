@@ -27,6 +27,7 @@ public class PlayerCommandBehavior   : MonoBehaviour
     private GameObject m_CurrentSceneMenu;
     // public GameObject LandStarType;
 
+
     private void Awake()
     {
 
@@ -40,6 +41,10 @@ public class PlayerCommandBehavior   : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /* ----- ゲームパッド用ボタン番号 ----- */
+        bool startButton = Input.GetKeyDown(KeyCode.Joystick1Button7);      // STARTボタン
+
+
         // プレイヤーキャラクター系
         if( m_PlayerCharacter == null )
         {
@@ -48,47 +53,47 @@ public class PlayerCommandBehavior   : MonoBehaviour
 
         if( m_PlayerScript != null )
         {
-            if (Input.GetKey(KeyCode.W))
+            if (Input.GetKeyDown(KeyCode.W))
             {
                 m_PlayerScript.MoveFromCurrentStar(Direction.Top);
             }
-            else if (Input.GetKey(KeyCode.E))
+            else if (Input.GetKeyDown(KeyCode.E))
             {
                 m_PlayerScript.MoveFromCurrentStar(Direction.RightTop);
 
             }
-            else if (Input.GetKey(KeyCode.D))
+            else if (Input.GetKeyDown(KeyCode.D))
             {
                 m_PlayerScript.MoveFromCurrentStar(Direction.Right);
 
             }
-            else if (Input.GetKey(KeyCode.C))
+            else if (Input.GetKeyDown(KeyCode.C))
             {
                 m_PlayerScript.MoveFromCurrentStar(Direction.RightBottom);
 
             }
-            else if (Input.GetKey(KeyCode.X))
+            else if (Input.GetKeyDown(KeyCode.X))
             {
                 m_PlayerScript.MoveFromCurrentStar(Direction.Bottom);
 
             }
-            else if (Input.GetKey(KeyCode.Z))
+            else if (Input.GetKeyDown(KeyCode.Z))
             {
                 m_PlayerScript.MoveFromCurrentStar(Direction.LeftBottom);
 
             }
-            else if (Input.GetKey(KeyCode.A))
+            else if (Input.GetKeyDown(KeyCode.A))
             {
                 m_PlayerScript.MoveFromCurrentStar(Direction.Left);
             }
-            else if (Input.GetKey(KeyCode.Q))
+            else if (Input.GetKeyDown(KeyCode.Q))
             {
                 m_PlayerScript.MoveFromCurrentStar(Direction.LeftTop);
             }
         }
 
         // リセットボタン
-        if( Input.GetKey( KeyCode.L ) )
+        if( Input.GetKeyDown( KeyCode.L ) )
         {
             GameObject starMaker = GameObject.FindWithTag(ObjectTag.StarMaker);
             if( starMaker != null )
@@ -97,7 +102,7 @@ public class PlayerCommandBehavior   : MonoBehaviour
             }
         }
 
-        if( Input.GetKey( KeyCode.Escape) && m_CurrentSceneMenu != null )
+        if( Input.GetKeyDown( ( KeyCode.Escape) || startButton )  && m_CurrentSceneMenu != null)
         {
             var menuScript = m_CurrentSceneMenu.GetComponent<ParentMenuCanvasBehavior>();
             if( menuScript != null )
