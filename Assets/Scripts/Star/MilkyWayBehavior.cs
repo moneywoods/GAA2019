@@ -20,7 +20,7 @@ public class MilkyWayBehavior : MonoBehaviour
     // 当たり判定はとりあえず3にしてます.
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if( collision.tag == "Land" )
+        if( collision.tag == ObjectTag.Land )
         {
             collision.GetComponent<LandStarController>().AddStat(LandStarController.LANDSTAR_STAT.IN_MILKYWAY_AREA);
             Debug.Log("This is MilkyWay at " + transform.position.ToString("F2") + "."

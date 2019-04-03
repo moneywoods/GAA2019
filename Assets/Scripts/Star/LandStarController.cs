@@ -131,7 +131,7 @@ public class LandStarController : MonoBehaviour
 
     public void ArriveThisLand(GameObject Character) // 自身にSTAYINGフラグを立て,引数のcurrentStarStayingをこのオブジェクトにする.
     {
-        if( Character.tag == "PlayerCharacter" )
+        if( Character.tag == ObjectTag.PlayerCharacter )
         {
             Character.GetComponent<TakoController>().SetCurrentStarStaying(gameObject);
             AddStat(LANDSTAR_STAT.PLAYER_STAYING);
@@ -177,7 +177,7 @@ public class LandStarController : MonoBehaviour
         {
             foreach (Transform child in transform)
             {
-                if (child.tag == "AbstructEffect")
+                if (child.tag == ObjectTag.AbstructEffect)
                 {
                     Destroy(child.gameObject);
                     m_isCanMoveToEffectEmitting = false;

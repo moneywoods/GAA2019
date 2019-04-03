@@ -95,15 +95,20 @@ public class PlayerCommandBehavior   : MonoBehaviour
         // リセットボタン
         if( Input.GetKeyDown( KeyCode.L ) )
         {
-            GameObject starMaker = GameObject.FindWithTag("StarMaker");
-            starMaker.GetComponent<StarMaker>().DestroyWorld();
-            starMaker.GetComponent<StarMaker>().MakeWorld();
+            GameObject starMaker = GameObject.FindWithTag(ObjectTag.StarMaker);
+            if( starMaker != null )
+            {
+                starMaker.GetComponent<StarMaker>().ResetWorld();
+            }
         }
 
-        if( Input.GetKeyDown( KeyCode.Escape) || startButton)
+        if( Input.GetKeyDown( ( KeyCode.Escape) || startButton )  && m_CurrentSceneMenu != null)
         {
-            // m_CurrentSceneMenu.SetActive(!m_CurrentSceneMenu.activeInHierarchy);
-            m_CurrentSceneMenu.GetComponent<ParentMenuCanvasBehavior>().SwitchActive();
+            var menuScript = m_CurrentSceneMenu.GetComponent<ParentMenuCanvasBehavior>();
+            if( menuScript != null )
+            {
+                menuScript.SwitchActive();
+            }
         }
     }
 
@@ -125,12 +130,12 @@ public class PlayerCommandBehavior   : MonoBehaviour
     {
         if( m_PlayerCharacter == null )
         {
-            SetPlayerCharacter( GameObject.FindGameObjectWithTag("PlayerCharacter") );
+            SetPlayerCharacter( GameObject.FindGameObjectWithTag(ObjectTag.PlayerCharacter) );
         }
     }
     public  void SetCurrentSceneMenu( GameObject Menu )
     {
-        if( Menu.tag == "MenuCanvas")
+        if( Menu.tag == ObjectTag.MenuCanvas)
         {
             m_CurrentSceneMenu = Menu;
         }

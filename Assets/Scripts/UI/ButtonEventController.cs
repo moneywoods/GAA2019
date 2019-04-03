@@ -46,10 +46,48 @@ public class ButtonEventController : MonoBehaviour
     {
 
     }
+
     public void OnClick()
     {
+        /* ----- タイトル画面のメニュー ----- */
+        if(gameObject.name == "BeginGame")
+        {// 初めから
+            FadeManager.FadeOut("scene0315");
+        }
+        if (gameObject.name == "ContinueGame")
+        {// 続きから
+
+        }
+        if (gameObject.name == "SelectStage")
+        {// ステージ選択
+
+        }
+        if (gameObject.name == "End")
+        {// ゲーム終了
+
+        }
+
+        /* ----- ゲーム画面のメニュー ----- */
+        if (gameObject.name == "ReturnToGame")
+        {// ゲームに戻る
+
+        }
+        if(gameObject.name == "SelectStage")
+        {// ステージ選択
+
+        }
+        if(gameObject.name == "ControllerLayout")
+        {// 操作説明
+
+        }
+        if(gameObject.name == "BackToTitle")
+        {// タイトルに戻る
+            FadeManager.FadeOut("TitleScene");
+        }
+
         Debug.Log("Button click!" + gameObject.name );
     }
+
     public void OnSubmit()
     {
         Debug.Log("Submit!");

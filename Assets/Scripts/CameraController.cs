@@ -18,7 +18,7 @@ public class CameraController : MonoBehaviour {
     {
         if( target == null )
         {
-            target = GameObject.FindGameObjectWithTag("PlayerCharacter");
+            target = GameObject.FindGameObjectWithTag( ObjectTag.PlayerCharacter );
             // offsetToTarget = this.transform.position - target.transform.position;
         }
     }
