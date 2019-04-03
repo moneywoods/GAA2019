@@ -19,11 +19,10 @@ public class TakoKinetickPower : MonoBehaviour
     void Update() // どうしてこのUpdateに書いてしまったのか.
     {
         // ゲームパッド
-        bool rsh = Input.GetKey(KeyCode.Joystick1Button5);      // 右ボタン
-        bool lsh = Input.GetKey(KeyCode.Joystick1Button4);      // 左ボタン
+        bool rsh = Input.GetKeyDown(KeyCode.Joystick1Button5);      // 右ボタン
+        bool lsh = Input.GetKeyDown(KeyCode.Joystick1Button4);      // 左ボタン
 
-
-        if (Input.GetKey(KeyCode.Alpha3) || lsh)
+        if (Input.GetKeyDown(KeyCode.Alpha3) || rsh)
         {
             // 右回り
             // 今いる星の隣接星をすべて回転させる.
@@ -45,7 +44,7 @@ public class TakoKinetickPower : MonoBehaviour
                 }
             }
         }
-        else if (Input.GetKey(KeyCode.Alpha1) || rsh)
+        else if (Input.GetKeyDown(KeyCode.Alpha1) || lsh)
         {
             // 左回り
             // 今いる星の隣接星をすべて回転させる.

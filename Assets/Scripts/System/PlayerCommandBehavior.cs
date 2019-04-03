@@ -27,6 +27,7 @@ public class PlayerCommandBehavior   : MonoBehaviour
     private GameObject m_CurrentSceneMenu;
     // public GameObject LandStarType;
 
+
     private void Awake()
     {
 
@@ -40,6 +41,10 @@ public class PlayerCommandBehavior   : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /* ----- ゲームパッド用ボタン番号 ----- */
+        bool startButton = Input.GetKeyDown(KeyCode.Joystick1Button7);      // STARTボタン
+
+
         // プレイヤーキャラクター系
         if( m_PlayerCharacter == null )
         {
@@ -95,7 +100,7 @@ public class PlayerCommandBehavior   : MonoBehaviour
             starMaker.GetComponent<StarMaker>().MakeWorld();
         }
 
-        if( Input.GetKeyDown( KeyCode.Escape))
+        if( Input.GetKeyDown( KeyCode.Escape) || startButton)
         {
             // m_CurrentSceneMenu.SetActive(!m_CurrentSceneMenu.activeInHierarchy);
             m_CurrentSceneMenu.GetComponent<ParentMenuCanvasBehavior>().SwitchActive();
