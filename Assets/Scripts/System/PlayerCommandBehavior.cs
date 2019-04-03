@@ -25,7 +25,6 @@ public class PlayerCommandBehavior : MonoBehaviour
     private GameObject m_PlayerCharacter;
     private TakoController m_PlayerScript;
     private GameObject m_CurrentSceneMenu;
-    // public GameObject LandStarType;
 
 
     private void Awake()
@@ -53,43 +52,42 @@ public class PlayerCommandBehavior : MonoBehaviour
 
         if( m_PlayerScript != null )
         {
-            if( Input.GetKeyDown(KeyCode.W) )
-            {
-                m_PlayerScript.MoveFromCurrentStar(Direction.Top);
-            }
-            else if( Input.GetKeyDown(KeyCode.E) )
-            {
-                m_PlayerScript.MoveFromCurrentStar(Direction.RightTop);
+            //if( Input.GetKeyDown(KeyCode.W) )
+            //{
+            //    m_PlayerScript.GetKeyCommand(KeyCode.W);
+            //}
+            //else if( Input.GetKeyDown(KeyCode.E) )
+            //{
+            //    m_PlayerScript.GetKeyCommand(KeyCode.E);
 
-            }
-            else if( Input.GetKeyDown(KeyCode.D) )
-            {
-                m_PlayerScript.MoveFromCurrentStar(Direction.Right);
+            //}
+            //else if( Input.GetKeyDown(KeyCode.D) )
+            //{
+            //    m_PlayerScript.GetKeyCommand(KeyCode.D);
 
-            }
-            else if( Input.GetKeyDown(KeyCode.C) )
-            {
-                m_PlayerScript.MoveFromCurrentStar(Direction.RightBottom);
+            //}
+            //else if( Input.GetKeyDown(KeyCode.C) )
+            //{
+            //    m_PlayerScript.GetKeyCommand(KeyCode.C);
 
-            }
-            else if( Input.GetKeyDown(KeyCode.X) )
-            {
-                m_PlayerScript.MoveFromCurrentStar(Direction.Bottom);
+            //}
+            //else if( Input.GetKeyDown(KeyCode.X) )
+            //{
+            //    m_PlayerScript.GetKeyCommand(KeyCode.X);
 
-            }
-            else if( Input.GetKeyDown(KeyCode.Z) )
-            {
-                m_PlayerScript.MoveFromCurrentStar(Direction.LeftBottom);
-
-            }
-            else if( Input.GetKeyDown(KeyCode.A) )
-            {
-                m_PlayerScript.MoveFromCurrentStar(Direction.Left);
-            }
-            else if( Input.GetKeyDown(KeyCode.Q) )
-            {
-                m_PlayerScript.MoveFromCurrentStar(Direction.LeftTop);
-            }
+            //}
+            //else if( Input.GetKeyDown(KeyCode.Z) )
+            //{
+            //    m_PlayerScript.GetKeyCommand(KeyCode.Z);
+            //}
+            //else if( Input.GetKeyDown(KeyCode.A) )
+            //{
+            //    m_PlayerScript.GetKeyCommand(KeyCode.A);
+            //}
+            //else if( Input.GetKeyDown(KeyCode.Q) )
+            //{
+            //    m_PlayerScript.GetKeyCommand(KeyCode.Q);
+            //}
         }
 
         // リセットボタン
