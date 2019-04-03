@@ -29,7 +29,7 @@ public class PlayerCommandBehavior   : MonoBehaviour
 
     private void Awake()
     {
-
+        
     }
     // Start is called before the first frame update
     void Start()
@@ -99,9 +99,13 @@ public class PlayerCommandBehavior   : MonoBehaviour
 
         if( Input.GetKey( KeyCode.Escape) && m_CurrentSceneMenu != null )
         {
+            // ポーズのオンオフ
+            PauseTheGame.PauseSwitching();
+
             var menuScript = m_CurrentSceneMenu.GetComponent<ParentMenuCanvasBehavior>();
             if( menuScript != null )
             {
+                
                 menuScript.SwitchActive();
             }
         }

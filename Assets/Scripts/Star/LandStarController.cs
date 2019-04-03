@@ -48,9 +48,13 @@ public class LandStarController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Mathf.Approximately(Time.timeScale, 0f))
+        {
+            return;
+        }
 
         // 移住可能を示すエフェクトの管理
-        if(m_IniticialChildCnt < transform.childCount && ( CheckFlag(LANDSTAR_STAT.MOVING) || CheckFlag(LANDSTAR_STAT.PLAYER_STAYING ) ) )
+        if (m_IniticialChildCnt < transform.childCount && ( CheckFlag(LANDSTAR_STAT.MOVING) || CheckFlag(LANDSTAR_STAT.PLAYER_STAYING ) ) )
         {
             DiscardCanMoveToEffect();
         }
