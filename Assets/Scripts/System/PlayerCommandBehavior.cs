@@ -21,9 +21,7 @@ public class PlayerCommandBehavior : MonoBehaviour
         ENUM_MAX,
         NONE
     }
-
-    private GameObject m_PlayerCharacter;
-    private TakoController m_PlayerScript;
+    
     private GameObject m_CurrentSceneMenu;
 
 
@@ -42,53 +40,6 @@ public class PlayerCommandBehavior : MonoBehaviour
     {
         /* ----- ゲームパッド用ボタン番号 ----- */
         bool startButton = Input.GetKeyDown(KeyCode.Joystick1Button7);      // STARTボタン
-
-
-        // プレイヤーキャラクター系
-        if( m_PlayerCharacter == null )
-        {
-            FindPlayerCharacter();
-        }
-
-        if( m_PlayerScript != null )
-        {
-            //if( Input.GetKeyDown(KeyCode.W) )
-            //{
-            //    m_PlayerScript.GetKeyCommand(KeyCode.W);
-            //}
-            //else if( Input.GetKeyDown(KeyCode.E) )
-            //{
-            //    m_PlayerScript.GetKeyCommand(KeyCode.E);
-
-            //}
-            //else if( Input.GetKeyDown(KeyCode.D) )
-            //{
-            //    m_PlayerScript.GetKeyCommand(KeyCode.D);
-
-            //}
-            //else if( Input.GetKeyDown(KeyCode.C) )
-            //{
-            //    m_PlayerScript.GetKeyCommand(KeyCode.C);
-
-            //}
-            //else if( Input.GetKeyDown(KeyCode.X) )
-            //{
-            //    m_PlayerScript.GetKeyCommand(KeyCode.X);
-
-            //}
-            //else if( Input.GetKeyDown(KeyCode.Z) )
-            //{
-            //    m_PlayerScript.GetKeyCommand(KeyCode.Z);
-            //}
-            //else if( Input.GetKeyDown(KeyCode.A) )
-            //{
-            //    m_PlayerScript.GetKeyCommand(KeyCode.A);
-            //}
-            //else if( Input.GetKeyDown(KeyCode.Q) )
-            //{
-            //    m_PlayerScript.GetKeyCommand(KeyCode.Q);
-            //}
-        }
 
         // リセットボタン
         if( Input.GetKeyDown(KeyCode.L) )
@@ -109,28 +60,7 @@ public class PlayerCommandBehavior : MonoBehaviour
             }
         }
     }
-
-    public void SetPlayerCharacter(GameObject _PlayerCharacter)
-    {
-        m_PlayerCharacter = _PlayerCharacter;
-        m_PlayerScript = m_PlayerCharacter.GetComponent<TakoController>();
-    }
-
-    public void DiscardPlayerCharacterControll()
-    {
-        if( m_PlayerCharacter != null )
-        {
-            m_PlayerCharacter = null;
-        }
-    }
-
-    private void FindPlayerCharacter() // シーン中の"Player"タグのついたオブジェクトを検索し,自身にセットする(現状"Player"オブジェクトはシーン中1つとしてます).
-    {
-        if( m_PlayerCharacter == null )
-        {
-            SetPlayerCharacter(GameObject.FindGameObjectWithTag(ObjectTag.PlayerCharacter));
-        }
-    }
+    
     public void SetCurrentSceneMenu(GameObject Menu)
     {
         if( Menu.tag == ObjectTag.MenuCanvas )
