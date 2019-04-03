@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerCommandBehavior   : MonoBehaviour
+public class PlayerCommandBehavior : MonoBehaviour
 {
     public enum Direction
     {
@@ -35,7 +35,7 @@ public class PlayerCommandBehavior   : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -53,47 +53,47 @@ public class PlayerCommandBehavior   : MonoBehaviour
 
         if( m_PlayerScript != null )
         {
-            if (Input.GetKeyDown(KeyCode.W))
+            if( Input.GetKeyDown(KeyCode.W) )
             {
                 m_PlayerScript.MoveFromCurrentStar(Direction.Top);
             }
-            else if (Input.GetKeyDown(KeyCode.E))
+            else if( Input.GetKeyDown(KeyCode.E) )
             {
                 m_PlayerScript.MoveFromCurrentStar(Direction.RightTop);
 
             }
-            else if (Input.GetKeyDown(KeyCode.D))
+            else if( Input.GetKeyDown(KeyCode.D) )
             {
                 m_PlayerScript.MoveFromCurrentStar(Direction.Right);
 
             }
-            else if (Input.GetKeyDown(KeyCode.C))
+            else if( Input.GetKeyDown(KeyCode.C) )
             {
                 m_PlayerScript.MoveFromCurrentStar(Direction.RightBottom);
 
             }
-            else if (Input.GetKeyDown(KeyCode.X))
+            else if( Input.GetKeyDown(KeyCode.X) )
             {
                 m_PlayerScript.MoveFromCurrentStar(Direction.Bottom);
 
             }
-            else if (Input.GetKeyDown(KeyCode.Z))
+            else if( Input.GetKeyDown(KeyCode.Z) )
             {
                 m_PlayerScript.MoveFromCurrentStar(Direction.LeftBottom);
 
             }
-            else if (Input.GetKeyDown(KeyCode.A))
+            else if( Input.GetKeyDown(KeyCode.A) )
             {
                 m_PlayerScript.MoveFromCurrentStar(Direction.Left);
             }
-            else if (Input.GetKeyDown(KeyCode.Q))
+            else if( Input.GetKeyDown(KeyCode.Q) )
             {
                 m_PlayerScript.MoveFromCurrentStar(Direction.LeftTop);
             }
         }
 
         // リセットボタン
-        if( Input.GetKeyDown( KeyCode.L ) )
+        if( Input.GetKeyDown(KeyCode.L) )
         {
             GameObject starMaker = GameObject.FindWithTag(ObjectTag.StarMaker);
             if( starMaker != null )
@@ -102,7 +102,7 @@ public class PlayerCommandBehavior   : MonoBehaviour
             }
         }
 
-        if( Input.GetKeyDown( ( KeyCode.Escape) || startButton )  && m_CurrentSceneMenu != null)
+        if( (Input.GetKeyDown(KeyCode.Escape) || startButton) && m_CurrentSceneMenu != null )
         {
             var menuScript = m_CurrentSceneMenu.GetComponent<ParentMenuCanvasBehavior>();
             if( menuScript != null )
@@ -112,7 +112,7 @@ public class PlayerCommandBehavior   : MonoBehaviour
         }
     }
 
-    public void SetPlayerCharacter( GameObject _PlayerCharacter )
+    public void SetPlayerCharacter(GameObject _PlayerCharacter)
     {
         m_PlayerCharacter = _PlayerCharacter;
         m_PlayerScript = m_PlayerCharacter.GetComponent<TakoController>();
@@ -120,7 +120,7 @@ public class PlayerCommandBehavior   : MonoBehaviour
 
     public void DiscardPlayerCharacterControll()
     {
-        if( m_PlayerCharacter != null)
+        if( m_PlayerCharacter != null )
         {
             m_PlayerCharacter = null;
         }
@@ -130,12 +130,12 @@ public class PlayerCommandBehavior   : MonoBehaviour
     {
         if( m_PlayerCharacter == null )
         {
-            SetPlayerCharacter( GameObject.FindGameObjectWithTag(ObjectTag.PlayerCharacter) );
+            SetPlayerCharacter(GameObject.FindGameObjectWithTag(ObjectTag.PlayerCharacter));
         }
     }
-    public  void SetCurrentSceneMenu( GameObject Menu )
+    public void SetCurrentSceneMenu(GameObject Menu)
     {
-        if( Menu.tag == ObjectTag.MenuCanvas)
+        if( Menu.tag == ObjectTag.MenuCanvas )
         {
             m_CurrentSceneMenu = Menu;
         }
