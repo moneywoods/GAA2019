@@ -5,11 +5,11 @@ using UnityEngine;
 public class StarMaker : MonoBehaviour
 {
     /* Prefab 置き場*/
-    public GameObject landStar;
-    public GameObject blackHole;
-    public GameObject milkyWay;
-    public GameObject PlayerCharacter;
-    public GameObject goalStar;
+    public GameObject m_LandStarPrefab;
+    public GameObject m_BlackHolePrefab;
+    public GameObject m_MilkyWayPrefab;
+    public GameObject m_PlayerCharacterPrefab;
+    public GameObject m_GoalStarPrefab;
 
 
 
@@ -18,11 +18,7 @@ public class StarMaker : MonoBehaviour
     public float marginY; // 一コマ当たりの高さ.
 
     private char [,] m_CurrentMapData = null;
-    // ステージを作るためにテキストファイル情報読み込み
-    private void LoadStage()
-    {
-
-    }
+    private Vector2Int m_CurrentMapSize;
 
     private void Awake()
     {
@@ -39,8 +35,8 @@ public class StarMaker : MonoBehaviour
         
         int cntStart = 0; // スタート地点が複数個設置されていないかチェックするため.
 
-        int row = mapData.GetLength(0);
-        int col = mapData.GetLength(1);
+        int row = m_CurrentMapSize.y = mapData.GetLength(0);
+        int col = m_CurrentMapSize.x = mapData.GetLength(1);
 
         // マップに配置
         for ( uint rc = 0; rc < row; rc++ )
@@ -50,36 +46,36 @@ public class StarMaker : MonoBehaviour
                 if (mapData[rc, cc] == 'L')
                 {
                     // プレイヤーが乗れる星.
-                    PlaceStar(landStar, rc, cc).GetComponent<LandStarController>().AddStat(LandStarController.LANDSTAR_STAT.ALIVE);
+                    PlaceStar(m_LandStarPrefab, rc, cc).GetComponent<LandStarController>().AddStat(LandStarController.LANDSTAR_STAT.ALIVE);
                 }
                 else if (mapData[rc, cc] == 'S')
                 {
                     // プレイヤーのスタートする星.
                     // 現状はTakoを置いてます.
                     // 星を生成
-                    GameObject startingStar = PlaceStar(landStar, rc, cc);
+                    GameObject startingStar = PlaceStar(m_LandStarPrefab, rc, cc);
                     startingStar.GetComponent<LandStarController>().AddStat(LandStarController.LANDSTAR_STAT.ALIVE);
                     LandStarController script = startingStar.GetComponent<LandStarController>();
                     script.AddStat(LandStarController.LANDSTAR_STAT.PLAYER_STAYING);
                     // 生成した星にプレイヤーを配置
-                    GameObject player = Instantiate(PlayerCharacter);
+                    GameObject player = Instantiate(m_PlayerCharacterPrefab);
                     script.ArriveThisLand(player);
                     cntStart++;
                 }
                 else if (mapData[rc, cc] == 'B')
                 {
                     // ブラックホール.
-                    PlaceStar(blackHole, rc, cc);
+                    PlaceStar(m_BlackHolePrefab, rc, cc);
                 }
                 else if (mapData[rc, cc] == 'M')
                 {
                     // 乳.
-                    PlaceStar(milkyWay, rc, cc);
+                    PlaceStar(m_MilkyWayPrefab, rc, cc);
                 }
                 else if (mapData[rc, cc] == 'G')
                 {
                     // ゴールの星.
-                    GameObject star = PlaceStar(goalStar, rc, cc);
+                    GameObject star = PlaceStar(m_GoalStarPrefab, rc, cc);
                     star.GetComponent<LandStarController>().AddStat(LandStarController.LANDSTAR_STAT.ALIVE);
                 }
                 else if(mapData[rc, cc] == 'W')
@@ -119,6 +115,11 @@ public class StarMaker : MonoBehaviour
         {
             Destroy(obj);
         }
+    }
+
+    public Vector2Int GetCurrentMapSize()
+    {
+        return m_CurrentMapSize;
     }
     // Update is called once per frame
     void Update()

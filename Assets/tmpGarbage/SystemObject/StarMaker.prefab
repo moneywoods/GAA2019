@@ -43,14 +43,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c2e3fdb04520a547a8abd29c05ad265, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  landStar: {fileID: 1066779473278714, guid: 2db31a5757c9cd1419bb18fe183e660f, type: 3}
-  blackHole: {fileID: 243682550725790215, guid: 0e821360794539345b78afdbd270bb4d,
+  m_LandStarPrefab: {fileID: 1066779473278714, guid: 2db31a5757c9cd1419bb18fe183e660f,
     type: 3}
-  milkyWay: {fileID: 3025326536767554516, guid: b6c2b4e3339ed9d44ba670bfc24d93cc,
+  m_BlackHolePrefab: {fileID: 243682550725790215, guid: 0e821360794539345b78afdbd270bb4d,
     type: 3}
-  PlayerCharacter: {fileID: 3227633270504513355, guid: 44bca1824f9b1684db3587e26f97ab0c,
+  m_MilkyWayPrefab: {fileID: 3025326536767554516, guid: b6c2b4e3339ed9d44ba670bfc24d93cc,
     type: 3}
-  goalStar: {fileID: 8112558533587871894, guid: 61830842644e90e4494a09ce61d61994,
+  m_PlayerCharacterPrefab: {fileID: 3227633270504513355, guid: 44bca1824f9b1684db3587e26f97ab0c,
+    type: 3}
+  m_GoalStarPrefab: {fileID: 8112558533587871894, guid: 61830842644e90e4494a09ce61d61994,
     type: 3}
   marginX: 5
   marginY: 5
