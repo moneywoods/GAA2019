@@ -97,6 +97,7 @@ namespace TakoState
             _State = new AbstractState[(int) StateIndex.ENUM_MAX];
             AbstractState.SetTako(tako);
             _State[(int) StateIndex.Normal] = new StateNormal();
+            _State[(int) StateIndex.CommandDisable] = new StateDisableCommand();
         }
 
         // AbstractState本体
