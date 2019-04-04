@@ -18,7 +18,11 @@ public class TakoKinetickPower : MonoBehaviour
     // Update is called once per frame
     void Update() // どうしてこのUpdateに書いてしまったのか.
     {
-        if(Input.GetKey(KeyCode.Alpha3))
+        // ゲームパッド
+        bool rsh = Input.GetKeyDown(KeyCode.Joystick1Button5);      // 右ボタン
+        bool lsh = Input.GetKeyDown(KeyCode.Joystick1Button4);      // 左ボタン
+
+        if (Input.GetKeyDown(KeyCode.Alpha3) || rsh)
         {
             // 右回り
             // 今いる星の隣接星をすべて回転させる.
@@ -28,7 +32,7 @@ public class TakoKinetickPower : MonoBehaviour
 
             for (int i = 0; i < neighvorStarList.Count; i++)
             {
-                if( neighvorStarList[i].tag == "Land" )
+                if( neighvorStarList[i].tag == ObjectTag.Land )
                 {
 
                     LandStarController scriptNeighvor = neighvorStarList[i].GetComponent<LandStarController>();
@@ -40,7 +44,7 @@ public class TakoKinetickPower : MonoBehaviour
                 }
             }
         }
-        else if (Input.GetKey(KeyCode.Alpha1))
+        else if (Input.GetKeyDown(KeyCode.Alpha1) || lsh)
         {
             // 左回り
             // 今いる星の隣接星をすべて回転させる.
@@ -50,7 +54,7 @@ public class TakoKinetickPower : MonoBehaviour
 
             for (int i = 0; i < neighvorStarList.Count; i++)
             {
-                if (neighvorStarList[i].tag == "Land")
+                if (neighvorStarList[i].tag == ObjectTag.Land)
                 {
                     LandStarController scriptNeighvor = neighvorStarList[i].GetComponent<LandStarController>();
 
@@ -65,7 +69,7 @@ public class TakoKinetickPower : MonoBehaviour
 
     void KinetikPower( GameObject target, float estimatedTimeToCirculate, bool isRight ) // 回すやつ. 関数名がくそすぎる. ここ関数に分ける???
     {
-        if( target.tag == "Land")
+        if( target.tag == ObjectTag.Land)
         {
             target.GetComponent<LandStarController>().SetMove(this.gameObject, estimatedTimeToCirculate, isRight);
         }

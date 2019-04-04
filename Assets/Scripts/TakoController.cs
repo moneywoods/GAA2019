@@ -22,7 +22,7 @@ public class TakoController : MonoBehaviour
         // この処理は他のファイルとかにした方がゴチャらなくてなくていいかも
         foreach( GameObject obj in neighvorList )
         {
-            if( obj.tag == "Land" || obj.tag == "GoalStar") // 今のところ着陸可能星しかリストに入ってないのでこの条件いらないけど一応.
+            if(obj.tag == ObjectTag.Land || obj.tag == ObjectTag.GoalStar) // 今のところ着陸可能星しかリストに入ってないのでこの条件いらないけど一応.
             {
                 obj.GetComponent<LandStarController>().SetCanMoveToEffect(CheckDirection(obj));
             }

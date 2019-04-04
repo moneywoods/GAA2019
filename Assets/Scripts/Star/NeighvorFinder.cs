@@ -29,7 +29,7 @@ public class NeighvorFinder : MonoBehaviour
                 return; 
             }
         }
-        if( ( other.tag == "Land" || other.tag == "GoalStar" ) && other.gameObject != transform.root.gameObject )
+        if( ( other.tag == ObjectTag.Land || other.tag == ObjectTag.GoalStar ) && other.gameObject != transform.root.gameObject )
         {
             // 当たり判定で隣接判定をし,リストへ追加する.
             neighborStarList.Add(other.gameObject); // add to list
@@ -37,7 +37,7 @@ public class NeighvorFinder : MonoBehaviour
             Vector3 pos = other.gameObject.transform.position;
             float dist = Vector3.Distance(transform.position, other.gameObject.transform.position);
             Debug.Log("This is at( " + transform.position.x + "," + transform.position.y + " ).NeighborStar[" + neighborStarList.Count + "] pos = ( " + pos.x + "," + pos.y + " ).");
-            if (other.tag == "GoalStar")
+            if (other.tag == ObjectTag.GoalStar)
             {
                 Debug.Log("New one is goal star.");
             }
