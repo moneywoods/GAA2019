@@ -37,7 +37,6 @@ public class GameMasterBehavior : MonoBehaviour
         // プレイヤーコントローラを生成し,にプレイヤーキャラクターをセット.
         GameObject playerController = Instantiate(m_PlayerCommand);
         var scriptPlayerController = playerController.GetComponent<PlayerCommandBehavior>();
-        scriptPlayerController.SetPlayerCharacter(GameObject.FindGameObjectWithTag(ObjectTag.PlayerCharacter));
         scriptPlayerController.SetCurrentSceneMenu(menu);
     }
     // Start is called before the first frame update
