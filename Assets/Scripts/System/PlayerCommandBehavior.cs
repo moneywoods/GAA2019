@@ -56,6 +56,7 @@ public class PlayerCommandBehavior : MonoBehaviour
             var menuScript = m_CurrentSceneMenu.GetComponent<ParentMenuCanvasBehavior>();
             if( menuScript != null )
             {
+                PauseTheGame.GamePauseSwitch();
                 menuScript.SwitchActive();
             }
         }
