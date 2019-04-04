@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -102,8 +102,11 @@ public class PlayerCommandBehavior : MonoBehaviour
             }
         }
 
-        if( (Input.GetKeyDown(KeyCode.Escape) || startButton) && m_CurrentSceneMenu != null )
+        if( ( Input.GetKeyDown(KeyCode.Escape) || startButton ) && m_CurrentSceneMenu != null)
         {
+            // ゲームを停止
+            PauseTheGame.GamePauseSwitch();
+
             var menuScript = m_CurrentSceneMenu.GetComponent<ParentMenuCanvasBehavior>();
             if( menuScript != null )
             {
