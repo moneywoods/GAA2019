@@ -1,0 +1,37 @@
+[33m193be18[m[33m ([m[1;36mHEAD -> [m[1;32mfeature/UpdateGameSceneUpdateSequence[m[33m)[m - 変更点 ・TakoKineticPower.csを削除
+[33m49757e6[m[33m ([m[1;31morigin/feature/UpdateGameSceneUpdateSequence[m[33m)[m 手直し.
+[33mcdcbd04[m - 変更点 ・Takoの更新処理にStatePatternを適用. ・状態によりTakoのUpdate内容を変更する際には,TakoState.StateIndexにインデックスを追加し,State派生クラスを実装し,StateContexクラスコンストラクタのStateインスタンス配列に新規Stateを追加して下さい. ・PlayerCommandBehaviorからプレイヤーキャラクターの操作に関する記述を削除.今後はTakoControllerに記述すること.
+[33m92252fc[m[33m ([m[1;31morigin/develop[m[33m, [m[1;32mdevelop[m[33m)[m Merge pull request #3 from moneywoods/feature/hotfix_smallmistake
+[33maf3abf1[m[33m ([m[1;31morigin/feature/hotfix_smallmistake[m[33m)[m 些細な修正.
+[33m14c3abd[m Merge pull request #1 from moneywoods/feature/Change_players_input_operation
+[33md12151d[m[33m ([m[1;31morigin/feature/Change_players_input_operation[m[33m)[m Merge branch 'develop' into feature/Change_players_input_operation
+[33mb8b9171[m ゲームパッドのスタートボタン適用。 KeyDownになっていなかったものをKeyDownに変更
+[33m85d773c[m GameObjectのタグ名をクラスObjectTagに集約
+[33m4f54ad3[m プレイヤーが星を回す操作にゲームパッドを追加しました。 TakoKinetickPower関数内 : LeftButton, RightButton
+[33mb2cfc7f[m 今度こそコンフリクト解消. シーンのロードの順番が代わったと思います.
+[33mfb1dd99[m Merge branch 'feature/Model_of_scene_transition' into develop
+[33m7f0f38d[m[33m ([m[1;31morigin/feature/Model_of_scene_transition[m[33m)[m マージコンフリクトを解消.
+[33m611d89c[m ゲームメニューからタイトルへ、タイトルからゲームへのシーン遷移を作成 マウスクリックだけでなくエンターキーにも対応させました。 メニューの追加の際は "Assets/ Scripts/ UI/  ButtonEventController" のOnClick関数内に追記していく形になると思います。
+[33mbd4c66f[m Merge branch 'feature/HotFix_AvoidNullException' into develop
+[33maf75d92[m 手直し.
+[33m54045a1[m 少しだけNullReferenceException回避をした.
+[33m279ede6[m 先のマージコンフリクト解決の際のミスを解消.
+[33mf6857a6[m Merge branch 'feature/Scene' into develop
+[33m8e19cd9[m 動作確認用の記述を暫定版へと変更
+[33ma3e48cf[m Merge branch 'develop' of https://github.com/moneywoods/GAA2019 into feature/Scene
+[33m9652231[m マップデータとその読み込み機能の実装をとりあえず完了. - 特記事項 ・ マップデータは最後の行を必ず改行すること(例: 高さ8x幅8のマップの場合, データの行数は9行になる). ・ StarMakerのMakeWorld()の引数を変更 string -> char. それに伴い, 内蔵するマップデータを変更 string array -> char array.
+[33me601c76[m StarMakerに関数を追加した. - ResetWorld() ゲーム用オブジェクト(星とプレイヤー)を再生成. MakeWorld()に引数を追加した.
+[33m564e856[m /* ---- 変更 ---- */ Scripts/ System/ PlayerCommandBehavior プレイヤーの入力操作 "Input.GetKey" -> "Input.GetKeyDown" へ変更
+[33m4c9a4dd[m MenuUI表示の操作の記述を変更.
+[33m2d8be08[m /* ---- 新規 ---- */ Assets / Resources内にステージ用テキストファイル Scripts / FadeManager追加 Scripts / System/LodeText追加
+[33m9d97018[m Merge branch 'feature/test_UI' into develop
+[33mff3c616[m[33m ([m[1;31morigin/feature/test_UI[m[33m)[m TitleSceneの雛形完成. シーンの遷移はこれからやる. 一部スクリプト,オブジェクトの名前を変更. (GameInitializer -> GameMasterとか, CanvasPrefab回りの名前を最適化)
+[33mf0a60a5[m InGameMenuの構成を更新した.
+[33md0d3d4a[m fck 忘れてた
+[33m754d2a4[m GameSceneのUIの雛形の完成?
+[33m45ddf47[m PlayerCommandBehaviorのenum:Directionを変更した。 それに伴う各所での変更も。
+[33m4161ea9[m チュートリアル用ファイルを削除.
+[33mcba9df1[m[33m ([m[1;31morigin/feature/Test[m[33m)[m Readme.Update
+[33m1a37917[m[33m ([m[1;31morigin/feature/prototype[m[33m)[m プロトタイプ完成
+[33mccc45b9[m gitignoreを追加完了.
+[33mdb958be[m Initial commit
