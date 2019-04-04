@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectTag : MonoBehaviour
+public class ObjectTag
 {
     public static readonly string Land            = "Land";
     public static readonly string Neighvor        = "NeighvorFinder";

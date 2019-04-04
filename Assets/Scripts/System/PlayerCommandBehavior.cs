@@ -21,7 +21,7 @@ public class PlayerCommandBehavior : MonoBehaviour
         ENUM_MAX,
         NONE
     }
-    
+
     private GameObject m_CurrentSceneMenu;
 
 
