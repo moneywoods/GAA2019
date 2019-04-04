@@ -289,16 +289,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 4612238528041068032, guid: 609bce861ccd51a4cbc68f067d3ce81c,
-        type: 3}
-      propertyPath: m_Text
-      value: "\u64CD\u4F5C\u78BA\u8A8D"
-      objectReference: {fileID: 0}
-    - target: {fileID: 4612238528041068032, guid: 609bce861ccd51a4cbc68f067d3ce81c,
-        type: 3}
-      propertyPath: m_FontData.m_Font
-      value: 
-      objectReference: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     - target: {fileID: 4612238527715300746, guid: 609bce861ccd51a4cbc68f067d3ce81c,
         type: 3}
       propertyPath: m_Delegates.Array.size
@@ -345,6 +335,16 @@ PrefabInstance:
       value: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI, Version=1.0.0.0,
         Culture=neutral, PublicKeyToken=null
       objectReference: {fileID: 0}
+    - target: {fileID: 4612238528041068032, guid: 609bce861ccd51a4cbc68f067d3ce81c,
+        type: 3}
+      propertyPath: m_Text
+      value: "\u64CD\u4F5C\u78BA\u8A8D"
+      objectReference: {fileID: 0}
+    - target: {fileID: 4612238528041068032, guid: 609bce861ccd51a4cbc68f067d3ce81c,
+        type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 609bce861ccd51a4cbc68f067d3ce81c, type: 3}
 --- !u!114 &2446064245082062768 stripped
@@ -486,26 +486,26 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 4612238528041068032, guid: 609bce861ccd51a4cbc68f067d3ce81c,
+    - target: {fileID: 4612238527715300745, guid: 609bce861ccd51a4cbc68f067d3ce81c,
         type: 3}
-      propertyPath: m_FontData.m_FontStyle
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4612238528041068032, guid: 609bce861ccd51a4cbc68f067d3ce81c,
-        type: 3}
-      propertyPath: m_FontData.m_RichText
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4612238528041068032, guid: 609bce861ccd51a4cbc68f067d3ce81c,
-        type: 3}
-      propertyPath: m_Text
-      value: "\u30B2\u30FC\u30E0\u306B\u623B\u308B"
-      objectReference: {fileID: 0}
-    - target: {fileID: 4612238528041068032, guid: 609bce861ccd51a4cbc68f067d3ce81c,
-        type: 3}
-      propertyPath: m_FontData.m_Font
+      propertyPath: m_ObjMenuIndex
       value: 
-      objectReference: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+      objectReference: {fileID: 5994316680908539326}
+    - target: {fileID: 4612238527715300744, guid: 609bce861ccd51a4cbc68f067d3ce81c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2446064245636394108}
+    - target: {fileID: 4612238527715300744, guid: 609bce861ccd51a4cbc68f067d3ce81c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClick
+      objectReference: {fileID: 0}
+    - target: {fileID: 4612238527715300744, guid: 609bce861ccd51a4cbc68f067d3ce81c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4612238527715300746, guid: 609bce861ccd51a4cbc68f067d3ce81c,
         type: 3}
       propertyPath: m_Delegates.Array.size
@@ -552,6 +552,26 @@ PrefabInstance:
       value: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI, Version=1.0.0.0,
         Culture=neutral, PublicKeyToken=null
       objectReference: {fileID: 0}
+    - target: {fileID: 4612238528041068032, guid: 609bce861ccd51a4cbc68f067d3ce81c,
+        type: 3}
+      propertyPath: m_FontData.m_FontStyle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4612238528041068032, guid: 609bce861ccd51a4cbc68f067d3ce81c,
+        type: 3}
+      propertyPath: m_FontData.m_RichText
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4612238528041068032, guid: 609bce861ccd51a4cbc68f067d3ce81c,
+        type: 3}
+      propertyPath: m_Text
+      value: "\u30B2\u30FC\u30E0\u306B\u623B\u308B"
+      objectReference: {fileID: 0}
+    - target: {fileID: 4612238528041068032, guid: 609bce861ccd51a4cbc68f067d3ce81c,
+        type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 609bce861ccd51a4cbc68f067d3ce81c, type: 3}
 --- !u!114 &2446064245636394108 stripped
@@ -683,11 +703,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 4612238528041068032, guid: 609bce861ccd51a4cbc68f067d3ce81c,
-        type: 3}
-      propertyPath: m_FontData.m_Font
-      value: 
-      objectReference: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     - target: {fileID: 4612238527715300744, guid: 609bce861ccd51a4cbc68f067d3ce81c,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -831,6 +846,11 @@ PrefabInstance:
       value: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI, Version=1.0.0.0,
         Culture=neutral, PublicKeyToken=null
       objectReference: {fileID: 0}
+    - target: {fileID: 4612238528041068032, guid: 609bce861ccd51a4cbc68f067d3ce81c,
+        type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 609bce861ccd51a4cbc68f067d3ce81c, type: 3}
 --- !u!1 &2446064246164504465 stripped
@@ -978,16 +998,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 4612238528041068032, guid: 609bce861ccd51a4cbc68f067d3ce81c,
-        type: 3}
-      propertyPath: m_FontData.m_Font
-      value: 
-      objectReference: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    - target: {fileID: 4612238528041068032, guid: 609bce861ccd51a4cbc68f067d3ce81c,
-        type: 3}
-      propertyPath: m_Text
-      value: "\u30B9\u30C6\u30FC\u30B8\u30BB\u30EC\u30AF\u30C8"
-      objectReference: {fileID: 0}
     - target: {fileID: 4612238527715300746, guid: 609bce861ccd51a4cbc68f067d3ce81c,
         type: 3}
       propertyPath: m_Delegates.Array.size
@@ -1034,6 +1044,16 @@ PrefabInstance:
       value: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI, Version=1.0.0.0,
         Culture=neutral, PublicKeyToken=null
       objectReference: {fileID: 0}
+    - target: {fileID: 4612238528041068032, guid: 609bce861ccd51a4cbc68f067d3ce81c,
+        type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    - target: {fileID: 4612238528041068032, guid: 609bce861ccd51a4cbc68f067d3ce81c,
+        type: 3}
+      propertyPath: m_Text
+      value: "\u30B9\u30C6\u30FC\u30B8\u30BB\u30EC\u30AF\u30C8"
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 609bce861ccd51a4cbc68f067d3ce81c, type: 3}
 --- !u!114 &2446064246764084902 stripped
@@ -1064,6 +1084,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TagString
       value: MenuCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 3657991325827071031, guid: c8c48cb21ff5bd0448e5135a2937526f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1732179601933671799, guid: c8c48cb21ff5bd0448e5135a2937526f,
         type: 3}

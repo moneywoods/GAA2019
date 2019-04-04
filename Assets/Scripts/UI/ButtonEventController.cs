@@ -29,15 +29,15 @@ public class ButtonEventController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
-    // ----------------------------------------------------------------------------------
-    //
-    // Event Trigger
-    //
-    // ----------------------------------------------------------------------------------
-    public void OnSelected()
+// ----------------------------------------------------------------------------------
+//
+// Event Trigger
+//
+// ----------------------------------------------------------------------------------
+public void OnSelected()
     {
 
     }
@@ -49,8 +49,10 @@ public class ButtonEventController : MonoBehaviour
 
     public void OnClick()
     {
+        ParentMenuCanvasBehavior menuDelete = transform.root.gameObject.GetComponent<ParentMenuCanvasBehavior>();
+
         /* ----- タイトル画面のメニュー ----- */
-        if(gameObject.name == "BeginGame")
+        if (gameObject.name == "BeginGame")
         {// 初めから
             FadeManager.FadeOut("scene0315");
         }
@@ -70,9 +72,10 @@ public class ButtonEventController : MonoBehaviour
         /* ----- ゲーム画面のメニュー ----- */
         if (gameObject.name == "ReturnToGame")
         {// ゲームに戻る
-
+            PauseTheGame.GameReStart();
+            menuDelete.SwitchActive();
         }
-        if(gameObject.name == "SelectStage")
+        if (gameObject.name == "SelectStage")
         {// ステージ選択
 
         }
@@ -82,6 +85,7 @@ public class ButtonEventController : MonoBehaviour
         }
         if(gameObject.name == "BackToTitle")
         {// タイトルに戻る
+            PauseTheGame.GameReStart();
             FadeManager.FadeOut("TitleScene");
         }
 
