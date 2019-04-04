@@ -5,7 +5,12 @@ using UnityEngine;
 
 public class LandStarController : MonoBehaviour
 {
-    private const uint m_IniticialChildCnt = 1; // 元の子の数( NeighvorFinderのみ )
+    public enum LandStarChild
+    {
+        NeighvorFinder,
+        ENUM_MAX
+    }
+
     [Flags]
     public enum LANDSTAR_STAT // たぶん32bitだから大丈夫(?)
     {
@@ -50,7 +55,7 @@ public class LandStarController : MonoBehaviour
     {
 
         // 移住可能を示すエフェクトの管理
-        if(m_IniticialChildCnt < transform.childCount && ( CheckFlag(LANDSTAR_STAT.MOVING) || CheckFlag(LANDSTAR_STAT.PLAYER_STAYING ) ) )
+        if((int)LandStarChild.ENUM_MAX < transform.childCount && ( CheckFlag(LANDSTAR_STAT.MOVING) || CheckFlag(LANDSTAR_STAT.PLAYER_STAYING ) ) )
         {
             DiscardCanMoveToEffect();
         }

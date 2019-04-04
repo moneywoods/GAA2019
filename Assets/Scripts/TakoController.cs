@@ -136,7 +136,7 @@ namespace TakoState
         // 星を移動する.
         protected bool MoveFromCurrentStar(PlayerCommandBehavior.Direction _Direction)
         {
-            // 星を移動する.
+            // 行きたい方向に行けるLandがあるかチェック.
             GameObject newLand = null;
 
             if( _Direction == PlayerCommandBehavior.Direction.Top )
@@ -212,7 +212,7 @@ namespace TakoState
                     vecPlayerToStar.Normalize(); // 正規化する.
 
                     // 比較するための単位ベクトルを取得する.
-                    var vecComp = new Vector3(1.0f, 0.0f); // 真上へのベクトル. これ真下では?
+                    var vecComp = new Vector3(1.0f, 0.0f); // 真上へのベクトル.
 
                     float EstimatedStarDegree = 0.0f;
 
@@ -263,12 +263,41 @@ namespace TakoState
             }
             return null;
         }
+
+        protected void KineticPower(float estimatedTimeToCirculate, bool isRight) // 隣接するすべてのLandに回るよう指示する.
+        {
+            GameObject starStaying = takoScript.GetCurrentStarStaying();
+            GameObject starScript = starStaying.transform.GetChild(0).gameObject; // LandのChildの先頭はNeighvorFinderになるように調整すること.
+            List<GameObject> neighvorStarList = starScript.GetComponent<NeighvorFinder>().GetNeighvorStarList();
+
+            for(int i = 0; i < neighvorStarList.Count; i++)
+            {
+                if(neighvorStarList[i].tag == ObjectTag.Land)
+                {
+                    LandStarController scriptNeighvor = neighvorStarList[i].GetComponent<LandStarController>();
+
+                    if(scriptNeighvor.CheckFlag(LandStarController.LANDSTAR_STAT.ALIVE) && !scriptNeighvor.CheckFlag(LandStarController.LANDSTAR_STAT.MOVING))
+                    {
+                        neighvorStarList[i].GetComponent<LandStarController>().SetMove(tako.gameObject, estimatedTimeToCirculate, isRight);                       
+                    }
+                }
+            }
+           
+        }
+
     }
 
     public class StateNormal : AbstractState
     {
         public override void StateUpdate()
         {
+            // 入力を取得.
+            // ゲームパッド
+            bool rsh = Input.GetKeyDown(KeyCode.Joystick1Button5);      // 右ボタン
+            bool lsh = Input.GetKeyDown(KeyCode.Joystick1Button4);      // 左ボタン
+
+
+            // 星を渡る.
             if(Input.GetKey(KeyCode.W))
             {
                 MoveFromCurrentStar(PlayerCommandBehavior.Direction.Top);
@@ -305,6 +334,16 @@ namespace TakoState
             else if(Input.GetKey(KeyCode.Q))
             {
                 MoveFromCurrentStar(PlayerCommandBehavior.Direction.LeftTop);
+            }
+
+
+            if(Input.GetKeyDown(KeyCode.Alpha3) || rsh)
+            {
+                KineticPower(2.0f, true);
+            }
+            else if(Input.GetKeyDown(KeyCode.Alpha1) || lsh)
+            {
+                KineticPower(2.0f, false);
             }
         }
     }
