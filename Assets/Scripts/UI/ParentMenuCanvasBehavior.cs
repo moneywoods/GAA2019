@@ -13,7 +13,6 @@ public class ParentMenuCanvasBehavior : MenuCanvasBehavior
     // Update is called once per frame
     void Update()
     {
-        
     }
 
     public void SwitchActive()
@@ -27,6 +26,5 @@ public class ParentMenuCanvasBehavior : MenuCanvasBehavior
             gameObject.SetActive(true);
             SetActivateSelectionCursor();
         }
-
     }
 }

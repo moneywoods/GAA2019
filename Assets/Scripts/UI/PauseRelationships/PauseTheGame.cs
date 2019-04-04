@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PauseTheGame : MonoBehaviour
 {
-
     // Start is called before the first frame update
     void Start()
     {
@@ -15,14 +14,33 @@ public class PauseTheGame : MonoBehaviour
     {
     }
 
-    public static void PauseSwitching()
+    //=======================
+    // ゲームを停止
+    //=======================
+    public static void GameStop()
     {
-        if (Time.timeScale == 1f)
-        {
-            Time.timeScale = 0f;
-        }else if (Time.timeScale == 0f)
+        Time.timeScale = 0f;
+    }
+
+    //=======================
+    // ゲームを開始
+    //=======================
+    public static void GameReStart()
+    {
+        Time.timeScale = 1f;
+    }
+
+    //=======================
+    // ゲームを一時停止のオンオフ
+    //=======================
+    public static void GamePauseSwitch()
+    {
+        if (Time.timeScale == 0f)
         {
             Time.timeScale = 1f;
+        } else if (Time.timeScale == 1f)
+        {
+            Time.timeScale = 0f;
         }
     }
 }
