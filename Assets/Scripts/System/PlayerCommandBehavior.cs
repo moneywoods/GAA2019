@@ -38,6 +38,7 @@ public class PlayerCommandBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         /* ----- ゲームパッド用ボタン番号 ----- */
         bool startButton = Input.GetKeyDown(KeyCode.Joystick1Button7);      // STARTボタン
 
@@ -53,6 +54,9 @@ public class PlayerCommandBehavior : MonoBehaviour
 
         if( (Input.GetKeyDown(KeyCode.Escape) || startButton) && m_CurrentSceneMenu != null )
         {
+            // フェードイン/アウトしてたら抜ける
+            if (FadeManager.CheckIsFade()) return;
+
             var menuScript = m_CurrentSceneMenu.GetComponent<ParentMenuCanvasBehavior>();
             if( menuScript != null )
             {
