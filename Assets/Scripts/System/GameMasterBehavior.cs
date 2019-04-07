@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class GameMasterBehavior : MonoBehaviour
 {
-
-    public GameObject m_MapLoaderPrefab = null;
     public GameObject m_StarMakerPrefab = null;
     public GameObject m_PlayerCommand;
 
@@ -14,14 +12,13 @@ public class GameMasterBehavior : MonoBehaviour
     public GameObject m_EventObjectPrefab;
     public GameObject m_MenuCanvas;
 
-
+    public static StageInfo InitiatingStage = new StageInfo(1, 1);
     private void Awake()
     {
         FadeManager.FadeIn();
 
         // ステージ情報を書いたテキストファイルの読み込み
-        GameObject loadText = Instantiate(m_MapLoaderPrefab);
-        var mapData = loadText.GetComponent<MapLoaderBehavior>().LoadMap(1, 1);
+        var mapData = MapLoader.LoadMap(InitiatingStage);
 
         // 世界を作る.
         GameObject starMaker = Instantiate(m_StarMakerPrefab);

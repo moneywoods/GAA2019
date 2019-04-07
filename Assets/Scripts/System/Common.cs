@@ -16,3 +16,14 @@ public class ObjectTag
     public static readonly string MenuBotton      = "MenuBotton";
     public static readonly string SceneMaster     = "SceneMaster";
 }
+
+public struct StageInfo
+{
+    public StageInfo( int stageNum, int chapterNum )
+    {
+        Stage = stageNum;
+        Chapter = chapterNum;
+    }
+    public int Stage;
+    public int Chapter;
+}
