@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MapLoaderBehavior : MonoBehaviour
+public class MapLoader : MonoBehaviour
 {
 
 
@@ -21,10 +21,10 @@ public class MapLoaderBehavior : MonoBehaviour
         
     }
 
-    public char[,] LoadMap( uint stageNum, uint chapterNum )
+    public static char[,] LoadMap( StageInfo stageInfo )
     {
         string fileName = "MapData";
-        fileName += stageNum.ToString() + "_" + chapterNum.ToString();
+        fileName += stageInfo.Stage.ToString() + "_" + stageInfo.Chapter.ToString();
         TextAsset textAsset = new TextAsset(); //テキストファイルのデータを取得するインスタンスを作成
         textAsset = Resources.Load(fileName, typeof(TextAsset)) as TextAsset; //Resourcesフォルダから対象テキストを取得
         string[] tmp = textAsset.text.Split('\n'); //テキスト全体をstring型で入れる変数を用意して入れる.

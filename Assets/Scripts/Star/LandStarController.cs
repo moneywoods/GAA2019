@@ -146,7 +146,7 @@ public class LandStarController : MonoBehaviour
             AddStat(LANDSTAR_STAT.PLAYER_STAYING);
         }
     }
-    public bool LeaveThisLand(GameObject Character) // 自身にSTAYINGフラグを解除し,引数のcurrentStarStayingをこのオブジェクトにする.
+    public bool LeaveThisLand(GameObject Character) // 自身にSTAYINGフラグを解除する.
     {
         if (CheckFlag(LANDSTAR_STAT.PLAYER_STAYING))
         {
@@ -201,7 +201,7 @@ public class LandStarController : MonoBehaviour
     //
     // --------------------------------------------------------------------------------------------
 
-    public void ChangeStat( LANDSTAR_STAT newStat ) // フラグ用変数に引数を代入.
+    public void SetStat( LANDSTAR_STAT newStat ) // フラグ用変数に引数を代入.
     {
         CurrentStat = newStat;
         Debug.Log("Im at " + transform.position.ToString("F2") + ". My current stat is " + CurrentStat + ".");
