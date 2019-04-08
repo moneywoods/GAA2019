@@ -17,6 +17,11 @@ public class Effect_CanMoveToController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Mathf.Approximately(Time.timeScale, 0f))
+        {
+            return;
+        }
+
         Vector3 newScale = new Vector3();
         newScale.x = m_ScaleLowerLimit.x + (m_ScaleUpperLimit.x - m_ScaleLowerLimit.x) * Mathf.Sin(Mathf.Deg2Rad * m_Cnt);
         newScale.y = m_ScaleLowerLimit.y + (m_ScaleUpperLimit.y - m_ScaleLowerLimit.y) * Mathf.Sin(Mathf.Deg2Rad * m_Cnt);

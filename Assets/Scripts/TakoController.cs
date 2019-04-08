@@ -19,9 +19,14 @@ public class TakoController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Mathf.Approximately(Time.timeScale, 0f))
+        {
+            return;
+        }
+
         // 移動可能な隣接星を明示するエフェクト作成.
         // この処理は他のファイルとかにした方がゴチャらなくてなくていいかも
-        foreach( GameObject obj in neighvorList )
+        foreach ( GameObject obj in neighvorList )
         {
             if(obj.tag == ObjectTag.Land || obj.tag == ObjectTag.GoalStar) // 今のところ着陸可能星しかリストに入ってないのでこの条件いらないけど一応.
             {
