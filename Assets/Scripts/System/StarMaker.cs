@@ -4,6 +4,22 @@ using UnityEngine;
 
 public class StarMaker : MonoBehaviour
 {
+    public class MapInfo
+    {
+        public MapInfo(char[,] mapData, Vector2 cellSize, Vector2 position)
+        {
+            MapData = mapData;
+            CellCnt = new Vector2Int(mapData.GetLength(1), mapData.GetLength(0));
+            CellSize = cellSize;
+            Position = position;
+        }
+        public char[,] MapData;
+        public Vector2Int CellCnt;
+        public Vector2 CellSize;
+
+        public Vector2 Position;
+    }
+
     /* Prefab 置き場*/
     public GameObject m_LandStarPrefab;
     public GameObject m_BlackHolePrefab;
@@ -11,37 +27,34 @@ public class StarMaker : MonoBehaviour
     public GameObject m_PlayerCharacterPrefab;
     public GameObject m_GoalStarPrefab;
 
-
-
-
-    public float marginX; // 一コマ当たりの幅.
-    public float marginY; // 一コマ当たりの高さ.
-
-    private char [,] m_CurrentMapData = null;
-    private Vector2Int m_CurrentMapSize;
-
-    private void Awake()
+    /* 変数 */
+    private MapInfo currentMapInfo;
+    public MapInfo CurrentMapInfo
     {
-
+        get
+        {
+            return currentMapInfo;
+        }
+        set
+        {
+            currentMapInfo = value;
+        }
     }
 
+
     // マップをロードし,インスタンスを生成する.
-    public void MakeWorld( char[ , ] mapData )
+    public void MakeWorld( char[ , ] mapData, Vector2 cellSize )
     {
-        if( m_CurrentMapData == null )
-        {
-            m_CurrentMapData = mapData; // 現在のマップを保持.
-        }
-        
+        MapInfo newMap = new MapInfo(mapData, cellSize, new Vector2(transform.position.x, transform.position.y));
+        // 現在のMapInfoを更新.
+        currentMapInfo = newMap;
+
         int cntStart = 0; // スタート地点が複数個設置されていないかチェックするため.
 
-        int row = m_CurrentMapSize.y = mapData.GetLength(0);
-        int col = m_CurrentMapSize.x = mapData.GetLength(1);
-
         // マップに配置
-        for ( uint rc = 0; rc < row; rc++ )
+        for ( uint rc = 0; rc < currentMapInfo.CellCnt.y; rc++ )
         {
-            for (uint cc = 0; cc < col; cc++)
+            for (uint cc = 0; cc < currentMapInfo.CellCnt.x; cc++)
             {
                 if (mapData[rc, cc] == 'L')
                 {
@@ -95,7 +108,7 @@ public class StarMaker : MonoBehaviour
     public void ResetWorld()
     {
         DestroyWorld();
-        MakeWorld(m_CurrentMapData);
+        MakeWorld(currentMapInfo.MapData, currentMapInfo.CellSize);
     }
     public void DestroyWorld() // このスクリプトで生成した(であろう)オブジェクト達を消す.
     {
@@ -117,25 +130,17 @@ public class StarMaker : MonoBehaviour
         }
     }
 
-    public Vector2Int GetCurrentMapSize()
+    public Vector2Int GetCurrentCellSize()
     {
-        return m_CurrentMapSize;
+        return currentMapInfo.CellCnt;
     }
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    private void OnDestroy()
-    {
-        
-    }
+    
     // Place Stars
     GameObject PlaceStar( GameObject star, uint row, uint col )
     {
         //配置する座標を設定
-        Vector3 placePosition = new Vector3(marginX * col, -marginY * row, 0);
+        Vector2 diff = new Vector2(currentMapInfo.CellSize.x * 0.5f * currentMapInfo.CellCnt.x, currentMapInfo.CellSize.y * 0.5f * currentMapInfo.CellCnt.y);
+        Vector3 placePosition = new Vector3(currentMapInfo.CellSize.x * col - diff.x, -currentMapInfo.CellSize.y * row - diff.y, 0);
         //配置する回転角を設定
         Quaternion q = new Quaternion();
         q = Quaternion.identity;

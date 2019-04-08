@@ -13,6 +13,7 @@ public class GameMasterBehavior : MonoBehaviour
     public GameObject m_MenuCanvas;
 
     public static StageInfo InitiatingStage = new StageInfo(1, 1);
+
     private void Awake()
     {
         FadeManager.FadeIn();
@@ -22,7 +23,7 @@ public class GameMasterBehavior : MonoBehaviour
 
         // 世界を作る.
         GameObject starMaker = Instantiate(m_StarMakerPrefab);
-        starMaker.GetComponent<StarMaker>().MakeWorld(mapData);
+        starMaker.GetComponent<StarMaker>().MakeWorld(mapData, Common.CellSize);
 
         // Event objectを生成. UIの前に必ず生成!
         Instantiate(m_EventObjectPrefab);
