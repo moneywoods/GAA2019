@@ -15,6 +15,7 @@ public class ObjectTag
     public static readonly string MenuCanvas      = "MenuCanvas";
     public static readonly string MenuBotton      = "MenuBotton";
     public static readonly string SceneMaster     = "SceneMaster";
+    public static readonly string GridLine        = "GridLine";
 }
 
 public struct StageInfo
