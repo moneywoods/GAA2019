@@ -18,7 +18,7 @@ public class GameMenuControl : MonoBehaviour
         var component = GetComponent<Button>();
         var color = component.colors;
         color.normalColor = Color.white;
-        color.highlightedColor = Color.green;
+        color.highlightedColor = Color.red;
         color.pressedColor = Color.blue;
 
         component.colors = color;
@@ -67,18 +67,6 @@ public class GameMenuControl : MonoBehaviour
     //==================
     public void OnSelect()
     {
-//        Button button = GetComponent<Button>();
-//        var color = button.colors;
-//        color.highlightedColor = Color.red;
-//        button.colors = color;
-
-        var component = GetComponent<Button>();
-        var color = component.colors;
-//        color.normalColor = Color.white;
-        color.highlightedColor = Color.yellow;
-//        color.pressedColor = Color.blue;
-
-        component.colors = color;
 
     }
 
@@ -87,11 +75,6 @@ public class GameMenuControl : MonoBehaviour
     //==================
     public void OnDeselct()
     {
-        Button button = GetComponent<Button>();
-        var color = button.colors;
-        color.highlightedColor = Color.white;
-
-        button.colors = color;        
     }
 
 }

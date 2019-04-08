@@ -31,10 +31,10 @@ public class MenuCanvasBehavior : MonoBehaviour
             }
             else if (obj.tag == ObjectTag.MenuBotton)
             {
+
                 EventSystem.current.SetSelectedGameObject(obj.gameObject);
                 return true;
             }
-
         }
         return false;
     }
