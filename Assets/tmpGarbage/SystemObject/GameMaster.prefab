@@ -43,7 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c840bf3c221626d47bb51eefbc2762ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MapLoaderPrefab: {fileID: 0}
   m_StarMakerPrefab: {fileID: 4245834145686331464, guid: 3c478e8e813d5e441b2ecb09b48f166e,
     type: 3}
   m_PlayerCommand: {fileID: 3993350545147920050, guid: 13ced3218a867a9448c3d48e9c69e3ef,
@@ -51,4 +50,6 @@ MonoBehaviour:
   m_EventObjectPrefab: {fileID: 930535821925683042, guid: 15bf0c3f7ad3d40459e411fe1d7577b5,
     type: 3}
   m_MenuCanvas: {fileID: 5994316680908539326, guid: b2d8241d6bf37a943907181b450b7896,
+    type: 3}
+  m_GridLinePrefab: {fileID: 1204925341602613978, guid: c62f489ae3290094cab13de6270cdf32,
     type: 3}
