@@ -27,3 +27,8 @@ public struct StageInfo
     public int Stage;
     public int Chapter;
 }
+
+static class Common
+{
+    public static readonly Vector2 CellSize = new Vector2(5.0f, 5.0f);
+}
