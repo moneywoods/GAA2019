@@ -28,7 +28,7 @@ public class StarMaker : MonoBehaviour
     public GameObject m_GoalStarPrefab;
 
     /* 変数 */
-    private MapInfo currentMapInfo;
+    static private MapInfo currentMapInfo;
     public MapInfo CurrentMapInfo
     {
         get
@@ -40,15 +40,13 @@ public class StarMaker : MonoBehaviour
             currentMapInfo = value;
         }
     }
-
-
+    
     // マップをロードし,インスタンスを生成する.
     public void MakeWorld( char[ , ] mapData, Vector2 cellSize )
     {
-        MapInfo newMap = new MapInfo(mapData, cellSize, new Vector2(transform.position.x, transform.position.y));
         // 現在のMapInfoを更新.
-        currentMapInfo = newMap;
-
+        currentMapInfo = new MapInfo(mapData, cellSize, new Vector2(transform.position.x, transform.position.y));
+        
         int cntStart = 0; // スタート地点が複数個設置されていないかチェックするため.
 
         // マップに配置
@@ -103,6 +101,13 @@ public class StarMaker : MonoBehaviour
 
             }
         }
+
+        // グリッドを調整
+        GameObject grid = GameObject.FindWithTag(ObjectTag.GridLine);
+        if(grid !=null)
+        {
+            grid.GetComponent<GridLineBehaviour>().CurrentMapInfo = CurrentMapInfo;
+        }
     }
 
     public void ResetWorld()
@@ -140,7 +145,7 @@ public class StarMaker : MonoBehaviour
     {
         //配置する座標を設定
         Vector2 diff = new Vector2(currentMapInfo.CellSize.x * 0.5f * currentMapInfo.CellCnt.x, currentMapInfo.CellSize.y * 0.5f * currentMapInfo.CellCnt.y);
-        Vector3 placePosition = new Vector3(currentMapInfo.CellSize.x * col - diff.x, -currentMapInfo.CellSize.y * row - diff.y, 0);
+        Vector3 placePosition = new Vector3(currentMapInfo.CellSize.x * col - diff.x, -currentMapInfo.CellSize.y * row + diff.y, 0);
         //配置する回転角を設定
         Quaternion q = new Quaternion();
         q = Quaternion.identity;
