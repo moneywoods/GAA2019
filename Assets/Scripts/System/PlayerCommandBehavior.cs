@@ -73,4 +73,13 @@ public class PlayerCommandBehavior : MonoBehaviour
             m_CurrentSceneMenu = Menu;
         }
     }
+
+    public void RedoTheStage()
+    {
+        GameObject starMaker = GameObject.FindWithTag(ObjectTag.StarMaker);
+        if (starMaker != null)
+        {
+            starMaker.GetComponent<StarMaker>().ResetWorld();
+        }
+    }
 }

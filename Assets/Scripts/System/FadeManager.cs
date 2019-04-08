@@ -132,5 +132,4 @@ public class FadeManager : MonoBehaviour
 
         return false;
     }
-
 }

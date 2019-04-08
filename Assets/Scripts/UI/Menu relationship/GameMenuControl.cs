@@ -10,6 +10,8 @@ public class GameMenuControl : MonoBehaviour
 {
     ParentMenuCanvasBehavior m_MenuDelete;      // メニューデリート用
 
+    GameObject m_ObjPlayerCmdBhv;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +24,8 @@ public class GameMenuControl : MonoBehaviour
         component.colors = color;
 
         m_MenuDelete = transform.root.gameObject.GetComponent<ParentMenuCanvasBehavior>();
+        m_ObjPlayerCmdBhv = GameObject.FindWithTag("PlayerCommand");
+
     }
 
     // Update is called once per frame
@@ -35,6 +39,12 @@ public class GameMenuControl : MonoBehaviour
         if (gameObject.name == "ReturnToGame")
         {// ゲームに戻る
             PauseTheGame.GameReStart();
+            m_MenuDelete.SwitchActive();
+        }
+        if (gameObject.name == "RestartStage")
+        {// ステージをやり直す
+            PauseTheGame.GameReStart();
+            m_ObjPlayerCmdBhv.GetComponent<PlayerCommandBehavior>().RedoTheStage();
             m_MenuDelete.SwitchActive();
         }
         if (gameObject.name == "SelectStage")
