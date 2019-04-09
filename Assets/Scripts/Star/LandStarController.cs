@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LandStarController : MonoBehaviour
+public class LandStarController : StarBase
 {
     public enum ChildIndex
     {
