@@ -6,18 +6,20 @@ public class StarMaker : MonoBehaviour
 {
     public class MapInfo
     {
-        public MapInfo(char[,] mapData, Vector2 cellSize, Vector2 position)
+        public MapInfo(char[,] mapData, Vector3 cellSize, Vector3 position)
         {
             MapData = mapData;
             CellCnt = new Vector2Int(mapData.GetLength(1), mapData.GetLength(0));
             CellSize = cellSize;
             Position = position;
+            DeffaultOffset = new Vector3( -CellSize.x * CellCnt.x * 0.5f + 2.5f, CellSize.y * CellCnt.y * 0.5f + 2.5f, 0.0f) + Position;
         }
-        public char[,] MapData;
-        public Vector2Int CellCnt;
-        public Vector2 CellSize;
+        public char[,] MapData;  // マップの初期配置
+        public Vector2Int CellCnt; // マスの列数,行数
+        public Vector2 CellSize; // 1マスのサイズ
 
-        public Vector2 Position;
+        public Vector3 Position; // マップの中心座標
+        public Vector3 DeffaultOffset; // 星の座標のオフセット
     }
 
     /* Prefab 置き場*/
@@ -104,7 +106,7 @@ public class StarMaker : MonoBehaviour
 
         // グリッドを調整
         GameObject grid = GameObject.FindWithTag(ObjectTag.GridLine);
-        if(grid !=null)
+        if(grid != null)
         {
             grid.GetComponent<GridLineBehaviour>().CurrentMapInfo = CurrentMapInfo;
         }
@@ -125,7 +127,7 @@ public class StarMaker : MonoBehaviour
 
     }
 
-    private void DestroyObject( string tag )
+    private void DestroyObject(string tag)
     {
         GameObject[] array = GameObject.FindGameObjectsWithTag(tag);
 
@@ -141,11 +143,10 @@ public class StarMaker : MonoBehaviour
     }
     
     // Place Stars
-    GameObject PlaceStar( GameObject star, uint row, uint col )
+    GameObject PlaceStar(GameObject star, uint row, uint col)
     {
         //配置する座標を設定
-        Vector2 diff = new Vector2(currentMapInfo.CellSize.x * 0.5f * currentMapInfo.CellCnt.x, currentMapInfo.CellSize.y * 0.5f * currentMapInfo.CellCnt.y);
-        Vector3 placePosition = new Vector3(currentMapInfo.CellSize.x * col - diff.x, -currentMapInfo.CellSize.y * row + diff.y, 0);
+        Vector3 placePosition = new Vector3(currentMapInfo.CellSize.x * col, -currentMapInfo.CellSize.y * row , 0) + currentMapInfo.DeffaultOffset;
         //配置する回転角を設定
         Quaternion q = new Quaternion();
         q = Quaternion.identity;

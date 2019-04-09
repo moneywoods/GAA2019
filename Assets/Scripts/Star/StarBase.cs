@@ -33,6 +33,18 @@ public class StarBaseClass : MonoBehaviour
     void CaluculateCellPos()
     {
         // セル位置を計算。
+        Vector3 vec = transform.position - new Vector3(-1.0f, -1.0f, -1.0f);
+        vec.x = Mathf.Round(vec.x); // 丸める
+        vec.y = Mathf.Round(vec.y);
+        vec.z = Mathf.Round(vec.z);
+    }
+    public static GameObject FindStar()
+    {
+        GameObject starMaker = GameObject.FindGameObjectWithTag(ObjectTag.StarMaker);
+
+        if(starMaker == null)
+            return null;
         
+        return null;
     }
 }
