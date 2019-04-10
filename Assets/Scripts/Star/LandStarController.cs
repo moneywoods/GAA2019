@@ -39,9 +39,10 @@ public class LandStarController : StarBase
     float timeToCirculate; // 今回の回転に要する時間. 単位: 秒.
     float timePast;  // 回転している時間の累計(回転状態を解除されるたびにリセット)
 
-    // 移住可能を示すエフェクト
+    // 移住可能を示すエフェクト // 今後UIとかもっと他の物に置き換える予定
     public GameObject m_EffectCanMoveTo;
     private bool m_isCanMoveToEffectEmitting;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -63,7 +64,6 @@ public class LandStarController : StarBase
         {
             DiscardCanMoveToEffect();
         }
-
 
         // 回転
         if( (CheckFlag( LANDSTAR_STAT.MOVING ) && timeToCirculate != 0.0f ) )
@@ -108,7 +108,6 @@ public class LandStarController : StarBase
             Instantiate(explosionObject, transform.position, transform.rotation ); // 自身のtransformをそのまま引き継いでいるので注意!
             Destroy(gameObject);
         }
-
     }
 
     // --------------------------------------------------------------------------------------------
@@ -157,7 +156,6 @@ public class LandStarController : StarBase
                 RemoveFlag(LANDSTAR_STAT.PLAYER_STAYING);
                 return true;
             }
-
         }
         return false;
     }
@@ -176,7 +174,6 @@ public class LandStarController : StarBase
             m_isCanMoveToEffectEmitting = true;
             Transform obj = effect.transform.GetChild(0);
             obj.GetComponent<QWEASDZXCController>().SetQWEASDZXC(direction);
-
         }
     }
 
@@ -261,12 +258,5 @@ public class LandStarController : StarBase
             return true;
         }
         return false;
-    }
-
-    // --------------------------------------------------------------------------------------------
-    //
-    // private
-    //
-    // --------------------------------------------------------------------------------------------
-    
+    }    
 }

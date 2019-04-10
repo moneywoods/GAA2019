@@ -167,5 +167,4 @@ public class StarMaker : SingletonPattern<StarMaker>
         cellNum.y = (int) Math.Round(-vec.y, MidpointRounding.AwayFromZero) / (int) mapInfo.CellSize.y;
         return cellNum;
     }
-
 }
