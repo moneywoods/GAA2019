@@ -158,7 +158,6 @@ public class StarMaker : MonoBehaviour
     // 静的関数
     public static Vector2Int CaluculateCellPos(Vector3 position)
     {
-
         MapInfo mapInfo = CurrentMapInfo;
         var offset = mapInfo.DeffaultOffset;
         // セル位置を計算。
