@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -30,14 +31,14 @@ public class StarMaker : MonoBehaviour
     public GameObject m_GoalStarPrefab;
 
     /* 変数 */
-    static private MapInfo currentMapInfo;
-    public MapInfo CurrentMapInfo
+    private static MapInfo currentMapInfo;
+    public static MapInfo CurrentMapInfo
     {
         get
         {
             return currentMapInfo;
         }
-        set
+        private set
         {
             currentMapInfo = value;
         }
@@ -153,4 +154,19 @@ public class StarMaker : MonoBehaviour
 
         return Instantiate( star, placePosition, q);
     }
+
+    // 静的関数
+    public static Vector2Int CaluculateCellPos(Vector3 position)
+    {
+
+        MapInfo mapInfo = CurrentMapInfo;
+        var offset = mapInfo.DeffaultOffset;
+        // セル位置を計算。
+        Vector3 vec = position - offset;
+        Vector2Int cellNum = new Vector2Int();
+        cellNum.x = (int) Math.Round(vec.x, MidpointRounding.AwayFromZero) / (int) mapInfo.CellSize.x;
+        cellNum.y = (int) Math.Round(-vec.y, MidpointRounding.AwayFromZero) / (int) mapInfo.CellSize.y;
+        return cellNum;
+    }
+
 }
