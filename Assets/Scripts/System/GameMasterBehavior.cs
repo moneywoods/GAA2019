@@ -26,8 +26,7 @@ public class GameMasterBehavior : MonoBehaviour
 
         // 世界を作る.
         GameObject starMaker = Instantiate(m_StarMakerPrefab);
-        starMaker.GetComponent<StarMaker>().MakeWorld(mapData, Common.CellSize);
-
+        StarMaker.Instance.MakeWorld(mapData, Common.CellSize);
 
         // Event objectを生成. UIの前に必ず生成!
         Instantiate(m_EventObjectPrefab);

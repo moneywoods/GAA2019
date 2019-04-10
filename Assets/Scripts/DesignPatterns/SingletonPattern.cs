@@ -14,7 +14,6 @@ public class SingletonPattern<T> : MonoBehaviour where T : MonoBehaviour
     // getter
     public static T Instance
     {
-
         get
         {
             // インスタンスがない場合探す。

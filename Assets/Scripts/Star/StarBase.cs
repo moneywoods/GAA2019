@@ -7,11 +7,11 @@ public class StarBase : MonoBehaviour
 {
     private Vector2Int cellNum = new Vector2Int(-1, -1);
     
-    public Vector2Int CellNum
+    public Vector2Int CellNum // 必ずプロパティを介して値を取得してください.
     {
         get
         {
-            cellNum = StarMaker.CaluculateCellPos(transform.position);
+            cellNum = StarMaker.Instance.CaluculateCellPos(transform.position);
             return cellNum;
         }
         set

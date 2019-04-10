@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StarMaker : MonoBehaviour
+public class StarMaker : SingletonPattern<StarMaker>
 {
     public class MapInfo
     {
@@ -31,8 +31,8 @@ public class StarMaker : MonoBehaviour
     public GameObject m_GoalStarPrefab;
 
     /* 変数 */
-    private static MapInfo currentMapInfo;
-    public static MapInfo CurrentMapInfo
+    private MapInfo currentMapInfo;
+    public MapInfo CurrentMapInfo
     {
         get
         {
@@ -156,7 +156,7 @@ public class StarMaker : MonoBehaviour
     }
 
     // 静的関数
-    public static Vector2Int CaluculateCellPos(Vector3 position)
+    public Vector2Int CaluculateCellPos(Vector3 position)
     {
         MapInfo mapInfo = CurrentMapInfo;
         var offset = mapInfo.DeffaultOffset;
