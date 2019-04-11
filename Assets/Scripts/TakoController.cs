@@ -12,8 +12,19 @@ namespace Tako
             public static readonly string WaitingForKineticPowerEnd = "WaitingForKineticPowerEnd";
             public static readonly string CommandDisable = "CommandDisable";
         }
-        internal GameObject currentStarStaying; // 今いる星.
-        internal List<GameObject> neighvorList; // 今いる星の隣接星.星を移動したら必ず更新すること.
+        public GameObject currentStarStaying; // 今いる星.
+        public List<GameObject> neighvorList; // 今いる星の隣接星.星を移動したら必ず更新すること.
+        public List<GameObject> NeighvorList
+        {
+            get
+            {
+                var script = currentStarStaying.transform.GetChild((int) LandStarController.ChildIndex.NeighvorFinder).GetComponent<NeighvorFinder>();
+                neighvorList = script.GetNeighvorStarList();
+                return neighvorList;
+            }
+            set { neighvorList = value; }
+        }
+        
 
         protected void Awake()
         {

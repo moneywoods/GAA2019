@@ -89,7 +89,9 @@ namespace StatePattern
             {
                 return; // これがいるかは不明.
             }
+
             var targetState = StateList.Find(s => s.Name == stateName);
+
             if(targetState == null)
             {
                 Debug.Log(stateName + "instance has not been \"new\"ed.");
