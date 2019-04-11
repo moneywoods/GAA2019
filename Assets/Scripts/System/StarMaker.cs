@@ -154,8 +154,7 @@ public class StarMaker : SingletonPattern<StarMaker>
 
         return Instantiate( star, placePosition, q);
     }
-
-    // 静的関数
+    
     public Vector2Int CaluculateCellPos(Vector3 position)
     {
         MapInfo mapInfo = CurrentMapInfo;
@@ -166,5 +165,164 @@ public class StarMaker : SingletonPattern<StarMaker>
         cellNum.x = (int) Math.Round(vec.x, MidpointRounding.AwayFromZero) / (int) mapInfo.CellSize.x;
         cellNum.y = (int) Math.Round(-vec.y, MidpointRounding.AwayFromZero) / (int) mapInfo.CellSize.y;
         return cellNum;
+    }
+
+    public bool CheckLimitOfMap(Direction direction, Vector2Int startPos)
+    {
+        if(direction == Direction.Right)
+        {
+            if(Check4Direction(Direction.Right, startPos))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else if(direction == Direction.RightTop)
+        {
+            if(Check4Direction(Direction.Right, startPos) && Check4Direction(Direction.Top, startPos))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else if(direction == Direction.Top)
+        {
+            if(Check4Direction(Direction.Top, startPos))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else if(direction == Direction.LeftTop)
+        {
+            if(Check4Direction(Direction.Top, startPos) && Check4Direction(Direction.Left, startPos))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else if(direction == Direction.Left)
+        {
+            if(Check4Direction(Direction.Left, startPos))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else if(direction == Direction.LeftBottom)
+        {
+            if(Check4Direction(Direction.Left, startPos) && Check4Direction(Direction.Bottom, startPos))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else if(direction == Direction.Bottom)
+        {
+            if(Check4Direction(Direction.Bottom, startPos))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else if(direction == Direction.RightBottom)
+        {
+            if(Check4Direction(Direction.Bottom, startPos) && Check4Direction(Direction.Right, startPos))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public bool Check4Direction(Direction direction, Vector2Int startPos)
+    {
+        
+        if(direction != Direction.Right ||
+            direction != Direction.Top ||
+            direction != Direction.Bottom ||
+            direction != Direction.Left)
+        {
+
+            throw new System.InvalidOperationException("wrong parameter ditected. Function Name: Check4Direction");
+        }
+        
+        Vector2Int mapSize = CurrentMapInfo.CellCnt;
+        if(direction == Direction.Right)
+        {
+            if(startPos.x + 1 <= mapSize.x)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else if(direction == Direction.Top)
+        {
+            if(0 <= startPos.y - 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else if(direction == Direction.Left)
+        {
+            if(0 <= startPos.x - 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else if(direction == Direction.Bottom)
+        {
+            if(startPos.y + 1 <= mapSize.y)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
     }
 }
