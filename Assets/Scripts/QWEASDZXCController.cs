@@ -43,37 +43,37 @@ public class QWEASDZXCController : MonoBehaviour
             );
     }
 
-    public void SetQWEASDZXC(PlayerCommandBehavior.Direction direction )
+    public void SetQWEASDZXC(Direction direction )
     {
-        if ( direction == PlayerCommandBehavior.Direction.Top)
+        if ( direction == Direction.Top)
         {
             spriteRenderer.sprite = m_W;
         }
-        else if (direction == PlayerCommandBehavior.Direction.RightTop)
+        else if (direction == Direction.RightTop)
         {
             spriteRenderer.sprite = m_E;
         }
-        else if (direction == PlayerCommandBehavior.Direction.Right)
+        else if (direction == Direction.Right)
         {
             spriteRenderer.sprite = m_D;
         }
-        else if (direction == PlayerCommandBehavior.Direction.RightBottom)
+        else if (direction == Direction.RightBottom)
         {
             spriteRenderer.sprite = m_C;
         }
-        else if (direction == PlayerCommandBehavior.Direction.Bottom)
+        else if (direction == Direction.Bottom)
         {
             spriteRenderer.sprite = m_X;
         }
-        else if( direction == PlayerCommandBehavior.Direction.LeftBottom)
+        else if( direction == Direction.LeftBottom)
         {
             spriteRenderer.sprite = m_Z;
         }
-        else if (direction == PlayerCommandBehavior.Direction.Left)
+        else if (direction == Direction.Left)
         {
             spriteRenderer.sprite = m_A;
         }
-        else if (direction == PlayerCommandBehavior.Direction.LeftTop)
+        else if (direction == Direction.LeftTop)
         {
             spriteRenderer.sprite = m_Q;
         }

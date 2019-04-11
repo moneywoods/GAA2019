@@ -25,7 +25,6 @@ namespace Tako
             set { neighvorList = value; }
         }
         
-
         protected void Awake()
         {
             // ステートを生成
@@ -55,7 +54,7 @@ namespace Tako
         }
 
 
-        public PlayerCommandBehavior.Direction CheckDirection(GameObject obj)
+        public Direction CheckDirection(GameObject obj)
         {
             var vecPlayerToStar = obj.transform.position - transform.position;
 
@@ -65,7 +64,7 @@ namespace Tako
 
             // 方向に応じたベクトルを作成し,プレイヤーから星へのベクトルと比較.
             Vector3 vecSearchingStar;
-            for (PlayerCommandBehavior.Direction i = 0; i < PlayerCommandBehavior.Direction.ENUM_MAX; i++)
+            for (Direction i = 0; i < Direction.ENUM_MAX; i++)
             {
                 vecSearchingStar = Quaternion.Euler(0.0f, 0.0f, (uint)i * 45.0f) * vecComp;
 
@@ -74,48 +73,48 @@ namespace Tako
                     return i;
                 }
             }
-            return PlayerCommandBehavior.Direction.NONE;
+            return Direction.NONE;
         }
 
 
         /* ----- 操作関数 ----- */
         // 星を移動する.
-        public bool MoveFromCurrentStar(PlayerCommandBehavior.Direction _Direction)
+        public bool MoveFromCurrentStar(Direction direction)
         {
             // 行きたい方向に行けるLandがあるかチェック.
             GameObject newLand = null;
 
-            if (_Direction == PlayerCommandBehavior.Direction.Top)
+            if (direction == Direction.Top)
             {
-                newLand = GetStarOnTheDirection(PlayerCommandBehavior.Direction.Top);
+                newLand = GetStarOnTheDirection(Direction.Top);
             }
-            else if (_Direction == PlayerCommandBehavior.Direction.LeftTop)
+            else if (direction == Direction.LeftTop)
             {
-                newLand = GetStarOnTheDirection(PlayerCommandBehavior.Direction.LeftTop);
+                newLand = GetStarOnTheDirection(Direction.LeftTop);
             }
-            else if (_Direction == PlayerCommandBehavior.Direction.Left)
+            else if (direction == Direction.Left)
             {
-                newLand = GetStarOnTheDirection(PlayerCommandBehavior.Direction.Left);
+                newLand = GetStarOnTheDirection(Direction.Left);
             }
-            else if (_Direction == PlayerCommandBehavior.Direction.LeftBottom)
+            else if (direction == Direction.LeftBottom)
             {
-                newLand = GetStarOnTheDirection(PlayerCommandBehavior.Direction.LeftBottom);
+                newLand = GetStarOnTheDirection(Direction.LeftBottom);
             }
-            else if (_Direction == PlayerCommandBehavior.Direction.Bottom)
+            else if (direction == Direction.Bottom)
             {
-                newLand = GetStarOnTheDirection(PlayerCommandBehavior.Direction.Bottom);
+                newLand = GetStarOnTheDirection(Direction.Bottom);
             }
-            else if (_Direction == PlayerCommandBehavior.Direction.RightBottom)
+            else if (direction == Direction.RightBottom)
             {
-                newLand = GetStarOnTheDirection(PlayerCommandBehavior.Direction.RightBottom);
+                newLand = GetStarOnTheDirection(Direction.RightBottom);
             }
-            else if (_Direction == PlayerCommandBehavior.Direction.Right)
+            else if (direction == Direction.Right)
             {
-                newLand = GetStarOnTheDirection(PlayerCommandBehavior.Direction.Right);
+                newLand = GetStarOnTheDirection(Direction.Right);
             }
-            else if (_Direction == PlayerCommandBehavior.Direction.RightTop)
+            else if (direction == Direction.RightTop)
             {
-                newLand = GetStarOnTheDirection(PlayerCommandBehavior.Direction.RightTop);
+                newLand = GetStarOnTheDirection(Direction.RightTop);
             }
             // 星を渡る.
             if (newLand != null)
@@ -135,7 +134,7 @@ namespace Tako
             return false;
         }
 
-        public GameObject GetStarOnTheDirection(PlayerCommandBehavior.Direction _Direction)
+        public GameObject GetStarOnTheDirection(Direction direction)
         {
             // 今いる星の隣接星リストを取得.
             GameObject tmp = currentStarStaying.transform.GetChild((int)LandStarController.ChildIndex.NeighvorFinder).gameObject;
@@ -162,35 +161,35 @@ namespace Tako
 
                     float EstimatedStarDegree = 0.0f;
 
-                    if (_Direction == PlayerCommandBehavior.Direction.Top)
+                    if (direction == Direction.Top)
                     {
                         EstimatedStarDegree = 90.0f; // 下方向Y正, 右方向X正 に注意!
                     }
-                    else if (_Direction == PlayerCommandBehavior.Direction.LeftTop)
+                    else if (direction == Direction.LeftTop)
                     {
                         EstimatedStarDegree = 135.0f;
                     }
-                    else if (_Direction == PlayerCommandBehavior.Direction.Left)
+                    else if (direction == Direction.Left)
                     {
                         EstimatedStarDegree = 180.0f;
                     }
-                    else if (_Direction == PlayerCommandBehavior.Direction.LeftBottom)
+                    else if (direction == Direction.LeftBottom)
                     {
                         EstimatedStarDegree = 225.0f;
                     }
-                    else if (_Direction == PlayerCommandBehavior.Direction.Bottom)
+                    else if (direction == Direction.Bottom)
                     {
                         EstimatedStarDegree = 270.0f;
                     }
-                    else if (_Direction == PlayerCommandBehavior.Direction.RightBottom)
+                    else if (direction == Direction.RightBottom)
                     {
                         EstimatedStarDegree = 315.0f;
                     }
-                    else if (_Direction == PlayerCommandBehavior.Direction.Right)
+                    else if (direction == Direction.Right)
                     {
                         EstimatedStarDegree = 0.0f;
                     }
-                    else if (_Direction == PlayerCommandBehavior.Direction.RightTop)
+                    else if (direction == Direction.RightTop)
                     {
                         EstimatedStarDegree = 45.0f;
                     }
@@ -259,39 +258,39 @@ namespace Tako
                 // 星を渡る.
                 if (Input.GetKeyDown(KeyCode.W))
                 {
-                    takoScript.MoveFromCurrentStar(PlayerCommandBehavior.Direction.Top);
+                    takoScript.MoveFromCurrentStar(Direction.Top);
                 }
                 else if (Input.GetKeyDown(KeyCode.E))
                 {
-                    takoScript.MoveFromCurrentStar(PlayerCommandBehavior.Direction.RightTop);
+                    takoScript.MoveFromCurrentStar(Direction.RightTop);
                 }
                 else if (Input.GetKeyDown(KeyCode.D))
                 {
-                    takoScript.MoveFromCurrentStar(PlayerCommandBehavior.Direction.Right);
+                    takoScript.MoveFromCurrentStar(Direction.Right);
 
                 }
                 else if (Input.GetKeyDown(KeyCode.C))
                 {
-                    takoScript.MoveFromCurrentStar(PlayerCommandBehavior.Direction.RightBottom);
+                    takoScript.MoveFromCurrentStar(Direction.RightBottom);
 
                 }
                 else if (Input.GetKeyDown(KeyCode.X))
                 {
-                    takoScript.MoveFromCurrentStar(PlayerCommandBehavior.Direction.Bottom);
+                    takoScript.MoveFromCurrentStar(Direction.Bottom);
 
                 }
                 else if (Input.GetKeyDown(KeyCode.Z))
                 {
-                    takoScript.MoveFromCurrentStar(PlayerCommandBehavior.Direction.LeftBottom);
+                    takoScript.MoveFromCurrentStar(Direction.LeftBottom);
 
                 }
                 else if (Input.GetKeyDown(KeyCode.A))
                 {
-                    takoScript.MoveFromCurrentStar(PlayerCommandBehavior.Direction.LeftBottom);
+                    takoScript.MoveFromCurrentStar(Direction.LeftBottom);
                 }
                 else if (Input.GetKeyDown(KeyCode.Q))
                 {
-                    takoScript.MoveFromCurrentStar(PlayerCommandBehavior.Direction.LeftTop);
+                    takoScript.MoveFromCurrentStar(Direction.LeftTop);
                 }
 
 

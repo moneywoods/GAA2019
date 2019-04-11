@@ -165,7 +165,7 @@ public class LandStarController : StarBase
     // public エフェクト
     //
     // --------------------------------------------------------------------------------------------
-    public void SetCanMoveToEffect( PlayerCommandBehavior.Direction direction)
+    public void SetCanMoveToEffect( Direction direction)
     {
         if( !m_isCanMoveToEffectEmitting && !CheckFlag( LANDSTAR_STAT.MOVING) && !CheckFlag( LANDSTAR_STAT.PLAYER_STAYING) ) // 現状,移動可能を示すエフェクトを除いてneighvorFinderのみが子に含まれている.
         {
