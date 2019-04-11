@@ -142,7 +142,7 @@ public class LandStarController : MonoBehaviour
     {
         if( Character.tag == ObjectTag.PlayerCharacter )
         {
-            Character.GetComponent<TakoController>().SetCurrentStarStaying(gameObject);
+            Character.GetComponent<Tako.TakoController>().SetCurrentStarStaying(gameObject);
             AddStat(LANDSTAR_STAT.PLAYER_STAYING);
         }
     }
@@ -150,7 +150,7 @@ public class LandStarController : MonoBehaviour
     {
         if (CheckFlag(LANDSTAR_STAT.PLAYER_STAYING))
         {
-            var script = Character.GetComponent<TakoController>();
+            var script = Character.GetComponent<Tako.TakoController>();
 
             if (script.GetCurrentStarStaying() == gameObject)
             {

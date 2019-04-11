@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace StatePattern
 {
-    public class State<T> where T : Enum
+    public class State
     {
-        public T CurrentStateIndex { get; private set; }
-        public StateContex<T> Context
+        public string Name { get; protected set; }
+        public StateContex Context
         {
             get;
-            private set;
+            protected set;
         }
         public delegate void stateEnterEvent();
         public stateEnterEvent OnEnter;
@@ -20,30 +20,51 @@ namespace StatePattern
         public delegate void stateUpdate();
         public stateUpdate update;
 
-        public State(StateContex<T> stateContex)
+        public State(StateContex stateContex)
         {
             Context = stateContex;
         }
     }
 
-    public class StateContex<T> : MonoBehaviour where T : IEnumerable
+    public class StateContex : MonoBehaviour
     {
-        public List<State<T>> StateList = new List<State<T>>();
-        public State<T> CurrentState { get; private set; }
+        public List<State> StateList = new List<State>();
+        public State CurrentState { get; protected set; }
 
+        public StateContex()
+        {
+            CurrentState = null;
+        }
         object locker = new object();
 
-        public void SetCurrentState(State<T> state)
+        public void SetCurrentState(State state)
         {
             if(state == null || !StateList.Contains(state))
             {
                 return;
             }
-
             CurrentState = state;
+            Debug.Log(gameObject.name + "is now State: " + CurrentState.Name);
         }
 
-        public void AddState(State<T> state)
+        public void SetCurrentState(string stateName)
+        {
+            if(stateName == null)
+            {
+                return; // これがいるかは不明.
+            }
+            var targetState = StateList.Find(s => s.Name == stateName);
+            if( targetState == null ) 
+            {
+                Debug.Log(stateName + "instance has not been \"new\"ed.");
+                return;
+            }
+
+            CurrentState = targetState;
+            Debug.Log(gameObject.name + "is set to State: " + CurrentState.Name);
+        }
+
+        public void AddState(State state)
         {
             if(state == null || StateList.Contains(state))
             {
@@ -52,13 +73,35 @@ namespace StatePattern
             StateList.Add(state);
         }
 
-        public void TransitState(State<T> target)
+        public void TransitState(State target) // 名前が微妙かも
         {
             if(target == null || !StateList.Contains(target))
             {
                 return;
             }
 
+            TransitTo(target);
+        }
+
+        public void TransitState(string stateName)
+        {
+            if(stateName == null)
+            {
+                return; // これがいるかは不明.
+            }
+            var targetState = StateList.Find(s => s.Name == stateName);
+            if(targetState == null)
+            {
+                Debug.Log(stateName + "instance has not been \"new\"ed.");
+                return;
+            }
+
+            TransitTo(targetState);
+            Debug.Log(gameObject.name + "transited ot State: " + CurrentState.Name);
+        }
+
+        private void TransitTo(State target) // null検証はしてません. 
+        {
             lock(locker)
             {
                 if(CurrentState.OnExit != null)
