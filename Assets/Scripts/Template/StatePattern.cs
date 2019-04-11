@@ -117,7 +117,6 @@ namespace StatePattern
                 }
             }
         }
-
         /* Unity 関数 override */
         protected virtual void Update()
         {
