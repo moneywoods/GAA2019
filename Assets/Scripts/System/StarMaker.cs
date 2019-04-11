@@ -1,9 +1,28 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StarMaker : MonoBehaviour
+public class StarMaker : SingletonPattern<StarMaker>
 {
+    public class MapInfo
+    {
+        public MapInfo(char[,] mapData, Vector3 cellSize, Vector3 position)
+        {
+            MapData = mapData;
+            CellCnt = new Vector2Int(mapData.GetLength(1), mapData.GetLength(0));
+            CellSize = cellSize;
+            Position = position;
+            DeffaultOffset = new Vector3( -CellSize.x * CellCnt.x * 0.5f + 2.5f, CellSize.y * CellCnt.y * 0.5f + 2.5f, 0.0f) + Position;
+        }
+        public char[,] MapData;  // マップの初期配置
+        public Vector2Int CellCnt; // マスの列数,行数
+        public Vector2 CellSize; // 1マスのサイズ
+
+        public Vector3 Position; // マップの中心座標
+        public Vector3 DeffaultOffset; // 星の座標のオフセット
+    }
+
     /* Prefab 置き場*/
     public GameObject m_LandStarPrefab;
     public GameObject m_BlackHolePrefab;
@@ -11,37 +30,32 @@ public class StarMaker : MonoBehaviour
     public GameObject m_PlayerCharacterPrefab;
     public GameObject m_GoalStarPrefab;
 
-
-
-
-    public float marginX; // 一コマ当たりの幅.
-    public float marginY; // 一コマ当たりの高さ.
-
-    private char [,] m_CurrentMapData = null;
-    private Vector2Int m_CurrentMapSize;
-
-    private void Awake()
+    /* 変数 */
+    private MapInfo currentMapInfo;
+    public MapInfo CurrentMapInfo
     {
-
-    }
-
-    // マップをロードし,インスタンスを生成する.
-    public void MakeWorld( char[ , ] mapData )
-    {
-        if( m_CurrentMapData == null )
+        get
         {
-            m_CurrentMapData = mapData; // 現在のマップを保持.
+            return currentMapInfo;
         }
+        private set
+        {
+            currentMapInfo = value;
+        }
+    }
+    
+    // マップをロードし,インスタンスを生成する.
+    public void MakeWorld( char[ , ] mapData, Vector2 cellSize )
+    {
+        // 現在のMapInfoを更新.
+        currentMapInfo = new MapInfo(mapData, cellSize, new Vector2(transform.position.x, transform.position.y));
         
         int cntStart = 0; // スタート地点が複数個設置されていないかチェックするため.
 
-        int row = m_CurrentMapSize.y = mapData.GetLength(0);
-        int col = m_CurrentMapSize.x = mapData.GetLength(1);
-
         // マップに配置
-        for ( uint rc = 0; rc < row; rc++ )
+        for ( uint rc = 0; rc < currentMapInfo.CellCnt.y; rc++ )
         {
-            for (uint cc = 0; cc < col; cc++)
+            for (uint cc = 0; cc < currentMapInfo.CellCnt.x; cc++)
             {
                 if (mapData[rc, cc] == 'L')
                 {
@@ -90,12 +104,19 @@ public class StarMaker : MonoBehaviour
 
             }
         }
+
+        // グリッドを調整
+        GameObject grid = GameObject.FindWithTag(ObjectTag.GridLine);
+        if(grid != null)
+        {
+            grid.GetComponent<GridLineBehaviour>().CurrentMapInfo = CurrentMapInfo;
+        }
     }
 
     public void ResetWorld()
     {
         DestroyWorld();
-        MakeWorld(m_CurrentMapData);
+        MakeWorld(currentMapInfo.MapData, currentMapInfo.CellSize);
     }
     public void DestroyWorld() // このスクリプトで生成した(であろう)オブジェクト達を消す.
     {
@@ -107,7 +128,7 @@ public class StarMaker : MonoBehaviour
 
     }
 
-    private void DestroyObject( string tag )
+    private void DestroyObject(string tag)
     {
         GameObject[] array = GameObject.FindGameObjectsWithTag(tag);
 
@@ -117,29 +138,33 @@ public class StarMaker : MonoBehaviour
         }
     }
 
-    public Vector2Int GetCurrentMapSize()
+    public Vector2Int GetCurrentCellSize()
     {
-        return m_CurrentMapSize;
+        return currentMapInfo.CellCnt;
     }
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    private void OnDestroy()
-    {
-        
-    }
+    
     // Place Stars
-    GameObject PlaceStar( GameObject star, uint row, uint col )
+    GameObject PlaceStar(GameObject star, uint row, uint col)
     {
         //配置する座標を設定
-        Vector3 placePosition = new Vector3(marginX * col, -marginY * row, 0);
+        Vector3 placePosition = new Vector3(currentMapInfo.CellSize.x * col, -currentMapInfo.CellSize.y * row , 0) + currentMapInfo.DeffaultOffset;
         //配置する回転角を設定
         Quaternion q = new Quaternion();
         q = Quaternion.identity;
 
         return Instantiate( star, placePosition, q);
+    }
+
+    // 静的関数
+    public Vector2Int CaluculateCellPos(Vector3 position)
+    {
+        MapInfo mapInfo = CurrentMapInfo;
+        var offset = mapInfo.DeffaultOffset;
+        // セル位置を計算。
+        Vector3 vec = position - offset;
+        Vector2Int cellNum = new Vector2Int();
+        cellNum.x = (int) Math.Round(vec.x, MidpointRounding.AwayFromZero) / (int) mapInfo.CellSize.x;
+        cellNum.y = (int) Math.Round(-vec.y, MidpointRounding.AwayFromZero) / (int) mapInfo.CellSize.y;
+        return cellNum;
     }
 }

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LandStarController : MonoBehaviour
+public class LandStarController : StarBase
 {
     public enum ChildIndex
     {
@@ -39,9 +39,10 @@ public class LandStarController : MonoBehaviour
     float timeToCirculate; // 今回の回転に要する時間. 単位: 秒.
     float timePast;  // 回転している時間の累計(回転状態を解除されるたびにリセット)
 
-    // 移住可能を示すエフェクト
+    // 移住可能を示すエフェクト // 今後UIとかもっと他の物に置き換える予定
     public GameObject m_EffectCanMoveTo;
     private bool m_isCanMoveToEffectEmitting;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -63,7 +64,6 @@ public class LandStarController : MonoBehaviour
         {
             DiscardCanMoveToEffect();
         }
-
 
         // 回転
         if( (CheckFlag( LANDSTAR_STAT.MOVING ) && timeToCirculate != 0.0f ) )
@@ -108,7 +108,6 @@ public class LandStarController : MonoBehaviour
             Instantiate(explosionObject, transform.position, transform.rotation ); // 自身のtransformをそのまま引き継いでいるので注意!
             Destroy(gameObject);
         }
-
     }
 
     // --------------------------------------------------------------------------------------------
@@ -142,22 +141,21 @@ public class LandStarController : MonoBehaviour
     {
         if( Character.tag == ObjectTag.PlayerCharacter )
         {
-            Character.GetComponent<TakoController>().SetCurrentStarStaying(gameObject);
+            Character.GetComponent<Tako.TakoController>().SetCurrentStarStaying(gameObject);
             AddStat(LANDSTAR_STAT.PLAYER_STAYING);
         }
     }
-    public bool LeaveThisLand(GameObject Character) // 自身にSTAYINGフラグを解除し,引数のcurrentStarStayingをこのオブジェクトにする.
+    public bool LeaveThisLand(GameObject Character) // 自身にSTAYINGフラグを解除する.
     {
         if (CheckFlag(LANDSTAR_STAT.PLAYER_STAYING))
         {
-            var script = Character.GetComponent<TakoController>();
+            var script = Character.GetComponent<Tako.TakoController>();
 
             if (script.GetCurrentStarStaying() == gameObject)
             {
                 RemoveFlag(LANDSTAR_STAT.PLAYER_STAYING);
                 return true;
             }
-
         }
         return false;
     }
@@ -176,7 +174,6 @@ public class LandStarController : MonoBehaviour
             m_isCanMoveToEffectEmitting = true;
             Transform obj = effect.transform.GetChild(0);
             obj.GetComponent<QWEASDZXCController>().SetQWEASDZXC(direction);
-
         }
     }
 
@@ -201,7 +198,7 @@ public class LandStarController : MonoBehaviour
     //
     // --------------------------------------------------------------------------------------------
 
-    public void ChangeStat( LANDSTAR_STAT newStat ) // フラグ用変数に引数を代入.
+    public void SetStat( LANDSTAR_STAT newStat ) // フラグ用変数に引数を代入.
     {
         CurrentStat = newStat;
         Debug.Log("Im at " + transform.position.ToString("F2") + ". My current stat is " + CurrentStat + ".");
@@ -261,12 +258,5 @@ public class LandStarController : MonoBehaviour
             return true;
         }
         return false;
-    }
-
-    // --------------------------------------------------------------------------------------------
-    //
-    // private
-    //
-    // --------------------------------------------------------------------------------------------
-    
+    }    
 }

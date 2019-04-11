@@ -15,6 +15,7 @@ TagManager:
   - MenuCanvas
   - MenuBotton
   - SceneMaster
+  - GridLine
   layers:
   - Default
   - TransparentFX
