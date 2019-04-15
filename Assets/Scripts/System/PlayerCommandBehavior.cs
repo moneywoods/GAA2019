@@ -6,7 +6,6 @@ public class PlayerCommandBehavior : MonoBehaviour
 {
     private GameObject m_CurrentSceneMenu;
 
-
     private void Awake()
     {
 
