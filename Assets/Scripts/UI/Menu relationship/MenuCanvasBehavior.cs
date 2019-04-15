@@ -31,6 +31,7 @@ public class MenuCanvasBehavior : MonoBehaviour
             }
             else if (obj.tag == ObjectTag.MenuBotton)
             {
+                if (EventSystem.current.currentSelectedGameObject == obj.gameObject) return true;
 
                 EventSystem.current.SetSelectedGameObject(obj.gameObject);
                 return true;

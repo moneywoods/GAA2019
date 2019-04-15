@@ -54,7 +54,6 @@ public class PlayerCommandBehavior : MonoBehaviour
 
         if( (Input.GetKeyDown(KeyCode.Escape) || startButton) && m_CurrentSceneMenu != null )
         {
-            // フェードイン/アウトしてたら抜ける
             if (FadeManager.CheckIsFade()) return;
 
             var menuScript = m_CurrentSceneMenu.GetComponent<ParentMenuCanvasBehavior>();

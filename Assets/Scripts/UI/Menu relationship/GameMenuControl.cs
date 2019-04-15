@@ -12,6 +12,10 @@ public class GameMenuControl : MonoBehaviour
 
     GameObject m_ObjPlayerCmdBhv;
 
+    [SerializeField]
+    public float m_Rotation;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,7 +35,6 @@ public class GameMenuControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
     }
 
     public void OnClick()
@@ -63,18 +66,30 @@ public class GameMenuControl : MonoBehaviour
     }
 
     //==================
-    // ボタンが選ばれている
+    // ボタンが選ばれた
     //==================
     public void OnSelect()
     {
-
     }
 
+    //==================
+    // ボタンが選ばれている
+    //==================
+    public void UpdateSelected()
+    {
+//        Quaternion rotation = gameObject.transform.rotation;
+//
+//        rotation.y += m_Rotation;
+//        gameObject.transform.rotation = Quaternion.Euler(0.0f, rotation.y, 0.0f);
+//        
+    }
+    
     //==================
     // ボタンから離れた
     //==================
     public void OnDeselct()
     {
+        gameObject.transform.rotation = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f);
     }
 
 }
