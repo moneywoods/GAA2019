@@ -53,7 +53,6 @@ namespace Tako
             return currentStarStaying;
         }
 
-
         public Direction CheckDirection(GameObject obj)
         {
             var vecPlayerToStar = obj.transform.position - transform.position;
@@ -76,6 +75,23 @@ namespace Tako
             return Direction.NONE;
         }
 
+        private bool CheckKineticPowerAvailable(List<GameObject> neighvorList)
+        {
+            bool result = true;
+            Vector2Int cellNum = currentStarStaying.GetComponent<StarBase>().CellNum;
+            var cellCnt = StarMaker.Instance.CurrentMapInfo.CellCnt;
+
+            // マップの端の時は×
+            if(cellNum.x <= 0 ||
+                cellCnt.x <= cellNum.x||
+                cellNum.y <= 0 ||
+                cellCnt.y <= cellNum.y)
+            {
+                result = false;
+            }
+
+            return result;
+        }
 
         /* ----- 操作関数 ----- */
         // 星を移動する.
@@ -203,7 +219,6 @@ namespace Tako
                     {
                         return land;
                     }
-
                 }
             }
             return null;
@@ -292,13 +307,33 @@ namespace Tako
 
                 if (Input.GetKeyDown(KeyCode.Alpha3) || rsh)
                 {
-                    takoScript.KineticPower(2.0f, true);
-                    takoScript.TransitState(StateName.WaitingForKineticPowerEnd);
+                    var list = StarMaker.Instance.GetNeighvorList(takoScript.currentStarStaying.GetComponent<LandStarController>().CellNum);
+
+                    if(takoScript.CheckKineticPowerAvailable(list))
+                    {
+                        Debug.Log("KineticPowerAvailable");
+                        takoScript.KineticPower(2.0f, true);
+                        takoScript.TransitState(StateName.WaitingForKineticPowerEnd);
+                    }
+                    else
+                    {
+                        Debug.Log("KinetickPowerNotAvailable");
+                    }
                 }
                 else if (Input.GetKeyDown(KeyCode.Alpha1) || lsh)
                 {
-                    takoScript.KineticPower(2.0f, false);
-                    takoScript.TransitState(StateName.WaitingForKineticPowerEnd);
+                    var list = StarMaker.Instance.GetNeighvorList(takoScript.currentStarStaying.GetComponent<LandStarController>().CellNum);
+
+                    if(takoScript.CheckKineticPowerAvailable(list))
+                    {
+                        Debug.Log("KineticPowerAvailable");
+                        takoScript.KineticPower(2.0f, false);
+                        takoScript.TransitState(StateName.WaitingForKineticPowerEnd);
+                    }
+                    else
+                    {
+                        Debug.Log("KinetickPowerNotAvailable");
+                    }
                 }
             }
         }

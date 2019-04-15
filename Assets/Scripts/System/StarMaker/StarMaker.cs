@@ -347,4 +347,73 @@ public class StarMaker : SingletonPattern<StarMaker>
             return false;
         }
     }
+
+    public List<GameObject> GetStarInDirection(Direction direction, Vector2Int cellNum) // 指定された方向のマスにある星を取得する. 指定された方向がマップの端を超える場合nullを戻す.
+    {
+        // マップ限界のチェック
+        if(!CheckLimitOfMap(direction, cellNum))
+        {
+            return null;
+        }
+
+        // 指定された方向のコマを戻す.
+        if(direction == Direction.Right)
+        {
+            return Cell[cellNum.y, cellNum.x + 1].GetComponent<CellColliderBehaviour>().List;
+        }
+        else if(direction == Direction.RightTop)
+        {
+            return Cell[cellNum.y - 1, cellNum.x + 1].GetComponent<CellColliderBehaviour>().List;
+        }
+        else if(direction == Direction.Top)
+        {
+            return Cell[cellNum.y - 1, cellNum.x].GetComponent<CellColliderBehaviour>().List;
+        }
+        else if(direction == Direction.LeftTop)
+        {
+            return Cell[cellNum.y - 1, cellNum.x - 1].GetComponent<CellColliderBehaviour>().List;
+        }
+        else if(direction == Direction.Left)
+        {
+            return Cell[cellNum.y, cellNum.x - 1].GetComponent<CellColliderBehaviour>().List;
+        }
+        else if(direction == Direction.LeftBottom)
+        {
+            return Cell[cellNum.y + 1, cellNum.x - 1].GetComponent<CellColliderBehaviour>().List;
+        }
+        else if(direction == Direction.Bottom)
+        {
+            return Cell[cellNum.y + 1, cellNum.x].GetComponent<CellColliderBehaviour>().List;
+        }
+        else if(direction == Direction.RightBottom)
+        {
+            return Cell[cellNum.y + 1, cellNum.x + 1].GetComponent<CellColliderBehaviour>().List;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    public List<GameObject> GetNeighvorList(Vector2Int cellNum)
+    {
+        var list = new List<GameObject>(); // 戻すリスト
+
+        foreach(Direction value in Enum.GetValues(typeof(Direction)))
+        {
+            if(value == Direction.ENUM_MAX || value == Direction.NONE)
+            {
+                return list;
+            }
+            var tmpList = GetStarInDirection(value, cellNum);
+
+            // マップの端を超えてしていた場合nullが戻されるので.
+            if(tmpList == null)
+            {
+                return null;
+            }
+            list.AddRange(tmpList);
+        }
+        return list;
+    }
 }
