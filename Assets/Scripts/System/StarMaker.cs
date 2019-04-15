@@ -167,7 +167,7 @@ public class StarMaker : SingletonPattern<StarMaker>
         return cellNum;
     }
 
-    public bool CheckLimitOfMap(Direction direction, Vector2Int startPos)
+    public bool CheckLimitOfMap(Direction direction, Vector2Int startPos) // 指定した方向にマスがあるか.
     {
         if(direction == Direction.Right)
         {
