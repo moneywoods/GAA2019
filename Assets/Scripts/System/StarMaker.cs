@@ -263,16 +263,16 @@ public class StarMaker : SingletonPattern<StarMaker>
         }
     }
 
-    public bool Check4Direction(Direction direction, Vector2Int startPos)
+    private bool Check4Direction(Direction direction, Vector2Int startPos) // 4方向をチェック
     {
-        
-        if(direction != Direction.Right ||
-            direction != Direction.Top ||
-            direction != Direction.Bottom ||
-            direction != Direction.Left)
+        // para0が上下左右かチェック. 一応... 
+        if(direction == Direction.LeftTop ||
+            direction == Direction.LeftBottom ||
+            direction == Direction.RightBottom ||
+            direction == Direction.RightTop)
         {
-
-            throw new System.InvalidOperationException("wrong parameter ditected. Function Name: Check4Direction");
+            // 斜めは関数が別.
+            return CheckLimitOfMap(direction, startPos);            
         }
         
         Vector2Int mapSize = CurrentMapInfo.CellCnt;
