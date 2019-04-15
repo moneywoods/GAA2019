@@ -29,6 +29,7 @@ public class StarMaker : SingletonPattern<StarMaker>
     public GameObject m_MilkyWayPrefab;
     public GameObject m_PlayerCharacterPrefab;
     public GameObject m_GoalStarPrefab;
+    public GameObject m_CellCollider;
 
     /* 変数 */
     private MapInfo currentMapInfo;
@@ -43,13 +44,28 @@ public class StarMaker : SingletonPattern<StarMaker>
             currentMapInfo = value;
         }
     }
-    
+    public GameObject[,] Cell
+    {
+        get;
+        private set;
+    }
+
     // マップをロードし,インスタンスを生成する.
     public void MakeWorld( char[ , ] mapData, Vector2 cellSize )
     {
         // 現在のMapInfoを更新.
         currentMapInfo = new MapInfo(mapData, cellSize, new Vector2(transform.position.x, transform.position.y));
-        
+
+        Cell = new GameObject[CurrentMapInfo.CellCnt.y, CurrentMapInfo.CellCnt.x]; 
+        for(uint cy = 0; cy < CurrentMapInfo.CellCnt.y; cy++)
+        {
+            for(uint cx = 0; cx < CurrentMapInfo.CellCnt.x; cx++)
+            {
+                Cell[cy, cx] = PlaceStar(m_CellCollider, cy, cx);
+                Cell[cy, cx].transform.parent = transform;
+                Cell[cy, cx].name += "(" + cx.ToString() + "," + cy.ToString() + ")";
+            }
+        }
         int cntStart = 0; // スタート地点が複数個設置されていないかチェックするため.
 
         // マップに配置
@@ -104,7 +120,7 @@ public class StarMaker : SingletonPattern<StarMaker>
 
             }
         }
-
+        
         // グリッドを調整
         GameObject grid = GameObject.FindWithTag(ObjectTag.GridLine);
         if(grid != null)
@@ -155,7 +171,7 @@ public class StarMaker : SingletonPattern<StarMaker>
         return Instantiate( star, placePosition, q);
     }
     
-    public Vector2Int CaluculateCellPos(Vector3 position)
+    public Vector2Int CaluculateCellNum(Vector3 position)
     {
         MapInfo mapInfo = CurrentMapInfo;
         var offset = mapInfo.DeffaultOffset;
@@ -167,6 +183,12 @@ public class StarMaker : SingletonPattern<StarMaker>
         return cellNum;
     }
 
+    public Vector3 GetCenterPosOfCell(Vector2Int cellNum)
+    {
+        var size = CurrentMapInfo.CellSize;
+        var offset = CurrentMapInfo.DeffaultOffset;
+        return new Vector3(size.x * cellNum.x + offset.x, size.y * cellNum.y + offset.y, offset.z);
+    }
     public bool CheckLimitOfMap(Direction direction, Vector2Int startPos) // 指定した方向にマスがあるか.
     {
         if(direction == Direction.Right)

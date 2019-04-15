@@ -160,6 +160,10 @@ public class LandStarController : StarBase
         return false;
     }
 
+    public void Check90DegreeAwayCell(bool isRight)
+    {
+
+    }
     // --------------------------------------------------------------------------------------------
     //
     // public エフェクト
@@ -197,7 +201,6 @@ public class LandStarController : StarBase
     // public フラグ関連
     //
     // --------------------------------------------------------------------------------------------
-
     public void SetStat( LANDSTAR_STAT newStat ) // フラグ用変数に引数を代入.
     {
         CurrentStat = newStat;

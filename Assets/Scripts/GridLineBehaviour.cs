@@ -24,7 +24,7 @@ public class GridLineBehaviour : MonoBehaviour
             return;
         scale = CurrentMapInfo.CellSize * CurrentMapInfo.CellCnt;// Vector2 * Vecto2 = element-wise product
         division = CurrentMapInfo.CellCnt;
-
+        offset = new Vector3(0.0f, -CurrentMapInfo.CellSize.y, 0.0f);
         Vector2 stepSize = scale / division;
         Vector2 halfScale = scale * 0.5f;
 

@@ -267,22 +267,18 @@ namespace Tako
                 else if (Input.GetKeyDown(KeyCode.D))
                 {
                     takoScript.MoveFromCurrentStar(Direction.Right);
-
                 }
                 else if (Input.GetKeyDown(KeyCode.C))
                 {
                     takoScript.MoveFromCurrentStar(Direction.RightBottom);
-
                 }
                 else if (Input.GetKeyDown(KeyCode.X))
                 {
                     takoScript.MoveFromCurrentStar(Direction.Bottom);
-
                 }
                 else if (Input.GetKeyDown(KeyCode.Z))
                 {
                     takoScript.MoveFromCurrentStar(Direction.LeftBottom);
-
                 }
                 else if (Input.GetKeyDown(KeyCode.A))
                 {

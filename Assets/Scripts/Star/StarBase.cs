@@ -11,7 +11,7 @@ public class StarBase : MonoBehaviour
     {
         get
         {
-            cellNum = StarMaker.Instance.CaluculateCellPos(transform.position);
+            cellNum = StarMaker.Instance.CaluculateCellNum(transform.position);
             return cellNum;
         }
         set
