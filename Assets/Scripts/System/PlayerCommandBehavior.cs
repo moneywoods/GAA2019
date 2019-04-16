@@ -23,6 +23,7 @@ public class PlayerCommandBehavior : MonoBehaviour
     }
 
     private GameObject m_CurrentSceneMenu;
+    [SerializeField] private GameObject ResetSpritePrefab;
 
 
     private void Awake()
@@ -47,6 +48,7 @@ public class PlayerCommandBehavior : MonoBehaviour
             GameObject starMaker = GameObject.FindWithTag(ObjectTag.StarMaker);
             if( starMaker != null )
             {
+                Instantiate(ResetSpritePrefab);
                 starMaker.GetComponent<StarMaker>().ResetWorld();
             }
         }

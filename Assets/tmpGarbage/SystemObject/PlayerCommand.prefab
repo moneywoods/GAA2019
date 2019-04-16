@@ -92,3 +92,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5382448376da2a14bacf5fc952eb6ca7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ResetSpritePrefab: {fileID: 7687525143576401856, guid: 7947801b553f33a478f08a8d24dcfc3a,
+    type: 3}
