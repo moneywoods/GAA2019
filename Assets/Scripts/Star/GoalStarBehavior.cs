@@ -21,7 +21,8 @@ public class GoalStarBehavior : LandStarController
         {
             if(m_NextSceneTimer % 60 == 0)
             {// 時間がたったら次のシーンへ
-                FadeManager.FadeOut("01");
+                PauseTheGame.GameStop();
+                FadeManager.FadeOut("TitleScene");
             }
             m_NextSceneTimer++;
         }   
