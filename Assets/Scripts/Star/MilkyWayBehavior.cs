@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MilkyWayBehavior : MonoBehaviour
+public class MilkyWayBehavior : StarBase
 {
     // Start is called before the first frame update
     void Start()
