@@ -22,7 +22,6 @@ public class TitleMasterBehavior : MonoBehaviour
         // UI objectを生成.
         GameObject menu = Instantiate(m_ParentCanvasPrefab);
         menu.GetComponent<ParentMenuCanvasBehavior>().SetActivateSelectionCursor();
-
     }
 
     // Update is called once per frame

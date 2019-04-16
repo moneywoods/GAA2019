@@ -32,7 +32,6 @@ public class GoalStarBehavior : LandStarController
     {
         if( collision.tag == ObjectTag.PlayerCharacter)
         {
-            Debug.Log("Congratulations! Player Win. ");
             GameObject.FindWithTag("Finish").transform.position = transform.position;
 
             m_NextSceneTimer++;

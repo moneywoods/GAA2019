@@ -1,215 +1,176 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class TakoController : MonoBehaviour
+using StatePattern;
+namespace Tako
 {
-    internal GameObject currentStarStaying;
-    TakoState.StateContex stateContex;
-
-    // 移動可能な隣接星を明示するエフェクト作成用.
-    internal List<GameObject> neighvorList;
-
-    // Start is called before the first frame update
-    void Start()
+    public class TakoController : StateContex
     {
-        stateContex = new TakoState.StateContex(gameObject);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        // 移動可能な隣接星を明示するエフェクト作成.
-        // この処理は他のファイルとかにした方がゴチャらなくてなくていいかも
-        foreach( GameObject obj in neighvorList )
+        public class StateName
         {
-            if(obj.tag == ObjectTag.Land || obj.tag == ObjectTag.GoalStar) // 今のところ着陸可能星しかリストに入ってないのでこの条件いらないけど一応.
+            public static readonly string Normal = "Normal";
+            public static readonly string WaitingForKineticPowerEnd = "WaitingForKineticPowerEnd";
+            public static readonly string CommandDisable = "CommandDisable";
+        }
+        public GameObject currentStarStaying; // 今いる星.
+        public List<GameObject> neighvorList; // 今いる星の隣接星.星を移動したら必ず更新すること.
+        public List<GameObject> NeighvorList
+        {
+            get
             {
-                obj.GetComponent<LandStarController>().SetCanMoveToEffect(CheckDirection(obj));
+                var script = currentStarStaying.transform.GetChild((int) LandStarController.ChildIndex.NeighvorFinder).GetComponent<NeighvorFinder>();
+                neighvorList = script.GetNeighvorStarList();
+                return neighvorList;
             }
+            set { neighvorList = value; }
         }
-        // 状態ごとの更新
-        stateContex.StateUpdate();
-    }
-
-    void SetState(TakoState.StateIndex state)
-    {
-        stateContex.CurrentState = TakoState.StateIndex.Normal;
-    }
-
-    public void SetCurrentStarStaying(GameObject Land)
-    {
-        currentStarStaying = Land;
-        transform.position = Land.transform.position;
-        neighvorList = Land.transform.GetChild(0).GetComponent<NeighvorFinder>().GetNeighvorStarList();
-        Land.GetComponent<LandStarController>().AddStat(LandStarController.LANDSTAR_STAT.PLAYER_STAYING);
-    }
-
-    public GameObject GetCurrentStarStaying()
-    {
-        return currentStarStaying;
-    }
-
-
-    PlayerCommandBehavior.Direction CheckDirection(GameObject obj)
-    {
-        var vecPlayerToStar = obj.transform.position - transform.position;
-
-
-        // 比較するための単位ベクトルを取得する.
-        var vecComp = new Vector3(1.0f, 0.0f); // 真上へのベクトル.
-
-        // 方向に応じたベクトルを作成し,プレイヤーから星へのベクトルと比較.
-        Vector3 vecSearchingStar;
-        for (PlayerCommandBehavior.Direction i = 0; i < PlayerCommandBehavior.Direction.ENUM_MAX; i++ )
+        
+        protected void Awake()
         {
-            vecSearchingStar = Quaternion.Euler(0.0f, 0.0f, (uint)i * 45.0f ) * vecComp;
+            // ステートを生成
+            AddState(new StateNormal(this, gameObject));
+            AddState(new StateWaitingForKineticPowerEnd(this, gameObject));
+            AddState(new StateCommandDisable(this, gameObject));
+            // 現在のステートをセット
+            SetCurrentState(StateList.Find(m => m.Name == StateName.Normal));
+        }
 
-            if (Vector3.Angle(vecPlayerToStar.normalized, vecSearchingStar.normalized) <= 10.0f)
+        protected override void Update()
+        {
+            base.Update();
+        }
+
+        public void SetCurrentStarStaying(GameObject Land)
+        {
+            currentStarStaying = Land;
+            transform.position = Land.transform.position;
+            neighvorList = Land.transform.GetChild(0).GetComponent<NeighvorFinder>().GetNeighvorStarList();
+            Land.GetComponent<LandStarController>().AddStat(LandStarController.LANDSTAR_STAT.PLAYER_STAYING);
+        }
+
+        public GameObject GetCurrentStarStaying()
+        {
+            return currentStarStaying;
+        }
+
+        public Direction CheckDirection(GameObject obj)
+        {
+            var vecPlayerToStar = obj.transform.position - transform.position;
+
+
+            // 比較するための単位ベクトルを取得する.
+            var vecComp = new Vector3(1.0f, 0.0f); // 真上へのベクトル.
+
+            // 方向に応じたベクトルを作成し,プレイヤーから星へのベクトルと比較.
+            Vector3 vecSearchingStar;
+            for (Direction i = 0; i < Direction.ENUM_MAX; i++)
             {
-                return i;
+                vecSearchingStar = Quaternion.Euler(0.0f, 0.0f, (uint)i * 45.0f) * vecComp;
+
+                if (Vector3.Angle(vecPlayerToStar.normalized, vecSearchingStar.normalized) <= 10.0f)
+                {
+                    return i;
+                }
             }
-        }
-        return PlayerCommandBehavior.Direction.NONE;
-    }
-}
-
-
-namespace TakoState
-{
-    public enum StateIndex
-    {
-        Normal = 0,
-        CommandDisable,
-        ENUM_MAX
-    }
-    public class StateContex
-    {
-        StateIndex _currentState;
-        public StateIndex CurrentState
-        {
-            set { _currentState = value; }
-            get { return _currentState; }
-        }
-        public StateContex(GameObject tako)
-        {
-            _currentState = StateIndex.Normal;
-            _State = new AbstractState[(int) StateIndex.ENUM_MAX];
-            AbstractState.SetTako(tako);
-            _State[(int) StateIndex.Normal] = new StateNormal();
-            _State[(int) StateIndex.CommandDisable] = new StateDisableCommand();
+            return Direction.NONE;
         }
 
-        // AbstractState本体
-        private AbstractState[] _State;
-
-        public void StateUpdate()
+        private bool CheckKineticPowerAvailable(List<GameObject> neighvorList, bool isRight)
         {
-            _State[(int) CurrentState].StateUpdate();
-        }
-    }
-
-    // AbstractStateクラス
-    public abstract class AbstractState
-    {
-        protected static GameObject tako;
-        protected static TakoController takoScript;
-        public static void SetTako(GameObject newTako)
-        {
-            tako = newTako;
-            takoScript = tako.GetComponent<TakoController>();
-        }
-        // Update
-        // デリゲート
-        public delegate void excuteUpdate();
-        private excuteUpdate execUpdate;
-
-        // 実行処理
-        public virtual void StateUpdate()
-        {
-            if( execUpdate != null)
+            bool result = true;
+            foreach(GameObject star in neighvorList)
             {
-                execUpdate();
+                var script = star.GetComponent<StarBase>();
+                var pos = currentStarStaying.GetComponent<StarBase>().CellNum;
+                if(!star.GetComponent<StarBase>().CheckKineticPowerCanBeUsed(currentStarStaying.GetComponent<StarBase>().CellNum, isRight))
+                {
+                    result = false;
+                }
+                else
+                {
+                    // null
+                }
             }
+            return result;
         }
 
         /* ----- 操作関数 ----- */
         // 星を移動する.
-        protected bool MoveFromCurrentStar(PlayerCommandBehavior.Direction _Direction)
+        public bool MoveFromCurrentStar(Direction direction)
         {
             // 行きたい方向に行けるLandがあるかチェック.
             GameObject newLand = null;
 
-            if( _Direction == PlayerCommandBehavior.Direction.Top )
+            if (direction == Direction.Top)
             {
-                newLand = GetStarOnTheDirection(PlayerCommandBehavior.Direction.Top);
+                newLand = GetStarOnTheDirection(Direction.Top);
             }
-            else if( _Direction == PlayerCommandBehavior.Direction.LeftTop )
+            else if (direction == Direction.LeftTop)
             {
-                newLand = GetStarOnTheDirection(PlayerCommandBehavior.Direction.LeftTop);
+                newLand = GetStarOnTheDirection(Direction.LeftTop);
             }
-            else if( _Direction == PlayerCommandBehavior.Direction.Left )
+            else if (direction == Direction.Left)
             {
-                newLand = GetStarOnTheDirection(PlayerCommandBehavior.Direction.Left);
+                newLand = GetStarOnTheDirection(Direction.Left);
             }
-            else if( _Direction == PlayerCommandBehavior.Direction.LeftBottom )
+            else if (direction == Direction.LeftBottom)
             {
-                newLand = GetStarOnTheDirection(PlayerCommandBehavior.Direction.LeftBottom);
+                newLand = GetStarOnTheDirection(Direction.LeftBottom);
             }
-            else if( _Direction == PlayerCommandBehavior.Direction.Bottom )
+            else if (direction == Direction.Bottom)
             {
-                newLand = GetStarOnTheDirection(PlayerCommandBehavior.Direction.Bottom);
+                newLand = GetStarOnTheDirection(Direction.Bottom);
             }
-            else if( _Direction == PlayerCommandBehavior.Direction.RightBottom )
+            else if (direction == Direction.RightBottom)
             {
-                newLand = GetStarOnTheDirection(PlayerCommandBehavior.Direction.RightBottom);
+                newLand = GetStarOnTheDirection(Direction.RightBottom);
             }
-            else if( _Direction == PlayerCommandBehavior.Direction.Right )
+            else if (direction == Direction.Right)
             {
-                newLand = GetStarOnTheDirection(PlayerCommandBehavior.Direction.Right);
+                newLand = GetStarOnTheDirection(Direction.Right);
             }
-            else if( _Direction == PlayerCommandBehavior.Direction.RightTop )
+            else if (direction == Direction.RightTop)
             {
-                newLand = GetStarOnTheDirection(PlayerCommandBehavior.Direction.RightTop);
+                newLand = GetStarOnTheDirection(Direction.RightTop);
             }
             // 星を渡る.
-            if( newLand != null )
+            if (newLand != null)
             {
                 // 移動処理
-                foreach( GameObject obj in takoScript.neighvorList )
+                foreach (GameObject obj in neighvorList)
                 {
                     obj.GetComponent<LandStarController>().DiscardCanMoveToEffect();
                 }
-                var currentStarScript = takoScript.currentStarStaying.GetComponent<LandStarController>();
-                currentStarScript.LeaveThisLand(tako);
+                var currentStarScript = currentStarStaying.GetComponent<LandStarController>();
+                currentStarScript.LeaveThisLand(gameObject);
 
-                newLand.GetComponent<LandStarController>().ArriveThisLand(tako);
+                newLand.GetComponent<LandStarController>().ArriveThisLand(gameObject);
                 return true;
             }
 
             return false;
         }
 
-        protected GameObject GetStarOnTheDirection(PlayerCommandBehavior.Direction _Direction)
+        public GameObject GetStarOnTheDirection(Direction direction)
         {
             // 今いる星の隣接星リストを取得.
-            GameObject tmp = takoScript.currentStarStaying.transform.GetChild((int)LandStarController.ChildIndex.NeighvorFinder).gameObject;
+            GameObject tmp = currentStarStaying.transform.GetChild((int)LandStarController.ChildIndex.NeighvorFinder).gameObject;
             NeighvorFinder script = tmp.GetComponent<NeighvorFinder>();
             List<GameObject> neighborStarList = script.GetNeighvorStarList();
 
-            if( neighborStarList == null )
+            if (neighborStarList == null)
             {
                 Debug.Log("Something wrong! neighvorStarList == null. Function name : GetStarOnTHeDirection");
             }
             // 方向
-            foreach( GameObject land in neighborStarList )
+            foreach (GameObject land in neighborStarList)
             {
                 // 0326現在,リストに含まれるのは着陸可能星のみになってます.
                 var landScript = land.GetComponent<LandStarController>();
-                if( (landScript.CheckFlag(LandStarController.LANDSTAR_STAT.ALIVE)) && !landScript.CheckFlag(LandStarController.LANDSTAR_STAT.MOVING) )
+                if ((landScript.CheckFlag(LandStarController.LANDSTAR_STAT.ALIVE)) && !landScript.CheckFlag(LandStarController.LANDSTAR_STAT.MOVING))
                 {
                     // プレイヤーから星への単位ベクトルを作る.
-                    var vecPlayerToStar = land.transform.position - tako.transform.position;
+                    var vecPlayerToStar = land.transform.position - transform.position;
                     vecPlayerToStar.Normalize(); // 正規化する.
 
                     // 比較するための単位ベクトルを取得する.
@@ -217,35 +178,35 @@ namespace TakoState
 
                     float EstimatedStarDegree = 0.0f;
 
-                    if( _Direction == PlayerCommandBehavior.Direction.Top )
+                    if (direction == Direction.Top)
                     {
                         EstimatedStarDegree = 90.0f; // 下方向Y正, 右方向X正 に注意!
                     }
-                    else if( _Direction == PlayerCommandBehavior.Direction.LeftTop )
+                    else if (direction == Direction.LeftTop)
                     {
                         EstimatedStarDegree = 135.0f;
                     }
-                    else if( _Direction == PlayerCommandBehavior.Direction.Left )
+                    else if (direction == Direction.Left)
                     {
                         EstimatedStarDegree = 180.0f;
                     }
-                    else if( _Direction == PlayerCommandBehavior.Direction.LeftBottom )
+                    else if (direction == Direction.LeftBottom)
                     {
                         EstimatedStarDegree = 225.0f;
                     }
-                    else if( _Direction == PlayerCommandBehavior.Direction.Bottom )
+                    else if (direction == Direction.Bottom)
                     {
                         EstimatedStarDegree = 270.0f;
                     }
-                    else if( _Direction == PlayerCommandBehavior.Direction.RightBottom )
+                    else if (direction == Direction.RightBottom)
                     {
                         EstimatedStarDegree = 315.0f;
                     }
-                    else if( _Direction == PlayerCommandBehavior.Direction.Right )
+                    else if (direction == Direction.Right)
                     {
                         EstimatedStarDegree = 0.0f;
                     }
-                    else if( _Direction == PlayerCommandBehavior.Direction.RightTop )
+                    else if (direction == Direction.RightTop)
                     {
                         EstimatedStarDegree = 45.0f;
                     }
@@ -255,105 +216,150 @@ namespace TakoState
                     }
 
                     Vector3 vecSearchngStar = Quaternion.Euler(0.0f, 0.0f, EstimatedStarDegree) * vecComp;
-                    if( Vector3.Angle(vecPlayerToStar.normalized, vecSearchngStar.normalized) <= 10.0f )
+                    if (Vector3.Angle(vecPlayerToStar.normalized, vecSearchngStar.normalized) <= 10.0f)
                     {
                         return land;
                     }
-
                 }
             }
             return null;
         }
 
-        protected void KineticPower(float estimatedTimeToCirculate, bool isRight) // 隣接するすべてのLandに回るよう指示する.
+        public void KineticPower(float estimatedTimeToCirculate, bool isRight) // 隣接するすべてのLandに回るよう指示する.
         {
-            GameObject starStaying = takoScript.GetCurrentStarStaying();
-            GameObject starScript = starStaying.transform.GetChild(0).gameObject; // LandのChildの先頭はNeighvorFinderになるように調整すること.
+            GameObject starScript = currentStarStaying.transform.GetChild(0).gameObject; // LandのChildの先頭はNeighvorFinderになるように調整すること.
             List<GameObject> neighvorStarList = starScript.GetComponent<NeighvorFinder>().GetNeighvorStarList();
 
-            for(int i = 0; i < neighvorStarList.Count; i++)
+            for (int i = 0; i < neighvorStarList.Count; i++)
             {
-                if(neighvorStarList[i].tag == ObjectTag.Land)
+                if (neighvorStarList[i].tag == ObjectTag.Land)
                 {
                     LandStarController scriptNeighvor = neighvorStarList[i].GetComponent<LandStarController>();
 
-                    if(scriptNeighvor.CheckFlag(LandStarController.LANDSTAR_STAT.ALIVE) && !scriptNeighvor.CheckFlag(LandStarController.LANDSTAR_STAT.MOVING))
+                    if (scriptNeighvor.CheckFlag(LandStarController.LANDSTAR_STAT.ALIVE) && !scriptNeighvor.CheckFlag(LandStarController.LANDSTAR_STAT.MOVING))
                     {
-                        neighvorStarList[i].GetComponent<LandStarController>().SetMove(tako.gameObject, estimatedTimeToCirculate, isRight);                       
+                        neighvorStarList[i].GetComponent<LandStarController>().SetMove(gameObject, estimatedTimeToCirculate, isRight);
                     }
                 }
             }
-           
         }
 
-    }
-
-    public class StateNormal : AbstractState
-    {
-        public override void StateUpdate()
+        public class TakoState : State
         {
-            // 入力を取得.
-            // ゲームパッド
-            bool rsh = Input.GetKeyDown(KeyCode.Joystick1Button5);      // 右ボタン
-            bool lsh = Input.GetKeyDown(KeyCode.Joystick1Button4);      // 左ボタン
-
-
-            // 星を渡る.
-            if(Input.GetKey(KeyCode.W))
+            public TakoState(StateContex stateContex, GameObject tako) : base(stateContex)
             {
-                MoveFromCurrentStar(PlayerCommandBehavior.Direction.Top);
-            }
-            else if(Input.GetKey(KeyCode.E))
-            {
-                MoveFromCurrentStar(PlayerCommandBehavior.Direction.RightTop);
-
-            }
-            else if(Input.GetKey(KeyCode.D))
-            {
-                MoveFromCurrentStar(PlayerCommandBehavior.Direction.Right);
-
-            }
-            else if(Input.GetKey(KeyCode.C))
-            {
-                MoveFromCurrentStar(PlayerCommandBehavior.Direction.RightBottom);
-
-            }
-            else if(Input.GetKey(KeyCode.X))
-            {
-                MoveFromCurrentStar(PlayerCommandBehavior.Direction.Bottom);
-
-            }
-            else if(Input.GetKey(KeyCode.Z))
-            {
-                MoveFromCurrentStar(PlayerCommandBehavior.Direction.LeftBottom);
-
-            }
-            else if(Input.GetKey(KeyCode.A))
-            {
-                MoveFromCurrentStar(PlayerCommandBehavior.Direction.LeftBottom);
-            }
-            else if(Input.GetKey(KeyCode.Q))
-            {
-                MoveFromCurrentStar(PlayerCommandBehavior.Direction.LeftTop);
+                this.tako = tako;
+                this.takoScript = this.tako.GetComponent<TakoController>();
             }
 
+            protected GameObject tako;
+            protected TakoController takoScript;
+        }
 
-            if(Input.GetKeyDown(KeyCode.Alpha3) || rsh)
+        public class StateNormal : TakoState
+        {
+            public StateNormal(StateContex stateContex, GameObject tako) : base(stateContex, tako)
             {
-                KineticPower(2.0f, true);
+                Name = StateName.Normal;
+                update = UpdateByCommand;
             }
-            else if(Input.GetKeyDown(KeyCode.Alpha1) || lsh)
+
+            void UpdateByCommand()
             {
-                KineticPower(2.0f, false);
+                // 入力を取得.
+                // ゲームパッド
+                bool rsh = Input.GetKeyDown(KeyCode.Joystick1Button5);      // 右ボタン
+                bool lsh = Input.GetKeyDown(KeyCode.Joystick1Button4);      // 左ボタン
+
+                // 星を渡る.
+                if (Input.GetKeyDown(KeyCode.W))
+                {
+                    takoScript.MoveFromCurrentStar(Direction.Top);
+                }
+                else if (Input.GetKeyDown(KeyCode.E))
+                {
+                    takoScript.MoveFromCurrentStar(Direction.RightTop);
+                }
+                else if (Input.GetKeyDown(KeyCode.D))
+                {
+                    takoScript.MoveFromCurrentStar(Direction.Right);
+                }
+                else if (Input.GetKeyDown(KeyCode.C))
+                {
+                    takoScript.MoveFromCurrentStar(Direction.RightBottom);
+                }
+                else if (Input.GetKeyDown(KeyCode.X))
+                {
+                    takoScript.MoveFromCurrentStar(Direction.Bottom);
+                }
+                else if (Input.GetKeyDown(KeyCode.Z))
+                {
+                    takoScript.MoveFromCurrentStar(Direction.LeftBottom);
+                }
+                else if (Input.GetKeyDown(KeyCode.A))
+                {
+                    takoScript.MoveFromCurrentStar(Direction.LeftBottom);
+                }
+                else if (Input.GetKeyDown(KeyCode.Q))
+                {
+                    takoScript.MoveFromCurrentStar(Direction.LeftTop);
+                }
+
+
+                if (Input.GetKeyDown(KeyCode.Alpha3) || rsh)
+                {
+                    var list = StarMaker.Instance.GetNeighvorList(takoScript.currentStarStaying.GetComponent<LandStarController>().CellNum);
+
+                    if(takoScript.CheckKineticPowerAvailable(list, true))
+                    {
+                        takoScript.KineticPower(2.0f, true);
+                        takoScript.TransitState(StateName.WaitingForKineticPowerEnd);
+                    }
+                    else
+                    {
+                        // できなかった時の処理
+                    }
+                }
+                else if (Input.GetKeyDown(KeyCode.Alpha1) || lsh)
+                {
+                    var list = StarMaker.Instance.GetNeighvorList(takoScript.currentStarStaying.GetComponent<LandStarController>().CellNum);
+
+                    if(takoScript.CheckKineticPowerAvailable(list, false))
+                    {
+                        takoScript.KineticPower(2.0f, false);
+                        takoScript.TransitState(StateName.WaitingForKineticPowerEnd);
+                    }
+                    else
+                    {
+                        // できなかった時の処理
+                    }
+                }
             }
         }
-    }
-
-    public class StateDisableCommand : AbstractState
-    {
-        public override void StateUpdate()
+        public class StateWaitingForKineticPowerEnd : TakoState
         {
-            // no acceptable command 
+            public StateWaitingForKineticPowerEnd(StateContex contex, GameObject tako) : base(contex, tako)
+            {
+                Name = StateName.WaitingForKineticPowerEnd;
+                update = CheckMovingLand;
+            }
+
+            void CheckMovingLand()
+            {
+                // neighvorListに移動中のLandがあるか確認.
+                var foundItem = takoScript.neighvorList.Find(item => item.GetComponent<LandStarController>().CheckFlag(LandStarController.LANDSTAR_STAT.MOVING) == true); // yokonagada...
+                if (foundItem == null)
+                { // 無ければステートをNormalへ.
+                    Context.TransitState(StateName.Normal);
+                }
+            }
+        }
+        public class StateCommandDisable : TakoState
+        {
+            public StateCommandDisable(StateContex contex, GameObject tako) : base(contex, tako)
+            {
+                Name = StateName.CommandDisable;
+            }
         }
     }
 }

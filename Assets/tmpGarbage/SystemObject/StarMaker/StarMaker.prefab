@@ -53,5 +53,5 @@ MonoBehaviour:
     type: 3}
   m_GoalStarPrefab: {fileID: 8112558533587871894, guid: 61830842644e90e4494a09ce61d61994,
     type: 3}
-  marginX: 5
-  marginY: 5
+  m_CellCollider: {fileID: 6396194789035416357, guid: 500befeb7811a4648a1cc2938981c15d,
+    type: 3}
