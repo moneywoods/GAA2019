@@ -53,7 +53,7 @@ public class LandStarController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Mathf.Approximately(Time.timeScale, 0f))
+        if (Mathf.Approximately(Time.timeScale, 0f) || FadeManager.CheckIsFade())
         {
             return;
         }

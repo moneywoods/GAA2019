@@ -11,7 +11,6 @@ public class GameMasterBehavior : MonoBehaviour
     public GameObject m_PlayerCommand;
 
     // UI
-    public GameObject m_EventObjectPrefab;
     public GameObject m_MenuCanvas;
 
 
@@ -26,9 +25,6 @@ public class GameMasterBehavior : MonoBehaviour
         // 世界を作る.
         GameObject starMaker = Instantiate(m_StarMakerPrefab);
         starMaker.GetComponent<StarMaker>().MakeWorld(mapData);
-
-        // Event objectを生成. UIの前に必ず生成!
-        Instantiate(m_EventObjectPrefab);
 
         // UIオブジェクトを生成.
         GameObject menu = Instantiate(m_MenuCanvas);
