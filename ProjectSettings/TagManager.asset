@@ -17,6 +17,7 @@ TagManager:
   - SceneMaster
   - GridLine
   - CellCollider
+  - Rock
   layers:
   - Default
   - TransparentFX

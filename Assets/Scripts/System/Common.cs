@@ -17,6 +17,7 @@ public class ObjectTag
     public static readonly string SceneMaster     = "SceneMaster";
     public static readonly string GridLine        = "GridLine";
     public static readonly string CellCollider    = "CellCollider";
+    public static readonly string Rock            = "Rock";
 }
 
 public struct StageInfo
@@ -33,6 +34,10 @@ public struct StageInfo
 static class Common
 {
     public static readonly Vector2 CellSize = new Vector2(5.0f, 5.0f);
+    public class DiffPosInDirection
+    {
+
+    }
 }
 
 public enum Direction
