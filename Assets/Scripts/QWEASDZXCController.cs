@@ -26,7 +26,7 @@ public class QWEASDZXCController : MonoBehaviour
         }
         if( m_W == null )
         {
-            Debug.Log("W not found.");
+            
         }
     }
 

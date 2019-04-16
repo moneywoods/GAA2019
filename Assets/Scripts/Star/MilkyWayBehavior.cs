@@ -23,8 +23,6 @@ public class MilkyWayBehavior : StarBase
         if( collision.tag == ObjectTag.Land )
         {
             collision.GetComponent<LandStarController>().AddStat(LandStarController.LANDSTAR_STAT.IN_MILKYWAY_AREA);
-            Debug.Log("This is MilkyWay at " + transform.position.ToString("F2") + "."
-                        + " Land at " + collision.transform.position.ToString("F2") + "is now [ IN_MILKY_WAY ]. " );
         }
     }
 

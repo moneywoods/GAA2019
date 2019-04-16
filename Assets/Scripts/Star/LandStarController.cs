@@ -133,9 +133,6 @@ public class LandStarController : StarBase
         }
         centerOfCircular = center.transform.position;
         timeToCirculate = estimatedTimeToCirculate;
-        Debug.Log("Im at " + centerOfCircular.ToString( "F2" ) + "."
-            + " My current stat is " + CurrentStat + ".Estimated time is " + timeToCirculate + " s."
-            + " Moving to" + ( isRight ? "RIGHT" : "LEFT" ) );
     }
 
     public void ArriveThisLand(GameObject Character) // 自身にSTAYINGフラグを立て,引数のcurrentStarStayingをこのオブジェクトにする.
@@ -438,7 +435,6 @@ public class LandStarController : StarBase
     public void SetStat( LANDSTAR_STAT newStat ) // フラグ用変数に引数を代入.
     {
         CurrentStat = newStat;
-        Debug.Log("Im at " + transform.position.ToString("F2") + ". My current stat is " + CurrentStat + ".");
     }
     public bool AddStat( LANDSTAR_STAT additionalStat ) // フラグを立てる. 引数のフラグが既に立っている場合trueを戻し終了.
     {

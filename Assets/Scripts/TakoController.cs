@@ -312,13 +312,12 @@ namespace Tako
 
                     if(takoScript.CheckKineticPowerAvailable(list, true))
                     {
-                        Debug.Log("KineticPowerAvailable");
                         takoScript.KineticPower(2.0f, true);
                         takoScript.TransitState(StateName.WaitingForKineticPowerEnd);
                     }
                     else
                     {
-                        Debug.Log("KinetickPowerNotAvailable");
+                        // できなかった時の処理
                     }
                 }
                 else if (Input.GetKeyDown(KeyCode.Alpha1) || lsh)
@@ -327,13 +326,12 @@ namespace Tako
 
                     if(takoScript.CheckKineticPowerAvailable(list, false))
                     {
-                        Debug.Log("KineticPowerAvailable");
                         takoScript.KineticPower(2.0f, false);
                         takoScript.TransitState(StateName.WaitingForKineticPowerEnd);
                     }
                     else
                     {
-                        Debug.Log("KinetickPowerNotAvailable");
+                        // できなかった時の処理
                     }
                 }
             }
