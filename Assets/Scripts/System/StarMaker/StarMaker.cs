@@ -300,7 +300,7 @@ public class StarMaker : SingletonPattern<StarMaker>
         Vector2Int mapSize = CurrentMapInfo.CellCnt;
         if(direction == Direction.Right)
         {
-            if(startPos.x + 1 <= mapSize.x)
+            if(startPos.x + 1 < mapSize.x)
             {
                 return true;
             }
@@ -311,7 +311,7 @@ public class StarMaker : SingletonPattern<StarMaker>
         }
         else if(direction == Direction.Top)
         {
-            if(0 <= startPos.y - 1)
+            if(0 <= startPos.y - 1 )
             {
                 return true;
             }
@@ -333,7 +333,7 @@ public class StarMaker : SingletonPattern<StarMaker>
         }
         else if(direction == Direction.Bottom)
         {
-            if(startPos.y + 1 <= mapSize.y)
+            if(startPos.y + 1 < mapSize.y)
             {
                 return true;
             }
@@ -348,7 +348,7 @@ public class StarMaker : SingletonPattern<StarMaker>
         }
     }
 
-    public List<GameObject> GetStarInDirection(Direction direction, Vector2Int cellNum) // 指定された方向のマスにある星を取得する. 指定された方向がマップの端を超える場合nullを戻す.
+    public List<GameObject> GetStarListInDirection(Direction direction, Vector2Int cellNum) // 指定された方向のマスにある星を取得する. 指定された方向がマップの端を超える場合nullを戻す.
     {
         // マップ限界のチェック
         if(!CheckLimitOfMap(direction, cellNum))
@@ -405,15 +405,55 @@ public class StarMaker : SingletonPattern<StarMaker>
             {
                 return list;
             }
-            var tmpList = GetStarInDirection(value, cellNum);
+            var tmpList = GetStarListInDirection(value, cellNum);
 
             // マップの端を超えてしていた場合nullが戻されるので.
-            if(tmpList == null)
+            if(tmpList != null)
             {
-                return null;
+                list.AddRange(tmpList);
             }
-            list.AddRange(tmpList);
         }
         return list;
+    }
+
+    public Direction GetDirection(Vector2Int origin, Vector2Int target) // targetがoriginの周囲1マスにない場合,NONEを戻すことに注意.
+    {
+        var diff = target - origin;
+        if(diff == new Vector2Int(1, 0))
+        {
+            return Direction.Right;
+        }
+        else if(diff == new Vector2Int(1, -1))
+        {
+            return Direction.RightTop;
+        }
+        else if(diff == new Vector2Int(0, -1))
+        {
+            return Direction.Top;
+        }
+        else if(diff == new Vector2Int(-1, -1))
+        {
+            return Direction.LeftTop;
+        }
+        else if(diff == new Vector2Int(-1, 0))
+        {
+            return Direction.Left;
+        }
+        else if(diff == new Vector2Int(-1, 1))
+        {
+            return Direction.LeftBottom;
+        }
+        else if(diff == new Vector2Int(0, 1))
+        {
+            return Direction.Bottom;
+        }
+        else if(diff == new Vector2Int(1, 1))
+        {
+            return Direction.RightBottom;
+        }
+        else
+        {
+            return Direction.NONE;
+        }
     }
 }

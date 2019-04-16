@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -30,5 +31,10 @@ public class StarBase : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public virtual bool CheckKineticPowerCanBeUsed(Vector2Int originCellNum, bool isRight)
+    {
+        return true;
     }
 }

@@ -75,21 +75,22 @@ namespace Tako
             return Direction.NONE;
         }
 
-        private bool CheckKineticPowerAvailable(List<GameObject> neighvorList)
+        private bool CheckKineticPowerAvailable(List<GameObject> neighvorList, bool isRight)
         {
             bool result = true;
-            Vector2Int cellNum = currentStarStaying.GetComponent<StarBase>().CellNum;
-            var cellCnt = StarMaker.Instance.CurrentMapInfo.CellCnt;
-
-            // マップの端の時は×
-            if(cellNum.x <= 0 ||
-                cellCnt.x <= cellNum.x||
-                cellNum.y <= 0 ||
-                cellCnt.y <= cellNum.y)
+            foreach(GameObject star in neighvorList)
             {
-                result = false;
+                var script = star.GetComponent<StarBase>();
+                var pos = currentStarStaying.GetComponent<StarBase>().CellNum;
+                if(!star.GetComponent<StarBase>().CheckKineticPowerCanBeUsed(currentStarStaying.GetComponent<StarBase>().CellNum, isRight))
+                {
+                    result = false;
+                }
+                else
+                {
+                    // null
+                }
             }
-
             return result;
         }
 
@@ -309,7 +310,7 @@ namespace Tako
                 {
                     var list = StarMaker.Instance.GetNeighvorList(takoScript.currentStarStaying.GetComponent<LandStarController>().CellNum);
 
-                    if(takoScript.CheckKineticPowerAvailable(list))
+                    if(takoScript.CheckKineticPowerAvailable(list, true))
                     {
                         Debug.Log("KineticPowerAvailable");
                         takoScript.KineticPower(2.0f, true);
@@ -324,7 +325,7 @@ namespace Tako
                 {
                     var list = StarMaker.Instance.GetNeighvorList(takoScript.currentStarStaying.GetComponent<LandStarController>().CellNum);
 
-                    if(takoScript.CheckKineticPowerAvailable(list))
+                    if(takoScript.CheckKineticPowerAvailable(list, false))
                     {
                         Debug.Log("KineticPowerAvailable");
                         takoScript.KineticPower(2.0f, false);
