@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,7 +12,7 @@ public class StarBase : MonoBehaviour
     {
         get
         {
-            cellNum = StarMaker.Instance.CaluculateCellPos(transform.position);
+            cellNum = StarMaker.Instance.CaluculateCellNum(transform.position);
             return cellNum;
         }
         set
@@ -30,5 +31,10 @@ public class StarBase : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public virtual bool CheckKineticPowerCanBeUsed(Vector2Int originCellNum, bool isRight)
+    {
+        return true;
     }
 }

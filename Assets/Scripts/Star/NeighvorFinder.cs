@@ -35,15 +35,7 @@ public class NeighvorFinder : MonoBehaviour
             neighborStarList.Add(other.gameObject); // add to list
 
             Vector3 pos = other.gameObject.transform.position;
-            float dist = Vector3.Distance(transform.position, other.gameObject.transform.position);
-            Debug.Log("This is at( " + transform.position.x + "," + transform.position.y + " ).NeighborStar[" + neighborStarList.Count + "] pos = ( " + pos.x + "," + pos.y + " ).");
-            if (other.tag == ObjectTag.GoalStar)
-            {
-                Debug.Log("New one is goal star.");
-            }
-            Debug.Log("Distance is " + dist);
-            Debug.Log("This is at( " + transform.position.x + "," + transform.position.y + " ).I have" + neighborStarList.Count + " neighvor(s).");
-            
+            float dist = Vector3.Distance(transform.position, other.gameObject.transform.position);            
         }
     }
 
@@ -54,17 +46,9 @@ public class NeighvorFinder : MonoBehaviour
             if( neighborStarList[ mc ] == other.gameObject )
             {
                 float dist = Vector3.Distance( transform.position, other.gameObject.transform.position );
-                if (7.07f < dist ) // 多分ここの条件いらない.
-                {
-                    Debug.Log("This is at( " + transform.position.x + "," + transform.position.y + " ).NeighborStar[" + neighborStarList.Count + "] is removed.");
-                    Debug.Log("Distance is " + dist);
-                    Debug.Log("This is at( " + transform.position.x + "," + transform.position.y + " ).I have" + (neighborStarList.Count - 1) + " neighvor(s).");
-                    neighborStarList.RemoveAt(mc);
-                    return;
-                }
-
+                neighborStarList.RemoveAt(mc);
+                return;
             }
-
         }
     }
 

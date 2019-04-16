@@ -16,6 +16,8 @@ TagManager:
   - MenuBotton
   - SceneMaster
   - GridLine
+  - CellCollider
+  - Rock
   layers:
   - Default
   - TransparentFX
