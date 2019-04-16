@@ -189,6 +189,21 @@ public class StarMaker : SingletonPattern<StarMaker>
         var offset = CurrentMapInfo.DeffaultOffset;
         return new Vector3(size.x * cellNum.x + offset.x, size.y * cellNum.y + offset.y, offset.z);
     }
+
+    public bool CheckLimitOfMap(Vector2Int cellNum)
+    {
+        var cellCnt = CurrentMapInfo.CellCnt;
+
+        if(cellNum.x < cellCnt.x && 0 < cellNum.x && 
+            cellNum.y < cellCnt.y && 0 < cellNum.y)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
     public bool CheckLimitOfMap(Direction direction, Vector2Int startPos) // 指定した方向にマスがあるか.
     {
         if(direction == Direction.Right)
@@ -348,12 +363,26 @@ public class StarMaker : SingletonPattern<StarMaker>
         }
     }
 
+    public List<GameObject> GetStarList(Vector2Int cellNum)
+    {
+        if(CheckLimitOfMap(cellNum))
+        {
+            return new List<GameObject>();
+        }
+        else
+        {
+
+        }
+
+        return Cell[cellNum.y, cellNum.x].GetComponent<CellColliderBehaviour>().List;
+    }
+
     public List<GameObject> GetStarListInDirection(Direction direction, Vector2Int cellNum) // 指定された方向のマスにある星を取得する. 指定された方向がマップの端を超える場合nullを戻す.
     {
         // マップ限界のチェック
         if(!CheckLimitOfMap(direction, cellNum))
         {
-            return null;
+            return new List<GameObject>();
         }
 
         // 指定された方向のコマを戻す.
