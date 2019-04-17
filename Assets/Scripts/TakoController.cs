@@ -33,7 +33,6 @@ namespace Tako
         {
             currentStarStaying = Land;
             transform.position = Land.transform.position;
-            // neighvorList = Land.transform.GetChild(0).GetComponent<NeighvorFinder>().GetNeighvorStarList(); ----------------------
             Land.GetComponent<LandStarController>().AddStat(LandStarController.LANDSTAR_STAT.PLAYER_STAYING);
         }
 
@@ -64,7 +63,7 @@ namespace Tako
             return Direction.NONE;
         }
 
-        private bool CheckKineticPowerAvailable(List<GameObject> neighvorList, bool isRight)
+        private bool AskKineticPowerAvailable(List<GameObject> neighvorList, bool isRight)
         {
             bool result = true;
             foreach(GameObject star in neighvorList)
@@ -300,10 +299,10 @@ namespace Tako
                 {
                     var list = StarMaker.Instance.GetNeighvorList(takoScript.currentStarStaying.GetComponent<LandStarController>().CellNum);
 
-                    if(takoScript.CheckKineticPowerAvailable(list, false))
+                    if(takoScript.AskKineticPowerAvailable(list, false))
                     {
                         takoScript.KineticPower(2.0f, true);
-                        takoScript.TransitState(StateName.WaitingForKineticPowerEnd);
+                        // takoScript.TransitState(StateName.WaitingForKineticPowerEnd);
                     }
                     else
                     {
@@ -314,10 +313,10 @@ namespace Tako
                 {
                     var list = StarMaker.Instance.GetNeighvorList(takoScript.currentStarStaying.GetComponent<LandStarController>().CellNum);
 
-                    if(takoScript.CheckKineticPowerAvailable(list, true))
+                    if(takoScript.AskKineticPowerAvailable(list, true))
                     {
                         takoScript.KineticPower(2.0f, false);
-                        takoScript.TransitState(StateName.WaitingForKineticPowerEnd);
+                        // takoScript.TransitState(StateName.WaitingForKineticPowerEnd);
                     }
                     else
                     {

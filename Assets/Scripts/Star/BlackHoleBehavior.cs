@@ -23,7 +23,6 @@ public class BlackHoleBehavior : StarBase
             LandStarController landScript = collision.GetComponent<LandStarController>();
             landScript.AddStat(LandStarController.LANDSTAR_STAT.DESTROYED);
             landScript.RemoveFlag(LandStarController.LANDSTAR_STAT.MOVING);
-
         }
     }
 
