@@ -179,7 +179,7 @@ public class StarMaker : SingletonPattern<StarMaker>
         Vector3 vec = position - offset;
         Vector2Int cellNum = new Vector2Int();
         cellNum.x = (int) Math.Round(vec.x, MidpointRounding.AwayFromZero) / (int) mapInfo.CellSize.x;
-        cellNum.y = (int) Math.Round(-vec.y, MidpointRounding.AwayFromZero) / (int) mapInfo.CellSize.y;
+        cellNum.y = (int) Math.Round(-vec.z, MidpointRounding.AwayFromZero) / (int) mapInfo.CellSize.y;
         return cellNum;
     }
 
