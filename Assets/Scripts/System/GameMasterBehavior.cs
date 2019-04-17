@@ -15,8 +15,8 @@ public class GameMasterBehavior : MonoBehaviour
 
     private void Awake()
     {
+        PauseTheGame.SetTimeScale(1.0f);
         FadeManager.FadeIn();
-        float a = Time.timeScale;
 
         // ステージ情報を書いたテキストファイルの読み込み
         var mapData = MapLoader.LoadMap(InitiatingStage);

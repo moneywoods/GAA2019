@@ -9,12 +9,13 @@ public class ParentMenuCanvasBehavior : MenuCanvasBehavior
     // Start is called before the first frame update
     void Start()
     {
-        
+        m_OldTime = 1.0f;
     }
 
     // Update is called once per frame
     void Update()
     {
+
     }
 
     public void SwitchActive()
