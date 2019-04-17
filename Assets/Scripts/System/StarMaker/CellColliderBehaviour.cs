@@ -18,7 +18,7 @@ public class CellColliderBehaviour : MonoBehaviour
         // BoxColliderを追加&設定
         var colliderScript = gameObject.AddComponent(typeof(BoxCollider)) as BoxCollider;
         colliderScript.isTrigger = true;
-        colliderScript.size = new Vector3(StarMaker.Instance.CurrentMapInfo.CellSize.x, 0.0f, StarMaker.Instance.CurrentMapInfo.CellSize.y) - new Vector3(0.1f, 0.0f, 0.1f);
+        colliderScript.size = new Vector3(StarMaker.Instance.CurrentMapInfo.CellSize.x, 0.1f, StarMaker.Instance.CurrentMapInfo.CellSize.y) - new Vector3(0.1f, 0.0f, 0.1f);
     }
     private void OnTriggerEnter(Collider collision)
     {
@@ -36,6 +36,7 @@ public class CellColliderBehaviour : MonoBehaviour
             }
             // 追加
             List.Add(collision.gameObject);
+            Debug.Log(collision.name + " is in the list of " + gameObject.name);
         }
     }
 
@@ -52,6 +53,7 @@ public class CellColliderBehaviour : MonoBehaviour
                 if(List[c].gameObject == collision.gameObject)
                 {
                     List.RemoveAt(c);
+                    Debug.Log(collision.name + " is NOT in the list of " + gameObject.name);
                     return;
                 }
             }
