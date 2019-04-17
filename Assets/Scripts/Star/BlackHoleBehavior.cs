@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BlackHoleBehavior : MonoBehaviour
+public class BlackHoleBehavior : StarBase
 {
     // Start is called before the first frame update
     void Start()

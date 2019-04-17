@@ -4,26 +4,8 @@ using UnityEngine;
 
 public class PlayerCommandBehavior : MonoBehaviour
 {
-    public enum Direction
-    {
-        // Q, W, E,
-        // A,    D,
-        // Z, X, C
-        // この順番になっているのはfor文で回したときにDirection型n * 45度で角度が出せるからです. 
-        Right,
-        RightTop,
-        Top,
-        LeftTop,
-        Left,
-        LeftBottom,
-        Bottom,
-        RightBottom,
-        ENUM_MAX,
-        NONE
-    }
-
     private GameObject m_CurrentSceneMenu;
-
+    [SerializeField] private GameObject ResetSpritePrefab;
 
     private void Awake()
     {
@@ -48,6 +30,7 @@ public class PlayerCommandBehavior : MonoBehaviour
             GameObject starMaker = GameObject.FindWithTag(ObjectTag.StarMaker);
             if( starMaker != null )
             {
+                Instantiate(ResetSpritePrefab);
                 starMaker.GetComponent<StarMaker>().ResetWorld();
             }
         }
