@@ -41,12 +41,12 @@ public class GameMenuControl : MonoBehaviour
     {
         if (gameObject.name == "ReturnToGame")
         {// ゲームに戻る
-            PauseTheGame.GameReStart();
+            PauseTheGame.SetTimeScale(1.0f);
             m_MenuDelete.SwitchActive();
         }
         if (gameObject.name == "RestartStage")
         {// ステージをやり直す
-            PauseTheGame.GameReStart();
+            PauseTheGame.SetTimeScale(1.0f);
             m_ObjPlayerCmdBhv.GetComponent<PlayerCommandBehavior>().RedoTheStage();
             m_MenuDelete.SwitchActive();
         }
@@ -60,7 +60,7 @@ public class GameMenuControl : MonoBehaviour
         }
         if (gameObject.name == "BackToTitle")
         {// タイトルに戻る
-            PauseTheGame.GameReStart();
+            PauseTheGame.SetTimeScale(1.0f);
             FadeManager.FadeOut("TitleScene");
         }
     }
