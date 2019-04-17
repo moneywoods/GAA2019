@@ -28,7 +28,7 @@ public class GoalStarBehavior : LandStarController
         }   
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter(Collider collision)
     {
         if( collision.tag == ObjectTag.PlayerCharacter)
         {
@@ -38,7 +38,7 @@ public class GoalStarBehavior : LandStarController
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit(Collider collision)
     {
         
     }

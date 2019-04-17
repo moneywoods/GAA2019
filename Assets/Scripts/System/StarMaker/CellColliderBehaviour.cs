@@ -16,11 +16,11 @@ public class CellColliderBehaviour : MonoBehaviour
         List = new List<GameObject>();
 
         // BoxColliderを追加&設定
-        var colliderScript = gameObject.AddComponent(typeof(BoxCollider2D)) as BoxCollider2D;
+        var colliderScript = gameObject.AddComponent(typeof(BoxCollider)) as BoxCollider;
         colliderScript.isTrigger = true;
-        colliderScript.size = StarMaker.Instance.CurrentMapInfo.CellSize - new Vector2(0.1f, 0.1f);
+        colliderScript.size = new Vector3(StarMaker.Instance.CurrentMapInfo.CellSize.x, 0.0f, StarMaker.Instance.CurrentMapInfo.CellSize.y) - new Vector3(0.1f, 0.0f, 0.1f);
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter(Collider collision)
     {
         if(collision.tag == ObjectTag.Land ||
             collision.tag == ObjectTag.BlackHole || 
@@ -39,7 +39,7 @@ public class CellColliderBehaviour : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit(Collider collision)
     {
         // 星であるかチェック
         if(collision.tag == ObjectTag.Land ||

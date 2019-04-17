@@ -78,15 +78,15 @@ public class LandStarController : StarBase
 
             float degree = 0.0f;
 
-            if( CheckFlag( LANDSTAR_STAT.MOVING_LEFT ) ) // 左回りに移動中
+            if( CheckFlag( LANDSTAR_STAT.MOVING_RIGHT) ) // 左回りに移動中
             {
                 degree = 90.0f / timeToCirculate * time;
             }
-            else if( CheckFlag( LANDSTAR_STAT.MOVING_RIGHT ) ) // 右回りに移動中
+            else if( CheckFlag( LANDSTAR_STAT.MOVING_LEFT ) ) // 右回りに移動中
             {
                 degree = -90.0f / timeToCirculate * time;
             }
-            transform.RotateAround(centerOfCircular, new Vector3(0.0f, 0.0f, 1.0f), degree);
+            transform.RotateAround(centerOfCircular, new Vector3(0.0f, 1.0f, 0.0f), degree);
 
             timePast += time;
 

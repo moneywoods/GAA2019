@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 7812969628955110922}
   - component: {fileID: 9026137170962525332}
   - component: {fileID: 2022741290142755996}
-  - component: {fileID: 6938608571851232820}
-  - component: {fileID: 1514311122959768731}
+  - component: {fileID: 399107893205564343}
+  - component: {fileID: 6573340101619167281}
   m_Layer: 0
   m_Name: Tako
   m_TagString: PlayerCharacter
@@ -94,40 +94,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ece4e7551ead994287545347ada8e50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!50 &6938608571851232820
-Rigidbody2D:
-  serializedVersion: 4
+  currentStarStaying: {fileID: 0}
+  neighvorList: []
+--- !u!54 &399107893205564343
+Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3227633270504513355}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
+  serializedVersion: 2
   m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
   m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
   m_Constraints: 0
---- !u!58 &1514311122959768731
-CircleCollider2D:
+  m_CollisionDetection: 0
+--- !u!135 &6573340101619167281
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3227633270504513355}
-  m_Enabled: 1
-  m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}

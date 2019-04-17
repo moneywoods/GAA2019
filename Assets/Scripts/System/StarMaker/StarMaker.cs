@@ -13,7 +13,7 @@ public class StarMaker : SingletonPattern<StarMaker>
             CellCnt = new Vector2Int(mapData.GetLength(1), mapData.GetLength(0));
             CellSize = cellSize;
             Position = position;
-            DeffaultOffset = new Vector3( -CellSize.x * CellCnt.x * 0.5f + 2.5f, CellSize.y * CellCnt.y * 0.5f + 2.5f, 0.0f) + Position;
+            DeffaultOffset = new Vector3( -CellSize.x * CellCnt.x * 0.5f + 2.5f, 0.0f, CellSize.y * CellCnt.y * 0.5f + 2.5f) + Position;
         }
         public char[,] MapData;  // マップの初期配置
         public Vector2Int CellCnt; // マスの列数,行数
@@ -163,7 +163,7 @@ public class StarMaker : SingletonPattern<StarMaker>
     GameObject PlaceStar(GameObject star, uint row, uint col)
     {
         //配置する座標を設定
-        Vector3 placePosition = new Vector3(currentMapInfo.CellSize.x * col, -currentMapInfo.CellSize.y * row , 0) + currentMapInfo.DeffaultOffset;
+        Vector3 placePosition = new Vector3(currentMapInfo.CellSize.x * col, 0.0f, -currentMapInfo.CellSize.y * row) + currentMapInfo.DeffaultOffset;
         //配置する回転角を設定
         Quaternion q = new Quaternion();
         q = Quaternion.identity;
@@ -187,7 +187,7 @@ public class StarMaker : SingletonPattern<StarMaker>
     {
         var size = CurrentMapInfo.CellSize;
         var offset = CurrentMapInfo.DeffaultOffset;
-        return new Vector3(size.x * cellNum.x + offset.x, size.y * cellNum.y + offset.y, offset.z);
+        return new Vector3(size.x * cellNum.x + offset.x, offset.y, size.y * cellNum.y + offset.z);
     }
 
     public bool CheckLimitOfMap(Vector2Int cellNum)

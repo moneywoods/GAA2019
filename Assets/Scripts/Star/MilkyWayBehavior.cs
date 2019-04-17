@@ -18,7 +18,7 @@ public class MilkyWayBehavior : StarBase
 
 
     // 当たり判定はとりあえず3にしてます.
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter(Collider collision)
     {
         if( collision.tag == ObjectTag.Land )
         {
@@ -26,7 +26,7 @@ public class MilkyWayBehavior : StarBase
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit(Collider collision)
     {
         
     }

@@ -24,7 +24,7 @@ public class GridLineBehaviour : MonoBehaviour
             return;
         scale = CurrentMapInfo.CellSize * CurrentMapInfo.CellCnt;// Vector2 * Vecto2 = element-wise product
         division = CurrentMapInfo.CellCnt;
-        offset = new Vector3(0.0f, -CurrentMapInfo.CellSize.y, 0.0f);
+        offset = new Vector3(0.0f, 0.0f, CurrentMapInfo.CellSize.y);
         Vector2 stepSize = scale / division;
         Vector2 halfScale = scale * 0.5f;
 
@@ -34,20 +34,20 @@ public class GridLineBehaviour : MonoBehaviour
         for(int x = 0; x <= division.x; x++) // マスの辺毎に描く必要ありそうなので。
         {
             GL.Begin(GL.LINES);
-            for(int z = 0; z < division.y; z++)
+            for(int y = 0; y < division.y; y++)
             {
-                GL.Vertex(new Vector3(x * stepSize.x - halfScale.x + offset.x, 0f, z * stepSize.y - halfScale.y + offset.y));
-                GL.Vertex(new Vector3(x * stepSize.x - halfScale.x + offset.x, 0f, (z + 1) * stepSize.y - halfScale.y + offset.y));
+                GL.Vertex(new Vector3(x * stepSize.x - halfScale.x + offset.x, y * stepSize.y - halfScale.y + offset.y, 0f));
+                GL.Vertex(new Vector3(x * stepSize.x - halfScale.x + offset.x, (y + 1) * stepSize.y - halfScale.y + offset.y, 0f));
             }
             GL.End();
         }
-        for(int z = 0; z <= division.y; z++)
+        for(int y = 0; y <= division.y; y++)
         {
             GL.Begin(GL.LINES);
             for(int x = 0; x < division.x; x++)
             {
-                GL.Vertex(new Vector3(x * stepSize.x - halfScale.x + offset.x, 0f, z * stepSize.y - halfScale.y + offset.y));
-                GL.Vertex(new Vector3((x + 1) * stepSize.x - halfScale.x + offset.x, 0f, z * stepSize.y - halfScale.y + offset.y));
+                GL.Vertex(new Vector3(x * stepSize.x - halfScale.x + offset.x, y * stepSize.y - halfScale.y + offset.y, 0f));
+                GL.Vertex(new Vector3((x + 1) * stepSize.x - halfScale.x + offset.x, y * stepSize.y - halfScale.y + offset.y, 0f));
             }
             GL.End();
         }
