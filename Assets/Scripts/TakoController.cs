@@ -37,6 +37,10 @@ namespace Tako
 
         protected override void Update()
         {
+            if (Mathf.Approximately(Time.timeScale, 0f))
+            {
+                return;
+            }
             base.Update();
         }
 

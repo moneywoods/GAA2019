@@ -121,5 +121,15 @@ public class FadeManager : MonoBehaviour
 			//フェード用Imageの透明度設定
 			fadeImage.color = new Color(0.0f, 0.0f, 0.0f, alpha);
 		}
+
 	}
+
+    // フェードイン/アウトのチェックフラグ
+    public static bool CheckIsFade()
+    {
+        // フェードイン/アウトが起動時はtrueを返す
+        if (isFadeIn || isFadeOut) return true;
+
+        return false;
+    }
 }

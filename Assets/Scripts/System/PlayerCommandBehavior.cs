@@ -20,6 +20,7 @@ public class PlayerCommandBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         /* ----- ゲームパッド用ボタン番号 ----- */
         bool startButton = Input.GetKeyDown(KeyCode.Joystick1Button7);      // STARTボタン
 
@@ -36,6 +37,8 @@ public class PlayerCommandBehavior : MonoBehaviour
 
         if( (Input.GetKeyDown(KeyCode.Escape) || startButton) && m_CurrentSceneMenu != null )
         {
+            if (FadeManager.CheckIsFade()) return;
+
             var menuScript = m_CurrentSceneMenu.GetComponent<ParentMenuCanvasBehavior>();
             if( menuScript != null )
             {
@@ -50,6 +53,15 @@ public class PlayerCommandBehavior : MonoBehaviour
         if( Menu.tag == ObjectTag.MenuCanvas )
         {
             m_CurrentSceneMenu = Menu;
+        }
+    }
+
+    public void RedoTheStage()
+    {
+        GameObject starMaker = GameObject.FindWithTag(ObjectTag.StarMaker);
+        if (starMaker != null)
+        {
+            starMaker.GetComponent<StarMaker>().ResetWorld();
         }
     }
 }
