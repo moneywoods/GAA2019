@@ -125,14 +125,9 @@ namespace Tako
             if (newLand != null)
             {
                 var neighvorList = StarMaker.Instance.GetNeighvorList(currentStarStaying.GetComponent<StarBase>().CellNum);
-                // 移動処理
-                foreach (GameObject obj in neighvorList)
-                {
-                    obj.GetComponent<LandStarController>().DiscardCanMoveToEffect();
-                }
                 var currentStarScript = currentStarStaying.GetComponent<LandStarController>();
-                currentStarScript.LeaveThisLand(gameObject);
 
+                currentStarScript.LeaveThisLand(gameObject);
                 newLand.GetComponent<LandStarController>().ArriveThisLand(gameObject);
                 return true;
             }
