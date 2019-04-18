@@ -20,6 +20,7 @@ public class Reset : MonoBehaviour
         if (timeElapsed >= timeOut)
         {
             // Do anything
+//            gameObject.SetActive(false);
             Destroy(gameObject);
             timeElapsed = 0.0f;
             
