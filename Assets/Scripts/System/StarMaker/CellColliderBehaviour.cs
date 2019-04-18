@@ -9,7 +9,7 @@ public class CellColliderBehaviour : MonoBehaviour
         get;
         private set;
     }
-
+    public int Cnt = 0;
     private void Awake()
     {
         // リストのnew
@@ -36,6 +36,7 @@ public class CellColliderBehaviour : MonoBehaviour
             }
             // 追加
             List.Add(collision.gameObject);
+            Cnt++;
             Debug.Log(collision.name + " is in the list of " + gameObject.name);
         }
     }
@@ -47,16 +48,19 @@ public class CellColliderBehaviour : MonoBehaviour
             collision.tag == ObjectTag.BlackHole ||
             collision.tag == ObjectTag.GoalStar ||
             collision.tag == ObjectTag.MilkyWay)
-        { 
-            for(int c = 0; c < List.Count; c++)
-            {
-                if(List[c].gameObject == collision.gameObject)
-                {
-                    List.RemoveAt(c);
-                    Debug.Log(collision.name + " is NOT in the list of " + gameObject.name);
-                    return;
-                }
-            }
+        {
+            List.Remove(collision.gameObject);
+            Cnt--;
+            //for(int c = 0; c < List.Count; c++)
+            //{
+            //    if(List[c].gameObject == collision.gameObject)
+            //    {
+            //        List.RemoveAt(c);
+            //        Cnt--;
+            //        Debug.Log(collision.name + " is NOT in the list of " + gameObject.name);
+            //        return;
+            //    }
+            //}
         }
     }
 }

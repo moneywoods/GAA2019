@@ -91,7 +91,7 @@ GameObject:
   - component: {fileID: 9197225789855296592}
   - component: {fileID: 5842273641038818132}
   - component: {fileID: 6160462021045755534}
-  - component: {fileID: 5974409555401939672}
+  - component: {fileID: 245837566697445668}
   - component: {fileID: 1697792433452341540}
   m_Layer: 5
   m_Name: End
@@ -197,7 +197,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5974409555401939672}
+      - m_Target: {fileID: 245837566697445668}
         m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
@@ -210,7 +210,7 @@ MonoBehaviour:
         m_CallState: 1
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &5974409555401939672
+--- !u!114 &245837566697445668
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -219,7 +219,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 618592592726424989}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dad449247d5c2b446a9c5aae4b3cef7d, type: 3}
+  m_Script: {fileID: 11500000, guid: cc18520fecb7c4b498a25c326b5e7ca0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1697792433452341540
@@ -239,7 +239,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 5974409555401939672}
+        - m_Target: {fileID: 0}
           m_MethodName: OnSelected
           m_Mode: 1
           m_Arguments:
@@ -256,7 +256,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 5974409555401939672}
+        - m_Target: {fileID: 0}
           m_MethodName: OnDeseleccted
           m_Mode: 1
           m_Arguments:
@@ -273,7 +273,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 5974409555401939672}
+        - m_Target: {fileID: 0}
           m_MethodName: OnSubmit
           m_Mode: 1
           m_Arguments:
@@ -290,7 +290,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 5974409555401939672}
+        - m_Target: {fileID: 0}
           m_MethodName: OnClick
           m_Mode: 1
           m_Arguments:
@@ -469,7 +469,7 @@ GameObject:
   - component: {fileID: 6018547282845714427}
   - component: {fileID: 2552193675224704224}
   - component: {fileID: 5702240953979543267}
-  - component: {fileID: 7197400844602865051}
+  - component: {fileID: 3079255787858806853}
   - component: {fileID: 1788788164452839080}
   m_Layer: 5
   m_Name: SelectStage
@@ -575,7 +575,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7197400844602865051}
+      - m_Target: {fileID: 3079255787858806853}
         m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
@@ -588,7 +588,7 @@ MonoBehaviour:
         m_CallState: 1
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &7197400844602865051
+--- !u!114 &3079255787858806853
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -597,7 +597,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4598057585987408641}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dad449247d5c2b446a9c5aae4b3cef7d, type: 3}
+  m_Script: {fileID: 11500000, guid: cc18520fecb7c4b498a25c326b5e7ca0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1788788164452839080
@@ -617,7 +617,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 7197400844602865051}
+        - m_Target: {fileID: 0}
           m_MethodName: OnSelected
           m_Mode: 1
           m_Arguments:
@@ -634,7 +634,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 7197400844602865051}
+        - m_Target: {fileID: 0}
           m_MethodName: OnDeseleccted
           m_Mode: 1
           m_Arguments:
@@ -651,7 +651,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 7197400844602865051}
+        - m_Target: {fileID: 0}
           m_MethodName: OnSubmit
           m_Mode: 1
           m_Arguments:
@@ -668,7 +668,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 7197400844602865051}
+        - m_Target: {fileID: 0}
           m_MethodName: OnClick
           m_Mode: 1
           m_Arguments:
@@ -694,7 +694,7 @@ GameObject:
   - component: {fileID: 3232236605011581037}
   - component: {fileID: 8305271113409418684}
   - component: {fileID: 8605861016440101955}
-  - component: {fileID: 5371944775676644635}
+  - component: {fileID: 187468483992407446}
   - component: {fileID: 4716118170065322712}
   m_Layer: 5
   m_Name: BeginGame
@@ -800,7 +800,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5371944775676644635}
+      - m_Target: {fileID: 187468483992407446}
         m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
@@ -810,10 +810,10 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 1
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &5371944775676644635
+--- !u!114 &187468483992407446
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -822,7 +822,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4619351866245664333}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dad449247d5c2b446a9c5aae4b3cef7d, type: 3}
+  m_Script: {fileID: 11500000, guid: cc18520fecb7c4b498a25c326b5e7ca0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &4716118170065322712
@@ -842,8 +842,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 5371944775676644635}
-          m_MethodName: OnSelected
+        - m_Target: {fileID: 187468483992407446}
+          m_MethodName: Select
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -859,59 +859,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 5371944775676644635}
-          m_MethodName: OnDeseleccted
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
-        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  - eventID: 15
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 5371944775676644635}
-          m_MethodName: OnSubmit
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
-        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  - eventID: 4
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 4619351866245664333}
-          m_MethodName: 
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
-        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  - eventID: 2
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 5371944775676644635}
-          m_MethodName: OnClick
+        - m_Target: {fileID: 187468483992407446}
+          m_MethodName: DeSelect
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -1346,7 +1295,7 @@ GameObject:
   - component: {fileID: 4808369766291578546}
   - component: {fileID: 6452422860457293265}
   - component: {fileID: 2519338701100656733}
-  - component: {fileID: 5942014613581747937}
+  - component: {fileID: 9151550075805071147}
   - component: {fileID: 707777137660971045}
   m_Layer: 5
   m_Name: ContinueGame
@@ -1452,7 +1401,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5942014613581747937}
+      - m_Target: {fileID: 9151550075805071147}
         m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
@@ -1465,7 +1414,7 @@ MonoBehaviour:
         m_CallState: 1
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &5942014613581747937
+--- !u!114 &9151550075805071147
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1474,7 +1423,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8623980350346131116}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dad449247d5c2b446a9c5aae4b3cef7d, type: 3}
+  m_Script: {fileID: 11500000, guid: cc18520fecb7c4b498a25c326b5e7ca0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &707777137660971045
@@ -1494,7 +1443,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 5942014613581747937}
+        - m_Target: {fileID: 0}
           m_MethodName: OnSelected
           m_Mode: 1
           m_Arguments:
@@ -1511,7 +1460,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 5942014613581747937}
+        - m_Target: {fileID: 0}
           m_MethodName: OnDeseleccted
           m_Mode: 1
           m_Arguments:
@@ -1528,7 +1477,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 5942014613581747937}
+        - m_Target: {fileID: 0}
           m_MethodName: OnSubmit
           m_Mode: 1
           m_Arguments:
@@ -1545,7 +1494,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 5942014613581747937}
+        - m_Target: {fileID: 0}
           m_MethodName: OnClick
           m_Mode: 1
           m_Arguments:

@@ -15,18 +15,18 @@ public class LandStarController : StarBase
     [Flags]
     public enum LANDSTAR_STAT // たぶん32bitだから大丈夫(?)
     {
-        NEUTRAL = 0 << 0, // 0000_0000_0000 // 何もない状態.
-        // WAITING                     = 1 << 0, // 0000_0000_0001 // 待機状態. これややこしくしてるだけかも.
-        MOVING_RIGHT = 1 << 1, // 0000_0000_0010 // プレイヤーの周りの星を右回転.
-        MOVING_LEFT = 1 << 2, // 0000_0000_0100 // プレイヤーの周りの星を左回転.
-                              // わからんけど開けておく下位4bitが移動待機を司る.
-        PLAYER_STAYING = 1 << 4, // 0000_0001_0000 // プレイヤーが滞在中.
-        IN_MILKYWAY_AREA = 1 << 5, // 0000_0010_0000 // 乳の領内に侵入中.
+        NEUTRAL                = 0 << 0, // 0000_0000_0000 // 何もない状態.
+        // WAITING             = 1 << 0, // 0000_0000_0001 // 待機状態. これややこしくしてるだけかも.
+        MOVING_RIGHT           = 1 << 1, // 0000_0000_0010 // プレイヤーの周りの星を右回転.
+        MOVING_LEFT            = 1 << 2, // 0000_0000_0100 // プレイヤーの周りの星を左回転.
+                                         // わからんけど開けておく下位4bitが移動待機を司る.
+        PLAYER_STAYING         = 1 << 4, // 0000_0001_0000 // プレイヤーが滞在中.
+        IN_MILKYWAY_AREA       = 1 << 5, // 0000_0010_0000 // 乳の領内に侵入中.
         GET_CAUGHT_BY_MILKYWAY = 1 << 6, // 0000_0100_0000 // 乳に飲まれて動けない.
-        ALIVE = 1 << 7, // 0000_1000_0000 // 生きてる.( == キネティックパワーを受ける状態)
-        DESTROYED = 1 << 8, // 0001_0000_0000  // 破壊された.
+        ALIVE                  = 1 << 7, // 0000_1000_0000 // 生きてる.( == キネティックパワーを受ける状態)
+        DESTROYED              = 1 << 8, // 0001_0000_0000  // 破壊された.
         // フラグ抽出用
-        MOVING = 6,      // 0000_0000_0110 // MOVING_LEFT | MOVING_RIGHT
+        MOVING                 = 6,      // 0000_0000_0110 // MOVING_LEFT | MOVING_RIGHT
         ENUM_MAX
     }
 
@@ -100,8 +100,11 @@ public class LandStarController : StarBase
         if(CheckFlag(LANDSTAR_STAT.DESTROYED))
         {
             // 爆発エフェクト生成.
-            Instantiate(explosionObject, transform.position, transform.rotation); // 自身のtransformをそのまま引き継いでいるので注意!
-            Destroy(gameObject);
+            Instantiate(explosionObject, transform.position, transform.rotation);
+            // gameObject.SetActive(false);
+            RemoveFlag(LANDSTAR_STAT.DESTROYED);
+            transform.position = new Vector3(1000000.0f, 100000.0f, 100000.0f);
+            // Destroy(gameObject);
         }
     }
 
@@ -405,8 +408,9 @@ public class LandStarController : StarBase
             return true; // 引数のフラグが既に立っている場合trueを返す.
         }
 
-        // フラグ別の追加処理
         CurrentStat |= additionalStat;
+
+        // フラグ別の追加処理
         if(additionalStat == LANDSTAR_STAT.DESTROYED)
         {
             RemoveFlag(LANDSTAR_STAT.ALIVE);

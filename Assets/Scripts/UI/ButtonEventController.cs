@@ -8,6 +8,7 @@ public class ButtonEventController : MonoBehaviour
 {
     private Text text;
 
+    private ParentMenuCanvasBehavior m_MenuDelete;
     private void Awake()
     {
 
@@ -24,6 +25,8 @@ public class ButtonEventController : MonoBehaviour
 
         component.colors = color;
         text = transform.root.GetComponent<Text>();
+
+        m_MenuDelete = transform.root.gameObject.GetComponent<ParentMenuCanvasBehavior>();
     }
 
     // Update is called once per frame
@@ -49,7 +52,6 @@ public void OnSelected()
 
     public void OnClick()
     {
-        ParentMenuCanvasBehavior menuDelete = transform.root.gameObject.GetComponent<ParentMenuCanvasBehavior>();
 
         /* ----- タイトル画面のメニュー ----- */
         if (gameObject.name == "BeginGame")
@@ -72,8 +74,8 @@ public void OnSelected()
         /* ----- ゲーム画面のメニュー ----- */
         if (gameObject.name == "ReturnToGame")
         {// ゲームに戻る
-            PauseTheGame.GameReStart();
-            menuDelete.SwitchActive();
+            PauseTheGame.GameReStart();         // 一時停止解除
+            m_MenuDelete.SwitchActive();        // メニューを消す
         }
         if (gameObject.name == "SelectStage")
         {// ステージ選択

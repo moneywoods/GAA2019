@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3993350545147920061}
   m_Layer: 0
   m_Name: PlayerCommand
-  m_TagString: Untagged
+  m_TagString: PlayerCommand
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -92,3 +92,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5382448376da2a14bacf5fc952eb6ca7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ResetSpritePrefab: {fileID: 7687525143576401856, guid: 7947801b553f33a478f08a8d24dcfc3a,
+    type: 3}

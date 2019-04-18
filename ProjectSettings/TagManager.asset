@@ -15,6 +15,7 @@ TagManager:
   - MenuCanvas
   - MenuBotton
   - SceneMaster
+  - PlayerCommand
   - GridLine
   - CellCollider
   - Rock

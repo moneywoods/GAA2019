@@ -125,7 +125,7 @@ public class StarMaker : SingletonPattern<StarMaker>
         GameObject grid = GameObject.FindWithTag(ObjectTag.GridLine);
         if(grid != null)
         {
-            grid.GetComponent<GridLineBehaviour>().CurrentMapInfo = CurrentMapInfo;
+            grid.GetComponent<GridLineBehaviour>().CurrentMapInfo = this.CurrentMapInfo;
         }
     }
 
