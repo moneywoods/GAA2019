@@ -12,7 +12,7 @@ public class StarBase : MonoBehaviour
     {
         get
         {
-            cellNum = StarMaker.Instance.CaluculateCellNum(transform.position);
+           //  cellNum = StarMaker.Instance.CaluculateCellNum(transform.position);
             return cellNum;
         }
         set
@@ -36,5 +36,25 @@ public class StarBase : MonoBehaviour
     public virtual bool CheckKineticPowerCanBeUsed(Vector2Int originCellNum, bool isRight)
     {
         return true;
+    }
+
+    public virtual void TriggerEnterCell(GameObject other)
+    {
+
+    }
+
+    public virtual void TriggerExitCell(GameObject other)
+    {
+
+    }
+
+    public virtual void TriggerOtherComeToSameCell(GameObject other)
+    {
+
+    }
+
+    public virtual void TriggerOtherLeaveFromSameCell(GameObject other)
+    {
+
     }
 }
