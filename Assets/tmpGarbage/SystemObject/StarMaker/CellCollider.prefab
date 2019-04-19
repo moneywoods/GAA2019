@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2940505243956116400}
   - component: {fileID: 8205578788977016241}
   - component: {fileID: 1034164790090118705}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: CellCollider
   m_TagString: CellCollider
   m_Icon: {fileID: 0}
@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f454f46f42c274468e935c4e03a3479, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ListCnt: 0
 --- !u!54 &1034164790090118705
 Rigidbody:
   m_ObjectHideFlags: 0
