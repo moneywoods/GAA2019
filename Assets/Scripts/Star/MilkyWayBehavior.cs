@@ -16,17 +16,11 @@ public class MilkyWayBehavior : StarBase
         
     }
 
-    
-    private void OnTriggerEnter(Collider collision)
+    public override void TriggerOtherComeToSameCell(GameObject other)
     {
-        if( collision.tag == ObjectTag.Land )
+        if(other.tag == ObjectTag.Land)
         {
-            collision.GetComponent<LandStarController>().AddStat(LandStarController.LANDSTAR_STAT.IN_MILKYWAY_AREA);
+            other.GetComponent<LandStarController>().AddStat(LandStarController.LANDSTAR_STAT.IN_MILKYWAY_AREA);
         }
-    }
-
-    private void OnTriggerExit(Collider collision)
-    {
-        
     }
 }

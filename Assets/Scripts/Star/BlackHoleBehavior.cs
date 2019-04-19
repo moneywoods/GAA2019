@@ -15,17 +15,7 @@ public class BlackHoleBehavior : StarBase
     {
 
     }
-
-    private void OnTriggerEnter(Collider collision)
-    {
-
-    }
-
-    private void OnTriggerExit(Collider collision)
-    {
-        
-    }
-
+    
     public override bool CheckKineticPowerCanBeUsed(Vector2Int originCellNum, bool isRight)
     {
         return base.CheckKineticPowerCanBeUsed(originCellNum, isRight);

@@ -34,16 +34,16 @@ public class CellColliderBehaviour : MonoBehaviour
                 return;
             }
         }
-        var starScript = star.GetComponent<StarBase>();
+        var starScript = star.GetComponent<MyGameObject>();
         starScript.CellNum = CellNum;
         // リスト中の星と同じマスに入った時のイベントを行う.
         foreach(var other in List)
         {
-            star.GetComponent<StarBase>().TriggerEnterCell(other);
+            star.GetComponent<MyGameObject>().TriggerEnterCell(other);
         }
         foreach(var other in List)
         {
-            other.GetComponent<StarBase>().TriggerOtherComeToSameCell(star);
+            other.GetComponent<MyGameObject>().TriggerOtherComeToSameCell(star);
         }
 
         List.Add(star.gameObject);
@@ -55,11 +55,11 @@ public class CellColliderBehaviour : MonoBehaviour
         // リスト中の星と同じマスから離れる時のイベントを行う.
         foreach(var other in List)
         {
-            other.GetComponent<StarBase>().TriggerOtherLeaveFromSameCell(star);
+            other.GetComponent<MyGameObject>().TriggerOtherLeaveFromSameCell(star);
         }
         foreach(var other in List)
         {
-            star.GetComponent<StarBase>().TriggerExitCell(other);
+            star.GetComponent<MyGameObject>().TriggerExitCell(other);
         }
 
         List.Remove(star);
@@ -79,11 +79,16 @@ public class CellColliderBehaviour : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if(other.tag == ObjectTag.PlayerCharacter)
+        {
+            int a = 0;
+        }
         // 星であるかチェック
         if(other.tag == ObjectTag.Land ||
            other.tag == ObjectTag.BlackHole ||
            other.tag == ObjectTag.GoalStar ||
-           other.tag == ObjectTag.MilkyWay)
+           other.tag == ObjectTag.MilkyWay ||
+           other.tag == ObjectTag.PlayerCharacter)
         {
             Add(other.gameObject);
             Debug.Log(other.name + " is in the list of " + gameObject.name);
@@ -96,7 +101,8 @@ public class CellColliderBehaviour : MonoBehaviour
         if(other.tag == ObjectTag.Land ||
            other.tag == ObjectTag.BlackHole ||
            other.tag == ObjectTag.GoalStar ||
-           other.tag == ObjectTag.MilkyWay)
+           other.tag == ObjectTag.MilkyWay ||
+           other.tag == ObjectTag.PlayerCharacter)
         {
             // リスト中の星と同じマスから離れる時のイベントを行う.
             Remove(other.gameObject);

@@ -27,17 +27,16 @@ public class GoalStarBehavior : LandStarController
             m_NextSceneTimer++;
         }   
     }
-
-    private void OnTriggerEnter(Collider collision)
+    
+    public override void TriggerOtherComeToSameCell(GameObject other)
     {
-        if( collision.tag == ObjectTag.PlayerCharacter)
+        if(other.tag == ObjectTag.PlayerCharacter)
         {
             GameObject.FindWithTag("Finish").transform.position = transform.position;
 
             m_NextSceneTimer++;
         }
     }
-
     private void OnTriggerExit(Collider collision)
     {
         
