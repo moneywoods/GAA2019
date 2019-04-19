@@ -134,14 +134,15 @@ public class StarMaker : SingletonPattern<StarMaker>
         DestroyWorld();
         MakeWorld(currentMapInfo.MapData, currentMapInfo.CellSize);
     }
+
     public void DestroyWorld() // このスクリプトで生成した(であろう)オブジェクト達を消す.
     {
-        DestroyObject("Land");
-        DestroyObject("GoalStar");
-        DestroyObject("BlackHole");
-        DestroyObject("MilkyWay");
-        DestroyObject("PlayerCharacter");
-
+        DestroyObject(ObjectTag.Land);
+        DestroyObject(ObjectTag.GoalStar);
+        DestroyObject(ObjectTag.BlackHole);
+        DestroyObject(ObjectTag.MilkyWay);
+        DestroyObject(ObjectTag.PlayerCharacter);
+        DestroyObject(ObjectTag.CellCollider);
     }
 
     private void DestroyObject(string tag)
