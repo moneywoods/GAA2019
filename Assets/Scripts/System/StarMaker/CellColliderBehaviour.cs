@@ -9,58 +9,98 @@ public class CellColliderBehaviour : MonoBehaviour
         get;
         private set;
     }
-    public int Cnt = 0;
+    public Vector2Int CellNum;
+    public int ListCnt = 0;
     private void Awake()
     {
         // リストのnew
         List = new List<GameObject>();
 
+        CellNum = StarMaker.Instance.CaluculateCellNum(transform.position);
+
         // BoxColliderを追加&設定
         var colliderScript = gameObject.AddComponent(typeof(BoxCollider)) as BoxCollider;
         colliderScript.isTrigger = true;
-        colliderScript.size = new Vector3(StarMaker.Instance.CurrentMapInfo.CellSize.x, 0.1f, StarMaker.Instance.CurrentMapInfo.CellSize.y) - new Vector3(0.1f, 0.0f, 0.1f);
+        colliderScript.size = new Vector3(StarMaker.Instance.CurrentMapInfo.CellSize.x, 0.1f, StarMaker.Instance.CurrentMapInfo.CellSize.y); // - new Vector3(1.0f, 0.0f, 1.0f);
     }
-    private void OnTriggerEnter(Collider collision)
+
+    private void Add(GameObject star)
     {
-        if(collision.tag == ObjectTag.Land ||
-            collision.tag == ObjectTag.BlackHole || 
-            collision.tag == ObjectTag.GoalStar ||
-            collision.tag == ObjectTag.MilkyWay)
+        // 重複チェック
+        foreach(GameObject obj in List)
         {
-            foreach(GameObject obj in List) // 重複チェック
+            if(obj.gameObject == star.gameObject)
             {
-                if(obj.gameObject == collision.gameObject)
-                {
-                    return;
-                }
+                return;
             }
-            // 追加
-            List.Add(collision.gameObject);
-            Cnt++;
-            Debug.Log(collision.name + " is in the list of " + gameObject.name);
+        }
+        var starScript = star.GetComponent<StarBase>();
+        starScript.CellNum = CellNum;
+        // リスト中の星と同じマスに入った時のイベントを行う.
+        foreach(var other in List)
+        {
+            star.GetComponent<StarBase>().TriggerEnterCell(other);
+        }
+        foreach(var other in List)
+        {
+            other.GetComponent<StarBase>().TriggerOtherComeToSameCell(star);
+        }
+
+        List.Add(star.gameObject);
+        ListCnt++;
+    }
+
+    private void Remove(GameObject star)
+    {
+        // リスト中の星と同じマスから離れる時のイベントを行う.
+        foreach(var other in List)
+        {
+            other.GetComponent<StarBase>().TriggerOtherLeaveFromSameCell(star);
+        }
+        foreach(var other in List)
+        {
+            star.GetComponent<StarBase>().TriggerExitCell(other);
+        }
+
+        List.Remove(star);
+        ListCnt--;
+    }
+    public void AddManually(GameObject star)
+    {
+        Add(star);
+        Debug.Log(star.name + " is added manually in the list of " + gameObject.name);
+    }
+
+    public void RemoveManually(GameObject star)
+    {
+        Remove(star);
+        Debug.Log(star.name + " is removed manually from the list of " + gameObject.name);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        // 星であるかチェック
+        if(other.tag == ObjectTag.Land ||
+           other.tag == ObjectTag.BlackHole ||
+           other.tag == ObjectTag.GoalStar ||
+           other.tag == ObjectTag.MilkyWay)
+        {
+            Add(other.gameObject);
+            Debug.Log(other.name + " is in the list of " + gameObject.name);
         }
     }
 
-    private void OnTriggerExit(Collider collision)
+    private void OnTriggerExit(Collider other)
     {
         // 星であるかチェック
-        if(collision.tag == ObjectTag.Land ||
-            collision.tag == ObjectTag.BlackHole ||
-            collision.tag == ObjectTag.GoalStar ||
-            collision.tag == ObjectTag.MilkyWay)
+        if(other.tag == ObjectTag.Land ||
+           other.tag == ObjectTag.BlackHole ||
+           other.tag == ObjectTag.GoalStar ||
+           other.tag == ObjectTag.MilkyWay)
         {
-            List.Remove(collision.gameObject);
-            Cnt--;
-            //for(int c = 0; c < List.Count; c++)
-            //{
-            //    if(List[c].gameObject == collision.gameObject)
-            //    {
-            //        List.RemoveAt(c);
-            //        Cnt--;
-            //        Debug.Log(collision.name + " is NOT in the list of " + gameObject.name);
-            //        return;
-            //    }
-            //}
+            // リスト中の星と同じマスから離れる時のイベントを行う.
+            Remove(other.gameObject);
+            Debug.Log(other.name + " is removed from the list of " + gameObject.name);
         }
     }
 }
