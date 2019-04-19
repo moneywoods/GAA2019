@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using StatePattern;
+
 namespace Tako
 {
     public class TakoController : StateContex
@@ -152,7 +153,7 @@ namespace Tako
             foreach (GameObject star in neighborStarList)
             {
                 // 0326現在,リストに含まれるのは着陸可能星のみになってます. -> 全て
-                if(star.tag == ObjectTag.Land)
+                if(star.tag == ObjectTag.Land || star.tag == ObjectTag.GoalStar)
                 {
                     var landScript = star.GetComponent<LandStarController>();
                     if((landScript.CheckFlag(LandStarController.LANDSTAR_STAT.ALIVE)) && !landScript.CheckFlag(LandStarController.LANDSTAR_STAT.MOVING))
