@@ -301,7 +301,7 @@ namespace Tako
                     if(takoScript.AskKineticPowerAvailable(list, false))
                     {
                         takoScript.KineticPower(2.0f, true);
-                        // takoScript.TransitState(StateName.WaitingForKineticPowerEnd);
+                        takoScript.TransitState(StateName.WaitingForKineticPowerEnd);
                     }
                     else
                     {
@@ -315,7 +315,7 @@ namespace Tako
                     if(takoScript.AskKineticPowerAvailable(list, true))
                     {
                         takoScript.KineticPower(2.0f, false);
-                        // takoScript.TransitState(StateName.WaitingForKineticPowerEnd);
+                        takoScript.TransitState(StateName.WaitingForKineticPowerEnd);
                     }
                     else
                     {
