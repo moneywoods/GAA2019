@@ -424,6 +424,15 @@ public class StarMaker : SingletonPattern<StarMaker>
         }
     }
 
+    public CellColliderBehaviour GetCellColliderBehavior(Vector2Int cellNum)
+    {
+        if(!CheckLimitOfMap(cellNum))
+        {
+            return null;
+        }
+        return Cell[cellNum.y, cellNum.x].GetComponent<CellColliderBehaviour>();
+    }
+
     public List<GameObject> GetNeighvorList(Vector2Int cellNum)
     {
         var list = new List<GameObject>(); // 戻すリスト
