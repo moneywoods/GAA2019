@@ -101,10 +101,9 @@ public class LandStarController : StarBase
         {
             // 爆発エフェクト生成.
             Instantiate(explosionObject, transform.position, transform.rotation);
-            // gameObject.SetActive(false);
-            RemoveFlag(LANDSTAR_STAT.DESTROYED);
-            transform.position = new Vector3(1000000.0f, 100000.0f, 100000.0f);
-            // Destroy(gameObject);
+            var i = StarMaker.Instance.GetCellColliderBehavior(new Vector2Int(3, 3));
+            StarMaker.Instance.GetCellColliderBehavior(CellNum).RemoveManually(gameObject);
+            Destroy(gameObject);
         }
     }
 
