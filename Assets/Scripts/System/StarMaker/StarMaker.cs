@@ -44,11 +44,7 @@ public class StarMaker : SingletonPattern<StarMaker>
             currentMapInfo = value;
         }
     }
-    public GameObject[,] Cell
-    {
-        get;
-        private set;
-    }
+    private GameObject[,] Cell;
 
     public CellColliderBehaviour[,] CellColliderBehaviourScript
     {
