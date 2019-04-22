@@ -13,7 +13,7 @@ public class StarMaker : SingletonPattern<StarMaker>
             CellCnt = new Vector2Int(mapData.GetLength(1), mapData.GetLength(0));
             CellSize = cellSize;
             Position = position;
-            DeffaultOffset = new Vector3( -CellSize.x * CellCnt.x * 0.5f + 2.5f, CellSize.y * CellCnt.y * 0.5f + 2.5f, 0.0f) + Position;
+            DeffaultOffset = new Vector3( -CellSize.x * CellCnt.x * 0.5f + 2.5f, 0.0f, CellSize.y * CellCnt.y * 0.5f + 2.5f) + Position;
         }
         public char[,] MapData;  // マップの初期配置
         public Vector2Int CellCnt; // マスの列数,行数
@@ -125,7 +125,7 @@ public class StarMaker : SingletonPattern<StarMaker>
         GameObject grid = GameObject.FindWithTag(ObjectTag.GridLine);
         if(grid != null)
         {
-            grid.GetComponent<GridLineBehaviour>().CurrentMapInfo = CurrentMapInfo;
+            grid.GetComponent<GridLineBehaviour>().CurrentMapInfo = this.CurrentMapInfo;
         }
     }
 
@@ -134,14 +134,15 @@ public class StarMaker : SingletonPattern<StarMaker>
         DestroyWorld();
         MakeWorld(currentMapInfo.MapData, currentMapInfo.CellSize);
     }
+
     public void DestroyWorld() // このスクリプトで生成した(であろう)オブジェクト達を消す.
     {
-        DestroyObject("Land");
-        DestroyObject("GoalStar");
-        DestroyObject("BlackHole");
-        DestroyObject("MilkyWay");
-        DestroyObject("PlayerCharacter");
-
+        DestroyObject(ObjectTag.Land);
+        DestroyObject(ObjectTag.GoalStar);
+        DestroyObject(ObjectTag.BlackHole);
+        DestroyObject(ObjectTag.MilkyWay);
+        DestroyObject(ObjectTag.PlayerCharacter);
+        DestroyObject(ObjectTag.CellCollider);
     }
 
     private void DestroyObject(string tag)
@@ -163,7 +164,7 @@ public class StarMaker : SingletonPattern<StarMaker>
     GameObject PlaceStar(GameObject star, uint row, uint col)
     {
         //配置する座標を設定
-        Vector3 placePosition = new Vector3(currentMapInfo.CellSize.x * col, -currentMapInfo.CellSize.y * row , 0) + currentMapInfo.DeffaultOffset;
+        Vector3 placePosition = new Vector3(currentMapInfo.CellSize.x * col, 0.0f, -currentMapInfo.CellSize.y * row) + currentMapInfo.DeffaultOffset;
         //配置する回転角を設定
         Quaternion q = new Quaternion();
         q = Quaternion.identity;
@@ -179,7 +180,7 @@ public class StarMaker : SingletonPattern<StarMaker>
         Vector3 vec = position - offset;
         Vector2Int cellNum = new Vector2Int();
         cellNum.x = (int) Math.Round(vec.x, MidpointRounding.AwayFromZero) / (int) mapInfo.CellSize.x;
-        cellNum.y = (int) Math.Round(-vec.y, MidpointRounding.AwayFromZero) / (int) mapInfo.CellSize.y;
+        cellNum.y = (int) Math.Round(-vec.z, MidpointRounding.AwayFromZero) / (int) mapInfo.CellSize.y;
         return cellNum;
     }
 
@@ -187,7 +188,7 @@ public class StarMaker : SingletonPattern<StarMaker>
     {
         var size = CurrentMapInfo.CellSize;
         var offset = CurrentMapInfo.DeffaultOffset;
-        return new Vector3(size.x * cellNum.x + offset.x, size.y * cellNum.y + offset.y, offset.z);
+        return new Vector3(size.x * cellNum.x + offset.x, offset.y, size.y * cellNum.y + offset.z);
     }
 
     public bool CheckLimitOfMap(Vector2Int cellNum)
@@ -422,6 +423,15 @@ public class StarMaker : SingletonPattern<StarMaker>
         {
             return null;
         }
+    }
+
+    public CellColliderBehaviour GetCellColliderBehavior(Vector2Int cellNum)
+    {
+        if(!CheckLimitOfMap(cellNum))
+        {
+            return null;
+        }
+        return Cell[cellNum.y, cellNum.x].GetComponent<CellColliderBehaviour>();
     }
 
     public List<GameObject> GetNeighvorList(Vector2Int cellNum)

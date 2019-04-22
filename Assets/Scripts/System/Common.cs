@@ -34,12 +34,7 @@ public struct StageInfo
 static class Common
 {
     public static readonly Vector2 CellSize = new Vector2(5.0f, 5.0f);
-    public class DiffPosInDirection
-    {
-
-    }
 }
-
 public enum Direction
 {
     // Q, W, E,
@@ -57,3 +52,4 @@ public enum Direction
     ENUM_MAX,
     NONE
 }
+

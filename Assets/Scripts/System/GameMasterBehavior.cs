@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class GameMasterBehavior : MonoBehaviour
 {
-    public GameObject m_StarMakerPrefab = null;
-    public GameObject m_PlayerCommand;
+    [SerializeField] private GameObject m_StarMakerPrefab = null;
+    [SerializeField] private GameObject m_PlayerCommand;
 
     // UI
-    public GameObject m_MenuCanvas;
-    public GameObject m_GridLinePrefab;
+    [SerializeField] private GameObject m_MenuCanvas;
+    [SerializeField] private GameObject m_EventSystem;
+    [SerializeField] private GameObject m_GridLinePrefab;
+
     public static StageInfo InitiatingStage = new StageInfo(1, 1);
 
     private void Awake()
