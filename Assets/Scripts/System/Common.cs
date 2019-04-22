@@ -35,7 +35,7 @@ static class Common
 {
     public static readonly Vector2 CellSize = new Vector2(5.0f, 5.0f);
 }
-public enum Direction
+public enum Direction // ビットフラグでやればよかった?
 {
     // Q, W, E,
     // A,    D,

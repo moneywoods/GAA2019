@@ -79,10 +79,6 @@ public class CellColliderBehaviour : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == ObjectTag.PlayerCharacter)
-        {
-            int a = 0;
-        }
         // 星であるかチェック
         if(other.tag == ObjectTag.Land ||
            other.tag == ObjectTag.BlackHole ||
