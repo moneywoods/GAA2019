@@ -15,10 +15,15 @@ public class GameMenuControl : MonoBehaviour
     [SerializeField]
     public float m_Rotation;
 
+    GameObject m_ObjMenuCanvas;
+
+    GameObject m_ObjStageSelectCanvas;
+
 
     // Start is called before the first frame update
     void Start()
     {
+
         var component = GetComponent<Button>();
         var color = component.colors;
         color.normalColor = Color.white;
@@ -29,6 +34,12 @@ public class GameMenuControl : MonoBehaviour
 
         m_MenuDelete = transform.root.gameObject.GetComponent<ParentMenuCanvasBehavior>();
         m_ObjPlayerCmdBhv = GameObject.FindWithTag("PlayerCommand");
+
+        m_ObjMenuCanvas = transform.parent.gameObject;
+
+        int stageSelectCanvas = 2;
+        m_ObjStageSelectCanvas = transform.root.GetChild(stageSelectCanvas).gameObject;
+//        m_ObjStageSelectCanvas = GameObject.Find("StageSelectCanvas");
 
     }
 
@@ -52,7 +63,8 @@ public class GameMenuControl : MonoBehaviour
         }
         if (gameObject.name == "SelectStage")
         {// ステージ選択
-
+            m_ObjStageSelectCanvas.gameObject.SetActive(true);
+            m_ObjMenuCanvas.gameObject.SetActive(false);
         }
         if (gameObject.name == "ControllerLayout")
         {// 操作説明
@@ -63,6 +75,11 @@ public class GameMenuControl : MonoBehaviour
             PauseTheGame.SetTimeScale(1.0f);
             FadeManager.FadeOut("TitleScene");
         }
+    }
+
+    private void StageSelect()
+    {
+//        GameMasterBehavior.InitiatingStage = new StageInfo()
     }
 
     //==================

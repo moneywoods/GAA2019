@@ -28,7 +28,7 @@ public class ParentMenuCanvasBehavior : MenuCanvasBehavior
         else
         {
             gameObject.SetActive(true);
-            SetActivateSelectionCursor();
+//            SetActivateSelectionCursor();
             m_OldTime = Time.timeScale;
             PauseTheGame.SetTimeScale(0.0f);
         }

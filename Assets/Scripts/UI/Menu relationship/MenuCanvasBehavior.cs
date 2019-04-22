@@ -6,6 +6,12 @@ using UnityEngine.EventSystems;
 
 public class MenuCanvasBehavior : MonoBehaviour
 {
+    private GameObject m_MenuCanvas;
+    public GameObject MenuCanvas
+    {
+        get { return gameObject; }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,4 +45,6 @@ public class MenuCanvasBehavior : MonoBehaviour
         }
         return false;
     }
+    
+
 }

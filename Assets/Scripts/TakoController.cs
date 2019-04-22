@@ -271,9 +271,8 @@ namespace Tako
             void UpdateByCommand()
             {
                 // 入力を取得.
-                // ゲームパッド
-                bool rsh = Input.GetKeyDown(KeyCode.Joystick1Button5);      // 右ボタン
-                bool lsh = Input.GetKeyDown(KeyCode.Joystick1Button4);      // 左ボタン
+                bool rightRotationInput = ( Input.GetKeyDown(KeyCode.Joystick1Button5) || Input.GetKeyDown(KeyCode.Alpha3) );      // 右ボタン
+                bool leftRotationInput = ( Input.GetKeyDown(KeyCode.Joystick1Button4) || Input.GetKeyDown(KeyCode.Alpha1) );      // 左ボタン
 
                 // 星を渡る.
                 if (Input.GetKeyDown(KeyCode.W))
@@ -310,7 +309,7 @@ namespace Tako
                 }
 
 
-                if (Input.GetKeyDown(KeyCode.Alpha3) || rsh)
+                if (rightRotationInput)
                 {
                     var list = StarMaker.Instance.GetNeighvorList(takoScript.currentStarStaying.GetComponent<LandStarController>().CellNum);
 
@@ -324,7 +323,7 @@ namespace Tako
                         // できなかった時の処理
                     }
                 }
-                else if (Input.GetKeyDown(KeyCode.Alpha1) || lsh)
+                else if (leftRotationInput)
                 {
                     var list = StarMaker.Instance.GetNeighvorList(takoScript.currentStarStaying.GetComponent<LandStarController>().CellNum);
 

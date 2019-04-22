@@ -11,7 +11,12 @@ public class GameMasterBehavior : MonoBehaviour
     // UI
     public GameObject m_MenuCanvas;
     public GameObject m_GridLinePrefab;
-    public static StageInfo InitiatingStage = new StageInfo(1, 1);
+    private static StageInfo initiatingStage = new StageInfo(1, 1);
+    public static StageInfo InitiatingStage
+    {
+        get { return initiatingStage; }
+        set { initiatingStage = value; }
+    }
 
     private void Awake()
     {
@@ -37,6 +42,7 @@ public class GameMasterBehavior : MonoBehaviour
         var scriptPlayerController = playerController.GetComponent<PlayerCommandBehavior>();
         scriptPlayerController.SetCurrentSceneMenu(menu);
     }
+    
     // Start is called before the first frame update
     void Start()
     {
