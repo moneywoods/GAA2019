@@ -14,6 +14,7 @@ namespace Tako
             public static readonly string CommandDisable = "CommandDisable";
             public static readonly string MovingBetweenStars = "MovingBetweenStars";
         }
+
         [SerializeField] private GameObject currentStarStaying; // 今いる星.
         [SerializeField] private GameObject nextStar;
         [SerializeField] public GameObject previousStar;
@@ -242,10 +243,29 @@ namespace Tako
             {
                 this.tako = tako;
                 this.takoScript = this.tako.GetComponent<TakoController>();
+                update = UsualUpdate;
+                OnEnter = UsualEnterEvent;
+                OnExit = UsualExitEvent;
             }
 
             protected GameObject tako;
             protected TakoController takoScript;
+
+            protected void UsualUpdate()
+            {
+                // 共通更新
+            }
+
+            protected void UsualEnterEvent()
+            {
+                update = UsualUpdate; // 本当にこれでいいのか?
+            }
+
+            protected void UsualExitEvent()
+            {
+
+            }
+
         }
 
         public class StateNormal : TakoState
@@ -253,7 +273,7 @@ namespace Tako
             public StateNormal(StateContex stateContex, GameObject tako) : base(stateContex, tako)
             {
                 Name = StateName.Normal;
-                update = UpdateByCommand;
+                update += UpdateByCommand;
             }
 
             void UpdateByCommand()
