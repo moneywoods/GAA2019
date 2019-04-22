@@ -139,25 +139,26 @@ public class LandStarController : StarBase
             AddStat(LANDSTAR_STAT.PLAYER_STAYING);
         }
     }
-    public bool LeaveThisLand(GameObject Character) // 自身にSTAYINGフラグを解除する.
-    {
-        if(CheckFlag(LANDSTAR_STAT.PLAYER_STAYING))
-        {
-            var script = Character.GetComponent<Tako.TakoController>();
 
-            if(script.GetCurrentStarStaying() == gameObject)
-            {
-                RemoveFlag(LANDSTAR_STAT.PLAYER_STAYING);
-                return true;
-            }
+    public bool LeaveThisLand() // 自身にSTAYINGフラグを解除する.
+    {
+        if(!CheckFlag(LANDSTAR_STAT.PLAYER_STAYING))
+        {
+            return false;
         }
-        return false;
+        else
+        {
+            // null
+        }
+
+        RemoveFlag(LANDSTAR_STAT.PLAYER_STAYING);
+        return true;
     }
 
 
     public override bool CheckKineticPowerCanBeUsed(Vector2Int originCellNum, bool isRight)
     {
-        var direction = StarMaker.Instance.GetDirection(originCellNum, CellNum);
+        var direction = StarMaker.GetDirection(originCellNum, CellNum);
 
         // 回転の中心から見て自身がどの方向にあるか.
         if(direction == Direction.Right)
