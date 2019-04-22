@@ -12,9 +12,12 @@ namespace Tako
             public static readonly string Normal = "Normal";
             public static readonly string WaitingForKineticPowerEnd = "WaitingForKineticPowerEnd";
             public static readonly string CommandDisable = "CommandDisable";
+            public static readonly string MovingBetweenStars = "MovingBetweenStars";
         }
-        public GameObject currentStarStaying; // 今いる星.
-        
+        [SerializeField] private GameObject currentStarStaying; // 今いる星.
+        [SerializeField] private GameObject nextStar;
+        [SerializeField] public GameObject previousStar;
+
         protected void Awake()
         {
             // ステートを生成
@@ -353,11 +356,26 @@ namespace Tako
                 }
             }
         }
+
         public class StateCommandDisable : TakoState
         {
             public StateCommandDisable(StateContex contex, GameObject tako) : base(contex, tako)
             {
                 Name = StateName.CommandDisable;
+            }
+        }
+
+        public class StateMovingBetweenStars : TakoState
+        {
+            public StateMovingBetweenStars(StateContex contex, GameObject tako) : base(contex, tako)
+            {
+                Name = StateName.MovingBetweenStars;
+                update = MoveToStar;
+            }
+            
+            void MoveToStar()
+            {
+
             }
         }
     }
