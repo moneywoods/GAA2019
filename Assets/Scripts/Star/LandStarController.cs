@@ -27,6 +27,7 @@ public class LandStarController : StarBase
         DESTROYED              = 1 << 8, // 0001_0000_0000  // 破壊された.
         // フラグ抽出用
         MOVING                 = 6,      // 0000_0000_0110 // MOVING_LEFT | MOVING_RIGHT
+        STUCKED                = GET_CAUGHT_BY_MILKYWAY, 
         ENUM_MAX
     }
 
@@ -264,7 +265,7 @@ public class LandStarController : StarBase
         }
 
         // マップ領域内かチェック
-        if(!(StarMaker.Instance.CheckLimitOfMap(cp0) || StarMaker.Instance.CheckLimitOfMap(cp1)))
+        if(!(StarMaker.Instance.CheckLimitOfMap(cp0) && StarMaker.Instance.CheckLimitOfMap(cp1)))
         {
             return false;
         }
@@ -274,13 +275,15 @@ public class LandStarController : StarBase
         }
 
         if(0 < StarMaker.Instance.GetStarList(cp0, StarType.Rock).Count ||
-            0 < StarMaker.Instance.GetStarList(cp0, StarType.Rock).Count)
+            0 < StarMaker.Instance.GetStarList(cp1, StarType.Rock).Count)
         {
             return false;
         }
-        else
+        
+        if(StarMaker.Instance.GetStarList(cp0, StarType.Land).Exists(obj => obj.GetComponent<LandStarController>().CheckFlag(LANDSTAR_STAT.STUCKED)) ||
+            StarMaker.Instance.GetStarList(cp1, StarType.Land).Exists(obj => obj.GetComponent<LandStarController>().CheckFlag(LANDSTAR_STAT.STUCKED)))
         {
-            // null
+            return false;
         }
 
         return true;
