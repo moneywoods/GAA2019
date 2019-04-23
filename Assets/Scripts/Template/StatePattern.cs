@@ -11,6 +11,12 @@ namespace StatePattern
             get;
             protected set;
         }
+
+        // 必要そうなら中継ぎクラスを作る
+        // StateContexWithNakatugi StateContex<T> : Monobehaviour where T : Class
+        //public delegate void stateEnterEvent(Nakatsugi nakatsugi);
+        //public stateEnterEvent OnEnter;
+
         public delegate void stateEnterEvent();
         public stateEnterEvent OnEnter;
 

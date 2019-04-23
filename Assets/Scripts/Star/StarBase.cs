@@ -4,21 +4,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StarBase : MonoBehaviour
+public class StarBase : MyGameObject
 {
-    private Vector2Int cellNum = new Vector2Int(-1, -1);
-    
-    public Vector2Int CellNum // 必ずプロパティを介して値を取得してください.
+    [Flags]
+    public enum StarType
     {
-        get
-        {
-            cellNum = StarMaker.Instance.CaluculateCellNum(transform.position);
-            return cellNum;
-        }
-        set
-        {
-            cellNum = value;
-        }
+        Land            = 1 << 0, // 0000_0001
+        GoalStar        = 1 << 1, // 0000_0010
+        BlackHole       = 1 << 2, // 0000_0100
+        MilkyWay        = 1 << 3, // 0000_1000
+        Rock            = 1 << 4, // 0001_0000
+    }
+    public StarType starType
+    {
+        get;
+        protected set;
+    }
+
+    public StarBase(StarType type) : base(ObjectType.Star)
+    {
+        this.starType = type;
     }
 
     // Start is called before the first frame update

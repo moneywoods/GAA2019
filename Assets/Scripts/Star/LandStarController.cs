@@ -15,22 +15,22 @@ public class LandStarController : StarBase
     [Flags]
     public enum LANDSTAR_STAT // たぶん32bitだから大丈夫(?)
     {
-        NEUTRAL                     = 0 << 0, // 0000_0000_0000 // 何もない状態.
-        // WAITING                     = 1 << 0, // 0000_0000_0001 // 待機状態. これややこしくしてるだけかも.
-        MOVING_RIGHT                = 1 << 1, // 0000_0000_0010 // プレイヤーの周りの星を右回転.
-        MOVING_LEFT                 = 1 << 2, // 0000_0000_0100 // プレイヤーの周りの星を左回転.
-                                                                // わからんけど開けておく下位4bitが移動待機を司る.
-        PLAYER_STAYING              = 1 << 4, // 0000_0001_0000 // プレイヤーが滞在中.
-        IN_MILKYWAY_AREA            = 1 << 5, // 0000_0010_0000 // 乳の領内に侵入中.
-        GET_CAUGHT_BY_MILKYWAY      = 1 << 6, // 0000_0100_0000 // 乳に飲まれて動けない.
-        ALIVE                       = 1 << 7, // 0000_1000_0000 // 生きてる.( == キネティックパワーを受ける状態)
-        DESTROYED                   = 1 << 8, // 0001_0000_0000  // 破壊された.
+        NEUTRAL                = 0 << 0, // 0000_0000_0000 // 何もない状態.
+        // WAITING             = 1 << 0, // 0000_0000_0001 // 待機状態. これややこしくしてるだけかも.
+        MOVING_RIGHT           = 1 << 1, // 0000_0000_0010 // プレイヤーの周りの星を右回転.
+        MOVING_LEFT            = 1 << 2, // 0000_0000_0100 // プレイヤーの周りの星を左回転.
+                                         // わからんけど開けておく下位4bitが移動待機を司る.
+        PLAYER_STAYING         = 1 << 4, // 0000_0001_0000 // プレイヤーが滞在中.
+        IN_MILKYWAY_AREA       = 1 << 5, // 0000_0010_0000 // 乳の領内に侵入中.
+        GET_CAUGHT_BY_MILKYWAY = 1 << 6, // 0000_0100_0000 // 乳に飲まれて動けない.
+        ALIVE                  = 1 << 7, // 0000_1000_0000 // 生きてる.( == キネティックパワーを受ける状態)
+        DESTROYED              = 1 << 8, // 0001_0000_0000  // 破壊された.
         // フラグ抽出用
-        MOVING                      = 6,      // 0000_0000_0110 // MOVING_LEFT | MOVING_RIGHT
+        MOVING                 = 6,      // 0000_0000_0110 // MOVING_LEFT | MOVING_RIGHT
         ENUM_MAX
     }
 
-    public LANDSTAR_STAT CurrentStat { get; private set; } 
+    public LANDSTAR_STAT CurrentStat { get; private set; }
 
     private Vector3 centerOfCircular;
 
@@ -44,69 +44,69 @@ public class LandStarController : StarBase
     public GameObject m_EffectCanMoveTo;
     private bool m_isCanMoveToEffectEmitting;
 
+    public LandStarController() : base(StarType.Land)
+    {
+        
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         timePast = 0.0f;
-
-        m_isCanMoveToEffectEmitting = false; 
+        m_isCanMoveToEffectEmitting = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Mathf.Approximately(Time.timeScale, 0f))
+        if(Mathf.Approximately(Time.timeScale, 0f))
         {
             return;
         }
 
-        // 移住可能を示すエフェクトの管理
-        if((int)ChildIndex.ENUM_MAX < transform.childCount && ( CheckFlag(LANDSTAR_STAT.MOVING) || CheckFlag(LANDSTAR_STAT.PLAYER_STAYING ) ) )
-        {
-            DiscardCanMoveToEffect();
-        }
-
         // 回転
-        if( (CheckFlag( LANDSTAR_STAT.MOVING ) && timeToCirculate != 0.0f ) )
+        if((CheckFlag(LANDSTAR_STAT.MOVING) && timeToCirculate != 0.0f))
         {
             float time = Time.deltaTime;
 
-            if( timeToCirculate < Time.deltaTime + timePast ) // 90度以上回らないように
+            if(timeToCirculate < Time.deltaTime + timePast) // 90度以上回らないように
             {
                 time = timeToCirculate - timePast;
             }
 
             float degree = 0.0f;
 
-            if( CheckFlag( LANDSTAR_STAT.MOVING_LEFT ) ) // 左回りに移動中
+            if(CheckFlag(LANDSTAR_STAT.MOVING_RIGHT)) // 左回りに移動中
             {
                 degree = 90.0f / timeToCirculate * time;
             }
-            else if( CheckFlag( LANDSTAR_STAT.MOVING_RIGHT ) ) // 右回りに移動中
+            else if(CheckFlag(LANDSTAR_STAT.MOVING_LEFT)) // 右回りに移動中
             {
                 degree = -90.0f / timeToCirculate * time;
             }
-            transform.RotateAround(centerOfCircular, new Vector3(0.0f, 0.0f, 1.0f), degree);
+            transform.RotateAround(centerOfCircular, new Vector3(0.0f, 1.0f, 0.0f), degree);
 
             timePast += time;
 
-            if( timeToCirculate <= timePast )
+            if(timeToCirculate <= timePast)
             {
                 timePast = 0.0f;
                 timeToCirculate = 0.0f;
-                if( CheckFlag( LANDSTAR_STAT.IN_MILKYWAY_AREA ))
+                if(CheckFlag(LANDSTAR_STAT.IN_MILKYWAY_AREA))
                 {
-                     AddStat( LANDSTAR_STAT.GET_CAUGHT_BY_MILKYWAY);
+                    AddStat(LANDSTAR_STAT.GET_CAUGHT_BY_MILKYWAY);
                 }
 
                 RemoveFlag(LANDSTAR_STAT.MOVING);
             }
         }
 
-        if( CheckFlag( LANDSTAR_STAT.DESTROYED ) )
+        if(CheckFlag(LANDSTAR_STAT.DESTROYED))
         {
             // 爆発エフェクト生成.
-            Instantiate(explosionObject, transform.position, transform.rotation ); // 自身のtransformをそのまま引き継いでいるので注意!
+            Instantiate(explosionObject, transform.position, transform.rotation);
+            var i = StarMaker.Instance.GetCellColliderBehavior(new Vector2Int(3, 3));
+            StarMaker.Instance.GetCellColliderBehavior(CellNum).RemoveManually(gameObject);
             Destroy(gameObject);
         }
     }
@@ -116,16 +116,16 @@ public class LandStarController : StarBase
     // public 操作関数
     //
     // --------------------------------------------------------------------------------------------
-    public void SetMove( GameObject center, float estimatedTimeToCirculate, bool isRight )
+    public void SetMove(GameObject center, float estimatedTimeToCirculate, bool isRight)
     {
-        if(CheckFlag(  LANDSTAR_STAT.MOVING_RIGHT ) || CheckFlag( LANDSTAR_STAT.MOVING_LEFT ) || CheckFlag( LANDSTAR_STAT.GET_CAUGHT_BY_MILKYWAY ) || CheckFlag(LANDSTAR_STAT.DESTROYED) )
+        if(CheckFlag(LANDSTAR_STAT.MOVING_RIGHT) || CheckFlag(LANDSTAR_STAT.MOVING_LEFT) || CheckFlag(LANDSTAR_STAT.GET_CAUGHT_BY_MILKYWAY) || CheckFlag(LANDSTAR_STAT.DESTROYED))
         {
             return; // 既に移動状態であるなら実行しない. 乳に飲まれている場合も実行しないゾ.
         }
-        if( isRight )
+        if(isRight)
         {
             AddStat(LANDSTAR_STAT.MOVING_RIGHT);
-            
+
         }
         else
         {
@@ -137,325 +137,184 @@ public class LandStarController : StarBase
 
     public void ArriveThisLand(GameObject Character) // 自身にSTAYINGフラグを立て,引数のcurrentStarStayingをこのオブジェクトにする.
     {
-        if( Character.tag == ObjectTag.PlayerCharacter )
+        if(Character.tag == ObjectTag.PlayerCharacter)
         {
             Character.GetComponent<Tako.TakoController>().SetCurrentStarStaying(gameObject);
             AddStat(LANDSTAR_STAT.PLAYER_STAYING);
         }
     }
-    public bool LeaveThisLand(GameObject Character) // 自身にSTAYINGフラグを解除する.
-    {
-        if (CheckFlag(LANDSTAR_STAT.PLAYER_STAYING))
-        {
-            var script = Character.GetComponent<Tako.TakoController>();
 
-            if (script.GetCurrentStarStaying() == gameObject)
-            {
-                RemoveFlag(LANDSTAR_STAT.PLAYER_STAYING);
-                return true;
-            }
+    public bool LeaveThisLand() // 自身にSTAYINGフラグを解除する.
+    {
+        if(!CheckFlag(LANDSTAR_STAT.PLAYER_STAYING))
+        {
+            return false;
         }
-        return false;
+        else
+        {
+            // null
+        }
+
+        RemoveFlag(LANDSTAR_STAT.PLAYER_STAYING);
+        return true;
     }
 
 
     public override bool CheckKineticPowerCanBeUsed(Vector2Int originCellNum, bool isRight)
     {
-        var direction = StarMaker.Instance.GetDirection(originCellNum, CellNum);
+        var direction = StarMaker.GetDirection(originCellNum, CellNum);
 
-        // 回転の中心から見て自身がどの方向にあるか.
-        if(direction == Direction.Right)
+        Vector2Int cp0 = CellNum;
+        Vector2Int cp1 = CellNum;
+
+        // チェックするコマを算出.
+        if(isRight)
         {
-            if(isRight)
+            if(direction == Direction.Right)
             {
-                if(StarMaker.Instance.CheckLimitOfMap(Direction.Bottom, CellNum) &&
-                    StarMaker.Instance.CheckLimitOfMap(Direction.LeftBottom, CellNum))
-                { // 移動しうるマスがマップの領域内であり,
-                    if(!StarMaker.Instance.GetStarListInDirection(Direction.Bottom, CellNum).Any(rock => rock.tag == ObjectTag.Rock) ||
-                        !StarMaker.Instance.GetStarListInDirection(Direction.LeftBottom, CellNum).Any(rock => rock.tag == ObjectTag.Rock))
-                    { // そのコマにRockが存在しないならtrue
-                        return true;
-                    }
-                }
+                cp0 += StarMaker.GetDifferenceByDirection(Direction.Bottom);
+                cp1 += StarMaker.GetDifferenceByDirection(Direction.LeftBottom);
+            }
+            else if(direction == Direction.RightTop)
+            {
+                cp0 += StarMaker.GetDifferenceByDirection(Direction.Bottom);
+                cp1 = cp0 + StarMaker.GetDifferenceByDirection(Direction.Bottom);
+            }
+            else if(direction == Direction.Top)
+            {
+                cp0 += StarMaker.GetDifferenceByDirection(Direction.Right);
+                cp1 += StarMaker.GetDifferenceByDirection(Direction.RightBottom);
+            }
+            else if(direction == Direction.LeftTop)
+            {
+                cp0 += StarMaker.GetDifferenceByDirection(Direction.Right);
+                cp1 = cp0 + StarMaker.GetDifferenceByDirection(Direction.Right);
+            }
+            else if(direction == Direction.Left)
+            {
+                cp0 += StarMaker.GetDifferenceByDirection(Direction.Top);
+                cp1 += StarMaker.GetDifferenceByDirection(Direction.RightTop);
+            }
+            else if(direction == Direction.LeftBottom)
+            {
+                cp0 += StarMaker.GetDifferenceByDirection(Direction.Top);
+                cp1 = cp0 + StarMaker.GetDifferenceByDirection(Direction.Top);
+            }
+            else if(direction == Direction.Bottom)
+            {
+                cp0 += StarMaker.GetDifferenceByDirection(Direction.Left);
+                cp1 += StarMaker.GetDifferenceByDirection(Direction.LeftTop);
+            }
+            else if(direction == Direction.RightBottom)
+            {
+                cp0 += StarMaker.GetDifferenceByDirection(Direction.Left);
+                cp1 = cp0 + StarMaker.GetDifferenceByDirection(Direction.Left);
             }
             else
             {
-                if(StarMaker.Instance.CheckLimitOfMap(Direction.Top, CellNum) &&
-                    StarMaker.Instance.CheckLimitOfMap(Direction.LeftTop, CellNum))
-                { // 移動しうるマスがマップの領域内であり,
-                    if(!StarMaker.Instance.GetStarListInDirection(Direction.Top, CellNum).Any(rock => rock.tag == ObjectTag.Rock) ||
-                        !StarMaker.Instance.GetStarListInDirection(Direction.LeftTop, CellNum).Any(rock => rock.tag == ObjectTag.Rock))
-                    { // そのコマにRockが存在しないならtrue
-                        return true;
-                    }
-                }
+                return false; // この条件に正であることはありえない.
             }
         }
-        else if(direction == Direction.RightTop)
+        else
         {
-            if(isRight)
+            if(direction == Direction.Right)
             {
-                var moreBottomCell = CellNum + new Vector2Int(0, 1); // 下の下
-                if(StarMaker.Instance.CheckLimitOfMap(Direction.Bottom, CellNum) &&
-                    StarMaker.Instance.CheckLimitOfMap(Direction.Bottom, moreBottomCell))
-                { // 移動しうるマスがマップの領域内であり,
-                    if(!StarMaker.Instance.GetStarListInDirection(Direction.Bottom, CellNum).Any(rock => rock.tag == ObjectTag.Rock) ||
-                        !StarMaker.Instance.GetStarListInDirection(Direction.Bottom, moreBottomCell).Any(rock => rock.tag == ObjectTag.Rock))
-                    { // そのコマにRockが存在しないならtrue
-                        return true;
-                    }
-                }
+                cp0 += StarMaker.GetDifferenceByDirection(Direction.Top);
+                cp1 += StarMaker.GetDifferenceByDirection(Direction.LeftTop);
+            }
+            else if(direction == Direction.RightTop)
+            {
+                cp0 += StarMaker.GetDifferenceByDirection(Direction.Left);
+                cp1 = cp0 + StarMaker.GetDifferenceByDirection(Direction.Left);
+            }
+            else if(direction == Direction.Top)
+            {
+                cp0 += StarMaker.GetDifferenceByDirection(Direction.Left);
+                cp1 += StarMaker.GetDifferenceByDirection(Direction.LeftBottom);
+            }
+            else if(direction == Direction.LeftTop)
+            {
+                cp0 += StarMaker.GetDifferenceByDirection(Direction.Bottom);
+                cp1 = cp0 + StarMaker.GetDifferenceByDirection(Direction.Bottom);
+            }
+            else if(direction == Direction.Left)
+            {
+                cp0 += StarMaker.GetDifferenceByDirection(Direction.Bottom);
+                cp1 += StarMaker.GetDifferenceByDirection(Direction.RightBottom);
+            }
+            else if(direction == Direction.LeftBottom)
+            {
+                cp0 += StarMaker.GetDifferenceByDirection(Direction.Right);
+                cp1 = cp0 + StarMaker.GetDifferenceByDirection(Direction.Right);
+            }
+            else if(direction == Direction.Bottom)
+            {
+                cp0 += StarMaker.GetDifferenceByDirection(Direction.Right);
+                cp1 += StarMaker.GetDifferenceByDirection(Direction.RightTop);
+            }
+            else if(direction == Direction.RightBottom)
+            {
+                cp0 += StarMaker.GetDifferenceByDirection(Direction.Top);
+                cp1 = cp0 + StarMaker.GetDifferenceByDirection(Direction.Top);
             }
             else
             {
-                var moreLeftCell = CellNum + new Vector2Int(-1, 0); // 左の左
-                if(StarMaker.Instance.CheckLimitOfMap(Direction.Left, CellNum) &&
-                    StarMaker.Instance.CheckLimitOfMap(Direction.Left, moreLeftCell))
-                { // 移動しうるマスがマップの領域内であり,
-                    if(!StarMaker.Instance.GetStarListInDirection(Direction.Left, CellNum).Any(rock => rock.tag == ObjectTag.Rock) ||
-                        !StarMaker.Instance.GetStarListInDirection(Direction.Left, moreLeftCell).Any(rock => rock.tag == ObjectTag.Rock))
-                    { // そのコマにRockが存在しないならtrue
-                        return true;
-                    }
-                }
+                return false; // この条件に正であることはありえない.
             }
-        }
-        else if(direction == Direction.Top)
-        {
-            if(isRight)
-            {
-                if(StarMaker.Instance.CheckLimitOfMap(Direction.Right, CellNum) &&
-                    StarMaker.Instance.CheckLimitOfMap(Direction.RightBottom, CellNum))
-                { // 移動しうるマスがマップの領域内であり,
-                    if(!StarMaker.Instance.GetStarListInDirection(Direction.Right, CellNum).Any(rock => rock.tag == ObjectTag.Rock) ||
-                        !StarMaker.Instance.GetStarListInDirection(Direction.RightBottom, CellNum).Any(rock => rock.tag == ObjectTag.Rock))
-                    { // そのコマにRockが存在しないならtrue
-                        return true;
-                    }
-                }
-            }
-            else
-            {
-                if(StarMaker.Instance.CheckLimitOfMap(Direction.Left, CellNum) &&
-                    StarMaker.Instance.CheckLimitOfMap(Direction.LeftBottom, CellNum))
-                { // 移動しうるマスがマップの領域内であり,
-                    if(!StarMaker.Instance.GetStarListInDirection(Direction.Left, CellNum).Any(rock => rock.tag == ObjectTag.Rock) ||
-                        !StarMaker.Instance.GetStarListInDirection(Direction.LeftBottom, CellNum).Any(rock => rock.tag == ObjectTag.Rock))
-                    { // そのコマにRockが存在しないならtrue
-                        return true;
-                    }
-                }
-            }
-        }
-        else if(direction == Direction.LeftTop)
-        {
-            if(isRight)
-            {
-                var moreRightCell = CellNum + new Vector2Int(1, 0); // 右の右
-                if(StarMaker.Instance.CheckLimitOfMap(Direction.Right, CellNum) &&
-                    StarMaker.Instance.CheckLimitOfMap(Direction.Right, moreRightCell))
-                { // 移動しうるマスがマップの領域内であり,
-                    if(!StarMaker.Instance.GetStarListInDirection(Direction.Right, CellNum).Any(rock => rock.tag == ObjectTag.Rock) ||
-                        !StarMaker.Instance.GetStarListInDirection(Direction.Right, moreRightCell).Any(rock => rock.tag == ObjectTag.Rock))
-                    { // そのコマにRockが存在しないならtrue
-                        return true;
-                    }
-                }
-            }
-            else
-            {
-                var moreBottomCell = CellNum + new Vector2Int(0, 1); // 下の下
-                if(StarMaker.Instance.CheckLimitOfMap(Direction.Bottom, CellNum) &&
-                    StarMaker.Instance.CheckLimitOfMap(Direction.Bottom, moreBottomCell))
-                { // 移動しうるマスがマップの領域内であり,
-                    if(!StarMaker.Instance.GetStarListInDirection(Direction.Bottom, CellNum).Any(rock => rock.tag == ObjectTag.Rock) ||
-                        !StarMaker.Instance.GetStarListInDirection(Direction.Bottom, moreBottomCell).Any(rock => rock.tag == ObjectTag.Rock))
-                    { // そのコマにRockが存在しないならtrue
-                        return true;
-                    }
-                }
-            }
-        }
-        else if(direction == Direction.Left)
-        {
-            if(isRight)
-            {
-                if(StarMaker.Instance.CheckLimitOfMap(Direction.Top, CellNum) &&
-                    StarMaker.Instance.CheckLimitOfMap(Direction.RightTop, CellNum))
-                { // 移動しうるマスがマップの領域内であり,
-                    if(!StarMaker.Instance.GetStarListInDirection(Direction.Top, CellNum).Any(rock => rock.tag == ObjectTag.Rock) ||
-                        !StarMaker.Instance.GetStarListInDirection(Direction.RightTop, CellNum).Any(rock => rock.tag == ObjectTag.Rock))
-                    { // そのコマにRockが存在しないならtrue
-                        return true;
-                    }
-                }
-            }
-            else
-            {
-                if(StarMaker.Instance.CheckLimitOfMap(Direction.Bottom, CellNum) &&
-                    StarMaker.Instance.CheckLimitOfMap(Direction.RightBottom, CellNum))
-                { // 移動しうるマスがマップの領域内であり,
-                    if(!StarMaker.Instance.GetStarListInDirection(Direction.Bottom, CellNum).Any(rock => rock.tag == ObjectTag.Rock) ||
-                        !StarMaker.Instance.GetStarListInDirection(Direction.RightBottom, CellNum).Any(rock => rock.tag == ObjectTag.Rock))
-                    { // そのコマにRockが存在しないならtrue
-                        return true;
-                    }
-                }
-            }
-        }
-        else if(direction == Direction.LeftBottom)
-        {
-            if(isRight)
-            {
-                var moreTopCell = CellNum + new Vector2Int(0, -1);
-                if(StarMaker.Instance.CheckLimitOfMap(Direction.Top, CellNum) &&
-                    StarMaker.Instance.CheckLimitOfMap(Direction.Top, moreTopCell))
-                { // 移動しうるマスがマップの領域内であり,
-                    if(!StarMaker.Instance.GetStarListInDirection(Direction.Top, CellNum).Any(rock => rock.tag == ObjectTag.Rock) ||
-                        !StarMaker.Instance.GetStarListInDirection(Direction.Top, moreTopCell).Any(rock => rock.tag == ObjectTag.Rock))
-                    { // そのコマにRockが存在しないならtrue
-                        return true;
-                    }
-                }
-            }
-            else
-            {
-                var moreRightCell = CellNum + new Vector2Int(0, 1);
-                if(StarMaker.Instance.CheckLimitOfMap(Direction.Right, CellNum) &&
-                    StarMaker.Instance.CheckLimitOfMap(Direction.Right, moreRightCell))
-                { // 移動しうるマスがマップの領域内であり,
-                    if(!StarMaker.Instance.GetStarListInDirection(Direction.Right, CellNum).Any(rock => rock.tag == ObjectTag.Rock) ||
-                        !StarMaker.Instance.GetStarListInDirection(Direction.Right, moreRightCell).Any(rock => rock.tag == ObjectTag.Rock))
-                    { // そのコマにRockが存在しないならtrue
-                        return true;
-                    }
-                }
-            }
-        }
-        else if(direction == Direction.Bottom)
-        {
-            if(isRight)
-            {
-                if(StarMaker.Instance.CheckLimitOfMap(Direction.Left, CellNum) &&
-                    StarMaker.Instance.CheckLimitOfMap(Direction.LeftTop, CellNum))
-                { // 移動しうるマスがマップの領域内であり,
-                    if(!StarMaker.Instance.GetStarListInDirection(Direction.Right, CellNum).Any(rock => rock.tag == ObjectTag.Rock) ||
-                        !StarMaker.Instance.GetStarListInDirection(Direction.RightTop, CellNum).Any(rock => rock.tag == ObjectTag.Rock))
-                    { // そのコマにRockが存在しないならtrue
-                        return true;
-                    }
-                }
-            }
-            else
-            {
-                if(StarMaker.Instance.CheckLimitOfMap(Direction.Right, CellNum) &&
-                    StarMaker.Instance.CheckLimitOfMap(Direction.RightTop, CellNum))
-                { // 移動しうるマスがマップの領域内であり,
-                    if(!StarMaker.Instance.GetStarListInDirection(Direction.Right, CellNum).Any(rock => rock.tag == ObjectTag.Rock) ||
-                        !StarMaker.Instance.GetStarListInDirection(Direction.RightTop, CellNum).Any(rock => rock.tag == ObjectTag.Rock))
-                    { // そのコマにRockが存在しないならtrue
-                        return true;
-                    }
-                }
-            }
-        }
-        else if(direction == Direction.RightBottom)
-        {
-            if(isRight)
-            {
-                var moreLeftCell = CellNum + new Vector2Int(-1, 0);
-                if(StarMaker.Instance.CheckLimitOfMap(Direction.Left, CellNum) &&
-                    StarMaker.Instance.CheckLimitOfMap(Direction.Left, moreLeftCell))
-                { // 移動しうるマスがマップの領域内であり,
-                    if(!StarMaker.Instance.GetStarListInDirection(Direction.Left, CellNum).Any(rock => rock.tag == ObjectTag.Rock) ||
-                        !StarMaker.Instance.GetStarListInDirection(Direction.Left, moreLeftCell).Any(rock => rock.tag == ObjectTag.Rock))
-                    { // そのコマにRockが存在しないならtrue
-                        return true;
-                    }
-                }
-            }
-            else
-            {
-                var moreTopCell = CellNum + new Vector2Int(0, -1);
-                if(StarMaker.Instance.CheckLimitOfMap(Direction.Top, CellNum) &&
-                    StarMaker.Instance.CheckLimitOfMap(Direction.Top, moreTopCell))
-                { // 移動しうるマスがマップの領域内であり,
-                    if(!StarMaker.Instance.GetStarListInDirection(Direction.Top, CellNum).Any(rock => rock.tag == ObjectTag.Rock) ||
-                        !StarMaker.Instance.GetStarListInDirection(Direction.Top, moreTopCell).Any(rock => rock.tag == ObjectTag.Rock))
-                    { // そのコマにRockが存在しないならtrue
-                        return true;
-                    }
-                }
-            }
-        }
-        else // NONE || ENUM_MAX
-        {
-            
         }
 
-        return false;
-    }
-    // --------------------------------------------------------------------------------------------
-    //
-    // public エフェクト
-    //
-    // --------------------------------------------------------------------------------------------
-    public void SetCanMoveToEffect( Direction direction)
-    {
-        if( !m_isCanMoveToEffectEmitting && !CheckFlag( LANDSTAR_STAT.MOVING) && !CheckFlag( LANDSTAR_STAT.PLAYER_STAYING) ) // 現状,移動可能を示すエフェクトを除いてneighvorFinderのみが子に含まれている.
+        // マップ領域内かチェック
+        if(!(StarMaker.Instance.CheckLimitOfMap(cp0) || StarMaker.Instance.CheckLimitOfMap(cp1)))
         {
-            GameObject effect = Instantiate(m_EffectCanMoveTo, transform, false) as GameObject;
-            effect.transform.parent = transform;
-            m_isCanMoveToEffectEmitting = true;
-            Transform obj = effect.transform.GetChild(0);
-            obj.GetComponent<QWEASDZXCController>().SetQWEASDZXC(direction);
+            return false;
         }
-    }
+        else
+        {
+            // null
+        }
 
-    public void DiscardCanMoveToEffect()
-    {
-        if( m_isCanMoveToEffectEmitting)
+        if(0 < StarMaker.Instance.GetStarList(cp0, StarType.Rock).Count ||
+            0 < StarMaker.Instance.GetStarList(cp0, StarType.Rock).Count)
         {
-            foreach (Transform child in transform)
-            {
-                if (child.tag == ObjectTag.AbstructEffect)
-                {
-                    Destroy(child.gameObject);
-                    m_isCanMoveToEffectEmitting = false;
-                }
-            }
+            return false;
         }
-        
+        else
+        {
+            // null
+        }
+
+        return true;
     }
     // --------------------------------------------------------------------------------------------
     //
     // public フラグ関連
     //
     // --------------------------------------------------------------------------------------------
-    public void SetStat( LANDSTAR_STAT newStat ) // フラグ用変数に引数を代入.
+    public void SetStat(LANDSTAR_STAT newStat) // フラグ用変数に引数を代入.
     {
         CurrentStat = newStat;
     }
-    public bool AddStat( LANDSTAR_STAT additionalStat ) // フラグを立てる. 引数のフラグが既に立っている場合trueを戻し終了.
+    public bool AddStat(LANDSTAR_STAT additionalStat) // フラグを立てる. 引数のフラグが既に立っている場合trueを戻し終了.
     {
-        if( ( CurrentStat & additionalStat ) != 0 )
+        if((CurrentStat & additionalStat) != 0)
         {
             return true; // 引数のフラグが既に立っている場合trueを返す.
         }
 
-        // フラグ別の追加処理
         CurrentStat |= additionalStat;
-        if( additionalStat == LANDSTAR_STAT.DESTROYED )
+
+        // フラグ別の追加処理
+        if(additionalStat == LANDSTAR_STAT.DESTROYED)
         {
             RemoveFlag(LANDSTAR_STAT.ALIVE);
             GetComponent<Renderer>().material.color = Color.red;
         }
-        else if (additionalStat == LANDSTAR_STAT.ALIVE)
+        else if(additionalStat == LANDSTAR_STAT.ALIVE)
         {
             RemoveFlag(LANDSTAR_STAT.DESTROYED);
             GetComponent<Renderer>().material.color = Color.white;
         }
-        else if( additionalStat == LANDSTAR_STAT.GET_CAUGHT_BY_MILKYWAY)
+        else if(additionalStat == LANDSTAR_STAT.GET_CAUGHT_BY_MILKYWAY)
         {
             GetComponent<Renderer>().material.color = Color.green;
         }
@@ -467,17 +326,17 @@ public class LandStarController : StarBase
         CurrentStat &= ~removingFlag;
 
         // フラグ別の追加処理
-        if (removingFlag == LANDSTAR_STAT.DESTROYED)
+        if(removingFlag == LANDSTAR_STAT.DESTROYED)
         {
             AddStat(LANDSTAR_STAT.ALIVE);
             GetComponent<Renderer>().material.color = Color.white;
         }
-        else if (removingFlag == LANDSTAR_STAT.ALIVE)
+        else if(removingFlag == LANDSTAR_STAT.ALIVE)
         {
             AddStat(LANDSTAR_STAT.DESTROYED);
             GetComponent<Renderer>().material.color = Color.red;
         }
-        else if (removingFlag == LANDSTAR_STAT.GET_CAUGHT_BY_MILKYWAY)
+        else if(removingFlag == LANDSTAR_STAT.GET_CAUGHT_BY_MILKYWAY)
         {
             GetComponent<Renderer>().material.color = Color.white;
         }
@@ -486,10 +345,10 @@ public class LandStarController : StarBase
     // フラグチェック
     public bool CheckFlag(LANDSTAR_STAT flag)
     {
-        if ((CurrentStat & flag) != 0)
+        if((CurrentStat & flag) != 0)
         {
             return true;
         }
         return false;
-    }    
+    }
 }

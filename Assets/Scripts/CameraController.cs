@@ -18,8 +18,8 @@ public class CameraController : MonoBehaviour {
     {
         if( target == null )
         {
-            target = GameObject.FindGameObjectWithTag( ObjectTag.PlayerCharacter );
-            // offsetToTarget = this.transform.position - target.transform.position;
+            target = GameObject.FindGameObjectWithTag(ObjectTag.PlayerCharacter);
+            offsetToTarget = this.transform.position - target.transform.position;
         }
     }
     // Update is called once per frame
@@ -29,9 +29,8 @@ public class CameraController : MonoBehaviour {
         {
             Vector3 tmp = transform.position;
             tmp.x = target.transform.position.x;
-            tmp.y = target.transform.position.y;
-            transform.position = tmp;
+            tmp.z = target.transform.position.z;
+            this.transform.position = target.transform.position + offsetToTarget;
         }
-        //  this.transform.position = target.transform.position + offsetToTarget;
     }
 }
