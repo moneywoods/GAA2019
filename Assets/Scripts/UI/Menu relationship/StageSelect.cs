@@ -38,11 +38,15 @@ public class StageSelect : MonoBehaviour
 
     public void OnClick(int stagenum)
     {
-        if (stagenum == 14) Debug.Break();
-        if (stagenum == 11) return;
-        if (stagenum == 43) Debug.Break();
+        GameMasterBehavior.SetStageAndChapter(stagenum);
 
         if (stagenum == 0) BackMenu();
+
+        if (stagenum != 0)
+        {// ステージが選択された
+            PauseTheGame.SetTimeScale(1.0f);
+            FadeManager.FadeOut("scene0315");
+        }
     }
 
     // メニューを一つ前に戻す(ゲームのメインメニュー)
@@ -50,15 +54,5 @@ public class StageSelect : MonoBehaviour
     {
         m_StageCanvas.SetActive(false);
         m_MenuCanvas.SetActive(true);
-    }
-
-    // ステージセレクトのアクティブ状態を取得
-    public bool GetStageMenuActive()
-    {
-        if (m_StageCanvas.activeSelf) return true;
-        else
-        {
-            return false;
-        }
     }
 }

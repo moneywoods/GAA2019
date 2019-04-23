@@ -20,37 +20,14 @@ public class PlayerCommandBehavior : MonoBehaviour
     void Start()
     {
         m_ObjStageSelect = m_ObjStageCanvas.transform.GetChild(2).gameObject;
-        
+        GameObject test = transform.root.gameObject;
     }
 
     // Update is called once per frame
     void Update()
     {
-        /* ----- ゲームパッド用ボタン番号 ----- */
-        bool startButton = Input.GetKeyDown(KeyCode.Joystick1Button7) || Input.GetKeyDown(KeyCode.Escape);      // STARTボタン
-
-        // リセットボタン
-        if( Input.GetKeyDown(KeyCode.L) )
-        {
-            GameObject starMaker = GameObject.FindWithTag(ObjectTag.StarMaker);
-            if( starMaker != null )
-            {
-                Instantiate(ResetSpritePrefab);
-                starMaker.GetComponent<StarMaker>().ResetWorld();
-            }
-        }
-
-        if (startButton && m_CurrentSceneMenu != null)
-        {
-            if (FadeManager.CheckIsFade()) return;
-            if (m_ObjStageSelect.activeSelf) return;
-
-            var menuScript = m_CurrentSceneMenu.GetComponent<ParentMenuCanvasBehavior>();
-            if( menuScript != null )
-            {
-                menuScript.SwitchActive();
-            }
-        }
+        ResetButton();
+        StartButton();
     }
     
     public void SetCurrentSceneMenu(GameObject Menu)
@@ -69,4 +46,38 @@ public class PlayerCommandBehavior : MonoBehaviour
             starMaker.GetComponent<StarMaker>().ResetWorld();
         }
     }
+
+    // リセットボタン（キーボードのみ）
+    private void ResetButton()
+    {
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            GameObject starMaker = GameObject.FindWithTag(ObjectTag.StarMaker);
+            if (starMaker != null)
+            {
+                Instantiate(ResetSpritePrefab);
+                starMaker.GetComponent<StarMaker>().ResetWorld();
+            }
+        }
+    }
+
+    // スタートボタン
+    private void StartButton()
+    {
+        /* ----- ゲームパッド用ボタン番号 ----- */
+        bool startButton = Input.GetKeyDown(KeyCode.Joystick1Button7) || Input.GetKeyDown(KeyCode.Escape);      // STARTボタン
+
+        if (startButton && m_CurrentSceneMenu != null)
+        {
+            if (FadeManager.CheckIsFade()) return;
+            if (m_ObjStageSelect.activeSelf) return;
+
+            var menuScript = m_CurrentSceneMenu.GetComponent<ParentMenuCanvasBehavior>();
+            if (menuScript != null)
+            {
+                menuScript.SwitchActive();
+            }
+        }
+    }
+
 }

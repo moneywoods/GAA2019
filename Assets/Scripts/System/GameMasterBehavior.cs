@@ -11,6 +11,7 @@ public class GameMasterBehavior : MonoBehaviour
     // UI
     public GameObject m_MenuCanvas;
     public GameObject m_GridLinePrefab;
+
     private static StageInfo initiatingStage;
     public static int InitiatingChapter
     {
@@ -19,6 +20,12 @@ public class GameMasterBehavior : MonoBehaviour
               IsChapterOver();
             }
     }
+
+    [SerializeField]
+    private static int STAGE_MAX;
+    [SerializeField]
+    private static int CHAPTER_MAX;
+
 
     private void Awake()
     {
@@ -62,13 +69,39 @@ public class GameMasterBehavior : MonoBehaviour
         
     }
 
+    // ステージクリア用
     private static void IsChapterOver()
     {
-        const int CHAPTER_MAX = 4;
         if(initiatingStage.Chapter > CHAPTER_MAX)
         {
             initiatingStage.Chapter = 1;
             initiatingStage.Stage += 1;
         }
+    }
+
+    // ステージ選択用
+    public static void SetStageAndChapter(int num)
+    {
+        int chapter;        // チャプター
+        int stage;          // ステージ
+        bool rangeChapter;  // 範囲内のチャプター
+        bool rangeStage;    // 範囲内のステージ
+
+        chapter = num % 10;
+        stage = num / 10;
+
+        rangeChapter = chapter < CHAPTER_MAX || chapter > 0;
+        rangeStage= stage < STAGE_MAX || stage > 0;
+        bool range = rangeChapter || rangeStage;
+
+        if (range)
+        {// 正しいステージ数及びチャプター数ならば更新
+            initiatingStage.Chapter = chapter;
+            initiatingStage.Stage = stage;
+        }else
+        {
+            
+        }
+
     }
 }
