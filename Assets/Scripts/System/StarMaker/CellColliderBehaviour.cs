@@ -9,62 +9,94 @@ public class CellColliderBehaviour : MonoBehaviour
         get;
         private set;
     }
+
+    public List<GameObject> OtherList
+    {
+        get;
+        private set;
+    }
+
     public Vector2Int CellNum;
-    public int ListCnt = 0;
+    [SerializeField] int ListCnt = 0;
+    [SerializeField] int OtherListCnt = 0;
     private void Awake()
     {
         // リストのnew
         List = new List<GameObject>();
+        OtherList = new List<GameObject>();
 
         CellNum = StarMaker.Instance.CaluculateCellNum(transform.position);
 
         // BoxColliderを追加&設定
         var colliderScript = gameObject.AddComponent(typeof(BoxCollider)) as BoxCollider;
         colliderScript.isTrigger = true;
-        colliderScript.size = new Vector3(StarMaker.Instance.CurrentMapInfo.CellSize.x, 0.1f, StarMaker.Instance.CurrentMapInfo.CellSize.y); // - new Vector3(1.0f, 0.0f, 1.0f);
+        colliderScript.size = new Vector3(StarMaker.Instance.CurrentMapInfo.CellSize.x, 10.0f, StarMaker.Instance.CurrentMapInfo.CellSize.y); // - new Vector3(1.0f, 0.0f, 1.0f);
     }
 
-    private void Add(GameObject star)
+    private void Add(GameObject target)
     {
         // 重複チェック
         foreach(GameObject obj in List)
         {
-            if(obj.gameObject == star.gameObject)
+            if(obj.gameObject == target.gameObject)
             {
                 return;
             }
         }
-        var starScript = star.GetComponent<MyGameObject>();
-        starScript.CellNum = CellNum;
+        
+        // マス数をセット.
+        var newoneScript = target.GetComponent<MyGameObject>();
+        newoneScript.CellNum = CellNum;
+
         // リスト中の星と同じマスに入った時のイベントを行う.
         foreach(var other in List)
         {
-            star.GetComponent<MyGameObject>().TriggerEnterCell(other);
+            target.GetComponent<MyGameObject>().TriggerEnterCell(other);
         }
         foreach(var other in List)
         {
-            other.GetComponent<MyGameObject>().TriggerOtherComeToSameCell(star);
+            other.GetComponent<MyGameObject>().TriggerOtherComeToSameCell(target);
         }
 
-        List.Add(star.gameObject);
-        ListCnt++;
+        // 適したリストに追加.
+        if(target.GetComponent<MyGameObject>().objectType != MyGameObject.ObjectType.Star)
+        {
+            OtherList.Add(target);
+            OtherListCnt++;
+        }
+        else
+        {
+            List.Add(target.gameObject);
+            ListCnt++;
+        }
+
     }
 
-    private void Remove(GameObject star)
+    private void Remove(GameObject target)
     {
         // リスト中の星と同じマスから離れる時のイベントを行う.
         foreach(var other in List)
         {
-            other.GetComponent<MyGameObject>().TriggerOtherLeaveFromSameCell(star);
+            other.GetComponent<MyGameObject>().TriggerOtherLeaveFromSameCell(target);
         }
         foreach(var other in List)
         {
-            star.GetComponent<MyGameObject>().TriggerExitCell(other);
+            target.GetComponent<MyGameObject>().TriggerExitCell(other);
         }
 
-        List.Remove(star);
-        ListCnt--;
+        // 適したリストに追加.
+        if(target.GetComponent<MyGameObject>().objectType != MyGameObject.ObjectType.Star)
+        {
+            OtherList.Remove(target);
+            OtherListCnt--;
+        }
+        else
+        {
+            List.Remove(target);
+            ListCnt--;
+        }
     }
+
     public void AddManually(GameObject star)
     {
         Add(star);
