@@ -213,11 +213,11 @@ public class StarMaker : SingletonPattern<StarMaker>
         }
     }
    
-    public bool CheckLimitOfMap(Direction direction, Vector2Int startPos) // 指定した方向にマスがあるか.
+    public bool CheckLimitOfMap(Vector2Int startPos, Direction direction) // 指定した方向にマスがあるか.
     {
         if(direction == Direction.Right)
         {
-            if(Check4Direction(Direction.Right, startPos))
+            if(Check4Direction(startPos, Direction.Right))
             {
                 return true;
             }
@@ -228,7 +228,7 @@ public class StarMaker : SingletonPattern<StarMaker>
         }
         else if(direction == Direction.RightTop)
         {
-            if(Check4Direction(Direction.Right, startPos) && Check4Direction(Direction.Top, startPos))
+            if(Check4Direction(startPos, Direction.Right) && Check4Direction(startPos, Direction.Top))
             {
                 return true;
             }
@@ -239,7 +239,7 @@ public class StarMaker : SingletonPattern<StarMaker>
         }
         else if(direction == Direction.Top)
         {
-            if(Check4Direction(Direction.Top, startPos))
+            if(Check4Direction(startPos, Direction.Top))
             {
                 return true;
             }
@@ -250,7 +250,7 @@ public class StarMaker : SingletonPattern<StarMaker>
         }
         else if(direction == Direction.LeftTop)
         {
-            if(Check4Direction(Direction.Top, startPos) && Check4Direction(Direction.Left, startPos))
+            if(Check4Direction(startPos, Direction.Top) && Check4Direction(startPos, Direction.Left))
             {
                 return true;
             }
@@ -261,7 +261,7 @@ public class StarMaker : SingletonPattern<StarMaker>
         }
         else if(direction == Direction.Left)
         {
-            if(Check4Direction(Direction.Left, startPos))
+            if(Check4Direction(startPos, Direction.Left))
             {
                 return true;
             }
@@ -272,7 +272,7 @@ public class StarMaker : SingletonPattern<StarMaker>
         }
         else if(direction == Direction.LeftBottom)
         {
-            if(Check4Direction(Direction.Left, startPos) && Check4Direction(Direction.Bottom, startPos))
+            if(Check4Direction(startPos, Direction.Left) && Check4Direction(startPos, Direction.Bottom))
             {
                 return true;
             }
@@ -283,7 +283,7 @@ public class StarMaker : SingletonPattern<StarMaker>
         }
         else if(direction == Direction.Bottom)
         {
-            if(Check4Direction(Direction.Bottom, startPos))
+            if(Check4Direction(startPos, Direction.Bottom))
             {
                 return true;
             }
@@ -294,7 +294,7 @@ public class StarMaker : SingletonPattern<StarMaker>
         }
         else if(direction == Direction.RightBottom)
         {
-            if(Check4Direction(Direction.Bottom, startPos) && Check4Direction(Direction.Right, startPos))
+            if(Check4Direction(startPos, Direction.Bottom) && Check4Direction(startPos, Direction.Right))
             {
                 return true;
             }
@@ -309,7 +309,7 @@ public class StarMaker : SingletonPattern<StarMaker>
         }
     }
 
-    private bool Check4Direction(Direction direction, Vector2Int startPos) // 4方向をチェック
+    private bool Check4Direction(Vector2Int startPos, Direction direction) // 4方向をチェック
     {
         // para0が上下左右かチェック. 一応... 
         if(direction == Direction.LeftTop ||
@@ -318,7 +318,7 @@ public class StarMaker : SingletonPattern<StarMaker>
             direction == Direction.RightTop)
         {
             // 斜めは関数が別.
-            return CheckLimitOfMap(direction, startPos);            
+            return CheckLimitOfMap(startPos, direction);            
         }
         
         Vector2Int mapSize = CurrentMapInfo.CellCnt;
@@ -421,6 +421,28 @@ public class StarMaker : SingletonPattern<StarMaker>
 
         return GetStar(tag, new Vector2Int(cellNum.x + x, cellNum.y + y));
     }
+
+    public GameObject GetStar(Vector2Int cellNum, StarBase.StarType type)
+    {
+        if(!CheckLimitOfMap(cellNum))
+        {
+            return null;
+        }
+        else
+        {
+            // null
+        }
+
+        return CellColliderBehaviourScript[cellNum.y, cellNum.x].List.Find(obj => (obj.GetComponent<StarBase>().starType & type) != 0);
+    }
+
+    public GameObject GetStar(Vector2Int cellNum, StarBase.StarType type, Direction direction)
+    {
+        cellNum += GetDifferenceByDirection(direction);
+
+        return GetStar(cellNum, type);
+    }
+
     public List<GameObject> GetStarList(Vector2Int cellNum)
     {
         if(CheckLimitOfMap(cellNum))
@@ -434,11 +456,32 @@ public class StarMaker : SingletonPattern<StarMaker>
 
         return Cell[cellNum.y, cellNum.x].GetComponent<CellColliderBehaviour>().List;
     }
-    
-    public List<GameObject> GetStarListInDirection(Direction direction, Vector2Int cellNum) // 指定された方向のマスにある星を取得する. 指定された方向がマップの端を超える場合nullを戻す.
+
+    public List<GameObject> GetStarList(Vector2Int cellNum, StarBase.StarType type)
+    {
+        if(!CheckLimitOfMap(cellNum))
+        {
+            return new List<GameObject>();
+        }
+        else
+        {
+
+        }
+
+        return CellColliderBehaviourScript[cellNum.y, cellNum.x].List.FindAll(obj => (obj.GetComponent<StarBase>().starType & type) != 0);
+    }
+
+    public List<GameObject> GetStarList(Vector2Int cellNum, StarBase.StarType type, Direction direction)
+    {
+        cellNum += GetDifferenceByDirection(direction);
+
+        return GetStarList(cellNum, type, direction);
+    }
+
+    public List<GameObject> GetStarList(Vector2Int cellNum, Direction direction) // 指定された方向のマスにある星を取得する. 指定された方向がマップの端を超える場合nullを戻す.
     {
         // マップ限界のチェック
-        if(!CheckLimitOfMap(direction, cellNum))
+        if(!CheckLimitOfMap(cellNum, direction))
         {
             return new List<GameObject>();
         }
@@ -505,7 +548,7 @@ public class StarMaker : SingletonPattern<StarMaker>
             {
                 return list;
             }
-            var tmpList = GetStarListInDirection(value, cellNum);
+            var tmpList = GetStarList(cellNum, value);
 
             // マップの端を超えてしていた場合nullが戻されるので.
             if(tmpList != null)
@@ -555,5 +598,41 @@ public class StarMaker : SingletonPattern<StarMaker>
         {
             return Direction.NONE;
         }
+    }
+
+    public static Vector2Int GetDifferenceByDirection(Direction direction)
+    {
+        int x = 0;
+        int y = 0;
+
+        // 左右判定
+        if(direction == Direction.Right || direction == Direction.RightTop || direction == Direction.RightBottom)
+        {
+            x = 1;
+        }
+        else if(direction == Direction.Left || direction == Direction.LeftTop || direction == Direction.LeftBottom)
+        {
+            x = -1;
+        }
+        else
+        {
+            // null
+        }
+
+        // 上下判定
+        if(direction == Direction.Top || direction == Direction.RightTop || direction == Direction.LeftTop)
+        {
+            y = -1;
+        }
+        else if(direction == Direction.Bottom || direction == Direction.RightBottom || direction == Direction.LeftBottom)
+        {
+            y = 1;
+        }
+        else
+        {
+            // null
+        }
+
+        return new Vector2Int(x, y);
     }
 }
