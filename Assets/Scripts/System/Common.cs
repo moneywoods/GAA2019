@@ -19,7 +19,6 @@ public class ObjectTag
     public static readonly string CellCollider    = "CellCollider";
     public static readonly string Rock            = "Rock";
 }
-
 public struct StageInfo
 {
     public StageInfo( int stageNum, int chapterNum )
