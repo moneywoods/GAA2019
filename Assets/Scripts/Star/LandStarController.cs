@@ -44,11 +44,15 @@ public class LandStarController : StarBase
     public GameObject m_EffectCanMoveTo;
     private bool m_isCanMoveToEffectEmitting;
 
+    public LandStarController() : base(StarType.Land)
+    {
+        
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         timePast = 0.0f;
-
         m_isCanMoveToEffectEmitting = false;
     }
 
@@ -160,237 +164,126 @@ public class LandStarController : StarBase
     {
         var direction = StarMaker.GetDirection(originCellNum, CellNum);
 
-        // 回転の中心から見て自身がどの方向にあるか.
-        if(direction == Direction.Right)
-        {
-            if(isRight)
-            {
-                if(StarMaker.Instance.CheckLimitOfMap(Direction.Bottom, CellNum) &&
-                    StarMaker.Instance.CheckLimitOfMap(Direction.LeftBottom, CellNum))
-                { // 移動しうるマスがマップの領域内であり,
-                    if(!StarMaker.Instance.GetStarListInDirection(Direction.Bottom, CellNum).Any(rock => rock.tag == ObjectTag.Rock) ||
-                        !StarMaker.Instance.GetStarListInDirection(Direction.LeftBottom, CellNum).Any(rock => rock.tag == ObjectTag.Rock))
-                    { // そのコマにRockが存在しないならtrue
-                        return true;
-                    }
-                }
-            }
-            else
-            {
-                if(StarMaker.Instance.CheckLimitOfMap(Direction.Top, CellNum) &&
-                    StarMaker.Instance.CheckLimitOfMap(Direction.LeftTop, CellNum))
-                { // 移動しうるマスがマップの領域内であり,
-                    if(!StarMaker.Instance.GetStarListInDirection(Direction.Top, CellNum).Any(rock => rock.tag == ObjectTag.Rock) ||
-                        !StarMaker.Instance.GetStarListInDirection(Direction.LeftTop, CellNum).Any(rock => rock.tag == ObjectTag.Rock))
-                    { // そのコマにRockが存在しないならtrue
-                        return true;
-                    }
-                }
-            }
-        }
-        else if(direction == Direction.RightTop)
-        {
-            if(isRight)
-            {
-                var moreBottomCell = CellNum + new Vector2Int(0, 1); // 下の下
-                if(StarMaker.Instance.CheckLimitOfMap(Direction.Bottom, CellNum) &&
-                    StarMaker.Instance.CheckLimitOfMap(Direction.Bottom, moreBottomCell))
-                { // 移動しうるマスがマップの領域内であり,
-                    if(!StarMaker.Instance.GetStarListInDirection(Direction.Bottom, CellNum).Any(rock => rock.tag == ObjectTag.Rock) ||
-                        !StarMaker.Instance.GetStarListInDirection(Direction.Bottom, moreBottomCell).Any(rock => rock.tag == ObjectTag.Rock))
-                    { // そのコマにRockが存在しないならtrue
-                        return true;
-                    }
-                }
-            }
-            else
-            {
-                var moreLeftCell = CellNum + new Vector2Int(-1, 0); // 左の左
-                if(StarMaker.Instance.CheckLimitOfMap(Direction.Left, CellNum) &&
-                    StarMaker.Instance.CheckLimitOfMap(Direction.Left, moreLeftCell))
-                { // 移動しうるマスがマップの領域内であり,
-                    if(!StarMaker.Instance.GetStarListInDirection(Direction.Left, CellNum).Any(rock => rock.tag == ObjectTag.Rock) ||
-                        !StarMaker.Instance.GetStarListInDirection(Direction.Left, moreLeftCell).Any(rock => rock.tag == ObjectTag.Rock))
-                    { // そのコマにRockが存在しないならtrue
-                        return true;
-                    }
-                }
-            }
-        }
-        else if(direction == Direction.Top)
-        {
-            if(isRight)
-            {
-                if(StarMaker.Instance.CheckLimitOfMap(Direction.Right, CellNum) &&
-                    StarMaker.Instance.CheckLimitOfMap(Direction.RightBottom, CellNum))
-                { // 移動しうるマスがマップの領域内であり,
-                    if(!StarMaker.Instance.GetStarListInDirection(Direction.Right, CellNum).Any(rock => rock.tag == ObjectTag.Rock) ||
-                        !StarMaker.Instance.GetStarListInDirection(Direction.RightBottom, CellNum).Any(rock => rock.tag == ObjectTag.Rock))
-                    { // そのコマにRockが存在しないならtrue
-                        return true;
-                    }
-                }
-            }
-            else
-            {
-                if(StarMaker.Instance.CheckLimitOfMap(Direction.Left, CellNum) &&
-                    StarMaker.Instance.CheckLimitOfMap(Direction.LeftBottom, CellNum))
-                { // 移動しうるマスがマップの領域内であり,
-                    if(!StarMaker.Instance.GetStarListInDirection(Direction.Left, CellNum).Any(rock => rock.tag == ObjectTag.Rock) ||
-                        !StarMaker.Instance.GetStarListInDirection(Direction.LeftBottom, CellNum).Any(rock => rock.tag == ObjectTag.Rock))
-                    { // そのコマにRockが存在しないならtrue
-                        return true;
-                    }
-                }
-            }
-        }
-        else if(direction == Direction.LeftTop)
-        {
-            if(isRight)
-            {
-                var moreRightCell = CellNum + new Vector2Int(1, 0); // 右の右
-                if(StarMaker.Instance.CheckLimitOfMap(Direction.Right, CellNum) &&
-                    StarMaker.Instance.CheckLimitOfMap(Direction.Right, moreRightCell))
-                { // 移動しうるマスがマップの領域内であり,
-                    if(!StarMaker.Instance.GetStarListInDirection(Direction.Right, CellNum).Any(rock => rock.tag == ObjectTag.Rock) ||
-                        !StarMaker.Instance.GetStarListInDirection(Direction.Right, moreRightCell).Any(rock => rock.tag == ObjectTag.Rock))
-                    { // そのコマにRockが存在しないならtrue
-                        return true;
-                    }
-                }
-            }
-            else
-            {
-                var moreBottomCell = CellNum + new Vector2Int(0, 1); // 下の下
-                if(StarMaker.Instance.CheckLimitOfMap(Direction.Bottom, CellNum) &&
-                    StarMaker.Instance.CheckLimitOfMap(Direction.Bottom, moreBottomCell))
-                { // 移動しうるマスがマップの領域内であり,
-                    if(!StarMaker.Instance.GetStarListInDirection(Direction.Bottom, CellNum).Any(rock => rock.tag == ObjectTag.Rock) ||
-                        !StarMaker.Instance.GetStarListInDirection(Direction.Bottom, moreBottomCell).Any(rock => rock.tag == ObjectTag.Rock))
-                    { // そのコマにRockが存在しないならtrue
-                        return true;
-                    }
-                }
-            }
-        }
-        else if(direction == Direction.Left)
-        {
-            if(isRight)
-            {
-                if(StarMaker.Instance.CheckLimitOfMap(Direction.Top, CellNum) &&
-                    StarMaker.Instance.CheckLimitOfMap(Direction.RightTop, CellNum))
-                { // 移動しうるマスがマップの領域内であり,
-                    if(!StarMaker.Instance.GetStarListInDirection(Direction.Top, CellNum).Any(rock => rock.tag == ObjectTag.Rock) ||
-                        !StarMaker.Instance.GetStarListInDirection(Direction.RightTop, CellNum).Any(rock => rock.tag == ObjectTag.Rock))
-                    { // そのコマにRockが存在しないならtrue
-                        return true;
-                    }
-                }
-            }
-            else
-            {
-                if(StarMaker.Instance.CheckLimitOfMap(Direction.Bottom, CellNum) &&
-                    StarMaker.Instance.CheckLimitOfMap(Direction.RightBottom, CellNum))
-                { // 移動しうるマスがマップの領域内であり,
-                    if(!StarMaker.Instance.GetStarListInDirection(Direction.Bottom, CellNum).Any(rock => rock.tag == ObjectTag.Rock) ||
-                        !StarMaker.Instance.GetStarListInDirection(Direction.RightBottom, CellNum).Any(rock => rock.tag == ObjectTag.Rock))
-                    { // そのコマにRockが存在しないならtrue
-                        return true;
-                    }
-                }
-            }
-        }
-        else if(direction == Direction.LeftBottom)
-        {
-            if(isRight)
-            {
-                var moreTopCell = CellNum + new Vector2Int(0, -1);
-                if(StarMaker.Instance.CheckLimitOfMap(Direction.Top, CellNum) &&
-                    StarMaker.Instance.CheckLimitOfMap(Direction.Top, moreTopCell))
-                { // 移動しうるマスがマップの領域内であり,
-                    if(!StarMaker.Instance.GetStarListInDirection(Direction.Top, CellNum).Any(rock => rock.tag == ObjectTag.Rock) ||
-                        !StarMaker.Instance.GetStarListInDirection(Direction.Top, moreTopCell).Any(rock => rock.tag == ObjectTag.Rock))
-                    { // そのコマにRockが存在しないならtrue
-                        return true;
-                    }
-                }
-            }
-            else
-            {
-                var moreRightCell = CellNum + new Vector2Int(0, 1);
-                if(StarMaker.Instance.CheckLimitOfMap(Direction.Right, CellNum) &&
-                    StarMaker.Instance.CheckLimitOfMap(Direction.Right, moreRightCell))
-                { // 移動しうるマスがマップの領域内であり,
-                    if(!StarMaker.Instance.GetStarListInDirection(Direction.Right, CellNum).Any(rock => rock.tag == ObjectTag.Rock) ||
-                        !StarMaker.Instance.GetStarListInDirection(Direction.Right, moreRightCell).Any(rock => rock.tag == ObjectTag.Rock))
-                    { // そのコマにRockが存在しないならtrue
-                        return true;
-                    }
-                }
-            }
-        }
-        else if(direction == Direction.Bottom)
-        {
-            if(isRight)
-            {
-                if(StarMaker.Instance.CheckLimitOfMap(Direction.Left, CellNum) &&
-                    StarMaker.Instance.CheckLimitOfMap(Direction.LeftTop, CellNum))
-                { // 移動しうるマスがマップの領域内であり,
-                    if(!StarMaker.Instance.GetStarListInDirection(Direction.Right, CellNum).Any(rock => rock.tag == ObjectTag.Rock) ||
-                        !StarMaker.Instance.GetStarListInDirection(Direction.RightTop, CellNum).Any(rock => rock.tag == ObjectTag.Rock))
-                    { // そのコマにRockが存在しないならtrue
-                        return true;
-                    }
-                }
-            }
-            else
-            {
-                if(StarMaker.Instance.CheckLimitOfMap(Direction.Right, CellNum) &&
-                    StarMaker.Instance.CheckLimitOfMap(Direction.RightTop, CellNum))
-                { // 移動しうるマスがマップの領域内であり,
-                    if(!StarMaker.Instance.GetStarListInDirection(Direction.Right, CellNum).Any(rock => rock.tag == ObjectTag.Rock) ||
-                        !StarMaker.Instance.GetStarListInDirection(Direction.RightTop, CellNum).Any(rock => rock.tag == ObjectTag.Rock))
-                    { // そのコマにRockが存在しないならtrue
-                        return true;
-                    }
-                }
-            }
-        }
-        else if(direction == Direction.RightBottom)
-        {
-            if(isRight)
-            {
-                var moreLeftCell = CellNum + new Vector2Int(-1, 0);
-                if(StarMaker.Instance.CheckLimitOfMap(Direction.Left, CellNum) &&
-                    StarMaker.Instance.CheckLimitOfMap(Direction.Left, moreLeftCell))
-                { // 移動しうるマスがマップの領域内であり,
-                    if(!StarMaker.Instance.GetStarListInDirection(Direction.Left, CellNum).Any(rock => rock.tag == ObjectTag.Rock) ||
-                        !StarMaker.Instance.GetStarListInDirection(Direction.Left, moreLeftCell).Any(rock => rock.tag == ObjectTag.Rock))
-                    { // そのコマにRockが存在しないならtrue
-                        return true;
-                    }
-                }
-            }
-            else
-            {
-                var moreTopCell = CellNum + new Vector2Int(0, -1);
-                if(StarMaker.Instance.CheckLimitOfMap(Direction.Top, CellNum) &&
-                    StarMaker.Instance.CheckLimitOfMap(Direction.Top, moreTopCell))
-                { // 移動しうるマスがマップの領域内であり,
-                    if(!StarMaker.Instance.GetStarListInDirection(Direction.Top, CellNum).Any(rock => rock.tag == ObjectTag.Rock) ||
-                        !StarMaker.Instance.GetStarListInDirection(Direction.Top, moreTopCell).Any(rock => rock.tag == ObjectTag.Rock))
-                    { // そのコマにRockが存在しないならtrue
-                        return true;
-                    }
-                }
-            }
-        }
-        else // NONE || ENUM_MAX
-        {
+        Vector2Int cp0 = CellNum;
+        Vector2Int cp1 = CellNum;
 
+        // チェックするコマを算出.
+        if(isRight)
+        {
+            if(direction == Direction.Right)
+            {
+                cp0 += StarMaker.GetDifferenceByDirection(Direction.Bottom);
+                cp1 += StarMaker.GetDifferenceByDirection(Direction.LeftBottom);
+            }
+            else if(direction == Direction.RightTop)
+            {
+                cp0 += StarMaker.GetDifferenceByDirection(Direction.Bottom);
+                cp1 = cp0 + StarMaker.GetDifferenceByDirection(Direction.Bottom);
+            }
+            else if(direction == Direction.Top)
+            {
+                cp0 += StarMaker.GetDifferenceByDirection(Direction.Right);
+                cp1 += StarMaker.GetDifferenceByDirection(Direction.RightBottom);
+            }
+            else if(direction == Direction.LeftTop)
+            {
+                cp0 += StarMaker.GetDifferenceByDirection(Direction.Right);
+                cp1 = cp0 + StarMaker.GetDifferenceByDirection(Direction.Right);
+            }
+            else if(direction == Direction.Left)
+            {
+                cp0 += StarMaker.GetDifferenceByDirection(Direction.Top);
+                cp1 += StarMaker.GetDifferenceByDirection(Direction.RightTop);
+            }
+            else if(direction == Direction.LeftBottom)
+            {
+                cp0 += StarMaker.GetDifferenceByDirection(Direction.Top);
+                cp1 = cp0 + StarMaker.GetDifferenceByDirection(Direction.Top);
+            }
+            else if(direction == Direction.Bottom)
+            {
+                cp0 += StarMaker.GetDifferenceByDirection(Direction.Left);
+                cp1 += StarMaker.GetDifferenceByDirection(Direction.LeftTop);
+            }
+            else if(direction == Direction.RightBottom)
+            {
+                cp0 += StarMaker.GetDifferenceByDirection(Direction.Left);
+                cp1 = cp0 + StarMaker.GetDifferenceByDirection(Direction.Left);
+            }
+            else
+            {
+                return false; // この条件に正であることはありえない.
+            }
+        }
+        else
+        {
+            if(direction == Direction.Right)
+            {
+                cp0 += StarMaker.GetDifferenceByDirection(Direction.Top);
+                cp1 += StarMaker.GetDifferenceByDirection(Direction.LeftTop);
+            }
+            else if(direction == Direction.RightTop)
+            {
+                cp0 += StarMaker.GetDifferenceByDirection(Direction.Left);
+                cp1 = cp0 + StarMaker.GetDifferenceByDirection(Direction.Left);
+            }
+            else if(direction == Direction.Top)
+            {
+                cp0 += StarMaker.GetDifferenceByDirection(Direction.Left);
+                cp1 += StarMaker.GetDifferenceByDirection(Direction.LeftBottom);
+            }
+            else if(direction == Direction.LeftTop)
+            {
+                cp0 += StarMaker.GetDifferenceByDirection(Direction.Bottom);
+                cp1 = cp0 + StarMaker.GetDifferenceByDirection(Direction.Bottom);
+            }
+            else if(direction == Direction.Left)
+            {
+                cp0 += StarMaker.GetDifferenceByDirection(Direction.Bottom);
+                cp1 += StarMaker.GetDifferenceByDirection(Direction.RightBottom);
+            }
+            else if(direction == Direction.LeftBottom)
+            {
+                cp0 += StarMaker.GetDifferenceByDirection(Direction.Right);
+                cp1 = cp0 + StarMaker.GetDifferenceByDirection(Direction.Right);
+            }
+            else if(direction == Direction.Bottom)
+            {
+                cp0 += StarMaker.GetDifferenceByDirection(Direction.Right);
+                cp1 += StarMaker.GetDifferenceByDirection(Direction.RightTop);
+            }
+            else if(direction == Direction.RightBottom)
+            {
+                cp0 += StarMaker.GetDifferenceByDirection(Direction.Top);
+                cp1 = cp0 + StarMaker.GetDifferenceByDirection(Direction.Top);
+            }
+            else
+            {
+                return false; // この条件に正であることはありえない.
+            }
         }
 
-        return false;
+        // マップ領域内かチェック
+        if(!(StarMaker.Instance.CheckLimitOfMap(cp0) || StarMaker.Instance.CheckLimitOfMap(cp1)))
+        {
+            return false;
+        }
+        else
+        {
+            // null
+        }
+
+        if(0 < StarMaker.Instance.GetStarList(cp0, StarType.Rock).Count ||
+            0 < StarMaker.Instance.GetStarList(cp0, StarType.Rock).Count)
+        {
+            return false;
+        }
+        else
+        {
+            // null
+        }
+
+        return true;
     }
     // --------------------------------------------------------------------------------------------
     //
