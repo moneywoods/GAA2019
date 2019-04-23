@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class StageSelect : MonoBehaviour
 {
-    Vector2 m_ButtonPosition;
 
     GameObject m_ObjMageMaster;
 
@@ -15,7 +14,6 @@ public class StageSelect : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        m_ButtonPosition = new Vector2(1, 1);
         m_ObjMageMaster = GameObject.FindWithTag("SceneMaster");
 
         var component = GetComponent<Button>();

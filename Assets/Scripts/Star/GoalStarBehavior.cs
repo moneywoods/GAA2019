@@ -11,7 +11,7 @@ public class GoalStarBehavior : LandStarController
     // Start is called before the first frame update
     void Start()
     {
-        m_NextSceneTimer = 0;   
+        m_NextSceneTimer = 0;
     }
 
     // Update is called once per frame
@@ -19,10 +19,10 @@ public class GoalStarBehavior : LandStarController
     {
         if(m_NextSceneTimer != 0)
         {
-            if(m_NextSceneTimer % 60 == 0)
+            if(m_NextSceneTimer % 120 == 0)
             {// 時間がたったら次のシーンへ
-                PauseTheGame.SetTimeScale(0.0f);
-                FadeManager.FadeOut("TitleScene");
+//                PauseTheGame.SetTimeScale(0.0f);
+                FadeManager.FadeOut("scene0315");
             }
             m_NextSceneTimer++;
         }   
@@ -35,6 +35,7 @@ public class GoalStarBehavior : LandStarController
             GameObject.FindWithTag("Finish").transform.position = transform.position;
 
             m_NextSceneTimer++;
+            GameMasterBehavior.InitiatingChapter = GameMasterBehavior.InitiatingChapter + 1;
         }
     }
 
