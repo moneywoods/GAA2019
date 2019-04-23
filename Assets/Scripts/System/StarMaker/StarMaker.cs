@@ -372,7 +372,7 @@ public class StarMaker : SingletonPattern<StarMaker>
         }
     }
 
-    public GameObject GetStar(string tag, Vector2Int cellNum) // 指定したコマのリストから指定したタグの星を戻す.
+    public GameObject GetStar(Vector2Int cellNum, string tag) // 指定したコマのリストから指定したタグの星を戻す.
     {
         if(!CheckLimitOfMap(cellNum))
         {
@@ -386,40 +386,11 @@ public class StarMaker : SingletonPattern<StarMaker>
         return CellColliderBehaviourScript[cellNum.y, cellNum.x].List.Find(obj => obj.tag == tag.ToString());
     }
 
-    public GameObject GetStar(string tag, Vector2Int cellNum, Direction direction)
+    public GameObject GetStar(Vector2Int cellNum, string tag, Direction direction)
     {
-        int x = 0;
-        int y = 0;
+        cellNum += GetDifferenceByDirection(direction);
 
-        // 左右判定
-        if(direction == Direction.Right || direction == Direction.RightTop || direction == Direction.RightBottom)
-        {
-            x = 1;
-        }
-        else if(direction == Direction.Left || direction == Direction.LeftTop || direction == Direction.LeftBottom)
-        {
-            x = -1;
-        }
-        else
-        {
-            // null
-        }
-
-        // 上下判定
-        if(direction == Direction.Top || direction == Direction.RightTop || direction == Direction.LeftTop)
-        {
-            y = -1;
-        }
-        else if(direction == Direction.Bottom || direction == Direction.RightBottom || direction == Direction.LeftBottom)
-        {
-            y = 1;
-        }
-        else
-        {
-            // null
-        }
-
-        return GetStar(tag, new Vector2Int(cellNum.x + x, cellNum.y + y));
+        return GetStar(cellNum, tag);
     }
 
     public GameObject GetStar(Vector2Int cellNum, StarBase.StarType type)
@@ -432,8 +403,17 @@ public class StarMaker : SingletonPattern<StarMaker>
         {
             // null
         }
+        
+        // StarBaseサブクラス以外にも入っているので取り除く.
+        var list = new List<GameObject>(GetStarList(cellNum));
+        var removingList = list.FindAll(obj => obj.GetComponent<MyGameObject>().objectType != MyGameObject.ObjectType.Star);
 
-        return CellColliderBehaviourScript[cellNum.y, cellNum.x].List.Find(obj => (obj.GetComponent<StarBase>().starType & type) != 0);
+        foreach(GameObject obj in removingList)
+        {
+            list.Remove(obj);
+        }
+        
+        return list.Find(obj => (obj.GetComponent<StarBase>().starType & type) != 0);
     }
 
     public GameObject GetStar(Vector2Int cellNum, StarBase.StarType type, Direction direction)
@@ -445,7 +425,7 @@ public class StarMaker : SingletonPattern<StarMaker>
 
     public List<GameObject> GetStarList(Vector2Int cellNum)
     {
-        if(CheckLimitOfMap(cellNum))
+        if(!CheckLimitOfMap(cellNum))
         {
             return new List<GameObject>();
         }
@@ -468,7 +448,15 @@ public class StarMaker : SingletonPattern<StarMaker>
 
         }
 
-        return CellColliderBehaviourScript[cellNum.y, cellNum.x].List.FindAll(obj => (obj.GetComponent<StarBase>().starType & type) != 0);
+        var list = new List<GameObject>(GetStarList(cellNum));
+        var removingList = list.FindAll(obj => obj.GetComponent<MyGameObject>().objectType != MyGameObject.ObjectType.Star);
+
+        foreach(GameObject obj in removingList)
+        {
+            list.Remove(obj);
+        }
+        
+        return list.FindAll(obj => (obj.GetComponent<StarBase>().starType & type) != 0);
     }
 
     public List<GameObject> GetStarList(Vector2Int cellNum, StarBase.StarType type, Direction direction)
