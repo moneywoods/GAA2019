@@ -126,7 +126,10 @@ namespace Tako
             }
 
             // 指定された方向に行けるLandがあるかチェック.
-            GameObject newLand = StarMaker.Instance.GetStar(ObjectTag.Land, currentStarStaying.GetComponent<StarBase>().CellNum, direction);
+            //GameObject newLand0 = StarMaker.Instance.GetStar(ObjectTag.Land, currentStarStaying.GetComponent<StarBase>().CellNum, direction);
+            //GameObject newLand1 = StarMaker.Instance.GetStar(ObjectTag.GoalStar, currentStarStaying.GetComponent<StarBase>().CellNum, direction);
+            GameObject newLand = StarMaker.Instance.GetStar(currentStarStaying.GetComponent<StarBase>().CellNum, StarBase.StarType.Land, direction);
+
             if(newLand == null)
             {
                 return false; 
@@ -302,7 +305,7 @@ namespace Tako
                 }
                 else if(Input.GetKeyDown(KeyCode.Q))
                 {
-                    whichDirection = Direction.RightTop;
+                    whichDirection = Direction.LeftTop;
                 }
                 else if(Input.GetKeyDown(KeyCode.A))
                 {
@@ -350,7 +353,7 @@ namespace Tako
                 {
                     var list = StarMaker.Instance.GetNeighvorList(takoScript.currentStarStaying.GetComponent<LandStarController>().CellNum);
 
-                    if(takoScript.AskKineticPowerAvailable(list, false))
+                    if(takoScript.AskKineticPowerAvailable(list, true))
                     {
                         takoScript.KineticPower(2.0f, true);
                         takoScript.TransitState(StateName.WaitingForKineticPowerEnd);
@@ -364,7 +367,7 @@ namespace Tako
                 {
                     var list = StarMaker.Instance.GetNeighvorList(takoScript.currentStarStaying.GetComponent<LandStarController>().CellNum);
 
-                    if(takoScript.AskKineticPowerAvailable(list, true))
+                    if(takoScript.AskKineticPowerAvailable(list, false))
                     {
                         takoScript.KineticPower(2.0f, false);
                         takoScript.TransitState(StateName.WaitingForKineticPowerEnd);
