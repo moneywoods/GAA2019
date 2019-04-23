@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class TakoColliderBehaviour : MyGameObject
 {
+    public TakoColliderBehaviour() : base(ObjectType.Character)
+    {
+
+    }
     // Start is called before the first frame update
     protected override void Start()
     {
