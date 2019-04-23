@@ -1,9 +1,25 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class MyGameObject : MonoBehaviour
 {
+    [Flags]
+    public enum ObjectType
+    {
+        Character,
+        Star,
+        Other
+    }
+
+    public ObjectType objectType
+    {
+        get;
+        protected set;
+    }
+
+
     private Vector2Int cellNum = new Vector2Int(-1, -1);
 
     public Vector2Int CellNum // 必ずプロパティを介して値を取得してください.
@@ -17,6 +33,11 @@ public class MyGameObject : MonoBehaviour
         {
             cellNum = value;
         }
+    }
+
+    public MyGameObject(ObjectType type)
+    {
+        objectType = type;
     }
 
     // Start is called before the first frame update

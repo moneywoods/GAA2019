@@ -21,7 +21,7 @@ public class StarBase : MyGameObject
         protected set;
     }
 
-    public StarBase(StarType type)
+    public StarBase(StarType type) : base(ObjectType.Star)
     {
         this.starType = type;
     }
