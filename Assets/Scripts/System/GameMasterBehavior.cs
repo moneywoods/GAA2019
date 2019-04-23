@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class GameMasterBehavior : MonoBehaviour
 {
-    public GameObject m_StarMakerPrefab = null;
-    public GameObject m_PlayerCommand;
+    [SerializeField] private GameObject m_StarMakerPrefab = null;
+    [SerializeField] private GameObject m_PlayerCommand;
 
     // UI
-    public GameObject m_MenuCanvas;
-    public GameObject m_GridLinePrefab;
 
     private static StageInfo initiatingStage;
     public static int InitiatingChapter
@@ -20,11 +19,13 @@ public class GameMasterBehavior : MonoBehaviour
               IsChapterOver();
             }
     }
+    
+    private readonly static int STAGE_MAX = 4;
+    private readonly static int CHAPTER_MAX = 4;
 
-    [SerializeField]
-    private static int STAGE_MAX;
-    [SerializeField]
-    private static int CHAPTER_MAX;
+    [SerializeField] private GameObject m_MenuCanvas;
+    [SerializeField] private GameObject m_EventSystem;
+    [SerializeField] private GameObject m_GridLinePrefab;
 
 
     private void Awake()

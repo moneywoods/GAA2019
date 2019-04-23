@@ -30,8 +30,8 @@ TagManager:
   - 
   - 
   - Player
-  - Land
-  - 
+  - Star
+  - CellCollider
   - 
   - 
   - 

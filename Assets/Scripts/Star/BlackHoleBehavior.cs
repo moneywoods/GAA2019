@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class BlackHoleBehavior : StarBase
 {
+    BlackHoleBehavior() : base(StarType.BlackHole)
+    {
+        
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -13,22 +18,37 @@ public class BlackHoleBehavior : StarBase
     // Update is called once per frame
     void Update()
     {
-        
+
+    }
+    
+    public override bool CheckKineticPowerCanBeUsed(Vector2Int originCellNum, bool isRight)
+    {
+        return base.CheckKineticPowerCanBeUsed(originCellNum, isRight);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public override void TriggerEnterCell(GameObject other)
     {
-        if( collision.tag == ObjectTag.Land)
+        base.TriggerEnterCell(other);
+    }
+
+    public override void TriggerExitCell(GameObject other)
+    {
+        base.TriggerExitCell(other);
+    }
+
+    public override void TriggerOtherComeToSameCell(GameObject other)
+    {
+        if(other.tag == ObjectTag.Land)
         {
-            LandStarController landScript = collision.GetComponent<LandStarController>();
+            LandStarController landScript = other.GetComponent<LandStarController>();
             landScript.AddStat(LandStarController.LANDSTAR_STAT.DESTROYED);
             landScript.RemoveFlag(LandStarController.LANDSTAR_STAT.MOVING);
-
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    public override void TriggerOtherLeaveFromSameCell(GameObject other)
     {
-        
+        base.TriggerOtherLeaveFromSameCell(other);
     }
+
 }

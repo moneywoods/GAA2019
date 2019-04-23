@@ -8,6 +8,11 @@ public class GoalStarBehavior : LandStarController
     // シーン遷移までの時間
     private uint m_NextSceneTimer = 0;
 
+    public GoalStarBehavior()
+    {
+        starType |= StarType.GoalStar;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,10 +32,10 @@ public class GoalStarBehavior : LandStarController
             m_NextSceneTimer++;
         }   
     }
-
-    private void OnTriggerEnter2D(Collider2D collision)
+    
+    public override void TriggerOtherComeToSameCell(GameObject other)
     {
-        if( collision.tag == ObjectTag.PlayerCharacter)
+        if(other.tag == ObjectTag.PlayerCharacter)
         {
             GameObject.FindWithTag("Finish").transform.position = transform.position;
 
@@ -38,8 +43,7 @@ public class GoalStarBehavior : LandStarController
             GameMasterBehavior.InitiatingChapter = GameMasterBehavior.InitiatingChapter + 1;
         }
     }
-
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit(Collider collision)
     {
         
     }

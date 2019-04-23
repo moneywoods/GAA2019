@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class MilkyWayBehavior : StarBase
 {
+    public MilkyWayBehavior() : base(StarType.MilkyWay)
+    {
+
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,18 +21,11 @@ public class MilkyWayBehavior : StarBase
         
     }
 
-
-    // 当たり判定はとりあえず3にしてます.
-    private void OnTriggerEnter2D(Collider2D collision)
+    public override void TriggerOtherComeToSameCell(GameObject other)
     {
-        if( collision.tag == ObjectTag.Land )
+        if(other.tag == ObjectTag.Land)
         {
-            collision.GetComponent<LandStarController>().AddStat(LandStarController.LANDSTAR_STAT.IN_MILKYWAY_AREA);
+            other.GetComponent<LandStarController>().AddStat(LandStarController.LANDSTAR_STAT.IN_MILKYWAY_AREA);
         }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        
     }
 }
