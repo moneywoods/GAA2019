@@ -8,6 +8,11 @@ public class GoalStarBehavior : LandStarController
     // シーン遷移までの時間
     private uint m_NextSceneTimer = 0;
 
+    public GoalStarBehavior()
+    {
+        starType |= StarType.GoalStar;
+    }
+
     // Start is called before the first frame update
     void Start()
     {

@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class BlackHoleBehavior : StarBase
 {
+    BlackHoleBehavior() : base(StarType.BlackHole)
+    {
+        
+    }
+
     // Start is called before the first frame update
     void Start()
     {

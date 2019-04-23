@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class MilkyWayBehavior : StarBase
 {
+    public MilkyWayBehavior() : base(StarType.MilkyWay)
+    {
+
+    }
+
     // Start is called before the first frame update
     void Start()
     {
