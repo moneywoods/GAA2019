@@ -27,6 +27,8 @@ public class GameMasterBehavior : MonoBehaviour
     [SerializeField] private GameObject m_EventSystem;
     [SerializeField] private GameObject m_GridLinePrefab;
 
+    [SerializeField] public static bool isInitiationEvent = true;
+
 
     private void Awake()
     {

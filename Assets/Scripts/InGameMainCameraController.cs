@@ -16,12 +16,14 @@ public class InGameMainCameraController : StateContex
 
     [SerializeField] private float dist5x5;
     [SerializeField] private float degree = -130.0f;
-    void Awake()
+    InGameMainCameraController()
     {
         AddState(new StateFollowingPlayer(this, gameObject));
+        AddState(new StateMovingFromGoalToStart(this, gameObject));
 
-        SetCurrentState(StateName.FollowingPlayer);  
+        SetCurrentState(StateName.FollowingPlayer);
     }
+
     // Use this for initialization
     void Start ()
     {
@@ -53,6 +55,7 @@ public class InGameMainCameraController : StateContex
         public CameraState(StateContex contex, GameObject camera) : base(contex)
         {
             this.camera = camera;
+            cameraScript = camera.GetComponent<InGameMainCameraController>();
         }
 
         protected GameObject camera = null;
@@ -65,15 +68,15 @@ public class InGameMainCameraController : StateContex
         public StateFollowingPlayer(StateContex contex, GameObject camera) : base(contex, camera)
         {
             Name = StateName.FollowingPlayer;
-            this.camera = camera;
-            cameraScript = camera.GetComponent<InGameMainCameraController>();
             OnEnter += Init;
-            update = UsualUpdate;
+            update += UsualUpdate;
         }
+
         private void Init()
         {
             Debug.Log("camera is following mode");
         }
+
         private void UsualUpdate()
         {
             if(cameraScript.target == null)
@@ -92,6 +95,7 @@ public class InGameMainCameraController : StateContex
                 }
             }
         }
+
         private void FollowTarget()
         {
             if(cameraScript.target == null)
@@ -102,6 +106,54 @@ public class InGameMainCameraController : StateContex
             var diff = cameraScript.target.transform.position - previousTargetPos;
             camera.transform.position += diff;
             previousTargetPos = cameraScript.target.transform.position;
+        }
+    }
+
+    private class StateMovingFromGoalToStart : CameraState
+    {
+        [SerializeField] private GameObject Destination;
+        [SerializeField] private float duration;
+        [SerializeField] private Vector3 diff;
+
+        public StateMovingFromGoalToStart(StateContex contex, GameObject camera) : base(contex, camera)
+        {
+            Name = StateName.MovingFromGoalToStart;
+            OnEnter += Init;
+        }
+
+        private void Init()
+        {
+            cameraScript.target = GameObject.FindGameObjectWithTag(ObjectTag.GoalStar);
+            Destination = GameObject.FindGameObjectWithTag(ObjectTag.PlayerCharacter);
+
+            if(cameraScript.target != null && Destination != null)
+            {
+                cameraScript.Init(StarMaker.Instance.CurrentMapInfo);
+
+                diff = (Destination.transform.position - cameraScript.target.transform.position) / duration; // 単位時間当たりの変位
+
+                var dist = new Vector3(0.0f, 0.0f, cameraScript.dist5x5);
+                dist = Quaternion.Euler(cameraScript.degree, 0.0f, 0.0f) * dist;
+                camera.transform.position = cameraScript.target.transform.position + dist;
+                camera.transform.LookAt(cameraScript.target.transform);
+
+                update += MoveFromGoalToStart;
+                return;
+            }
+
+            if(cameraScript.target == null)
+            {
+                Debug.Log("target couldnt be found.");
+            }
+            else if(Destination == null)
+            {
+                Debug.Log("Destination couldnt be found.");
+            }
+        }
+
+        private void MoveFromGoalToStart()
+        {
+            camera.transform.position += diff * Time.deltaTime;
         }
     }
 }
