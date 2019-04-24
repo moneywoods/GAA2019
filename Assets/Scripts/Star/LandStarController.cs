@@ -31,12 +31,13 @@ public class LandStarController : StarBase
     }
 
     public LANDSTAR_STAT CurrentStat { get; protected set; }
-
+    
     public Vector3 centerOfCircular
     {
         get;
         protected set;
     }
+    protected Vector3 centerOfCircular;
 
     [SerializeField]private GameObject explosionObject; // 自身にDESTROYEDフラグが立った時生成するエフェクトオブジェクト
 
@@ -52,9 +53,9 @@ public class LandStarController : StarBase
         protected set;
     }
 
-// 移住可能を示すエフェクト // 今後UIとかもっと他の物に置き換える予定
-public GameObject m_EffectCanMoveTo;
-    private bool m_isCanMoveToEffectEmitting;
+    // 移住可能を示すエフェクト // 今後UIとかもっと他の物に置き換える予定
+    public GameObject m_EffectCanMoveTo;
+    protected bool m_isCanMoveToEffectEmitting;
 
     public LandStarController() : base(StarType.Land)
     {
