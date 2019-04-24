@@ -49,7 +49,14 @@ namespace StatePattern
             {
                 return;
             }
+
             CurrentState = state;
+
+            if(CurrentState.OnEnter != null)
+            {
+                CurrentState.OnEnter();
+            }
+
             Debug.Log(gameObject.name + "is now State: " + CurrentState.Name);
         }
 
@@ -67,6 +74,11 @@ namespace StatePattern
             }
 
             CurrentState = targetState;
+            if(CurrentState.OnEnter != null)
+            {
+                CurrentState.OnEnter();
+            }
+
             Debug.Log(gameObject.name + "is set to State: " + CurrentState.Name);
         }
 
