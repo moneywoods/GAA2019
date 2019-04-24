@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 399107893205564343}
   - component: {fileID: 6573340101619167281}
   - component: {fileID: 2963613101676655682}
+  - component: {fileID: 2391957861694405543}
   m_Layer: 8
   m_Name: Tako
   m_TagString: PlayerCharacter
@@ -97,7 +98,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentStarStaying: {fileID: 0}
   nextStar: {fileID: 0}
-  previousStar: {fileID: 0}
 --- !u!54 &399107893205564343
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -137,5 +137,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0cbee561dad42024eb784ca201e8af7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2391957861694405543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3227633270504513355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cd34c547ef5f6248853a527835db9af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
