@@ -14,33 +14,15 @@ public class PauseTheGame : MonoBehaviour
     {
     }
 
-    //=======================
-    // ゲームを停止
-    //=======================
-    public static void GameStop()
+    // 時間の速度を設定(０f～１f)
+    public static void SetTimeScale(float time)
     {
-        Time.timeScale = 0f;
-    }
+        bool minTime = time >= 0f;
+        bool maxTime = time <= 1f;
 
-    //=======================
-    // ゲームを開始
-    //=======================
-    public static void GameReStart()
-    {
-        Time.timeScale = 1f;
-    }
-
-    //=======================
-    // ゲームを一時停止のオンオフ
-    //=======================
-    public static void GamePauseSwitch()
-    {
-        if (Time.timeScale == 0f)
+        if(minTime && maxTime)
         {
-            Time.timeScale = 1f;
-        } else if (Time.timeScale == 1f)
-        {
-            Time.timeScale = 0f;
+            Time.timeScale = time;
         }
     }
 }

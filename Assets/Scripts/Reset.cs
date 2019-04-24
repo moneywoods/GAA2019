@@ -4,26 +4,23 @@ using UnityEngine;
 
 public class Reset : MonoBehaviour
 {
-        
-    public float timeOut;
+    [SerializeField]    
+    private float timeOut;
+
     private float timeElapsed;
 
      void Start()
     {
-        timeOut = 1.0f;
-
     }
 
     void Update()
     {
-
-      
-
         timeElapsed += Time.deltaTime;
 
         if (timeElapsed >= timeOut)
         {
             // Do anything
+//            gameObject.SetActive(false);
             Destroy(gameObject);
             timeElapsed = 0.0f;
             

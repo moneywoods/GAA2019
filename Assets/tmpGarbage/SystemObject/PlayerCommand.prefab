@@ -94,3 +94,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ResetSpritePrefab: {fileID: 7687525143576401856, guid: 7947801b553f33a478f08a8d24dcfc3a,
     type: 3}
+  m_ObjStageCanvas: {fileID: 5994316680908539326, guid: b2d8241d6bf37a943907181b450b7896,
+    type: 3}

@@ -27,10 +27,11 @@ public class LandStarController : StarBase
         DESTROYED              = 1 << 8, // 0001_0000_0000  // 破壊された.
         // フラグ抽出用
         MOVING                 = 6,      // 0000_0000_0110 // MOVING_LEFT | MOVING_RIGHT
+        STUCKED                = GET_CAUGHT_BY_MILKYWAY, 
         ENUM_MAX
     }
 
-    public LANDSTAR_STAT CurrentStat { get; private set; }
+    public LANDSTAR_STAT CurrentStat { get; protected set; }
 
     private Vector3 centerOfCircular;
 
@@ -162,6 +163,12 @@ public class LandStarController : StarBase
 
     public override bool CheckKineticPowerCanBeUsed(Vector2Int originCellNum, bool isRight)
     {
+        // スタック中は動けないのでtrueを戻す
+        if(CheckFlag(LANDSTAR_STAT.STUCKED))
+        {
+            return true;
+        }
+
         var direction = StarMaker.GetDirection(originCellNum, CellNum);
 
         Vector2Int cp0 = CellNum;
@@ -264,23 +271,23 @@ public class LandStarController : StarBase
         }
 
         // マップ領域内かチェック
-        if(!(StarMaker.Instance.CheckLimitOfMap(cp0) || StarMaker.Instance.CheckLimitOfMap(cp1)))
+        if(!(StarMaker.Instance.CheckLimitOfMap(cp0) && StarMaker.Instance.CheckLimitOfMap(cp1)))
         {
             return false;
         }
-        else
-        {
-            // null
-        }
-
+                
+        // 移動経路に邪魔する要素があるかチェック
         if(0 < StarMaker.Instance.GetStarList(cp0, StarType.Rock).Count ||
-            0 < StarMaker.Instance.GetStarList(cp0, StarType.Rock).Count)
+            0 < StarMaker.Instance.GetStarList(cp1, StarType.Rock).Count ||
+            0 < StarMaker.Instance.GetStarList(cp0, StarType.BlackHole).Count ||
+            0 < StarMaker.Instance.GetStarList(cp1, StarType.BlackHole).Count)
         {
             return false;
         }
-        else
+        else if(StarMaker.Instance.GetStarList(cp0, StarType.Land).Exists(obj => obj.GetComponent<LandStarController>().CheckFlag(LANDSTAR_STAT.STUCKED)) ||
+            StarMaker.Instance.GetStarList(cp1, StarType.Land).Exists(obj => obj.GetComponent<LandStarController>().CheckFlag(LANDSTAR_STAT.STUCKED)))
         {
-            // null
+            return false;
         }
 
         return true;

@@ -18,9 +18,12 @@ namespace Tako
         [SerializeField] private GameObject currentStarStaying; // 今いる星.
         [SerializeField] private GameObject nextStar;
         [SerializeField] public GameObject previousStar;
+        private List<GameObject> MovingStarList;
 
         protected void Awake()
         {
+            MovingStarList = new List<GameObject>();
+
             // ステートを生成
             AddState(new StateNormal(this, gameObject));
             AddState(new StateWaitingForKineticPowerEnd(this, gameObject));
@@ -126,8 +129,6 @@ namespace Tako
             }
 
             // 指定された方向に行けるLandがあるかチェック.
-            //GameObject newLand0 = StarMaker.Instance.GetStar(ObjectTag.Land, currentStarStaying.GetComponent<StarBase>().CellNum, direction);
-            //GameObject newLand1 = StarMaker.Instance.GetStar(ObjectTag.GoalStar, currentStarStaying.GetComponent<StarBase>().CellNum, direction);
             GameObject newLand = StarMaker.Instance.GetStar(currentStarStaying.GetComponent<StarBase>().CellNum, StarBase.StarType.Land, direction);
 
             if(newLand == null)
@@ -236,6 +237,7 @@ namespace Tako
                     if (scriptNeighvor.CheckFlag(LandStarController.LANDSTAR_STAT.ALIVE) && !scriptNeighvor.CheckFlag(LandStarController.LANDSTAR_STAT.MOVING))
                     {
                         neighvorStarList[i].GetComponent<LandStarController>().SetMove(gameObject, estimatedTimeToCirculate, isRight);
+                        MovingStarList.Add(neighvorStarList[i]);
                     }
                 }
             }
@@ -283,9 +285,8 @@ namespace Tako
             void UpdateByCommand()
             {
                 // 入力を取得.
-                // ゲームパッド
-                bool rsh = Input.GetKeyDown(KeyCode.Joystick1Button5);      // 右ボタン
-                bool lsh = Input.GetKeyDown(KeyCode.Joystick1Button4);      // 左ボタン
+                bool rightRotationInput = ( Input.GetKeyDown(KeyCode.Joystick1Button5) || Input.GetKeyDown(KeyCode.Alpha3) );      // 右ボタン
+                bool leftRotationInput = ( Input.GetKeyDown(KeyCode.Joystick1Button4) || Input.GetKeyDown(KeyCode.Alpha1) );      // 左ボタン
 
                 // 星を渡る.
                 bool isMovementStart = false;
@@ -349,7 +350,7 @@ namespace Tako
                 }
 
                 // KineticPower
-                if (Input.GetKeyDown(KeyCode.Alpha3) || rsh)
+                if (rightRotationInput)
                 {
                     var list = StarMaker.Instance.GetNeighvorList(takoScript.currentStarStaying.GetComponent<LandStarController>().CellNum);
 
@@ -363,7 +364,7 @@ namespace Tako
                         // できなかった時の処理
                     }
                 }
-                else if (Input.GetKeyDown(KeyCode.Alpha1) || lsh)
+                else if (leftRotationInput)
                 {
                     var list = StarMaker.Instance.GetNeighvorList(takoScript.currentStarStaying.GetComponent<LandStarController>().CellNum);
 
@@ -390,19 +391,18 @@ namespace Tako
             void CheckMovingLand()
             {
                 bool result = true;
+
                 // neighvorListに移動中のLandがあるか確認.
-                foreach(var star in StarMaker.Instance.GetNeighvorList(takoScript.currentStarStaying.GetComponent<StarBase>().CellNum))
+                foreach(var star in takoScript.MovingStarList)
                 {
-                    if(star.tag == ObjectTag.Land)
+                    if(star.GetComponent<LandStarController>().CheckFlag(LandStarController.LANDSTAR_STAT.MOVING))
                     {
-                        if(star.GetComponent<LandStarController>().CheckFlag(LandStarController.LANDSTAR_STAT.MOVING))
-                        {
-                            result = false;
-                        }
+                        result = false;
                     }
                 }
                 if (result)
                 { // 無ければステートをNormalへ.
+                    takoScript.MovingStarList.Clear();
                     Context.TransitState(StateName.Normal);
                 }
             }

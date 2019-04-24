@@ -74,7 +74,7 @@ public void OnSelected()
         /* ----- ゲーム画面のメニュー ----- */
         if (gameObject.name == "ReturnToGame")
         {// ゲームに戻る
-            PauseTheGame.GameReStart();         // 一時停止解除
+            PauseTheGame.SetTimeScale(1.0f);         // 一時停止解除
             m_MenuDelete.SwitchActive();        // メニューを消す
         }
         if (gameObject.name == "SelectStage")
@@ -87,7 +87,7 @@ public void OnSelected()
         }
         if(gameObject.name == "BackToTitle")
         {// タイトルに戻る
-            PauseTheGame.GameReStart();
+            PauseTheGame.SetTimeScale(1.0f);
             FadeManager.FadeOut("TitleScene");
         }
 
@@ -97,14 +97,5 @@ public void OnSelected()
     public void OnSubmit()
     {
         Debug.Log("Submit!");
-    }
-    // ----------------------------------------------------------------------------------
-    //
-    // Accessor
-    //
-    // ----------------------------------------------------------------------------------
-    public void SetText( string newText )
-    {
-        text.text = newText;
     }
 }
