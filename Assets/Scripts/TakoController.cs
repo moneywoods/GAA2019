@@ -18,9 +18,12 @@ namespace Tako
         [SerializeField] private GameObject currentStarStaying; // 今いる星.
         [SerializeField] private GameObject nextStar;
         [SerializeField] public GameObject previousStar;
+        private List<GameObject> MovingStarList;
 
         protected void Awake()
         {
+            MovingStarList = new List<GameObject>();
+
             // ステートを生成
             AddState(new StateNormal(this, gameObject));
             AddState(new StateWaitingForKineticPowerEnd(this, gameObject));
@@ -126,8 +129,6 @@ namespace Tako
             }
 
             // 指定された方向に行けるLandがあるかチェック.
-            //GameObject newLand0 = StarMaker.Instance.GetStar(ObjectTag.Land, currentStarStaying.GetComponent<StarBase>().CellNum, direction);
-            //GameObject newLand1 = StarMaker.Instance.GetStar(ObjectTag.GoalStar, currentStarStaying.GetComponent<StarBase>().CellNum, direction);
             GameObject newLand = StarMaker.Instance.GetStar(currentStarStaying.GetComponent<StarBase>().CellNum, StarBase.StarType.Land, direction);
 
             if(newLand == null)
@@ -236,6 +237,7 @@ namespace Tako
                     if (scriptNeighvor.CheckFlag(LandStarController.LANDSTAR_STAT.ALIVE) && !scriptNeighvor.CheckFlag(LandStarController.LANDSTAR_STAT.MOVING))
                     {
                         neighvorStarList[i].GetComponent<LandStarController>().SetMove(gameObject, estimatedTimeToCirculate, isRight);
+                        MovingStarList.Add(neighvorStarList[i]);
                     }
                 }
             }
@@ -389,19 +391,18 @@ namespace Tako
             void CheckMovingLand()
             {
                 bool result = true;
+
                 // neighvorListに移動中のLandがあるか確認.
-                foreach(var star in StarMaker.Instance.GetNeighvorList(takoScript.currentStarStaying.GetComponent<StarBase>().CellNum))
+                foreach(var star in takoScript.MovingStarList)
                 {
-                    if(star.tag == ObjectTag.Land)
+                    if(star.GetComponent<LandStarController>().CheckFlag(LandStarController.LANDSTAR_STAT.MOVING))
                     {
-                        if(star.GetComponent<LandStarController>().CheckFlag(LandStarController.LANDSTAR_STAT.MOVING))
-                        {
-                            result = false;
-                        }
+                        result = false;
                     }
                 }
                 if (result)
                 { // 無ければステートをNormalへ.
+                    takoScript.MovingStarList.Clear();
                     Context.TransitState(StateName.Normal);
                 }
             }

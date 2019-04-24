@@ -19,6 +19,7 @@ public class CellColliderBehaviour : MonoBehaviour
     public Vector2Int CellNum;
     [SerializeField] int ListCnt = 0;
     [SerializeField] int OtherListCnt = 0;
+
     private void Awake()
     {
         // リストのnew
@@ -30,7 +31,7 @@ public class CellColliderBehaviour : MonoBehaviour
         // BoxColliderを追加&設定
         var colliderScript = gameObject.AddComponent(typeof(BoxCollider)) as BoxCollider;
         colliderScript.isTrigger = true;
-        colliderScript.size = new Vector3(StarMaker.Instance.CurrentMapInfo.CellSize.x, 10.0f, StarMaker.Instance.CurrentMapInfo.CellSize.y); // - new Vector3(1.0f, 0.0f, 1.0f);
+        colliderScript.size = new Vector3(StarMaker.Instance.CurrentMapInfo.CellSize.x, 10.0f, StarMaker.Instance.CurrentMapInfo.CellSize.y) - new Vector3(1.0f, 0.0f, 1.0f);
     }
 
     private void Add(GameObject target)
