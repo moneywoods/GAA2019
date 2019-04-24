@@ -17,8 +17,13 @@ namespace Tako
 
         [SerializeField] private GameObject currentStarStaying; // 今いる星.
         [SerializeField] private GameObject nextStar;
-        [SerializeField] public GameObject previousStar;
-        private List<GameObject> MovingStarList;
+        [SerializeField] public GameObject previousStar
+        {
+            get;
+            protected set;
+        }
+
+        private List<GameObject> MovingStarList; // KineticPower適応中の星のリスト
 
         protected void Awake()
         {
@@ -73,27 +78,6 @@ namespace Tako
         public GameObject GetCurrentStarStaying()
         {
             return currentStarStaying;
-        }
-
-        public Direction CheckDirection(GameObject obj) // ここ古いので消したい.
-        {
-            var vecPlayerToStar = obj.transform.position - transform.position;
-
-            // 比較するための単位ベクトルを取得する.
-            var vecComp = new Vector3(1.0f, 0.0f); // 真上へのベクトル.
-
-            // 方向に応じたベクトルを作成し,プレイヤーから星へのベクトルと比較.
-            Vector3 vecSearchingStar;
-            for (Direction i = 0; i < Direction.ENUM_MAX; i++)
-            {
-                vecSearchingStar = Quaternion.Euler(0.0f, (uint) i * 45.0f, 0.0f) * vecComp;
-
-                if (Vector3.Angle(vecPlayerToStar.normalized, vecSearchingStar.normalized) <= 10.0f)
-                {
-                    return i;
-                }
-            }
-            return Direction.NONE;
         }
 
         public bool AskKineticPowerAvailable(List<GameObject> neighvorList, bool isRight)
