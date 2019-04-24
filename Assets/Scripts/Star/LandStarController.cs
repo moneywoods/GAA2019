@@ -31,9 +31,9 @@ public class LandStarController : StarBase
         ENUM_MAX
     }
 
-    public LANDSTAR_STAT CurrentStat { get; private set; }
+    public LANDSTAR_STAT CurrentStat { get; protected set; }
 
-    private Vector3 centerOfCircular;
+    protected Vector3 centerOfCircular;
 
     public GameObject explosionObject; // 自身にDESTROYEDフラグが立った時生成するエフェクトオブジェクト
 
@@ -43,7 +43,7 @@ public class LandStarController : StarBase
 
     // 移住可能を示すエフェクト // 今後UIとかもっと他の物に置き換える予定
     public GameObject m_EffectCanMoveTo;
-    private bool m_isCanMoveToEffectEmitting;
+    protected bool m_isCanMoveToEffectEmitting;
 
     public LandStarController() : base(StarType.Land)
     {
