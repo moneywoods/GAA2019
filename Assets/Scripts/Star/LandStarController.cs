@@ -37,7 +37,6 @@ public class LandStarController : StarBase
         get;
         protected set;
     }
-    protected Vector3 centerOfCircular;
 
     [SerializeField]private GameObject explosionObject; // 自身にDESTROYEDフラグが立った時生成するエフェクトオブジェクト
 
