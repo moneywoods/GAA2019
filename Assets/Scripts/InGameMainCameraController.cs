@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using StatePattern;
-public class CameraController : StateContex
+public class InGameMainCameraController : StateContex
 {
     public static class StateName
     {
@@ -14,8 +14,8 @@ public class CameraController : StateContex
     
     public Vector3 offsetToTarget;
 
-    [SerializeField]private float dist5x5;
-
+    [SerializeField] private float dist5x5;
+    [SerializeField] private float degree = -130.0f;
     void Awake()
     {
         AddState(new StateFollowingPlayer(this, gameObject));
@@ -36,12 +36,7 @@ public class CameraController : StateContex
     // Update is called once per frame
     void LateUpdate ()
     {
-        if( target != null )
-        {
-            var dist = new Vector3(0.0f, 0.0f, dist5x5);
-            dist = Quaternion.Euler(-130.0f, 0.0f, 0.0f) * dist;
-            transform.position = target.transform.position + dist;
-        }
+
     }
 
     public void Init(StarMaker.MapInfo mapInfo)
@@ -61,21 +56,25 @@ public class CameraController : StateContex
         }
 
         protected GameObject camera = null;
-        protected CameraController cameraScript = null;
+        protected InGameMainCameraController cameraScript = null;
     }
 
     private class StateFollowingPlayer : CameraState
     {
+        private Vector3 previousTargetPos;
         public StateFollowingPlayer(StateContex contex, GameObject camera) : base(contex, camera)
         {
             Name = StateName.FollowingPlayer;
             this.camera = camera;
-            cameraScript = camera.GetComponent<CameraController>();
-
+            cameraScript = camera.GetComponent<InGameMainCameraController>();
+            OnEnter += Init;
             update = UsualUpdate;
         }
-
-        public void UsualUpdate()
+        private void Init()
+        {
+            Debug.Log("camera is following mode");
+        }
+        private void UsualUpdate()
         {
             if(cameraScript.target == null)
             {
@@ -84,6 +83,12 @@ public class CameraController : StateContex
                 {
                     cameraScript.Init(StarMaker.Instance.CurrentMapInfo);
                     update += FollowTarget;
+
+                    var dist = new Vector3(0.0f, 0.0f, cameraScript.dist5x5);
+                    dist = Quaternion.Euler(cameraScript.degree, 0.0f, 0.0f) * dist;
+                    camera.transform.position = cameraScript.target.transform.position + dist;
+                    camera.transform.LookAt(cameraScript.target.transform);
+                    previousTargetPos = cameraScript.target.transform.position;
                 }
             }
         }
@@ -94,9 +99,9 @@ public class CameraController : StateContex
                 update -= FollowTarget; // これまずいかな?
                 return;
             }
-            var dist = new Vector3(0.0f, 0.0f, cameraScript.dist5x5);
-            dist = Quaternion.Euler(-130.0f, 0.0f, 0.0f) * dist;
-            camera.transform.position = cameraScript.target.transform.position + dist;
+            var diff = cameraScript.target.transform.position - previousTargetPos;
+            camera.transform.position += diff;
+            previousTargetPos = cameraScript.target.transform.position;
         }
     }
 }
