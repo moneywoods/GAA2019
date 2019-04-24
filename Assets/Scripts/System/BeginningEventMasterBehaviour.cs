@@ -6,7 +6,7 @@ public class BeginningEventMasterBehaviour : MonoBehaviour
 {
     public bool isSceneEnding = false;
     private float timeElapsed;
-    private float estimatedTimeOfScene = 10.0f;
+    private float estimatedTimeOfScene = 3.0f;
 
     void Awake()
     {
@@ -29,7 +29,7 @@ public class BeginningEventMasterBehaviour : MonoBehaviour
 
         if(isSceneEnding)
         {
-
+            FadeManager.FadeOut("scene0315");
         }
     }
 }
