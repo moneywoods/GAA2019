@@ -41,7 +41,7 @@ public class BlackHoleBehavior : StarBase
         if(other.tag == ObjectTag.Land)
         {
             LandStarController landScript = other.GetComponent<LandStarController>();
-            landScript.AddStat(LandStarController.LANDSTAR_STAT.DESTROYED);
+            landScript.RemoveFlag(LandStarController.LANDSTAR_STAT.ALIVE);
             landScript.RemoveFlag(LandStarController.LANDSTAR_STAT.MOVING);
         }
     }
