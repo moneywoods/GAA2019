@@ -38,7 +38,7 @@ public class LandStarController : StarBase
         protected set;
     }
 
-    public GameObject explosionObject; // 自身にDESTROYEDフラグが立った時生成するエフェクトオブジェクト
+    [SerializeField]private GameObject explosionObject; // 自身にDESTROYEDフラグが立った時生成するエフェクトオブジェクト
 
     // 回すとき用
     public float timeToCirculate // 今回の回転に要する時間. 単位: 秒.
