@@ -22,24 +22,35 @@ public class LandStarController : StarBase
                                          // わからんけど開けておく下位4bitが移動待機を司る.
         PLAYER_STAYING         = 1 << 4, // 0000_0001_0000 // プレイヤーが滞在中.
         IN_MILKYWAY_AREA       = 1 << 5, // 0000_0010_0000 // 乳の領内に侵入中.
-        GET_CAUGHT_BY_MILKYWAY = 1 << 6, // 0000_0100_0000 // 乳に飲まれて動けない.
-        ALIVE                  = 1 << 7, // 0000_1000_0000 // 生きてる.( == キネティックパワーを受ける状態)
-        DESTROYED              = 1 << 8, // 0001_0000_0000  // 破壊された.
+        CAUGHT_BY_MILKYWAY = 1 << 6, // 0000_0100_0000 // 乳に飲まれて動けない.
+        ALIVE                  = 1 << 8, // 0001_0000_0000  // 破壊された.
         // フラグ抽出用
         MOVING                 = 6,      // 0000_0000_0110 // MOVING_LEFT | MOVING_RIGHT
-        STUCKED                = GET_CAUGHT_BY_MILKYWAY, 
+        STUCKED                = CAUGHT_BY_MILKYWAY, 
         ENUM_MAX
     }
 
     public LANDSTAR_STAT CurrentStat { get; protected set; }
 
-    private Vector3 centerOfCircular;
+    public Vector3 centerOfCircular
+    {
+        get;
+        protected set;
+    }
 
-    public GameObject explosionObject; // 自身にDESTROYEDフラグが立った時生成するエフェクトオブジェクト
+    [SerializeField]private GameObject explosionObject; // 自身にDESTROYEDフラグが立った時生成するエフェクトオブジェクト
 
     // 回すとき用
-    float timeToCirculate; // 今回の回転に要する時間. 単位: 秒.
-    float timePast;  // 回転している時間の累計(回転状態を解除されるたびにリセット)
+    public float timeToCirculate // 今回の回転に要する時間. 単位: 秒.
+    {
+        get;
+        set;
+    }
+    public float timePast // 回転している時間の累計(回転状態を解除されるたびにリセット)
+    {
+        get;
+        set;
+    }
 
     // 移住可能を示すエフェクト // 今後UIとかもっと他の物に置き換える予定
     public GameObject m_EffectCanMoveTo;
@@ -51,22 +62,21 @@ public class LandStarController : StarBase
     }
 
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
         timePast = 0.0f;
         m_isCanMoveToEffectEmitting = false;
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
         if(Mathf.Approximately(Time.timeScale, 0f))
         {
             return;
         }
 
-        // 回転
-        if((CheckFlag(LANDSTAR_STAT.MOVING) && timeToCirculate != 0.0f))
+        if(CheckFlag(LANDSTAR_STAT.MOVING) && !CheckFlag(LANDSTAR_STAT.IN_MILKYWAY_AREA)) // IN_MILKYWAY_AREA時はMW側が動かします。
         {
             float time = Time.deltaTime;
 
@@ -93,16 +103,16 @@ public class LandStarController : StarBase
             {
                 timePast = 0.0f;
                 timeToCirculate = 0.0f;
-                if(CheckFlag(LANDSTAR_STAT.IN_MILKYWAY_AREA))
-                {
-                    AddStat(LANDSTAR_STAT.GET_CAUGHT_BY_MILKYWAY);
-                }
+                //if(CheckFlag(LANDSTAR_STAT.IN_MILKYWAY_AREA))
+                //{
+                //    AddStat(LANDSTAR_STAT.GET_CAUGHT_BY_MILKYWAY);
+                //}
 
                 RemoveFlag(LANDSTAR_STAT.MOVING);
             }
         }
 
-        if(CheckFlag(LANDSTAR_STAT.DESTROYED))
+        if(!CheckFlag(LANDSTAR_STAT.ALIVE))
         {
             // 爆発エフェクト生成.
             Instantiate(explosionObject, transform.position, transform.rotation);
@@ -119,7 +129,7 @@ public class LandStarController : StarBase
     // --------------------------------------------------------------------------------------------
     public void SetMove(GameObject center, float estimatedTimeToCirculate, bool isRight)
     {
-        if(CheckFlag(LANDSTAR_STAT.MOVING_RIGHT) || CheckFlag(LANDSTAR_STAT.MOVING_LEFT) || CheckFlag(LANDSTAR_STAT.GET_CAUGHT_BY_MILKYWAY) || CheckFlag(LANDSTAR_STAT.DESTROYED))
+        if(CheckFlag(LANDSTAR_STAT.MOVING_RIGHT) || CheckFlag(LANDSTAR_STAT.MOVING_LEFT) || CheckFlag(LANDSTAR_STAT.CAUGHT_BY_MILKYWAY) || !CheckFlag(LANDSTAR_STAT.ALIVE))
         {
             return; // 既に移動状態であるなら実行しない. 乳に飲まれている場合も実行しないゾ.
         }
@@ -168,7 +178,7 @@ public class LandStarController : StarBase
         {
             return true;
         }
-
+        var starMaker = StarMaker.Instance;
         var direction = StarMaker.GetDirection(originCellNum, CellNum);
 
         Vector2Int cp0 = CellNum;
@@ -271,22 +281,28 @@ public class LandStarController : StarBase
         }
 
         // マップ領域内かチェック
-        if(!(StarMaker.Instance.CheckLimitOfMap(cp0) && StarMaker.Instance.CheckLimitOfMap(cp1)))
+        if(!(starMaker.CheckLimitOfMap(cp0) && starMaker.CheckLimitOfMap(cp1)))
         {
             return false;
         }
                 
         // 移動経路に邪魔する要素があるかチェック
-        if(0 < StarMaker.Instance.GetStarList(cp0, StarType.Rock).Count ||
-            0 < StarMaker.Instance.GetStarList(cp1, StarType.Rock).Count ||
-            0 < StarMaker.Instance.GetStarList(cp0, StarType.BlackHole).Count ||
-            0 < StarMaker.Instance.GetStarList(cp1, StarType.BlackHole).Count)
+        if(0 < starMaker.GetStarList(cp0, StarType.Rock).Count ||
+            0 < starMaker.GetStarList(cp1, StarType.Rock).Count ||
+            0 < starMaker.GetStarList(cp0, StarType.BlackHole).Count ||
+            0 < starMaker.GetStarList(cp1, StarType.BlackHole).Count)
         {
             return false;
         }
-        else if(StarMaker.Instance.GetStarList(cp0, StarType.Land).Exists(obj => obj.GetComponent<LandStarController>().CheckFlag(LANDSTAR_STAT.STUCKED)) ||
-            StarMaker.Instance.GetStarList(cp1, StarType.Land).Exists(obj => obj.GetComponent<LandStarController>().CheckFlag(LANDSTAR_STAT.STUCKED)))
+        else if(starMaker.GetStarList(cp0, StarType.Land).Exists(obj => obj.GetComponent<LandStarController>().CheckFlag(LANDSTAR_STAT.STUCKED)) ||
+            starMaker.GetStarList(cp1, StarType.Land).Exists(obj => obj.GetComponent<LandStarController>().CheckFlag(LANDSTAR_STAT.STUCKED)))
         {
+            return false;
+        }
+        else if(starMaker.GetStarList(cp0, StarType.Land).Exists(obj => !obj.GetComponent<LandStarController>().CheckFlag(LANDSTAR_STAT.STUCKED)) && 
+            0 < starMaker.GetStarList(cp1, StarType.MilkyWay).Count)
+        {
+            Debug.Log("couldnt initiate kinetic power because of cp0 = land, cp1 = MW");
             return false;
         }
 
@@ -308,45 +324,21 @@ public class LandStarController : StarBase
             return true; // 引数のフラグが既に立っている場合trueを返す.
         }
 
-        CurrentStat |= additionalStat;
+        if(additionalStat == LANDSTAR_STAT.IN_MILKYWAY_AREA && CheckFlag(LANDSTAR_STAT.MOVING))
+        {
+            if(timePast < timeToCirculate * 0.5f)
+            {
+                timeToCirculate *= 0.5f;
+            }
+        }
 
-        // フラグ別の追加処理
-        if(additionalStat == LANDSTAR_STAT.DESTROYED)
-        {
-            RemoveFlag(LANDSTAR_STAT.ALIVE);
-            GetComponent<Renderer>().material.color = Color.red;
-        }
-        else if(additionalStat == LANDSTAR_STAT.ALIVE)
-        {
-            RemoveFlag(LANDSTAR_STAT.DESTROYED);
-            GetComponent<Renderer>().material.color = Color.white;
-        }
-        else if(additionalStat == LANDSTAR_STAT.GET_CAUGHT_BY_MILKYWAY)
-        {
-            GetComponent<Renderer>().material.color = Color.green;
-        }
+        CurrentStat |= additionalStat;
         return false;
     }
 
     public void RemoveFlag(LANDSTAR_STAT removingFlag)
     {
         CurrentStat &= ~removingFlag;
-
-        // フラグ別の追加処理
-        if(removingFlag == LANDSTAR_STAT.DESTROYED)
-        {
-            AddStat(LANDSTAR_STAT.ALIVE);
-            GetComponent<Renderer>().material.color = Color.white;
-        }
-        else if(removingFlag == LANDSTAR_STAT.ALIVE)
-        {
-            AddStat(LANDSTAR_STAT.DESTROYED);
-            GetComponent<Renderer>().material.color = Color.red;
-        }
-        else if(removingFlag == LANDSTAR_STAT.GET_CAUGHT_BY_MILKYWAY)
-        {
-            GetComponent<Renderer>().material.color = Color.white;
-        }
     }
 
     // フラグチェック
