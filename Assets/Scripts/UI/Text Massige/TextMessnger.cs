@@ -5,21 +5,36 @@ using UnityEngine.UI;
 
 public class TextMessnger : MonoBehaviour
 {
+    // 表示領域
+    [SerializeField]
     public Text Qtext;      // Text取得
     int Textflag;           // Textのalpha値管理フラグ
     float Textalpha;        // Textのalpha値変更
+
+    // 表示領域
+    [SerializeField]
+    public RectTransform Area;
+    Vector3 rect = new Vector3(200, 0, 0);
+
+    // 表示領域
+    [SerializeField]
     public float Timemax;   // 最大表示時間
-    float Timecount;        // 時間のカウント 
+    float Timecount;        // 時間のカウント
+
+   
+
 
     // Use this for initialization
     void Start()
     {
-        
         Textflag = 0;
         Textalpha = 0.0f;
         Timecount = 0.0f;
+        Area = GetComponent<RectTransform>();
+        Area.localPosition = rect;
         Qtext = GetComponentInChildren<Text>();//UIのテキストの取得の仕方
         Qtext.text = "代替テキスト";//テキストの変更
+        
     }
 
     // Update is called once per frame
