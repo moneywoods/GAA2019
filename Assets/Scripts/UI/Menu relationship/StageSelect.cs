@@ -5,17 +5,12 @@ using UnityEngine.UI;
 
 public class StageSelect : MonoBehaviour
 {
-
-    GameObject m_ObjMageMaster;
-
     GameObject m_MenuCanvas;
     GameObject m_StageCanvas;
 
     // Start is called before the first frame update
     void Start()
     {
-        m_ObjMageMaster = GameObject.FindWithTag("SceneMaster");
-
         var component = GetComponent<Button>();
         var color = component.colors;
         color.normalColor = Color.white;

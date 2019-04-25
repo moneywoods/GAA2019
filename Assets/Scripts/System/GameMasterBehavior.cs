@@ -19,6 +19,11 @@ public class GameMasterBehavior : MonoBehaviour
               IsChapterOver();
             }
     }
+    public static StageInfo InitiatingStage
+    {
+        get { return initiatingStage; }
+        set { initiatingStage = value; }
+    }
     
     private readonly static int STAGE_MAX = 4;
     private readonly static int CHAPTER_MAX = 4;
