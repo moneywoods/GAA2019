@@ -11,6 +11,7 @@ public class GoalStarBehavior : LandStarController
     public GoalStarBehavior()
     {
         starType |= StarType.GoalStar;
+        AddStat(LANDSTAR_STAT.STUCKED);
     }
 
     // Start is called before the first frame update

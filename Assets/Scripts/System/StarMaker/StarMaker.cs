@@ -15,6 +15,7 @@ public class StarMaker : SingletonPattern<StarMaker>
             Position = position;
             DeffaultOffset = new Vector3( -CellSize.x * CellCnt.x * 0.5f + 2.5f, 0.0f, CellSize.y * CellCnt.y * 0.5f + 2.5f) + Position;
         }
+
         public char[,] MapData;  // マップの初期配置
         public Vector2Int CellCnt; // マスの列数,行数
         public Vector2 CellSize; // 1マスのサイズ
@@ -202,8 +203,8 @@ public class StarMaker : SingletonPattern<StarMaker>
     {
         var cellCnt = CurrentMapInfo.CellCnt;
 
-        if(cellNum.x < cellCnt.x && 0 < cellNum.x && 
-            cellNum.y < cellCnt.y && 0 < cellNum.y)
+        if(cellNum.x < cellCnt.x && 0 <= cellNum.x && 
+            cellNum.y < cellCnt.y && 0 <= cellNum.y)
         {
             return true;
         }

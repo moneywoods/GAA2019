@@ -19,6 +19,7 @@ public class CellColliderBehaviour : MonoBehaviour
     public Vector2Int CellNum;
     [SerializeField] int ListCnt = 0;
     [SerializeField] int OtherListCnt = 0;
+
     private void Awake()
     {
         // リストのnew

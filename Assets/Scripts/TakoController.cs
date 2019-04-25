@@ -17,10 +17,18 @@ namespace Tako
 
         [SerializeField] private GameObject currentStarStaying; // 今いる星.
         [SerializeField] private GameObject nextStar;
-        [SerializeField] public GameObject previousStar;
+        [SerializeField] public GameObject previousStar
+        {
+            get;
+            protected set;
+        }
+
+        private List<GameObject> MovingStarList; // KineticPower適応中の星のリスト
 
         protected void Awake()
         {
+            MovingStarList = new List<GameObject>();
+
             // ステートを生成
             AddState(new StateNormal(this, gameObject));
             AddState(new StateWaitingForKineticPowerEnd(this, gameObject));
@@ -72,27 +80,6 @@ namespace Tako
             return currentStarStaying;
         }
 
-        public Direction CheckDirection(GameObject obj) // ここ古いので消したい.
-        {
-            var vecPlayerToStar = obj.transform.position - transform.position;
-
-            // 比較するための単位ベクトルを取得する.
-            var vecComp = new Vector3(1.0f, 0.0f); // 真上へのベクトル.
-
-            // 方向に応じたベクトルを作成し,プレイヤーから星へのベクトルと比較.
-            Vector3 vecSearchingStar;
-            for (Direction i = 0; i < Direction.ENUM_MAX; i++)
-            {
-                vecSearchingStar = Quaternion.Euler(0.0f, (uint) i * 45.0f, 0.0f) * vecComp;
-
-                if (Vector3.Angle(vecPlayerToStar.normalized, vecSearchingStar.normalized) <= 10.0f)
-                {
-                    return i;
-                }
-            }
-            return Direction.NONE;
-        }
-
         public bool AskKineticPowerAvailable(List<GameObject> neighvorList, bool isRight)
         {
             bool result = true;
@@ -126,8 +113,6 @@ namespace Tako
             }
 
             // 指定された方向に行けるLandがあるかチェック.
-            //GameObject newLand0 = StarMaker.Instance.GetStar(ObjectTag.Land, currentStarStaying.GetComponent<StarBase>().CellNum, direction);
-            //GameObject newLand1 = StarMaker.Instance.GetStar(ObjectTag.GoalStar, currentStarStaying.GetComponent<StarBase>().CellNum, direction);
             GameObject newLand = StarMaker.Instance.GetStar(currentStarStaying.GetComponent<StarBase>().CellNum, StarBase.StarType.Land, direction);
 
             if(newLand == null)
@@ -236,6 +221,7 @@ namespace Tako
                     if (scriptNeighvor.CheckFlag(LandStarController.LANDSTAR_STAT.ALIVE) && !scriptNeighvor.CheckFlag(LandStarController.LANDSTAR_STAT.MOVING))
                     {
                         neighvorStarList[i].GetComponent<LandStarController>().SetMove(gameObject, estimatedTimeToCirculate, isRight);
+                        MovingStarList.Add(neighvorStarList[i]);
                     }
                 }
             }
@@ -389,19 +375,18 @@ namespace Tako
             void CheckMovingLand()
             {
                 bool result = true;
+
                 // neighvorListに移動中のLandがあるか確認.
-                foreach(var star in StarMaker.Instance.GetNeighvorList(takoScript.currentStarStaying.GetComponent<StarBase>().CellNum))
+                foreach(var star in takoScript.MovingStarList)
                 {
-                    if(star.tag == ObjectTag.Land)
+                    if(star.GetComponent<LandStarController>().CheckFlag(LandStarController.LANDSTAR_STAT.MOVING))
                     {
-                        if(star.GetComponent<LandStarController>().CheckFlag(LandStarController.LANDSTAR_STAT.MOVING))
-                        {
-                            result = false;
-                        }
+                        result = false;
                     }
                 }
                 if (result)
                 { // 無ければステートをNormalへ.
+                    takoScript.MovingStarList.Clear();
                     Context.TransitState(StateName.Normal);
                 }
             }
