@@ -16,14 +16,14 @@ public class InGameMainCameraController : StateContex
 
     [SerializeField] private float dist5x5;
     [SerializeField] private float degree = -130.0f;
-    InGameMainCameraController()
+
+    private void Awake()
     {
         AddState(new StateFollowingPlayer(this, gameObject));
         AddState(new StateMovingFromGoalToStart(this, gameObject));
 
         SetCurrentState(StateName.FollowingPlayer);
     }
-
     // Use this for initialization
     void Start ()
     {
