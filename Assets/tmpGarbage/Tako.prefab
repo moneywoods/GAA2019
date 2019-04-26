@@ -97,7 +97,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentStarStaying: {fileID: 0}
   nextStar: {fileID: 0}
-  previousStar: {fileID: 0}
 --- !u!54 &399107893205564343
 Rigidbody:
   m_ObjectHideFlags: 0

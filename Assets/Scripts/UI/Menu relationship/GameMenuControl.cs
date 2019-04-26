@@ -9,7 +9,7 @@ using UnityEngine.EventSystems;
 public class GameMenuControl : MonoBehaviour
 {
     ParentMenuCanvasBehavior m_MenuDelete;      // メニューデリート用
-
+    
     GameObject m_ObjPlayerCmdBhv;
 
     [SerializeField]

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ObjectTag
 {
+    public static readonly string MainCamera      = "MainCamera";
     public static readonly string Land            = "Land";
     public static readonly string Neighvor        = "NeighvorFinder";
     public static readonly string GoalStar        = "GoalStar";

@@ -379,6 +379,11 @@ namespace Tako
                 // neighvorListに移動中のLandがあるか確認.
                 foreach(var star in takoScript.MovingStarList)
                 {
+                    if(star == null)
+                    {
+                        continue;
+                    }
+
                     if(star.GetComponent<LandStarController>().CheckFlag(LandStarController.LANDSTAR_STAT.MOVING))
                     {
                         result = false;
