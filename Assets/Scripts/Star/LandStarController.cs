@@ -285,19 +285,24 @@ public class LandStarController : StarBase
         {
             return false;
         }
-                
+        
+        // 絶対にtrueなパターンのチェック
+        if(starMaker.GetStar(cp0,StarType.BlackHole)) // 先1マス目がブラックホール
+        {
+            return true;
+        }
+
         // 移動経路に邪魔する要素があるかチェック
-        if(0 < starMaker.GetStarList(cp0, StarType.Rock).Count ||
-            0 < starMaker.GetStarList(cp1, StarType.Rock).Count)
+        if(0 < starMaker.GetStarList(cp0, StarType.Rock).Count) // 先1マスにRockがある
         {
             return false;
         }
-        else if(starMaker.GetStarList(cp0, StarType.Land).Exists(obj => obj.GetComponent<LandStarController>().CheckFlag(LANDSTAR_STAT.STUCKED)) ||
+        else if(starMaker.GetStarList(cp0, StarType.Land).Exists(obj => obj.GetComponent<LandStarController>().CheckFlag(LANDSTAR_STAT.STUCKED)) || // いずれのマスにミルキーウェイにつかまっているLandがある
             starMaker.GetStarList(cp1, StarType.Land).Exists(obj => obj.GetComponent<LandStarController>().CheckFlag(LANDSTAR_STAT.STUCKED)))
         {
             return false;
         }
-        else if(starMaker.GetStarList(cp0, StarType.Land).Exists(obj => !obj.GetComponent<LandStarController>().CheckFlag(LANDSTAR_STAT.STUCKED)) && 
+        else if(starMaker.GetStarList(cp0, StarType.Land).Exists(obj => !obj.GetComponent<LandStarController>().CheckFlag(LANDSTAR_STAT.STUCKED)) && // 1マス先に動けるLandがいて、2マス先にミルキーウェイがある. 
             0 < starMaker.GetStarList(cp1, StarType.MilkyWay).Count)
         {
             Debug.Log("couldnt initiate kinetic power because of cp0 = land, cp1 = MW");
