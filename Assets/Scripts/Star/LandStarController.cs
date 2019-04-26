@@ -288,9 +288,7 @@ public class LandStarController : StarBase
                 
         // 移動経路に邪魔する要素があるかチェック
         if(0 < starMaker.GetStarList(cp0, StarType.Rock).Count ||
-            0 < starMaker.GetStarList(cp1, StarType.Rock).Count ||
-            0 < starMaker.GetStarList(cp0, StarType.BlackHole).Count ||
-            0 < starMaker.GetStarList(cp1, StarType.BlackHole).Count)
+            0 < starMaker.GetStarList(cp1, StarType.Rock).Count)
         {
             return false;
         }
