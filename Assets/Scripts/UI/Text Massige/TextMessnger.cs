@@ -12,9 +12,9 @@ public class TextMessnger : MonoBehaviour
     float Textalpha;        // Textのalpha値変更
 
     // 表示領域
+    RectTransform Area;
     [SerializeField]
-    public RectTransform Area;
-    Vector3 rect = new Vector3(200, 0, 0);
+    public Vector3 rect = new Vector3(200, 0, 0);
 
     // 表示領域
     [SerializeField]
@@ -32,8 +32,8 @@ public class TextMessnger : MonoBehaviour
         Timecount = 0.0f;
         Area = GetComponent<RectTransform>();
         Area.localPosition = rect;
-        Qtext = GetComponentInChildren<Text>();//UIのテキストの取得の仕方
-        Qtext.text = "代替テキスト";//テキストの変更
+        Qtext = GetComponentInChildren<Text>();   //UIのテキストの取得の仕方
+        Qtext.text = "代替テキスト";              //テキストの変更
         
     }
 
