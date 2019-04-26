@@ -5,21 +5,20 @@ using UnityEngine.UI;
 
 public class TextMessnger : MonoBehaviour
 {
-    // 表示領域
-    [SerializeField]
-    public Text Qtext;      // Text取得
-    int Textflag;           // Textのalpha値管理フラグ
-    float Textalpha;        // Textのalpha値変更
+    
+    [SerializeField]                // 表示領域
+    public Text Qtext;              // Text取得
+    private int Textflag;           // Textのalpha値管理フラグ
+    private float Textalpha;        // Textのalpha値変更
+    RectTransform Area;             // テキストの座標取得
 
-    // 表示領域
-    RectTransform Area;
-    [SerializeField]
-    public Vector3 rect = new Vector3(200, 0, 0);
+    
+    [SerializeField]                // 表示領域                                
+    public Vector3 rect = new Vector3(200, 0, 0);   // テキストの座標入力
 
-    // 表示領域
-    [SerializeField]
-    public float Timemax;   // 最大表示時間
-    float Timecount;        // 時間のカウント
+    [SerializeField]                // 表示領域
+    public float Timemax;           // 最大表示時間
+    private float Timecount;        // 時間のカウント
 
    
 
@@ -27,13 +26,14 @@ public class TextMessnger : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        // 初期化
         Textflag = 0;
         Textalpha = 0.0f;
         Timecount = 0.0f;
-        Area = GetComponent<RectTransform>();
-        Area.localPosition = rect;
-        Qtext = GetComponentInChildren<Text>();   //UIのテキストの取得の仕方
-        Qtext.text = "代替テキスト";              //テキストの変更
+        Area = GetComponent<RectTransform>();     // テキストの座標位置取得の仕方 
+        Area.localPosition = rect;                // テキスト座標の変更
+        Qtext = GetComponentInChildren<Text>();   // UIのテキストの取得の仕方
+        Qtext.text = "代替テキスト";              // テキストの変更
         
     }
 
