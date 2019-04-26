@@ -27,6 +27,8 @@ public class GameMasterBehavior : MonoBehaviour
     [SerializeField] private GameObject m_EventSystem;
     [SerializeField] private GameObject m_GridLinePrefab;
 
+    [SerializeField] public static bool isInitiationEvent = false;
+
 
     private void Awake()
     {
@@ -56,6 +58,23 @@ public class GameMasterBehavior : MonoBehaviour
         GameObject playerController = Instantiate(m_PlayerCommand);
         var scriptPlayerController = playerController.GetComponent<PlayerCommandBehavior>();
         scriptPlayerController.SetCurrentSceneMenu(menu);
+
+        // Camera
+        var camera = GameObject.FindGameObjectWithTag(ObjectTag.MainCamera);
+        var cameraScript = camera.GetComponent<InGameMainCameraController>();
+        // ゲームスタート時イベント有り無し
+        if(isInitiationEvent)
+        {
+            // ゴールからスタートまで星を映すモード
+            cameraScript.SetCurrentState(InGameMainCameraController.StateName.MovingFromGoalToStart);
+            var takoScript = GameObject.FindGameObjectWithTag(ObjectTag.PlayerCharacter).GetComponent<Tako.TakoController>();
+            takoScript.SetCurrentState(Tako.TakoController.StateName.CommandDisable);
+        }
+        else
+        {
+            cameraScript.SetTarget(GameObject.FindGameObjectWithTag(ObjectTag.PlayerCharacter));
+            cameraScript.SetCurrentState(InGameMainCameraController.StateName.Following);
+        }
     }
     
     // Start is called before the first frame update
