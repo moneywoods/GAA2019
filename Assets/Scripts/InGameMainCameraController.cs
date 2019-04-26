@@ -6,23 +6,30 @@ public class InGameMainCameraController : StateContex
 {
     public static class StateName
     {
-        public static readonly string FollowingPlayer = "FollowingPlayer";
+        public static readonly string Following = "Following";
         public static readonly string Floating = "Floating";
         public static readonly string MovingFromGoalToStart = "MovingFromGoalToStart";
     }
-    public GameObject target; // Camera follows Target.
+
+    public GameObject target // Camera follows Target.
+    {
+        get;
+        set;
+    }
     
     public Vector3 offsetToTarget;
 
+    [SerializeField] private float margin = 0.0f;
     [SerializeField] private float dist5x5;
     [SerializeField] private float degree = -130.0f;
 
     private void Awake()
     {
-        AddState(new StateFollowingPlayer(this, gameObject));
+        AddState(new StateFollowing(this, gameObject));
         AddState(new StateMovingFromGoalToStart(this, gameObject));
+        AddState(new StateFloating(this, gameObject));
 
-        SetCurrentState(StateName.FollowingPlayer);
+        SetCurrentState(StateName.Floating);
     }
     // Use this for initialization
     void Start ()
@@ -41,14 +48,31 @@ public class InGameMainCameraController : StateContex
 
     }
 
-    public void Init(StarMaker.MapInfo mapInfo)
+    public float GetDistXxX(int cellNum) // XかけるXのコマを映すカメラとターゲットの距離を戻す.
     {
         var cameraScript = GetComponent<Camera>();
+
+        var mapInfo = StarMaker.Instance.CurrentMapInfo;
+
         float fov = cameraScript.fieldOfView;
-        var width = mapInfo.CellSize.x * 5;
-        dist5x5 = 0.6f * 0.5f * width * Mathf.Sqrt((3 - Mathf.Cos(fov)) / (1 - Mathf.Cos(fov)));
+        var radius = 0.5f * mapInfo.CellSize.x * cellNum * Mathf.Sqrt(2.0f);
+        var dist = (radius) / Mathf.Sin(fov * 0.5f * Mathf.Deg2Rad);
+        return dist;
+    }
+
+    public void MoveAndLookAtTarget()
+    {
+        var dist = new Vector3(0.0f, 0.0f, dist5x5);
+        dist = Quaternion.Euler(degree, 0.0f, 0.0f) * dist;
+        transform.position = target.transform.position + dist;
+        transform.LookAt(target.transform);
     }
     
+    public void SetTarget(GameObject newTarget)
+    {
+        target = newTarget;
+    }
+
     // ステート
     private class CameraState : State
     {
@@ -62,47 +86,34 @@ public class InGameMainCameraController : StateContex
         protected InGameMainCameraController cameraScript = null;
     }
 
-    private class StateFollowingPlayer : CameraState
+    private class StateFollowing : CameraState
     {
         private Vector3 previousTargetPos;
-        public StateFollowingPlayer(StateContex contex, GameObject camera) : base(contex, camera)
+        public StateFollowing(StateContex contex, GameObject camera) : base(contex, camera)
         {
-            Name = StateName.FollowingPlayer;
+            Name = StateName.Following;
             OnEnter += Init;
-            update += UsualUpdate;
         }
 
         private void Init()
         {
             Debug.Log("camera is following mode");
-        }
+            Debug.Log("target is " + cameraScript.target.ToString() + ".");
 
-        private void UsualUpdate()
-        {
-            if(cameraScript.target == null)
-            {
-                cameraScript.target = GameObject.FindGameObjectWithTag(ObjectTag.PlayerCharacter);
-                if(cameraScript.target != null)
-                {
-                    cameraScript.Init(StarMaker.Instance.CurrentMapInfo);
-                    update += FollowTarget;
-
-                    var dist = new Vector3(0.0f, 0.0f, cameraScript.dist5x5);
-                    dist = Quaternion.Euler(cameraScript.degree, 0.0f, 0.0f) * dist;
-                    camera.transform.position = cameraScript.target.transform.position + dist;
-                    camera.transform.LookAt(cameraScript.target.transform);
-                    previousTargetPos = cameraScript.target.transform.position;
-                }
-            }
+            cameraScript.dist5x5 = cameraScript.GetDistXxX(5);
+            cameraScript.MoveAndLookAtTarget();
+            previousTargetPos = cameraScript.target.transform.position;
+            update += FollowTarget;
         }
 
         private void FollowTarget()
         {
             if(cameraScript.target == null)
             {
-                update -= FollowTarget; // これまずいかな?
+                update -= FollowTarget;
                 return;
             }
+
             var diff = cameraScript.target.transform.position - previousTargetPos;
             camera.transform.position += diff;
             previousTargetPos = cameraScript.target.transform.position;
@@ -111,9 +122,14 @@ public class InGameMainCameraController : StateContex
 
     private class StateMovingFromGoalToStart : CameraState
     {
-        [SerializeField] private GameObject Destination;
-        [SerializeField] private float duration;
-        [SerializeField] private Vector3 diff;
+        private GameObject Goal;
+        private float durationG2S = 2.0f;
+        private float durationToWait = 0.5f;
+        private float durationZoomOut = 2.0f;
+        private float timePast = 0.0f;
+        private Vector3 diffG2S;
+        private float diffDistZoomOut;
+        private float originalDist5x5;
 
         public StateMovingFromGoalToStart(StateContex contex, GameObject camera) : base(contex, camera)
         {
@@ -123,37 +139,141 @@ public class InGameMainCameraController : StateContex
 
         private void Init()
         {
+            update = Search;
+            timePast = 0.0f;
+        }
+
+        private void Search()
+        {
             cameraScript.target = GameObject.FindGameObjectWithTag(ObjectTag.GoalStar);
-            Destination = GameObject.FindGameObjectWithTag(ObjectTag.PlayerCharacter);
-
-            if(cameraScript.target != null && Destination != null)
-            {
-                cameraScript.Init(StarMaker.Instance.CurrentMapInfo);
-
-                diff = (Destination.transform.position - cameraScript.target.transform.position) / duration; // 単位時間当たりの変位
-
-                var dist = new Vector3(0.0f, 0.0f, cameraScript.dist5x5);
-                dist = Quaternion.Euler(cameraScript.degree, 0.0f, 0.0f) * dist;
-                camera.transform.position = cameraScript.target.transform.position + dist;
-                camera.transform.LookAt(cameraScript.target.transform);
-
-                update += MoveFromGoalToStart;
-                return;
-            }
+            Goal = GameObject.FindGameObjectWithTag(ObjectTag.PlayerCharacter);
 
             if(cameraScript.target == null)
             {
                 Debug.Log("target couldnt be found.");
+                return;
             }
-            else if(Destination == null)
+            else if(Goal == null)
             {
                 Debug.Log("Destination couldnt be found.");
+                return;
+            }
+
+            if(cameraScript.target != null && Goal != null)
+            {
+                originalDist5x5 = cameraScript.GetDistXxX(5);
+                cameraScript.dist5x5 = cameraScript.GetDistXxX(2);
+
+                diffDistZoomOut = (originalDist5x5 - cameraScript.dist5x5) / durationZoomOut;
+
+                update -= Search;
+                update += ZoomOutFromGoal;
+                return;
+            }
+        }
+
+        private void ZoomOutFromGoal()
+        {
+            var time = Time.deltaTime;
+
+            if(durationZoomOut < time + timePast)
+            {
+                time = durationZoomOut - timePast;
+            }
+
+            cameraScript.dist5x5 += diffDistZoomOut * time;
+
+            cameraScript.MoveAndLookAtTarget();
+
+            timePast += time;
+
+            if(durationZoomOut <= timePast)
+            {
+                timePast = 0.0f;
+                update -= ZoomOutFromGoal;
+                update += Wait;
+                return;
+            }
+        }
+
+        private void Wait()
+        {
+            var time = Time.deltaTime;
+
+            if(durationToWait < time + timePast)
+            {
+                time = durationToWait - timePast;
+            }
+
+            timePast += time;
+
+            if(durationToWait <= timePast)
+            {
+                timePast = 0.0f;
+                diffG2S = (Goal.transform.position - cameraScript.target.transform.position) / durationG2S; // 単位時間当たりの変位
+                update -= Wait;
+                update += MoveFromGoalToStart;
+                return;
             }
         }
 
         private void MoveFromGoalToStart()
         {
-            camera.transform.position += diff * Time.deltaTime;
+            // 移動する
+            var time = Time.deltaTime;
+
+            if(durationG2S < time + timePast)
+            {
+                time = durationG2S - timePast;
+            }
+
+            camera.transform.position += diffG2S * time;
+
+            timePast += time;
+
+            // スタート地点まで映した後はキャラクター追従ステートへ
+            if(durationG2S <= timePast)
+            {
+                var tako = GameObject.FindWithTag(ObjectTag.PlayerCharacter);
+                cameraScript.target = tako;
+                tako.GetComponent<Tako.TakoController>().SetCurrentState(Tako.TakoController.StateName.Normal);
+                Context.TransitState(StateName.Following);
+                return;
+            }
+        }
+    }
+
+    private class StateFloating : CameraState
+    {
+        private float speed = 1.0f; // per sec
+        public StateFloating(StateContex contex, GameObject camera) : base(contex, camera)
+        {
+            Name = StateName.Floating;
+            update = MoveByKeyInput;
+        }
+
+        public void MoveByKeyInput()
+        {
+            var vec = new Vector3();
+
+            if(Input.GetKey(KeyCode.UpArrow))
+            {
+                vec = Vector3.forward * speed;
+            }
+            else if(Input.GetKey(KeyCode.LeftArrow))
+            {
+                vec = Vector3.right * -speed;
+            }
+            else if(Input.GetKey(KeyCode.DownArrow))
+            {
+                vec = Vector3.forward * -speed;
+            }
+            else if(Input.GetKey(KeyCode.RightArrow))
+            {
+                vec = Vector3.right * speed;
+            }
+
+            camera.transform.position += vec;
         }
     }
 }
