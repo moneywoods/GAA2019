@@ -56,7 +56,7 @@ public class PlayerCommandBehavior : MonoBehaviour
             if (starMaker != null)
             {
                 Instantiate(ResetSpritePrefab);
-                starMaker.GetComponent<StarMaker>().ResetWorld();
+                StarMaker.Instance.ResetWorld();
             }
         }
     }
