@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class StageSelect : MonoBehaviour
 {
@@ -24,6 +25,12 @@ public class StageSelect : MonoBehaviour
         // ステージ毎に取り付けたオブジェクトの親
         int stageCanvas = 2;
         m_StageCanvas = transform.root.gameObject.transform.GetChild(stageCanvas).gameObject;
+
+        GameObject objStage = GameObject.Find("Stage1-1");
+        if (objStage)
+        {
+            EventSystem.current.SetSelectedGameObject(objStage);
+        }
     }
 
     // Update is called once per frame

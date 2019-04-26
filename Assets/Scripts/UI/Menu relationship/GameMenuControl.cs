@@ -23,7 +23,6 @@ public class GameMenuControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
         var component = GetComponent<Button>();
         var color = component.colors;
         color.normalColor = Color.white;
@@ -39,8 +38,6 @@ public class GameMenuControl : MonoBehaviour
 
         int stageSelectCanvas = 2;
         m_ObjStageSelectCanvas = transform.root.GetChild(stageSelectCanvas).gameObject;
-//        m_ObjStageSelectCanvas = GameObject.Find("StageSelectCanvas");
-
     }
 
     // Update is called once per frame
@@ -77,11 +74,6 @@ public class GameMenuControl : MonoBehaviour
         }
     }
 
-    private void StageSelect()
-    {
-//        GameMasterBehavior.InitiatingStage = new StageInfo()
-    }
-
     //==================
     // ボタンが選ばれた
     //==================
@@ -106,7 +98,7 @@ public class GameMenuControl : MonoBehaviour
     //==================
     public void OnDeselct()
     {
-        gameObject.transform.rotation = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f);
+//        gameObject.transform.rotation = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f);
     }
 
 }
