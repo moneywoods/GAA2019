@@ -1,7 +1,4 @@
-﻿//using System.Collections;
-//using System.Collections.Generic;
-//using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
@@ -9,6 +6,10 @@ using UnityEngine.UI;
 
 public class TitleMenuControl : MonoBehaviour
 {
+    GameObject m_ObjMenuCanvas;
+
+    GameObject m_ObjStageSelectCanvas;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +20,11 @@ public class TitleMenuControl : MonoBehaviour
         color.pressedColor = Color.blue;
 
         component.colors = color;
+
+        m_ObjMenuCanvas = transform.parent.gameObject;
+
+        int stageSelectCanvas = 2;
+        m_ObjStageSelectCanvas = transform.root.GetChild(stageSelectCanvas).gameObject;
 
     }
 
@@ -32,15 +38,17 @@ public class TitleMenuControl : MonoBehaviour
     {
         if (gameObject.name == "BeginGame")
         {// 初めから
+            GameMasterBehavior.InitiatingStage = new StageInfo(1, 1);
             FadeManager.FadeOut("scene0315");
         }
         if (gameObject.name == "ContinueGame")
         {// 続きから
-
+            FadeManager.FadeOut("scene0315");
         }
         if (gameObject.name == "SelectStage")
         {// ステージ選択
-
+            m_ObjStageSelectCanvas.gameObject.SetActive(true);
+            m_ObjMenuCanvas.gameObject.SetActive(false);
         }
         if (gameObject.name == "End")
         {// ゲーム終了
@@ -53,10 +61,6 @@ public class TitleMenuControl : MonoBehaviour
     //==================
     public void Select()
     {
-//        gameObject.GetComponent<Image>().color = new Color(231.0f / 255.0f, 20.0f / 255.0f, 20.0f / 255.0f, 255.0f / 255.0f);
-
-
-//        button.GetComponentInChildren<Text>().text = "test";
     }
 
     //==================

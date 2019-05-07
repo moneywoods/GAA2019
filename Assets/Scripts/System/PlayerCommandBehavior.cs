@@ -20,7 +20,6 @@ public class PlayerCommandBehavior : MonoBehaviour
     void Start()
     {
         m_ObjStageSelect = m_ObjStageCanvas.transform.GetChild(2).gameObject;
-        GameObject test = transform.root.gameObject;
     }
 
     // Update is called once per frame
