@@ -35,7 +35,7 @@ public class GameMasterBehavior : MonoBehaviour
     [SerializeField] public static bool isInitiationEvent = false;
 
 
-    private void Awake()
+    private void Start()
     {
         if (initiatingStage.Chapter == 0)
         {
@@ -80,12 +80,6 @@ public class GameMasterBehavior : MonoBehaviour
             cameraScript.SetTarget(GameObject.FindGameObjectWithTag(ObjectTag.PlayerCharacter));
             cameraScript.SetCurrentState(InGameMainCameraController.StateName.Following);
         }
-    }
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
     }
 
     // Update is called once per frame
