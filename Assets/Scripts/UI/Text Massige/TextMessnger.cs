@@ -11,13 +11,6 @@ public class TextMessnger : MonoBehaviour
     private int Textflag;           // Textのalpha値管理フラグ
     private float Textalpha;        // Textのalpha値変更
     RectTransform Area;             // テキストの座標取得
-
-    
-    [SerializeField]                // 表示領域                                
-    public Vector3 rect = new Vector3(200, 0, 0);   // テキストの座標入力
-
-    [SerializeField]                // 表示領域
-    public float Timemax;           // 最大表示時間
     private float Timecount;        // 時間のカウント
 
    
@@ -26,25 +19,37 @@ public class TextMessnger : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        // 初期化
-        Textflag = 0;
-        Textalpha = 0.0f;
-        Timecount = 0.0f;
-        Area = GetComponent<RectTransform>();     // テキストの座標位置取得の仕方 
-        Area.localPosition = rect;                // テキスト座標の変更
-        Qtext = GetComponentInChildren<Text>();   // UIのテキストの取得の仕方
-        Qtext.text = "代替テキスト";              // テキストの変更
         
+        MessngerInit();
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Textの色変更
-        Qtext.color = new Color(0, 0, 0, Textalpha);
+        Vector3 trect = new Vector3(-200.0f, 0.0f, 0.0f);
+        Color tcolor = new Color(255.0f, 0.0f, 0.0f, 1.0f);
+        MessngerUpdate("テキスト", trect, tcolor, 1);
+    }
+
+    public void MessngerInit()
+    {
+        // 初期化
+        Textflag = 0;
+        Textalpha = 0.0f;
+        Timecount = 0.0f;
+        Area = GetComponent<RectTransform>();                       // テキストの座標位置取得の仕方 
+        Qtext = GetComponentInChildren<Text>();                     // UIのテキストの取得の仕方
         
+    }
+
+    public void MessngerUpdate(string textset, Vector3 rect, Color textcolor, float Timemax)
+    {
+        Area.localPosition = new Vector3(rect.x, rect.y, rect.z);                   // テキスト座標の変更
+        Qtext.color = new Color(textcolor.r, textcolor.g, textcolor.b, Textalpha);  // Textの色変更
+        Qtext.text = textset;                                                       // テキストの変更
+
         // Mキーを押してTextflagを1にする
-        if (Input.GetKey(KeyCode.M))
+        if (Input.GetKey(KeyCode.M) && Textflag == 0)
         {
             Textflag = 1;
             Textalpha = 0.0f;
@@ -61,24 +66,25 @@ public class TextMessnger : MonoBehaviour
         {
             Textalpha += Time.deltaTime;
         }
-        else if(Textflag == 2)
+        else if (Textflag == 2)
         {
             Textalpha -= Time.deltaTime;
         }
 
         // Textalphaが1より大きいときTimecountを増やす
-        if (Textalpha > 1)
+        if (Textalpha > textcolor.a)
         {
-            Textalpha = 1;
-            Timecount += Time.deltaTime; 
+            Textalpha = textcolor.a;
+            Timecount += Time.deltaTime;
         }
 
         // Textalphaが0より小さいときTextalpha、Textflag、Timecountを0にする
-        else if (Textalpha< 0)
+        else if (Textalpha < 0)
         {
             Textalpha = 0.0f;
             Textflag = 0;
             Timecount = 0.0f;
         }
+
     }
 }
