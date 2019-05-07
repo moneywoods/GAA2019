@@ -22,16 +22,16 @@ public class LandStarController : StarBase
                                          // わからんけど開けておく下位4bitが移動待機を司る.
         PLAYER_STAYING         = 1 << 4, // 0000_0001_0000 // プレイヤーが滞在中.
         IN_MILKYWAY_AREA       = 1 << 5, // 0000_0010_0000 // 乳の領内に侵入中.
-        GET_CAUGHT_BY_MILKYWAY = 1 << 6, // 0000_0100_0000 // 乳に飲まれて動けない.
+        CAUGHT_BY_MILKYWAY = 1 << 6, // 0000_0100_0000 // 乳に飲まれて動けない.
         ALIVE                  = 1 << 8, // 0001_0000_0000  // 破壊された.
         // フラグ抽出用
         MOVING                 = 6,      // 0000_0000_0110 // MOVING_LEFT | MOVING_RIGHT
-        STUCKED                = GET_CAUGHT_BY_MILKYWAY, 
+        STUCKED                = CAUGHT_BY_MILKYWAY, 
         ENUM_MAX
     }
 
     public LANDSTAR_STAT CurrentStat { get; protected set; }
-
+    
     public Vector3 centerOfCircular
     {
         get;
@@ -44,17 +44,17 @@ public class LandStarController : StarBase
     public float timeToCirculate // 今回の回転に要する時間. 単位: 秒.
     {
         get;
-        protected set;
+        set;
     }
     public float timePast // 回転している時間の累計(回転状態を解除されるたびにリセット)
     {
         get;
-        protected set;
+        set;
     }
 
-// 移住可能を示すエフェクト // 今後UIとかもっと他の物に置き換える予定
-public GameObject m_EffectCanMoveTo;
-    private bool m_isCanMoveToEffectEmitting;
+    // 移住可能を示すエフェクト // 今後UIとかもっと他の物に置き換える予定
+    public GameObject m_EffectCanMoveTo;
+    protected bool m_isCanMoveToEffectEmitting;
 
     public LandStarController() : base(StarType.Land)
     {
@@ -76,8 +76,7 @@ public GameObject m_EffectCanMoveTo;
             return;
         }
 
-        // 回転
-        if((CheckFlag(LANDSTAR_STAT.MOVING) && timeToCirculate != 0.0f))
+        if(CheckFlag(LANDSTAR_STAT.MOVING) && !CheckFlag(LANDSTAR_STAT.IN_MILKYWAY_AREA)) // IN_MILKYWAY_AREA時はMW側が動かします。
         {
             float time = Time.deltaTime;
 
@@ -104,10 +103,10 @@ public GameObject m_EffectCanMoveTo;
             {
                 timePast = 0.0f;
                 timeToCirculate = 0.0f;
-                if(CheckFlag(LANDSTAR_STAT.IN_MILKYWAY_AREA))
-                {
-                    AddStat(LANDSTAR_STAT.GET_CAUGHT_BY_MILKYWAY);
-                }
+                //if(CheckFlag(LANDSTAR_STAT.IN_MILKYWAY_AREA))
+                //{
+                //    AddStat(LANDSTAR_STAT.GET_CAUGHT_BY_MILKYWAY);
+                //}
 
                 RemoveFlag(LANDSTAR_STAT.MOVING);
             }
@@ -130,7 +129,7 @@ public GameObject m_EffectCanMoveTo;
     // --------------------------------------------------------------------------------------------
     public void SetMove(GameObject center, float estimatedTimeToCirculate, bool isRight)
     {
-        if(CheckFlag(LANDSTAR_STAT.MOVING_RIGHT) || CheckFlag(LANDSTAR_STAT.MOVING_LEFT) || CheckFlag(LANDSTAR_STAT.GET_CAUGHT_BY_MILKYWAY) || !CheckFlag(LANDSTAR_STAT.ALIVE))
+        if(CheckFlag(LANDSTAR_STAT.MOVING_RIGHT) || CheckFlag(LANDSTAR_STAT.MOVING_LEFT) || CheckFlag(LANDSTAR_STAT.CAUGHT_BY_MILKYWAY) || !CheckFlag(LANDSTAR_STAT.ALIVE))
         {
             return; // 既に移動状態であるなら実行しない. 乳に飲まれている場合も実行しないゾ.
         }
@@ -179,7 +178,7 @@ public GameObject m_EffectCanMoveTo;
         {
             return true;
         }
-
+        var starMaker = StarMaker.Instance;
         var direction = StarMaker.GetDirection(originCellNum, CellNum);
 
         Vector2Int cp0 = CellNum;
@@ -282,22 +281,31 @@ public GameObject m_EffectCanMoveTo;
         }
 
         // マップ領域内かチェック
-        if(!(StarMaker.Instance.CheckLimitOfMap(cp0) && StarMaker.Instance.CheckLimitOfMap(cp1)))
+        if(!(starMaker.CheckLimitOfMap(cp0) && starMaker.CheckLimitOfMap(cp1)))
         {
             return false;
         }
-                
+        
+        // 絶対にtrueなパターンのチェック
+        if(starMaker.GetStar(cp0,StarType.BlackHole)) // 先1マス目がブラックホール
+        {
+            return true;
+        }
+
         // 移動経路に邪魔する要素があるかチェック
-        if(0 < StarMaker.Instance.GetStarList(cp0, StarType.Rock).Count ||
-            0 < StarMaker.Instance.GetStarList(cp1, StarType.Rock).Count ||
-            0 < StarMaker.Instance.GetStarList(cp0, StarType.BlackHole).Count ||
-            0 < StarMaker.Instance.GetStarList(cp1, StarType.BlackHole).Count)
+        if(0 < starMaker.GetStarList(cp0, StarType.Rock).Count) // 先1マスにRockがある
         {
             return false;
         }
-        else if(StarMaker.Instance.GetStarList(cp0, StarType.Land).Exists(obj => obj.GetComponent<LandStarController>().CheckFlag(LANDSTAR_STAT.STUCKED)) ||
-            StarMaker.Instance.GetStarList(cp1, StarType.Land).Exists(obj => obj.GetComponent<LandStarController>().CheckFlag(LANDSTAR_STAT.STUCKED)))
+        else if(starMaker.GetStarList(cp0, StarType.Land).Exists(obj => obj.GetComponent<LandStarController>().CheckFlag(LANDSTAR_STAT.STUCKED)) || // いずれのマスにミルキーウェイにつかまっているLandがある
+            starMaker.GetStarList(cp1, StarType.Land).Exists(obj => obj.GetComponent<LandStarController>().CheckFlag(LANDSTAR_STAT.STUCKED)))
         {
+            return false;
+        }
+        else if(starMaker.GetStarList(cp0, StarType.Land).Exists(obj => !obj.GetComponent<LandStarController>().CheckFlag(LANDSTAR_STAT.STUCKED)) && // 1マス先に動けるLandがいて、2マス先にミルキーウェイがある. 
+            0 < starMaker.GetStarList(cp1, StarType.MilkyWay).Count)
+        {
+            Debug.Log("couldnt initiate kinetic power because of cp0 = land, cp1 = MW");
             return false;
         }
 
@@ -317,6 +325,14 @@ public GameObject m_EffectCanMoveTo;
         if((CurrentStat & additionalStat) != 0)
         {
             return true; // 引数のフラグが既に立っている場合trueを返す.
+        }
+
+        if(additionalStat == LANDSTAR_STAT.IN_MILKYWAY_AREA && CheckFlag(LANDSTAR_STAT.MOVING))
+        {
+            if(timePast < timeToCirculate * 0.5f)
+            {
+                timeToCirculate *= 0.5f;
+            }
         }
 
         CurrentStat |= additionalStat;

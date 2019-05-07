@@ -2,20 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class StageSelect : MonoBehaviour
 {
-
-    GameObject m_ObjMageMaster;
-
     GameObject m_MenuCanvas;
     GameObject m_StageCanvas;
 
     // Start is called before the first frame update
     void Start()
     {
-        m_ObjMageMaster = GameObject.FindWithTag("SceneMaster");
-
         var component = GetComponent<Button>();
         var color = component.colors;
         color.normalColor = Color.white;
@@ -29,6 +25,12 @@ public class StageSelect : MonoBehaviour
         // ステージ毎に取り付けたオブジェクトの親
         int stageCanvas = 2;
         m_StageCanvas = transform.root.gameObject.transform.GetChild(stageCanvas).gameObject;
+
+        GameObject objStage = GameObject.Find("Stage1-1");
+        if (objStage)
+        {
+            EventSystem.current.SetSelectedGameObject(objStage);
+        }
     }
 
     // Update is called once per frame

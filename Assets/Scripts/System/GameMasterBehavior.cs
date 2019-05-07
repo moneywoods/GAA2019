@@ -19,6 +19,11 @@ public class GameMasterBehavior : MonoBehaviour
               IsChapterOver();
             }
     }
+    public static StageInfo InitiatingStage
+    {
+        get { return initiatingStage; }
+        set { initiatingStage = value; }
+    }
     
     private readonly static int STAGE_MAX = 4;
     private readonly static int CHAPTER_MAX = 4;
@@ -27,8 +32,10 @@ public class GameMasterBehavior : MonoBehaviour
     [SerializeField] private GameObject m_EventSystem;
     [SerializeField] private GameObject m_GridLinePrefab;
 
+    [SerializeField] public static bool isInitiationEvent = false;
 
-    private void Awake()
+
+    private void Start()
     {
         if (initiatingStage.Chapter == 0)
         {
@@ -56,12 +63,23 @@ public class GameMasterBehavior : MonoBehaviour
         GameObject playerController = Instantiate(m_PlayerCommand);
         var scriptPlayerController = playerController.GetComponent<PlayerCommandBehavior>();
         scriptPlayerController.SetCurrentSceneMenu(menu);
-    }
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+
+        // Camera
+        var camera = GameObject.FindGameObjectWithTag(ObjectTag.MainCamera);
+        var cameraScript = camera.GetComponent<InGameMainCameraController>();
+        // ゲームスタート時イベント有り無し
+        if(isInitiationEvent)
+        {
+            // ゴールからスタートまで星を映すモード
+            cameraScript.SetCurrentState(InGameMainCameraController.StateName.MovingFromGoalToStart);
+            var takoScript = GameObject.FindGameObjectWithTag(ObjectTag.PlayerCharacter).GetComponent<Tako.TakoController>();
+            takoScript.SetCurrentState(Tako.TakoController.StateName.CommandDisable);
+        }
+        else
+        {
+            cameraScript.SetTarget(GameObject.FindGameObjectWithTag(ObjectTag.PlayerCharacter));
+            cameraScript.SetCurrentState(InGameMainCameraController.StateName.Following);
+        }
     }
 
     // Update is called once per frame

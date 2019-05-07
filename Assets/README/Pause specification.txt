@@ -1,0 +1,25 @@
+ポーズについての仕様
+
+ポーズさせたいクラス(メニューなどを開いた時)のUpdate()にネズミ返しとして
+
+if (Mathf.Approximately(Time.timeScale, 0f))
+{
+	return;
+}
+
+を追加する。あるいは
+
+void FixedUpdate() 
+{
+}
+
+別のUpdateとしてFixedUpdate()を作成する。
+Update()にはネズミ返しを付けず、止めたい処理がある場合にはFixedUpdate内に記述していく。
+
+「Time.timeScale = 0 」による一時停止は
+・Updateは止まる。
+・FixedUpdateは止まらない。
+・Update内でも、時間を加味していない処理は止まらない。(Time.deltaTimeを付け加えると止まる)
+・物理演算はどこに記述しても強制的に止まる。(Rigidbody等)
+
+以上。
