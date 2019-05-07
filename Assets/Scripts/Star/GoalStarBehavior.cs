@@ -41,7 +41,7 @@ public class GoalStarBehavior : LandStarController
             GameObject.FindWithTag("Finish").transform.position = transform.position;
 
             m_NextSceneTimer++;
-            GameMasterBehavior.InitiatingChapter = GameMasterBehavior.InitiatingChapter + 1;
+            GameMasterBehavior.InitiatingChapter = GameMasterBehavior.InitiatingChapter + 1;    
         }
     }
     private void OnTriggerExit(Collider collision)
