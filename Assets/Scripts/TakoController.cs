@@ -28,7 +28,7 @@ namespace Tako
         protected void Awake()
         {
             MovingStarList = new List<GameObject>();
-
+            
             // ステートを生成
             AddState(new StateNormal(this, gameObject));
             AddState(new StateWaitingForKineticPowerEnd(this, gameObject));

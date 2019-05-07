@@ -8,6 +8,8 @@ public class GoalStarBehavior : LandStarController
     // シーン遷移までの時間
     private float m_NextSceneTimer = 0;
 
+    Tako.TakoController m_TakoControllerScript;
+
     public GoalStarBehavior()
     {
         starType |= StarType.GoalStar;
@@ -18,6 +20,8 @@ public class GoalStarBehavior : LandStarController
     void Start()
     {
         m_NextSceneTimer = 0;
+        GameObject objTako = GameObject.FindWithTag("PlayerCharacter");
+        m_TakoControllerScript = objTako.GetComponent<Tako.TakoController>();
     }
 
     // Update is called once per frame
@@ -44,6 +48,7 @@ public class GoalStarBehavior : LandStarController
             if(m_NextSceneTimer == 0) m_NextSceneTimer = Time.deltaTime;
 
             GameMasterBehavior.InitiatingChapter = GameMasterBehavior.InitiatingChapter + 1;
+
         }
     }
     private void OnTriggerExit(Collider collision)
