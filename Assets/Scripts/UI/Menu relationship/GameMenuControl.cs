@@ -19,6 +19,7 @@ public class GameMenuControl : MonoBehaviour
 
     GameObject m_ObjStageSelectCanvas;
 
+    bool m_MenuAvtive;
 
     // Start is called before the first frame update
     void Start()
@@ -38,6 +39,7 @@ public class GameMenuControl : MonoBehaviour
 
         int stageSelectCanvas = 2;
         m_ObjStageSelectCanvas = transform.root.GetChild(stageSelectCanvas).gameObject;
+        m_MenuAvtive = gameObject.activeInHierarchy;
     }
 
     // Update is called once per frame

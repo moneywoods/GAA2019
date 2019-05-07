@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class GoalStarBehavior : LandStarController
 {
     // シーン遷移までの時間
-    private uint m_NextSceneTimer = 0;
+    private float m_NextSceneTimer = 0;
 
     public GoalStarBehavior()
     {
@@ -25,13 +25,14 @@ public class GoalStarBehavior : LandStarController
     {
         if(m_NextSceneTimer != 0)
         {
-            if(m_NextSceneTimer % 120 == 0)
+        float TIME_OVER = 3f;
+        m_NextSceneTimer += Time.deltaTime;
+            if(m_NextSceneTimer > TIME_OVER)
             {// 時間がたったら次のシーンへ
-//                PauseTheGame.SetTimeScale(0.0f);
+                m_NextSceneTimer = 0;
                 FadeManager.FadeOut("scene0315");
             }
-            m_NextSceneTimer++;
-        }   
+        }
     }
     
     public override void TriggerOtherComeToSameCell(GameObject other)
@@ -40,7 +41,8 @@ public class GoalStarBehavior : LandStarController
         {
             GameObject.FindWithTag("Finish").transform.position = transform.position;
 
-            m_NextSceneTimer++;
+            if(m_NextSceneTimer == 0) m_NextSceneTimer = Time.deltaTime;
+
             GameMasterBehavior.InitiatingChapter = GameMasterBehavior.InitiatingChapter + 1;
         }
     }
