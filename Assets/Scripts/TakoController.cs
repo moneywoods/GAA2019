@@ -17,7 +17,11 @@ namespace Tako
         }
 
         [SerializeField] private GameObject currentStarStaying; // 今いる星.
-        [SerializeField] private GameObject nextStar;
+        [SerializeField] public GameObject nextStar
+        {
+            get;
+            private set;
+        }
         [SerializeField] public GameObject previousStar
         {
             get;
@@ -29,7 +33,7 @@ namespace Tako
         protected void Awake()
         {
             MovingStarList = new List<GameObject>();
-
+            
             // ステートを生成
             AddState(new StateNormal(this, gameObject));
             AddState(new StateWaitingForKineticPowerEnd(this, gameObject));
@@ -289,9 +293,15 @@ namespace Tako
             void UpdateByCommand()
             {
                 // 入力を取得.
+<<<<<<< HEAD
                 bool rightRotationInput = (Input.GetKeyDown(KeyCode.Joystick1Button5) || Input.GetKeyDown(KeyCode.Alpha3));      // 右ボタン
                 bool leftRotationInput = (Input.GetKeyDown(KeyCode.Joystick1Button4) || Input.GetKeyDown(KeyCode.Alpha1));      // 左ボタン
                 bool moveJump = (Input.GetKeyDown(KeyCode.J) );     // ジャンプボタン
+=======
+                bool rightStarRotationInput = ( Input.GetKeyDown(KeyCode.Joystick1Button5) || Input.GetKeyDown(KeyCode.Alpha3) );      // 右ボタン
+                bool leftStarRotationInput = ( Input.GetKeyDown(KeyCode.Joystick1Button4) || Input.GetKeyDown(KeyCode.Alpha1) );      // 左ボタン
+//                bool playerMove = ( Input.GetAxis() )
+>>>>>>> 42833bfc4103a7734b287a491083938746a33194
 
                 
                 // 星を渡る.
@@ -363,7 +373,7 @@ namespace Tako
                 }
 
                 // KineticPower
-                if (rightRotationInput)
+                if (rightStarRotationInput)
                 {
                     var list = StarMaker.Instance.GetNeighvorList(takoScript.currentStarStaying.GetComponent<LandStarController>().CellNum);
 
@@ -377,7 +387,7 @@ namespace Tako
                         // できなかった時の処理
                     }
                 }
-                else if (leftRotationInput)
+                else if (leftStarRotationInput)
                 {
                     var list = StarMaker.Instance.GetNeighvorList(takoScript.currentStarStaying.GetComponent<LandStarController>().CellNum);
 
@@ -447,8 +457,24 @@ namespace Tako
             {
                 Name = StateName.MovingBetweenStars;
                 OnEnter += Init;
-                update += MoveToStar;
+                update += WaitingSmallWindow;
             }
+
+            private float timeToWait = 0.15f;
+            private float timeExpired = 0.0f;
+
+            void WaitingSmallWindow()
+            {
+                timeExpired += Time.deltaTime;
+
+                if(timeToWait <= timeExpired)
+                 {
+                    update -= WaitingSmallWindow;
+                    update += MoveToStar;
+                 }
+
+            }
+
 
             void MoveToStar()
             {
