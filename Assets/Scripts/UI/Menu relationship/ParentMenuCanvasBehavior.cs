@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class ParentMenuCanvasBehavior : MenuCanvasBehavior
 {
-    float m_OldTime;        // 時間を止める前の時間を保持
-
+    private readonly int STAGE_SELECT = 2;
+    private readonly int CANVAS_MENU = 0;
     // Start is called before the first frame update
     void Start()
     {
-        m_OldTime = 1.0f;
+        
     }
 
     // Update is called once per frame
@@ -23,13 +23,18 @@ public class ParentMenuCanvasBehavior : MenuCanvasBehavior
         if (gameObject.activeSelf)
         {
             gameObject.SetActive(false);
-            PauseTheGame.SetTimeScale(m_OldTime);
+            PauseTheGame.SetTimeScale(PauseTheGame.GetOldTime());
         }
         else
         {
             gameObject.SetActive(true);
 //            SetActivateSelectionCursor();
-            m_OldTime = Time.timeScale;
+
+            GameObject stageSelect = transform.GetChild(STAGE_SELECT).gameObject;
+            GameObject canvasMenu = transform.GetChild(CANVAS_MENU).gameObject;
+            stageSelect.SetActive(false);
+            canvasMenu.SetActive(true);
+
             PauseTheGame.SetTimeScale(0.0f);
         }
     }
