@@ -2,10 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 [RequireComponent(typeof(LandStarController))]
+
+
 
 public class LandStarAnimationController : MonoBehaviour
 {
+
+    private Animator animator;
     LandStarController Script;
 
     // Start is called before the first frame update
@@ -13,7 +19,7 @@ public class LandStarAnimationController : MonoBehaviour
     {
         Script = GetComponent<LandStarController>();
 
-        
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -23,12 +29,14 @@ public class LandStarAnimationController : MonoBehaviour
         if (Script.CheckFlag(LandStarController.LANDSTAR_STAT.MOVING) )
         {
             transform.Rotate(0, 50000 * Time.deltaTime, 0);
+
         }
 
         //障害物につかまってる時
         if (Script.CheckFlag(LandStarController.LANDSTAR_STAT.STUCKED))
         {
             transform.Rotate(0, 100 * Time.deltaTime, 0);
+            
         }
 
         //プレイヤーが乗ってる時
@@ -44,5 +52,3 @@ public class LandStarAnimationController : MonoBehaviour
         }
     }
 }
-
-

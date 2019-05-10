@@ -17,7 +17,11 @@ namespace Tako
         }
 
         [SerializeField] private GameObject currentStarStaying; // 今いる星.
-        [SerializeField] private GameObject nextStar;
+        [SerializeField] public GameObject nextStar
+        {
+            get;
+            private set;
+        }
         [SerializeField] public GameObject previousStar
         {
             get;
@@ -429,8 +433,24 @@ namespace Tako
             {
                 Name = StateName.MovingBetweenStars;
                 OnEnter += Init;
-                update += MoveToStar;
+                update += WaitingSmallWindow;
             }
+
+            private float timeToWait = 0.15f;
+            private float timeExpired = 0.0f;
+
+            void WaitingSmallWindow()
+            {
+                timeExpired += Time.deltaTime;
+
+                if(timeToWait <= timeExpired)
+                 {
+                    update -= WaitingSmallWindow;
+                    update += MoveToStar;
+                 }
+
+            }
+
 
             void MoveToStar()
             {
