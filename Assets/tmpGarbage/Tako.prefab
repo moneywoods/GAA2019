@@ -98,7 +98,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentStarStaying: {fileID: 0}
-  nextStar: {fileID: 0}
 --- !u!54 &399107893205564343
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -211,6 +210,14 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 4bf8fdf351eb53042a6782ab97e73391, type: 2}
+    - target: {fileID: 11400002, guid: 3eb6c3b79409cc145a47ace42c1a2392, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 3eb6c3b79409cc145a47ace42c1a2392, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 400276, guid: 3eb6c3b79409cc145a47ace42c1a2392, type: 3}
       propertyPath: m_LocalRotation.x
       value: -0.093746535
