@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class TextMessnger : MonoBehaviour
 {
-    
     [SerializeField]                // 表示領域
     public Text Qtext;              // Text取得
     private int Textflag;           // Textのalpha値管理フラグ
@@ -44,8 +43,6 @@ public class TextMessnger : MonoBehaviour
             testtime = 0.0f;
         }
     }
-
-
 }
 
     public void MessngerInit()
