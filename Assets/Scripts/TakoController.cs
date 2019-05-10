@@ -284,14 +284,9 @@ namespace Tako
             void UpdateByCommand()
             {
                 // 入力を取得.
-<<<<<<< HEAD
                 bool rightStarRotationInput = ( Input.GetKeyDown(KeyCode.Joystick1Button5) || Input.GetKeyDown(KeyCode.Alpha3) );      // 右ボタン
                 bool leftStarRotationInput = ( Input.GetKeyDown(KeyCode.Joystick1Button4) || Input.GetKeyDown(KeyCode.Alpha1) );      // 左ボタン
 //                bool playerMove = ( Input.GetAxis() )
-=======
-                bool rightRotationInput = (Input.GetKeyDown(KeyCode.Joystick1Button5) || Input.GetKeyDown(KeyCode.Alpha3));      // 右ボタン
-                bool leftRotationInput = (Input.GetKeyDown(KeyCode.Joystick1Button4) || Input.GetKeyDown(KeyCode.Alpha1));      // 左ボタン
->>>>>>> 25dd9755566a5c7cd1c417af09761996bcb7433c
 
                 // 星を渡る.
                 bool isMovementStart = false;
