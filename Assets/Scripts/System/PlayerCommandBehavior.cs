@@ -6,15 +6,11 @@ public class PlayerCommandBehavior : MonoBehaviour
 {
     private GameObject m_CurrentSceneMenu;
     [SerializeField] private GameObject ResetSpritePrefab;
-
-    [SerializeField]
-    private GameObject m_ObjStageCanvas;
+    
     private GameObject m_ObjStageSelect;
 
     GameObject m_ObjMenuCanvas;
-
-    readonly int STAGESELECT = 2;
-    readonly int CANVASMENU = 0;
+    
 
     private void Awake()
     {
@@ -23,8 +19,6 @@ public class PlayerCommandBehavior : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        m_ObjStageSelect = m_ObjStageCanvas.transform.GetChild(STAGESELECT).gameObject;
-        m_ObjMenuCanvas = m_ObjStageCanvas.transform.GetChild(CANVASMENU).gameObject;
     }
 
     // Update is called once per frame
@@ -74,17 +68,12 @@ public class PlayerCommandBehavior : MonoBehaviour
 
         if (startButton && m_CurrentSceneMenu != null)
         {
-            GameObject stageSelect = m_ObjStageCanvas.transform.GetChild(STAGESELECT).gameObject;
-            GameObject canvasMenu = m_ObjStageCanvas.transform.GetChild(CANVASMENU).gameObject;
-            bool returnFrag = FadeManager.CheckIsFade();
-            
+            bool returnFrag = FadeManager.CheckIsFade();            
             if (returnFrag) return;
 
             var menuScript = m_CurrentSceneMenu.GetComponent<ParentMenuCanvasBehavior>();
             if (menuScript != null)
             {
-                stageSelect.SetActive(false);
-                canvasMenu.SetActive(true);
                 menuScript.SwitchActive();
             }
         }
