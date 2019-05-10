@@ -10,16 +10,20 @@ public class UnityChanDemo : MonoBehaviour
 
     GameObject ChildObject;
 
+    Transform target;
+    float speed = 10f;
+
     // Start is called before the first frame update
     void Start()
     {
         ChildObject = transform.GetChild(0).gameObject;
 
-
-
         Script = GetComponent<TakoController>();
 
         animator = ChildObject.GetComponent<Animator>();
+
+        
+
     }
 
     // Update is called once per frame
@@ -41,6 +45,14 @@ public class UnityChanDemo : MonoBehaviour
         if (Script.CurrentState.Name == TakoController.StateName.MovingBetweenStars)
         {
             animator.SetBool("is_run", true);
+
+            target = Script.nextStar.transform;
+
+            Vector3 targetDir = target.position - transform.position;
+            targetDir.y = transform.position.y; //targetと高さが異なると体ごと上下を向いてしまうので制御
+            float step = speed * Time.deltaTime;
+            Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0f);
+            transform.rotation = Quaternion.LookRotation(newDir);
 
         }
 
