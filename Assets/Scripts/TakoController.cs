@@ -13,10 +13,15 @@ namespace Tako
             public static readonly string WaitingForKineticPowerEnd = "WaitingForKineticPowerEnd";
             public static readonly string CommandDisable = "CommandDisable";
             public static readonly string MovingBetweenStars = "MovingBetweenStars";
+            public static readonly string StayingGoal = "StayingGoal";
         }
 
         [SerializeField] private GameObject currentStarStaying; // 今いる星.
-        [SerializeField] private GameObject nextStar;
+        [SerializeField] public GameObject nextStar
+        {
+            get;
+            private set;
+        }
         [SerializeField] public GameObject previousStar
         {
             get;
@@ -34,6 +39,7 @@ namespace Tako
             AddState(new StateWaitingForKineticPowerEnd(this, gameObject));
             AddState(new StateCommandDisable(this, gameObject));
             AddState(new StateMovingBetweenStars(this, gameObject));
+            AddState(new StateStayingGoal(this, gameObject));
             // 現在のステートをセット
             SetCurrentState(StateList.Find(m => m.Name == StateName.Normal));
         }
@@ -49,18 +55,27 @@ namespace Tako
 
         private void OnTriggerEnter(Collider other)
         {
-            if(other.gameObject == nextStar && CurrentState.Name == StateName.MovingBetweenStars)
+            if (other.gameObject == nextStar && CurrentState.Name == StateName.MovingBetweenStars)
             {
                 transform.position = other.transform.position;
                 currentStarStaying = other.gameObject;
                 nextStar = null;
-                TransitState(StateName.Normal);
+
+                string next = StateName.Normal;
+
+                if (other.tag == ObjectTag.GoalStar)
+                {
+                    next = StateName.StayingGoal;
+                }
+
+                TransitState(next);
+
             }
         }
 
         public void SetCurrentStarStaying(GameObject Land)
         {
-            if(currentStarStaying != null)
+            if (currentStarStaying != null)
             {
                 currentStarStaying.GetComponent<LandStarController>().LeaveThisLand();
                 previousStar = currentStarStaying;
@@ -83,11 +98,11 @@ namespace Tako
         public bool AskKineticPowerAvailable(List<GameObject> neighvorList, bool isRight)
         {
             bool result = true;
-            foreach(GameObject star in neighvorList)
+            foreach (GameObject star in neighvorList)
             {
                 var script = star.GetComponent<StarBase>();
                 var pos = currentStarStaying.GetComponent<StarBase>().CellNum;
-                if(!star.GetComponent<StarBase>().CheckKineticPowerCanBeUsed(currentStarStaying.GetComponent<StarBase>().CellNum, isRight))
+                if (!star.GetComponent<StarBase>().CheckKineticPowerCanBeUsed(currentStarStaying.GetComponent<StarBase>().CellNum, isRight))
                 {
                     result = false;
                 }
@@ -103,7 +118,7 @@ namespace Tako
         // 星を移動する.
         private bool MoveFromCurrentStar(Direction direction)
         {
-            if(direction == Direction.ENUM_MAX || direction == Direction.NONE)
+            if (direction == Direction.ENUM_MAX || direction == Direction.NONE)
             {
                 return false;
             }
@@ -115,9 +130,9 @@ namespace Tako
             // 指定された方向に行けるLandがあるかチェック.
             GameObject newLand = StarMaker.Instance.GetStar(currentStarStaying.GetComponent<StarBase>().CellNum, StarBase.StarType.Land, direction);
 
-            if(newLand == null)
+            if (newLand == null)
             {
-                return false; 
+                return false;
             }
             else
             {
@@ -146,10 +161,10 @@ namespace Tako
             foreach (GameObject star in neighborStarList)
             {
                 // 0326現在,リストに含まれるのは着陸可能星のみになってます. -> 全て
-                if(star.tag == ObjectTag.Land || star.tag == ObjectTag.GoalStar)
+                if (star.tag == ObjectTag.Land || star.tag == ObjectTag.GoalStar)
                 {
                     var landScript = star.GetComponent<LandStarController>();
-                    if((landScript.CheckFlag(LandStarController.LANDSTAR_STAT.ALIVE)) && !landScript.CheckFlag(LandStarController.LANDSTAR_STAT.MOVING))
+                    if ((landScript.CheckFlag(LandStarController.LANDSTAR_STAT.ALIVE)) && !landScript.CheckFlag(LandStarController.LANDSTAR_STAT.MOVING))
                     {
                         // プレイヤーから星への単位ベクトルを作る.
                         var vecPlayerToStar = star.transform.position - transform.position;
@@ -160,35 +175,35 @@ namespace Tako
 
                         float EstimatedStarDegree = 0.0f;
 
-                        if(direction == Direction.Top)
+                        if (direction == Direction.Top)
                         {
                             EstimatedStarDegree = -90.0f;
                         }
-                        else if(direction == Direction.LeftTop)
+                        else if (direction == Direction.LeftTop)
                         {
                             EstimatedStarDegree = -135.0f;
                         }
-                        else if(direction == Direction.Left)
+                        else if (direction == Direction.Left)
                         {
                             EstimatedStarDegree = -180.0f;
                         }
-                        else if(direction == Direction.LeftBottom)
+                        else if (direction == Direction.LeftBottom)
                         {
                             EstimatedStarDegree = -225.0f;
                         }
-                        else if(direction == Direction.Bottom)
+                        else if (direction == Direction.Bottom)
                         {
                             EstimatedStarDegree = -270.0f;
                         }
-                        else if(direction == Direction.RightBottom)
+                        else if (direction == Direction.RightBottom)
                         {
                             EstimatedStarDegree = -315.0f;
                         }
-                        else if(direction == Direction.Right)
+                        else if (direction == Direction.Right)
                         {
                             EstimatedStarDegree = 0.0f;
                         }
-                        else if(direction == Direction.RightTop)
+                        else if (direction == Direction.RightTop)
                         {
                             EstimatedStarDegree = -45.0f;
                         }
@@ -198,7 +213,7 @@ namespace Tako
                         }
 
                         Vector3 vecSearchngStar = Quaternion.Euler(0.0f, EstimatedStarDegree, 0.0f) * vecComp;
-                        if(Vector3.Angle(vecPlayerToStar.normalized, vecSearchngStar.normalized) <= 10.0f)
+                        if (Vector3.Angle(vecPlayerToStar.normalized, vecSearchngStar.normalized) <= 10.0f)
                         {
                             return star;
                         }
@@ -248,7 +263,7 @@ namespace Tako
 
             protected void UsualEnterEvent()
             {
-                
+
             }
 
             protected void UsualExitEvent()
@@ -269,43 +284,48 @@ namespace Tako
             void UpdateByCommand()
             {
                 // 入力を取得.
+<<<<<<< HEAD
                 bool rightStarRotationInput = ( Input.GetKeyDown(KeyCode.Joystick1Button5) || Input.GetKeyDown(KeyCode.Alpha3) );      // 右ボタン
                 bool leftStarRotationInput = ( Input.GetKeyDown(KeyCode.Joystick1Button4) || Input.GetKeyDown(KeyCode.Alpha1) );      // 左ボタン
 //                bool playerMove = ( Input.GetAxis() )
+=======
+                bool rightRotationInput = (Input.GetKeyDown(KeyCode.Joystick1Button5) || Input.GetKeyDown(KeyCode.Alpha3));      // 右ボタン
+                bool leftRotationInput = (Input.GetKeyDown(KeyCode.Joystick1Button4) || Input.GetKeyDown(KeyCode.Alpha1));      // 左ボタン
+>>>>>>> 25dd9755566a5c7cd1c417af09761996bcb7433c
 
                 // 星を渡る.
                 bool isMovementStart = false;
                 Direction whichDirection = Direction.NONE;
 
-                if(Input.GetKeyDown(KeyCode.D))
+                if (Input.GetKeyDown(KeyCode.D))
                 {
                     whichDirection = Direction.Right;
                 }
-                else if(Input.GetKeyDown(KeyCode.E))
+                else if (Input.GetKeyDown(KeyCode.E))
                 {
                     whichDirection = Direction.RightTop;
                 }
-                else if(Input.GetKeyDown(KeyCode.W))
+                else if (Input.GetKeyDown(KeyCode.W))
                 {
                     whichDirection = Direction.Top;
                 }
-                else if(Input.GetKeyDown(KeyCode.Q))
+                else if (Input.GetKeyDown(KeyCode.Q))
                 {
                     whichDirection = Direction.LeftTop;
                 }
-                else if(Input.GetKeyDown(KeyCode.A))
+                else if (Input.GetKeyDown(KeyCode.A))
                 {
                     whichDirection = Direction.Left;
                 }
-                else if(Input.GetKeyDown(KeyCode.Z))
+                else if (Input.GetKeyDown(KeyCode.Z))
                 {
                     whichDirection = Direction.LeftBottom;
                 }
-                else if(Input.GetKeyDown(KeyCode.X))
+                else if (Input.GetKeyDown(KeyCode.X))
                 {
                     whichDirection = Direction.Bottom;
                 }
-                else if(Input.GetKeyDown(KeyCode.C))
+                else if (Input.GetKeyDown(KeyCode.C))
                 {
                     whichDirection = Direction.RightBottom;
                 }
@@ -315,7 +335,7 @@ namespace Tako
                 }
 
                 // 移動
-                if(whichDirection != Direction.NONE)
+                if (whichDirection != Direction.NONE)
                 {
                     isMovementStart = takoScript.MoveFromCurrentStar(whichDirection);
                 }
@@ -324,7 +344,7 @@ namespace Tako
                     // null
                 }
 
-                if(isMovementStart)
+                if (isMovementStart)
                 {
                     Context.TransitState(StateName.MovingBetweenStars);
                     return;
@@ -339,7 +359,7 @@ namespace Tako
                 {
                     var list = StarMaker.Instance.GetNeighvorList(takoScript.currentStarStaying.GetComponent<LandStarController>().CellNum);
 
-                    if(takoScript.AskKineticPowerAvailable(list, true))
+                    if (takoScript.AskKineticPowerAvailable(list, true))
                     {
                         takoScript.KineticPower(2.0f, true);
                         takoScript.TransitState(StateName.WaitingForKineticPowerEnd);
@@ -353,7 +373,7 @@ namespace Tako
                 {
                     var list = StarMaker.Instance.GetNeighvorList(takoScript.currentStarStaying.GetComponent<LandStarController>().CellNum);
 
-                    if(takoScript.AskKineticPowerAvailable(list, false))
+                    if (takoScript.AskKineticPowerAvailable(list, false))
                     {
                         takoScript.KineticPower(2.0f, false);
                         takoScript.TransitState(StateName.WaitingForKineticPowerEnd);
@@ -378,14 +398,14 @@ namespace Tako
                 bool result = true;
 
                 // neighvorListに移動中のLandがあるか確認.
-                foreach(var star in takoScript.MovingStarList)
+                foreach (var star in takoScript.MovingStarList)
                 {
-                    if(star == null)
+                    if (star == null)
                     {
                         continue;
                     }
 
-                    if(star.GetComponent<LandStarController>().CheckFlag(LandStarController.LANDSTAR_STAT.MOVING))
+                    if (star.GetComponent<LandStarController>().CheckFlag(LandStarController.LANDSTAR_STAT.MOVING))
                     {
                         result = false;
                     }
@@ -419,9 +439,25 @@ namespace Tako
             {
                 Name = StateName.MovingBetweenStars;
                 OnEnter += Init;
-                update += MoveToStar;
+                update += WaitingSmallWindow;
             }
-            
+
+            private float timeToWait = 0.15f;
+            private float timeExpired = 0.0f;
+
+            void WaitingSmallWindow()
+            {
+                timeExpired += Time.deltaTime;
+
+                if(timeToWait <= timeExpired)
+                 {
+                    update -= WaitingSmallWindow;
+                    update += MoveToStar;
+                 }
+
+            }
+
+
             void MoveToStar()
             {
                 tako.transform.position += diff * Time.deltaTime;
@@ -429,7 +465,7 @@ namespace Tako
 
             void Init()
             {
-                if(EstimatedTimeToLand == 0.0f)
+                if (EstimatedTimeToLand == 0.0f)
                 {
                     EstimatedTimeToLand = 1.0f; // とりあえず
                 }
@@ -439,6 +475,14 @@ namespace Tako
                 }
 
                 diff = (takoScript.nextStar.transform.position - tako.transform.position) / EstimatedTimeToLand;
+            }
+        }
+
+        private class StateStayingGoal : TakoState
+        {
+            public StateStayingGoal(StateContex contex, GameObject tako) : base(contex, tako)
+            {
+                Name = StateName.StayingGoal;
             }
         }
     }

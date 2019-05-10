@@ -48,7 +48,6 @@ public class GoalStarBehavior : LandStarController
             if(m_NextSceneTimer == 0) m_NextSceneTimer = Time.deltaTime;
 
             GameMasterBehavior.InitiatingChapter = GameMasterBehavior.InitiatingChapter + 1;
-
         }
     }
     private void OnTriggerExit(Collider collision)
