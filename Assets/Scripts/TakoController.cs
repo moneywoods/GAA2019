@@ -135,13 +135,22 @@ namespace Tako
                 // null
             }
 
-            // 移動を開始する.
+            // 目的地を変更
+            nextStar = newLand;
+
+//            currentStarStaying.GetComponent<LandStarController>().LeaveThisLand();
+//
+//            previousStar = currentStarStaying;
+//            currentStarStaying = null;
+            return true;
+        }
+
+        private void IsJump()
+        {
             currentStarStaying.GetComponent<LandStarController>().LeaveThisLand();
 
             previousStar = currentStarStaying;
             currentStarStaying = null;
-            nextStar = newLand;
-            return true;
         }
 
         private GameObject GetStarOnTheDirection(Direction direction)
@@ -282,7 +291,9 @@ namespace Tako
                 // 入力を取得.
                 bool rightRotationInput = (Input.GetKeyDown(KeyCode.Joystick1Button5) || Input.GetKeyDown(KeyCode.Alpha3));      // 右ボタン
                 bool leftRotationInput = (Input.GetKeyDown(KeyCode.Joystick1Button4) || Input.GetKeyDown(KeyCode.Alpha1));      // 左ボタン
+                bool moveJump = (Input.GetKeyDown(KeyCode.J) );     // ジャンプボタン
 
+                
                 // 星を渡る.
                 bool isMovementStart = false;
                 Direction whichDirection = Direction.NONE;
@@ -336,12 +347,19 @@ namespace Tako
 
                 if (isMovementStart)
                 {
-                    Context.TransitState(StateName.MovingBetweenStars);
+//                    Context.TransitState(StateName.MovingBetweenStars);
                     return;
                 }
                 else
                 {
                     // null
+                }
+
+                // ジャンプ開始
+                if (moveJump && takoScript.nextStar)
+                {
+                    takoScript.IsJump();
+                    Context.TransitState(StateName.MovingBetweenStars);
                 }
 
                 // KineticPower
