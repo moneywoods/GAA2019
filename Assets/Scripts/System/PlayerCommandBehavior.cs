@@ -76,22 +76,15 @@ public class PlayerCommandBehavior : MonoBehaviour
         {
             GameObject stageSelect = m_ObjStageCanvas.transform.GetChild(STAGESELECT).gameObject;
             GameObject canvasMenu = m_ObjStageCanvas.transform.GetChild(CANVASMENU).gameObject;
-            bool menuActive = canvasMenu.activeSelf;       // メニューがアクティブかどうかの判定
-            bool stageSelectActive = stageSelect.activeSelf;
-            bool returnFrag = menuActive && FadeManager.CheckIsFade() && stageSelectActive;
-            Debug.Log("canvasMenu.activeSelf =" + canvasMenu.activeSelf);
-            Debug.Log("canvasMenu.activeInHierarchy =" + canvasMenu.activeInHierarchy);
-            Debug.Log("stageSelect.activeSelf =" + stageSelect.activeSelf);
-            Debug.Log("stageSelect.activeInHierarchy =" + stageSelect.activeInHierarchy);
-
-            //            if (!menuActive) return;
-            //            if (FadeManager.CheckIsFade()) return;
-            //            if (m_ObjStageSelect.activeSelf) return;
+            bool returnFrag = FadeManager.CheckIsFade();
+            
             if (returnFrag) return;
 
             var menuScript = m_CurrentSceneMenu.GetComponent<ParentMenuCanvasBehavior>();
             if (menuScript != null)
             {
+                stageSelect.SetActive(false);
+                canvasMenu.SetActive(true);
                 menuScript.SwitchActive();
             }
         }

@@ -269,8 +269,9 @@ namespace Tako
             void UpdateByCommand()
             {
                 // 入力を取得.
-                bool rightRotationInput = ( Input.GetKeyDown(KeyCode.Joystick1Button5) || Input.GetKeyDown(KeyCode.Alpha3) );      // 右ボタン
-                bool leftRotationInput = ( Input.GetKeyDown(KeyCode.Joystick1Button4) || Input.GetKeyDown(KeyCode.Alpha1) );      // 左ボタン
+                bool rightStarRotationInput = ( Input.GetKeyDown(KeyCode.Joystick1Button5) || Input.GetKeyDown(KeyCode.Alpha3) );      // 右ボタン
+                bool leftStarRotationInput = ( Input.GetKeyDown(KeyCode.Joystick1Button4) || Input.GetKeyDown(KeyCode.Alpha1) );      // 左ボタン
+//                bool playerMove = ( Input.GetAxis() )
 
                 // 星を渡る.
                 bool isMovementStart = false;
@@ -334,7 +335,7 @@ namespace Tako
                 }
 
                 // KineticPower
-                if (rightRotationInput)
+                if (rightStarRotationInput)
                 {
                     var list = StarMaker.Instance.GetNeighvorList(takoScript.currentStarStaying.GetComponent<LandStarController>().CellNum);
 
@@ -348,7 +349,7 @@ namespace Tako
                         // できなかった時の処理
                     }
                 }
-                else if (leftRotationInput)
+                else if (leftStarRotationInput)
                 {
                     var list = StarMaker.Instance.GetNeighvorList(takoScript.currentStarStaying.GetComponent<LandStarController>().CellNum);
 
