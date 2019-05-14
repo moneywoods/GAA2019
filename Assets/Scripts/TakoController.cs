@@ -293,7 +293,6 @@ namespace Tako
                 IsJumpCommand();
 
                 IsKineticPowerCommand();
-
             }
 
             private void IsNextStarCommand()
@@ -365,6 +364,17 @@ namespace Tako
                 }
             }
 
+            private void IsJumpCommand()
+            {
+                bool inputJump = (Input.GetKeyDown(KeyCode.Joystick1Button0) || Input.GetKeyDown(KeyCode.Space));                   // ジャンプボタン
+                bool isJump = inputJump && takoScript.nextStar;
+                if (isJump)
+                {
+                    takoScript.IsJump();
+                    Context.TransitState(StateName.MovingBetweenStars);
+                }
+            }
+
             private void IsKineticPowerCommand()
             {
                 bool inputRight = (Input.GetKeyDown(KeyCode.Joystick1Button5) || Input.GetKeyDown(KeyCode.Alpha3));     // 右回転ボタン
@@ -378,8 +388,6 @@ namespace Tako
                     {
                         takoScript.KineticPower(2.0f, true);
                         takoScript.TransitState(StateName.WaitingForKineticPowerEnd);
-                        //                        ResetNextStar();
-                        return;
                     }
                     else
                     {
@@ -394,23 +402,11 @@ namespace Tako
                     {
                         takoScript.KineticPower(2.0f, false);
                         takoScript.TransitState(StateName.WaitingForKineticPowerEnd);
-                        //                        ResetNextStar();
                     }
                     else
                     {
                         // できなかった時の処理
                     }
-                }
-            }
-
-            private void IsJumpCommand()
-            {
-                bool inputJump = (Input.GetKeyDown(KeyCode.Joystick1Button0) || Input.GetKeyDown(KeyCode.Space));                   // ジャンプボタン
-                bool isJump = inputJump && takoScript.nextStar;
-                if (isJump)
-                {
-                    takoScript.IsJump();
-                    Context.TransitState(StateName.MovingBetweenStars);
                 }
             }
         }
