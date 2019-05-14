@@ -52,13 +52,13 @@ public class GameMasterBehavior : MonoBehaviour
         // グリッド線を生成
         Instantiate(m_GridLinePrefab);
 
-        // GridCylinder 
-        var gc = Instantiate(m_GridCylinderPrefab);
-        gc.GetComponent<GridCylinderBehaviour>().Init();
-
         // 世界を作る.
         GameObject starMaker = Instantiate(m_StarMakerPrefab);
         StarMaker.Instance.MakeWorld(mapData, Common.CellSize);
+
+        // GridCylinder 
+        var gc = Instantiate(m_GridCylinderPrefab);
+        gc.GetComponent<GridCylinderBehaviour>().Init();
 
         // UIオブジェクトを生成.
         GameObject menu = Instantiate(m_MenuCanvas);
