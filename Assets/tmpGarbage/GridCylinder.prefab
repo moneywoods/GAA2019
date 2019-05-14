@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 876184096822520287}
   - component: {fileID: 876184096822520286}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: GridCylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,7 +45,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CylinderPrefab: {fileID: 6879020848998898278, guid: 1c4fe15ff83c7174b9bf6b4d1c783749,
     type: 3}
-  scale: {x: 0, y: 0}
-  division: {x: 0, y: 0}
+  stepSize: {x: 0, y: 0}
+  cellCnt: {x: 0, y: 0}
   offset: {x: 0, y: 0, z: 0}
   material: {fileID: 0}
