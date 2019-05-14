@@ -53,7 +53,8 @@ public class GameMasterBehavior : MonoBehaviour
         Instantiate(m_GridLinePrefab);
 
         // GridCylinder 
-        Instantiate(m_GridCylinderPrefab);
+        var gc = Instantiate(m_GridCylinderPrefab);
+        gc.GetComponent<GridCylinderBehaviour>().Init();
 
         // 世界を作る.
         GameObject starMaker = Instantiate(m_StarMakerPrefab);

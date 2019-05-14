@@ -14,7 +14,7 @@ public class GridCylinderBehaviour : MonoBehaviour
     [SerializeField] private StarMaker.MapInfo currentMapInfo = null;
 
     // Start is called before the first frame update
-    void Start()
+    public void Init()
     {
         currentMapInfo = StarMaker.Instance.CurrentMapInfo;
 
@@ -68,8 +68,7 @@ public class GridCylinderBehaviour : MonoBehaviour
         obj.transform.parent = gameObject.transform;
         return obj;
     }
-
-
+    
     // Update is called once per frame
     void Update()
     {
