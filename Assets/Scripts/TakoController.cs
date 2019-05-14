@@ -141,11 +141,7 @@ namespace Tako
 
             // 目的地を変更
             nextStar = newLand;
-
-//            currentStarStaying.GetComponent<LandStarController>().LeaveThisLand();
-//
-//            previousStar = currentStarStaying;
-//            currentStarStaying = null;
+            
             return true;
         }
 
@@ -292,88 +288,89 @@ namespace Tako
 
             void UpdateByCommand()
             {
+                IsNextStarCommand();
+
+                IsJumpCommand();
+
+                IsKineticPowerCommand();
+
+            }
+
+            private void IsNextStarCommand()
+            {
+                // スティックのしきい値
+                float INPUT_HORIZONTAL = 0.7f;
+                float INPUT_VERTICAL = 0.7f;
+                float INPUT_UP = 0.8f;
+                float INPUT_DOWN = -0.8f;
+                float INPUT_LEFT = -0.8f;
+                float INPUT_RIGHT = 0.8f;
+
+                float moveX = Input.GetAxisRaw("Horizontal");
+                float moveY = Input.GetAxisRaw("Vertical");
+
                 // 入力を取得.
-<<<<<<< HEAD
-                bool rightRotationInput = (Input.GetKeyDown(KeyCode.Joystick1Button5) || Input.GetKeyDown(KeyCode.Alpha3));      // 右ボタン
-                bool leftRotationInput = (Input.GetKeyDown(KeyCode.Joystick1Button4) || Input.GetKeyDown(KeyCode.Alpha1));      // 左ボタン
-                bool moveJump = (Input.GetKeyDown(KeyCode.J) );     // ジャンプボタン
-=======
-                bool rightStarRotationInput = ( Input.GetKeyDown(KeyCode.Joystick1Button5) || Input.GetKeyDown(KeyCode.Alpha3) );      // 右ボタン
-                bool leftStarRotationInput = ( Input.GetKeyDown(KeyCode.Joystick1Button4) || Input.GetKeyDown(KeyCode.Alpha1) );      // 左ボタン
-//                bool playerMove = ( Input.GetAxis() )
->>>>>>> 42833bfc4103a7734b287a491083938746a33194
+                bool inputUp = (moveY >= INPUT_VERTICAL || Input.GetKeyDown(KeyCode.W));            // 上入力
+                bool inputDown = (moveY <= -INPUT_VERTICAL || Input.GetKeyDown(KeyCode.X));         // 下入力
+                bool inputLeft = (moveX <= -INPUT_HORIZONTAL || Input.GetKeyDown(KeyCode.A));       // 左入力
+                bool inputRight = (moveX >= INPUT_HORIZONTAL || Input.GetKeyDown(KeyCode.D));       // 右入力
 
-                
-                // 星を渡る.
-                bool isMovementStart = false;
-                Direction whichDirection = Direction.NONE;
+                bool inputLeftUp = (moveX <= INPUT_LEFT && moveY >= INPUT_UP || Input.GetKeyDown(KeyCode.Q));       // 左上
+                bool inputLeftDown = (moveX <= INPUT_LEFT && moveY <= INPUT_DOWN || Input.GetKeyDown(KeyCode.Z));   // 左下
+                bool inputRightUp = (moveX >= INPUT_RIGHT && moveY >= INPUT_UP || Input.GetKeyDown(KeyCode.E));     // 右上
+                bool inputRightDown = (moveX >= INPUT_RIGHT && moveY <= INPUT_DOWN || Input.GetKeyDown(KeyCode.C)); // 右下
 
-                if (Input.GetKeyDown(KeyCode.D))
+                Direction indexDirection = Direction.NONE;
+                // 渡る星を選択
+                if (inputLeft)
                 {
-                    whichDirection = Direction.Right;
+                    indexDirection = Direction.Left;
                 }
-                else if (Input.GetKeyDown(KeyCode.E))
+                if (inputRight)
                 {
-                    whichDirection = Direction.RightTop;
+                    indexDirection = Direction.Right;
                 }
-                else if (Input.GetKeyDown(KeyCode.W))
+                if (inputUp)
                 {
-                    whichDirection = Direction.Top;
+                    indexDirection = Direction.Top;
                 }
-                else if (Input.GetKeyDown(KeyCode.Q))
+                if (inputDown)
                 {
-                    whichDirection = Direction.LeftTop;
+                    indexDirection = Direction.Bottom;
                 }
-                else if (Input.GetKeyDown(KeyCode.A))
+                if (inputLeftUp)
                 {
-                    whichDirection = Direction.Left;
+                    indexDirection = Direction.LeftTop;
                 }
-                else if (Input.GetKeyDown(KeyCode.Z))
+                if (inputLeftDown)
                 {
-                    whichDirection = Direction.LeftBottom;
+                    indexDirection = Direction.LeftBottom;
                 }
-                else if (Input.GetKeyDown(KeyCode.X))
+                if (inputRightUp)
                 {
-                    whichDirection = Direction.Bottom;
+                    indexDirection = Direction.RightTop;
                 }
-                else if (Input.GetKeyDown(KeyCode.C))
+                if (inputRightDown)
                 {
-                    whichDirection = Direction.RightBottom;
+                    indexDirection = Direction.RightBottom;
                 }
-                else
-                {
-                    // null
-                }
-
                 // 移動
-                if (whichDirection != Direction.NONE)
+                if (indexDirection != Direction.NONE)
                 {
-                    isMovementStart = takoScript.MoveFromCurrentStar(whichDirection);
+                    takoScript.MoveFromCurrentStar(indexDirection);
                 }
                 else
                 {
                     // null
                 }
+            }
 
-                if (isMovementStart)
-                {
-//                    Context.TransitState(StateName.MovingBetweenStars);
-                    return;
-                }
-                else
-                {
-                    // null
-                }
+            private void IsKineticPowerCommand()
+            {
+                bool inputRight = (Input.GetKeyDown(KeyCode.Joystick1Button5) || Input.GetKeyDown(KeyCode.Alpha3));     // 右回転ボタン
+                bool inputLeft = (Input.GetKeyDown(KeyCode.Joystick1Button4) || Input.GetKeyDown(KeyCode.Alpha1));      // 左回転ボタン
 
-                // ジャンプ開始
-                if (moveJump && takoScript.nextStar)
-                {
-                    takoScript.IsJump();
-                    Context.TransitState(StateName.MovingBetweenStars);
-                }
-
-                // KineticPower
-                if (rightStarRotationInput)
+                if (inputRight)
                 {
                     var list = StarMaker.Instance.GetNeighvorList(takoScript.currentStarStaying.GetComponent<LandStarController>().CellNum);
 
@@ -381,13 +378,15 @@ namespace Tako
                     {
                         takoScript.KineticPower(2.0f, true);
                         takoScript.TransitState(StateName.WaitingForKineticPowerEnd);
+                        //                        ResetNextStar();
+                        return;
                     }
                     else
                     {
                         // できなかった時の処理
                     }
                 }
-                else if (leftStarRotationInput)
+                else if (inputLeft)
                 {
                     var list = StarMaker.Instance.GetNeighvorList(takoScript.currentStarStaying.GetComponent<LandStarController>().CellNum);
 
@@ -395,6 +394,7 @@ namespace Tako
                     {
                         takoScript.KineticPower(2.0f, false);
                         takoScript.TransitState(StateName.WaitingForKineticPowerEnd);
+                        //                        ResetNextStar();
                     }
                     else
                     {
@@ -402,7 +402,20 @@ namespace Tako
                     }
                 }
             }
+
+            private void IsJumpCommand()
+            {
+                bool inputJump = (Input.GetKeyDown(KeyCode.Joystick1Button0) || Input.GetKeyDown(KeyCode.Space));                   // ジャンプボタン
+                bool isJump = inputJump && takoScript.nextStar;
+                if (isJump)
+                {
+                    takoScript.IsJump();
+                    Context.TransitState(StateName.MovingBetweenStars);
+                }
+            }
         }
+
+
         private class StateWaitingForKineticPowerEnd : TakoState
         {
             public StateWaitingForKineticPowerEnd(StateContex contex, GameObject tako) : base(contex, tako)
