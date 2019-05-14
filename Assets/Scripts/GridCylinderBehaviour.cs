@@ -7,18 +7,21 @@ public class GridCylinderBehaviour : MonoBehaviour
     [SerializeField] private GameObject CylinderPrefab;
 
     [SerializeField] private Vector2 stepSize; // グリッド中の1マスの幅高さ
-    [SerializeField] private Vector2Int division; // 線の数
+    [SerializeField] private Vector2Int cellCnt; // 線の数
     [SerializeField] private Vector3 offset; // グリッド左上へのオフセット
     [SerializeField] private Material material;
     private float Radius = 0.05f;
     [SerializeField] private StarMaker.MapInfo currentMapInfo = null;
+
+    private int horizontalNum;
+    private int verticalNum;
 
     // Start is called before the first frame update
     public void Init()
     {
         currentMapInfo = StarMaker.Instance.CurrentMapInfo;
 
-        division = currentMapInfo.CellCnt;
+        cellCnt = currentMapInfo.CellCnt;
         stepSize = currentMapInfo.CellSize;
         // StarMakerの座標に合わせるオフセット
         var topLeftOffset = currentMapInfo.CellSize * currentMapInfo.CellCnt * 0.5f;
@@ -30,9 +33,9 @@ public class GridCylinderBehaviour : MonoBehaviour
         // horizontal line
         var halfH = stepSize.x * 0.5f;
 
-        for (int row = 0; row < division.y + 1; row++)
+        for (int row = 0; row < cellCnt.y + 1; row++)
         {
-            for (int col = 0; col < division.x; col++)
+            for (int col = 0; col < cellCnt.x; col++)
             {
                 var pos = new Vector3(col * stepSize.x, 0.0f, -row * stepSize.y) +  new Vector3(halfH, 0.0f, 0.0f) + offset;
                 var obj = CreateCylinder(pos, true);
@@ -44,9 +47,9 @@ public class GridCylinderBehaviour : MonoBehaviour
         // vertical line
         var halfV = stepSize.y * 0.5f;
 
-        for (int col = 0; col < division.x + 1; col++)
+        for (int col = 0; col < cellCnt.x + 1; col++)
         {
-            for (int row = 0; row < division.y; row++)
+            for (int row = 0; row < cellCnt.y; row++)
             {
                 var pos = new Vector3(col * stepSize.x, 0.0f, -row * stepSize.y) - new Vector3(0.0f, 0.0f, halfV) + offset;
                 var obj = CreateCylinder(pos, false);
@@ -54,6 +57,10 @@ public class GridCylinderBehaviour : MonoBehaviour
 
             }
         }
+
+        // マスを形成するシリンダを取得するためにセット
+        horizontalNum = cellCnt.x * (cellCnt.y + 1);
+        verticalNum = (cellCnt.x + 1) * cellCnt.y; 
     }
 
     GameObject CreateCylinder(Vector3 pos, bool isHorizontal)
@@ -69,6 +76,23 @@ public class GridCylinderBehaviour : MonoBehaviour
         return obj;
     }
     
+    public List<GameObject> GetCylinderList(Vector2Int cellNum)
+    {
+
+        var list = new List<GameObject>();
+        
+        int h0 = cellNum.x + cellCnt.x * cellNum.y;
+        int h1 = cellNum.x + cellCnt.x * (cellNum.y + 1);
+        int v0 = cellNum.y + cellCnt.y * cellNum.x + horizontalNum;
+        int v1 = cellNum.y + cellCnt.y * (cellNum.x + 1) + horizontalNum;
+
+        list.Add(transform.GetChild(h0).gameObject);
+        list.Add(transform.GetChild(h1).gameObject);
+        list.Add(transform.GetChild(v0).gameObject);
+        list.Add(transform.GetChild(v1).gameObject);
+
+        return list;
+    }
     // Update is called once per frame
     void Update()
     {
