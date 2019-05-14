@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PauseTheGame : MonoBehaviour
 {
+    static float m_OldTime;     // 時間を止める前の時間を保持
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +25,12 @@ public class PauseTheGame : MonoBehaviour
         if(minTime && maxTime)
         {
             Time.timeScale = time;
+            if(time != 0) m_OldTime = time;
         }
+    }
+
+    public static float GetOldTime()
+    {
+        return m_OldTime;
     }
 }

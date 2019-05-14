@@ -13,6 +13,8 @@ public class UnityChanDemo : MonoBehaviour
     Transform target;
     float speed = 10f;
 
+    private GameObject m_ObjCamera;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +24,7 @@ public class UnityChanDemo : MonoBehaviour
 
         animator = ChildObject.GetComponent<Animator>();
 
-        
+        m_ObjCamera = GameObject.FindWithTag("MainCamera");
 
     }
 
@@ -34,6 +36,7 @@ public class UnityChanDemo : MonoBehaviour
         {
             animator.SetBool("is_wait", true);
 
+            PlayerRotate();
         }
 
         else
@@ -46,14 +49,7 @@ public class UnityChanDemo : MonoBehaviour
         {
             animator.SetBool("is_run", true);
 
-            target = Script.nextStar.transform;
-
-            Vector3 targetDir = target.position - transform.position;
-            targetDir.y = transform.position.y; //targetと高さが異なると体ごと上下を向いてしまうので制御
-            float step = speed * Time.deltaTime;
-            Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0f);
-            transform.rotation = Quaternion.LookRotation(newDir);
-
+            PlayerRotate();
         }
 
         else
@@ -66,11 +62,42 @@ public class UnityChanDemo : MonoBehaviour
         {
             animator.SetBool("is_starmove", true);
 
+            CameraLockOn();
         }
 
         else
         {
             animator.SetBool("is_starmove", false);
+        }
+    }
+
+
+    private void PlayerRotate()
+    {
+        if (Script.nextStar != null)
+        {
+            target = Script.nextStar.transform;
+
+            Vector3 targetDir = target.position - transform.position;
+            targetDir.y = transform.position.y; //targetと高さが異なると体ごと上下を向いてしまうので制御
+            float step = speed * Time.deltaTime;
+            Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0f);
+            transform.rotation = Quaternion.LookRotation(newDir);
+        }
+    }
+
+    private void CameraLockOn()
+    {
+        if(m_ObjCamera != null)
+        {
+            Transform target = m_ObjCamera.transform;
+
+            Vector3 targetDir = target.position - transform.position;
+            targetDir.y = transform.position.y; //targetと高さが異なると体ごと上下を向いてしまうので制御
+            float step = speed * Time.deltaTime;
+            Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0f);
+            transform.rotation = Quaternion.LookRotation(newDir);
+
         }
     }
 }
