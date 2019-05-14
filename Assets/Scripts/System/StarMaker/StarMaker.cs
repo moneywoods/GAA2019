@@ -13,7 +13,7 @@ public class StarMaker : SingletonPattern<StarMaker>
             CellCnt = new Vector2Int(mapData.GetLength(1), mapData.GetLength(0));
             CellSize = cellSize;
             Position = position;
-            DeffaultOffset = new Vector3( -CellSize.x * CellCnt.x * 0.5f + 2.5f, 0.0f, CellSize.y * CellCnt.y * 0.5f + 2.5f) + Position;
+            DeffaultOffset = new Vector3( -CellSize.x * CellCnt.x * 0.5f + CellSize.x * 0.5f, 0.0f, CellSize.y * CellCnt.y * 0.5f + CellSize.y * 0.5f) + Position;
         }
 
         public char[,] MapData;  // マップの初期配置

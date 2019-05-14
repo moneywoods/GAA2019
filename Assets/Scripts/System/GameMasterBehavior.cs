@@ -31,6 +31,7 @@ public class GameMasterBehavior : MonoBehaviour
     [SerializeField] private GameObject m_MenuCanvas;
     [SerializeField] private GameObject m_EventSystem;
     [SerializeField] private GameObject m_GridLinePrefab;
+    [SerializeField] private GameObject m_GridCylinderPrefab;
 
     [SerializeField] public static bool isInitiationEvent = false;
 
@@ -50,6 +51,9 @@ public class GameMasterBehavior : MonoBehaviour
 
         // グリッド線を生成
         Instantiate(m_GridLinePrefab);
+
+        // GridCylinder 
+        Instantiate(m_GridCylinderPrefab);
 
         // 世界を作る.
         GameObject starMaker = Instantiate(m_StarMakerPrefab);
