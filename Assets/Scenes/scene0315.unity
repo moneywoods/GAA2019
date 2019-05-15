@@ -443,6 +443,7 @@ MonoBehaviour:
   margin: 0
   dist5x5: 0
   degree: -130
+  ScreenSize: {x: 0, y: 0}
 --- !u!4 &1248792522 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5832974778256760271, guid: 0ef23fa4d38575348993f88fad1664fb,

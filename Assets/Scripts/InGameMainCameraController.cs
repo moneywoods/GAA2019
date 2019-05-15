@@ -23,6 +23,7 @@ public class InGameMainCameraController : StateContex
     [SerializeField] private float dist5x5;
     [SerializeField] private float degree = -130.0f;
 
+    [SerializeField] private Vector2Int ScreenSize;
     private void Awake()
     {
         AddState(new StateFollowing(this, gameObject));
@@ -80,10 +81,17 @@ public class InGameMainCameraController : StateContex
         {
             this.camera = camera;
             cameraScript = camera.GetComponent<InGameMainCameraController>();
+            update += GetScreenInfo;
         }
 
         protected GameObject camera = null;
         protected InGameMainCameraController cameraScript = null;
+
+        public void GetScreenInfo()
+        {
+            cameraScript.ScreenSize.x = Screen.width;
+            cameraScript.ScreenSize.y = Screen.height;
+        }
     }
 
     private class StateFollowing : CameraState
@@ -139,7 +147,7 @@ public class InGameMainCameraController : StateContex
 
         private void Init()
         {
-            update = Search;
+            update += Search;
             timePast = 0.0f;
         }
 
@@ -249,7 +257,7 @@ public class InGameMainCameraController : StateContex
         public StateFloating(StateContex contex, GameObject camera) : base(contex, camera)
         {
             Name = StateName.Floating;
-            update = MoveByKeyInput;
+            update += MoveByKeyInput;
         }
 
         public void MoveByKeyInput()
