@@ -214,7 +214,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: e2600aed73e810042b215ca705002deb, type: 2}
     - target: {fileID: 11499528, guid: 14ef3cb01b069fd40b26bc617c43783b, type: 3}
       propertyPath: fogIntensityA
-      value: 0.456
+      value: 0.566
       objectReference: {fileID: 0}
     - target: {fileID: 11499528, guid: 14ef3cb01b069fd40b26bc617c43783b, type: 3}
       propertyPath: fogIntensityB
@@ -231,6 +231,22 @@ PrefabInstance:
     - target: {fileID: 11499528, guid: 14ef3cb01b069fd40b26bc617c43783b, type: 3}
       propertyPath: fogEnd
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 11499528, guid: 14ef3cb01b069fd40b26bc617c43783b, type: 3}
+      propertyPath: causticsTilingX
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 11499528, guid: 14ef3cb01b069fd40b26bc617c43783b, type: 3}
+      propertyPath: causticsTilingY
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 11499528, guid: 14ef3cb01b069fd40b26bc617c43783b, type: 3}
+      propertyPath: causticsBoost
+      value: 0.19
+      objectReference: {fileID: 0}
+    - target: {fileID: 11499528, guid: 14ef3cb01b069fd40b26bc617c43783b, type: 3}
+      propertyPath: causticsSpeed
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 442108, guid: 14ef3cb01b069fd40b26bc617c43783b, type: 3}
       propertyPath: m_LocalPosition.x
