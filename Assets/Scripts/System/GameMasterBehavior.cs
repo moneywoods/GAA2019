@@ -34,6 +34,7 @@ public class GameMasterBehavior : MonoBehaviour
 
     [SerializeField] public static bool isInitiationEvent = false;
 
+    [SerializeField] private GameObject m_StarIndexParticle;
 
     private void Start()
     {
@@ -67,6 +68,10 @@ public class GameMasterBehavior : MonoBehaviour
         // Camera
         var camera = GameObject.FindGameObjectWithTag(ObjectTag.MainCamera);
         var cameraScript = camera.GetComponent<InGameMainCameraController>();
+
+        // パーチクルを生成
+        Instantiate(m_StarIndexParticle);
+
         // ゲームスタート時イベント有り無し
         if(isInitiationEvent)
         {
