@@ -280,10 +280,22 @@ namespace Tako
 
         private class StateNormal : TakoState
         {
+            public Direction facingDirection;
+
             public StateNormal(StateContex stateContex, GameObject tako) : base(stateContex, tako)
             {
                 Name = StateName.Normal;
+                facingDirection = Direction.NONE;
+                OnEnter += CheckAndSelectStarInFacingCell;
                 update += UpdateByCommand;
+            }
+
+            void CheckAndSelectStarInFacingCell()
+            {
+                if(facingDirection != Direction.NONE)
+                {
+                    takoScript.MoveFromCurrentStar(facingDirection);
+                }
             }
 
             void UpdateByCommand()
@@ -357,6 +369,7 @@ namespace Tako
                 if (indexDirection != Direction.NONE)
                 {
                     takoScript.MoveFromCurrentStar(indexDirection);
+                    facingDirection = indexDirection;
                 }
                 else
                 {
