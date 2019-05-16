@@ -116,7 +116,7 @@ namespace Tako
 
         /* ----- 操作関数 ----- */
         // 星を移動する.
-        private bool MoveFromCurrentStar(Direction direction)
+        private bool CheckLandInDirection(Direction direction)
         {
             if (direction == Direction.ENUM_MAX || direction == Direction.NONE)
             {
@@ -294,7 +294,7 @@ namespace Tako
             {
                 if(facingDirection != Direction.NONE)
                 {
-                    takoScript.MoveFromCurrentStar(facingDirection);
+                    takoScript.CheckLandInDirection(facingDirection);
                 }
             }
 
