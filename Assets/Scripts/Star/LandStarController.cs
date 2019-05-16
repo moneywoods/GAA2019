@@ -311,6 +311,7 @@ public class LandStarController : StarBase
 
         return true;
     }
+
     // --------------------------------------------------------------------------------------------
     //
     // public フラグ関連
@@ -320,6 +321,7 @@ public class LandStarController : StarBase
     {
         CurrentStat = newStat;
     }
+
     public bool AddStat(LANDSTAR_STAT additionalStat) // フラグを立てる. 引数のフラグが既に立っている場合trueを戻し終了.
     {
         if((CurrentStat & additionalStat) != 0)

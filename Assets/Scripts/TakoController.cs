@@ -53,7 +53,7 @@ namespace Tako
             base.Update();
         }
 
-        private void OnTriggerEnter(Collider other)
+        private void OnTriggerEnter(Collider other) // 目標の星と衝突したらその星についたこととする
         {
             if (other.gameObject == nextStar && CurrentState.Name == StateName.MovingBetweenStars)
             {
