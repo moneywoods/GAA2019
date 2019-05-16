@@ -443,7 +443,7 @@ MonoBehaviour:
   margin: 0
   dist5x5: 0
   degree: -130
-  ScreenSize: {x: 0, y: 0}
+  ScreenSize: {x: 1168, y: 543}
 --- !u!4 &1248792522 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5832974778256760271, guid: 0ef23fa4d38575348993f88fad1664fb,
@@ -462,6 +462,7 @@ GameObject:
   - component: {fileID: 1329923347}
   - component: {fileID: 1329923346}
   - component: {fileID: 1329923345}
+  - component: {fileID: 1329923348}
   m_Layer: 0
   m_Name: Grid Camera
   m_TagString: Untagged
@@ -546,6 +547,18 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &1329923348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1329923343}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fbaa60d7d257a44ca7f09bfa51afea0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1798414822
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -658,7 +671,8 @@ PrefabInstance:
       propertyPath: m_CullingMask.m_Bits
       value: 1847
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4195324602279320044, guid: 0ef23fa4d38575348993f88fad1664fb, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 0ef23fa4d38575348993f88fad1664fb, type: 3}
 --- !u!4 &2068214622 stripped
 Transform:
