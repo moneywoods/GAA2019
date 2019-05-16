@@ -1,0 +1,3 @@
+Textファイルを「Resources」に追加後Visual Studio内で
+ファイル => 保存オプションの詳細設定 => 行の終わり => Unix
+へ変更すること！

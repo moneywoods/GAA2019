@@ -31,6 +31,10 @@ public class UnityChanDemo : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        CharacterAnimation();
+    }
+    private void CharacterAnimation()
+    {
         //プレイヤーが待機中
         if (Script.CurrentState.Name == TakoController.StateName.Normal)
         {
@@ -38,7 +42,6 @@ public class UnityChanDemo : MonoBehaviour
 
             PlayerRotate();
         }
-
         else
         {
             animator.SetBool("is_wait", false);
@@ -51,7 +54,6 @@ public class UnityChanDemo : MonoBehaviour
 
             PlayerRotate();
         }
-
         else
         {
             animator.SetBool("is_run", false);
@@ -64,13 +66,11 @@ public class UnityChanDemo : MonoBehaviour
 
             CameraLockOn();
         }
-
         else
         {
             animator.SetBool("is_starmove", false);
         }
     }
-
 
     private void PlayerRotate()
     {
