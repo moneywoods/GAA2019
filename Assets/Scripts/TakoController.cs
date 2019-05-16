@@ -116,7 +116,7 @@ namespace Tako
 
         /* ----- 操作関数 ----- */
         // 星を移動する.
-        private bool MoveFromCurrentStar(Direction direction)
+        private bool CheckLandInDirection(Direction direction)
         {
             if (direction == Direction.ENUM_MAX || direction == Direction.NONE)
             {
@@ -280,10 +280,22 @@ namespace Tako
 
         private class StateNormal : TakoState
         {
+            public Direction facingDirection;
+
             public StateNormal(StateContex stateContex, GameObject tako) : base(stateContex, tako)
             {
                 Name = StateName.Normal;
+                facingDirection = Direction.NONE;
+                OnEnter += CheckAndSelectStarInFacingCell;
                 update += UpdateByCommand;
+            }
+
+            void CheckAndSelectStarInFacingCell()
+            {
+                if(facingDirection != Direction.NONE)
+                {
+                    takoScript.CheckLandInDirection(facingDirection);
+                }
             }
 
             void UpdateByCommand()
@@ -356,7 +368,8 @@ namespace Tako
                 // 移動
                 if (indexDirection != Direction.NONE)
                 {
-                    takoScript.MoveFromCurrentStar(indexDirection);
+                    takoScript.CheckLandInDirection(indexDirection);
+                    facingDirection = indexDirection;
                 }
                 else
                 {
