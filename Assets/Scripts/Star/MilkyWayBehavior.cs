@@ -25,7 +25,7 @@ public class MilkyWayBehavior : StarBase
     // Start is called before the first frame update
     void Start()
     {
-        LandList = new List<LandInMW>();
+        Init();
     }
 
     // Update is called once per frame
@@ -56,6 +56,11 @@ public class MilkyWayBehavior : StarBase
         }
     }
 
+    void Init()
+    {
+        LandList = new List<LandInMW>();
+    }
+
     public override void TriggerOtherComeToSameCell(GameObject other)
     {
         if(other.tag == ObjectTag.Land)
@@ -63,7 +68,14 @@ public class MilkyWayBehavior : StarBase
             var otherScript = other.GetComponent<LandStarController>();
             otherScript.AddStat(LandStarController.LANDSTAR_STAT.IN_MILKYWAY_AREA);
             var diff = (transform.position - other.gameObject.transform.position) / (otherScript.timeToCirculate - otherScript.timePast);
+
+            if(LandList == null) // 生まれたときにStart関数を通っているときと通っていないときがあるので.
+            {
+                Init();
+            }
+
             LandList.Add(new LandInMW(other, diff));
+
             other.GetComponent<Renderer>().material.color = Color.black;
         }
     }

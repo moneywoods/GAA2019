@@ -116,6 +116,14 @@ public class StarMaker : SingletonPattern<StarMaker>
                     GameObject star = PlaceStar(m_GoalStarPrefab, rc, cc);
                     star.GetComponent<LandStarController>().AddStat(LandStarController.LANDSTAR_STAT.ALIVE);
                 }
+                else if(mapData[rc, cc] == 'I')
+                {
+                    // ミルキーウェイに入ったLand
+                    PlaceStar(m_MilkyWayPrefab, rc, cc);
+                    GameObject star = PlaceStar(m_LandStarPrefab, rc, cc);
+                    star.GetComponent<LandStarController>().AddStat(LandStarController.LANDSTAR_STAT.ALIVE);
+
+                }
                 else if(mapData[rc, cc] == 'W')
                 {
                     // 壁用のオブジェクト
