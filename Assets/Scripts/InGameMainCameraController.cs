@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using StatePattern;
+
 public class InGameMainCameraController : StateContex
 {
     public static class StateName
@@ -20,10 +21,11 @@ public class InGameMainCameraController : StateContex
     public Vector3 offsetToTarget;
 
     [SerializeField] private float margin = 0.0f;
-    [SerializeField] private float dist5x5;
-    [SerializeField] private float degree = -130.0f;
+    [SerializeField] private float dist5x5;          // 5x5のマスを移すために必要な距離（を作りたかった）
+    [SerializeField] private float degree = -130.0f; // カメラとプレイヤーキャラクタを結ぶ線が水平と為す角度
 
     [SerializeField] private Vector2Int ScreenSize;
+
     private void Awake()
     {
         AddState(new StateFollowing(this, gameObject));
@@ -55,7 +57,8 @@ public class InGameMainCameraController : StateContex
 
         var mapInfo = StarMaker.Instance.CurrentMapInfo;
 
-        float fov = cameraScript.fieldOfView;
+        // float fov = cameraScript.fieldOfView;
+        float fov = cameraScript.fieldOfView * Screen.width / Screen.height;
         var radius = 0.5f * mapInfo.CellSize.x * cellNum * Mathf.Sqrt(2.0f);
         var dist = (radius) / Mathf.Sin(fov * 0.5f * Mathf.Deg2Rad);
         return dist;
@@ -97,6 +100,9 @@ public class InGameMainCameraController : StateContex
     private class StateFollowing : CameraState
     {
         private Vector3 previousTargetPos;
+        private float prevFov;
+        private float prevDegree;
+
         public StateFollowing(StateContex contex, GameObject camera) : base(contex, camera)
         {
             Name = StateName.Following;
@@ -108,10 +114,33 @@ public class InGameMainCameraController : StateContex
             Debug.Log("camera is following mode");
             Debug.Log("target is " + cameraScript.target.ToString() + ".");
 
+            InitPos();
+
+            update += AdjustDist;
+            update += FollowTarget;
+        }
+
+        private void InitPos()
+        {
             cameraScript.dist5x5 = cameraScript.GetDistXxX(5);
             cameraScript.MoveAndLookAtTarget();
             previousTargetPos = cameraScript.target.transform.position;
-            update += FollowTarget;
+
+            var cameraComponent = camera.GetComponent<Camera>();
+            prevFov = cameraComponent.fieldOfView;
+
+            prevDegree = cameraScript.degree;
+        }
+
+        private void AdjustDist()
+        {
+            var currentFov = camera.GetComponent<Camera>().fieldOfView;
+
+            if(prevFov != currentFov ||
+                prevDegree != cameraScript.degree)
+            {
+                InitPos();
+            }
         }
 
         private void FollowTarget()
