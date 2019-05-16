@@ -368,7 +368,7 @@ namespace Tako
                 // 移動
                 if (indexDirection != Direction.NONE)
                 {
-                    takoScript.MoveFromCurrentStar(indexDirection);
+                    takoScript.CheckLandInDirection(indexDirection);
                     facingDirection = indexDirection;
                 }
                 else
