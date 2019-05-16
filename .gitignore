@@ -117,3 +117,4 @@ sysinfo.txt #Unity3D Generated File On Crash Reports
 # my setting   #
 # ============ #
 .wav
+/Assets/Sounds/*
