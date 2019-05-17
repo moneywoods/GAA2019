@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 7686155803916100958}
   - component: {fileID: 4373778066301911203}
   - component: {fileID: 3373155373648042980}
-  - component: {fileID: 3816375979820481492}
   m_Layer: 9
   m_Name: Land
   m_TagString: Land
@@ -131,21 +130,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2f2930d73626104186e492a63639d49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3816375979820481492
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1066779473278714}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c37975c96f7992e4989c3a13e5b8c13e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  effectObject: {fileID: 1040592573266221633, guid: b7559847b31e123489f3b1c00e490281,
-    type: 3}
-  deleteTime: 2
 --- !u!1 &8034482191802385630
 GameObject:
   m_ObjectHideFlags: 0

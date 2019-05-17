@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ParticleScript : MonoBehaviour
 {
+
     //　出現させるエフェクト
     [SerializeField]
     private GameObject effectObject;
@@ -11,21 +12,28 @@ public class ParticleScript : MonoBehaviour
     [SerializeField]
     private float deleteTime;
 
+    GameObject Land;
     LandStarController Star;
 
     // Start is called before the first frame update
     void Start()
     {
-        Star = GetComponent<LandStarController>();
+        Land = GameObject.FindWithTag("Land");
+        Star = Land.GetComponent<LandStarController>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Star.CheckFlag(LandStarController.LANDSTAR_STAT.MOVING))
+        if (Star.CheckFlag(LandStarController.LANDSTAR_STAT.MOVING_LEFT))
         {
-            var instantiateEffect = GameObject.Instantiate(effectObject, transform.position + new Vector3(0f, 0f, 0f), Quaternion.identity) as GameObject;
-            Destroy(instantiateEffect, deleteTime);
+            transform.position = Land.transform.position;
+            GetComponent<ParticleSystem>().Play();
+
+           // var instantiateEffect = Instantiate(effectObject, transform.position + new Vector3(0f, 0f, 0f), Quaternion.identity) as GameObject;
+          //  Destroy(instantiateEffect, deleteTime);
         }
     }
+
+
 }
