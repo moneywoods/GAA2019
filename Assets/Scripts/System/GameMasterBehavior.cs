@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class GameMasterBehavior : MonoBehaviour
 {
@@ -81,6 +82,10 @@ public class GameMasterBehavior : MonoBehaviour
             cameraScript.SetTarget(GameObject.FindGameObjectWithTag(ObjectTag.PlayerCharacter));
             cameraScript.SetCurrentState(InGameMainCameraController.StateName.Following);
         }
+
+        // 背景用のシーン読込
+        SceneManager.LoadScene("GameBackGround",LoadSceneMode.Additive);
+        
     }
 
     // Update is called once per frame
