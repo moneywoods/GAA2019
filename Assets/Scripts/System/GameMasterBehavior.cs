@@ -70,7 +70,7 @@ public class GameMasterBehavior : MonoBehaviour
         var cameraScript = camera.GetComponent<InGameMainCameraController>();
 
         // パーチクルを生成
-        Instantiate(m_StarIndexParticle);
+        ParticlePackages();
 
         // ゲームスタート時イベント有り無し
         if(isInitiationEvent)
@@ -126,6 +126,14 @@ public class GameMasterBehavior : MonoBehaviour
         {
             
         }
+
+    }
+
+
+    // 仮パーチクルまとめ鯖
+    private void ParticlePackages()
+    {
+        Instantiate(m_StarIndexParticle);
 
     }
 }

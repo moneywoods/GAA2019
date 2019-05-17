@@ -4960,7 +4960,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_StarIndexParticle
       value: 
-      objectReference: {fileID: 6329496414247826729, guid: 4e65c9276e7097240a48fb89eb97cc4c,
+      objectReference: {fileID: 1404859691811447748, guid: ca6ba15f70cb7ff4e801a97d5ff01277,
         type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 545876662b98320419beabdcaa72f325, type: 3}
@@ -5044,6 +5044,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: RandomLight
+      objectReference: {fileID: 0}
+    - target: {fileID: 5905424573864129645, guid: 76351b5baa49ab24ab788c7c6f633f9b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5905424573864129642, guid: 76351b5baa49ab24ab788c7c6f633f9b,
         type: 3}
@@ -5499,7 +5504,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!199 &1305586924
 ParticleSystemRenderer:
   serializedVersion: 6
