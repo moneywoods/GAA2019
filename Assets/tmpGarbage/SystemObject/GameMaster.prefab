@@ -53,5 +53,5 @@ MonoBehaviour:
     type: 3}
   m_GridLinePrefab: {fileID: 1204925341602613978, guid: c62f489ae3290094cab13de6270cdf32,
     type: 3}
-  CameraPrefab: {fileID: 6468690247954029991, guid: 0ef23fa4d38575348993f88fad1664fb,
+  m_StarIndexParticle: {fileID: 6068810248393405571, guid: f9622a150e8bee849b80d0bf6ed3171f,
     type: 3}
