@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 66279399248833191}
   - component: {fileID: 2447843808785747305}
   - component: {fileID: 5415036221063523089}
+  - component: {fileID: 2947170035132506979}
   m_Layer: 0
   m_Name: TakoMoveGuideLine
   m_TagString: Untagged
@@ -48,7 +49,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 1
   prewarm: 0
-  playOnAwake: 0
+  playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 0
@@ -4698,3 +4699,15 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &2947170035132506979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6068810248393405571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec751dde1bcecde42a34147d3c4162fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

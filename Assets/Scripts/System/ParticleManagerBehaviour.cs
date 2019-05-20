@@ -10,7 +10,8 @@ public class ParticleManagerBehaviour : SingletonPattern<ParticleManagerBehaviou
 {
     public enum ParticleIndex
     {
-        TEST
+        ParticleMoveGuideLine,
+        ParticleMax
     }
 
     class MyParticle
@@ -28,13 +29,12 @@ public class ParticleManagerBehaviour : SingletonPattern<ParticleManagerBehaviou
 
 
     // Prefab置き場
-    [SerializeField] GameObject test;
-
+    [SerializeField]GameObject m_GuideLine;
+    
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        ParticlePrefabList = new List<MyParticle>();
-        ParticlePrefabList.Add(new MyParticle(test, ParticleIndex.TEST));
+        Initialize();
     }
 
     // Update is called once per frame
@@ -43,8 +43,20 @@ public class ParticleManagerBehaviour : SingletonPattern<ParticleManagerBehaviou
         
     }
 
+    private void Initialize()
+    {
+        ParticlePrefabList = new List<MyParticle>();
+        ParticlePrefabList.Add(new MyParticle(m_GuideLine, ParticleIndex.ParticleMoveGuideLine));
+
+
+        Instantiate(m_GuideLine);
+
+    }
+
     public GameObject GetParticle(ParticleIndex index)
     {
+        if(ParticlePrefabList == null) Initialize();
+
         return ParticlePrefabList.Find(obj => obj.index == index).ParticleObj;
     }
 

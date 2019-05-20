@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Tako;
 
+
 public class UnityChanDemo : MonoBehaviour
 {
     private Animator animator;
@@ -15,6 +16,7 @@ public class UnityChanDemo : MonoBehaviour
 
     private GameObject m_ObjCamera;
 
+    private PlayerMoveGide m_GuideLine;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,16 +28,20 @@ public class UnityChanDemo : MonoBehaviour
 
         m_ObjCamera = GameObject.FindWithTag("MainCamera");
 
+         GameObject playerGuideLine =  ParticleManagerBehaviour.Instance.GetParticle(ParticleManagerBehaviour.ParticleIndex.ParticleMoveGuideLine);
+        m_GuideLine = playerGuideLine.GetComponent<PlayerMoveGide>();
     }
 
     // Update is called once per frame
     void Update()
     {
+
         //プレイヤーが待機中
         if (Script.CurrentState.Name == TakoController.StateName.Normal)
         {
             animator.SetBool("is_wait", true);
 
+            m_GuideLine.ParticleStart();
             PlayerRotate();
         }
 
@@ -48,7 +54,7 @@ public class UnityChanDemo : MonoBehaviour
         if (Script.CurrentState.Name == TakoController.StateName.MovingBetweenStars)
         {
             animator.SetBool("is_run", true);
-
+            m_GuideLine.ParticleStop();
             PlayerRotate();
         }
 
@@ -62,6 +68,7 @@ public class UnityChanDemo : MonoBehaviour
         {
             animator.SetBool("is_starmove", true);
 
+            m_GuideLine.ParticleStop();
             CameraLockOn();
         }
 
