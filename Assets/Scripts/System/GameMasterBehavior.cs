@@ -32,7 +32,7 @@ public class GameMasterBehavior : MonoBehaviour
     [SerializeField] private GameObject m_EventSystem;
     [SerializeField] private GameObject m_GridLinePrefab;
 
-    [SerializeField] public static bool isInitiationEvent = false;
+    [SerializeField] public static bool isInitiationEvent = true;
 
     [SerializeField] private GameObject m_StarIndexParticle;
 
@@ -85,6 +85,8 @@ public class GameMasterBehavior : MonoBehaviour
             cameraScript.SetTarget(GameObject.FindGameObjectWithTag(ObjectTag.PlayerCharacter));
             cameraScript.SetCurrentState(InGameMainCameraController.StateName.Following);
         }
+
+        GetComponent<AudioSource>().Play();
     }
 
     // Update is called once per frame
@@ -114,8 +116,8 @@ public class GameMasterBehavior : MonoBehaviour
         chapter = num % 10;
         stage = num / 10;
 
-        rangeChapter = chapter < CHAPTER_MAX && chapter > 0;
-        rangeStage= stage < STAGE_MAX && stage > 0;
+        rangeChapter = chapter <= CHAPTER_MAX && chapter > 0;
+        rangeStage= stage <= STAGE_MAX && stage > 0;
         bool range = rangeChapter && rangeStage;
 
         if (range)
