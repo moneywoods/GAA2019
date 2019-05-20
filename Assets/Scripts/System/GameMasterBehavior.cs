@@ -34,7 +34,7 @@ public class GameMasterBehavior : MonoBehaviour
 
     [SerializeField] public static bool isInitiationEvent = true;
 
-    [SerializeField] private GameObject m_StarIndexParticle;
+    [SerializeField] private GameObject m_ParticleManagerPrefab;
 
     private void Start()
     {
@@ -73,6 +73,9 @@ public class GameMasterBehavior : MonoBehaviour
         ParticlePackages();
 
         // ゲームスタート時イベント有り無し
+
+        Instantiate(m_ParticleManagerPrefab);
+        
         if(isInitiationEvent)
         {
             // ゴールからスタートまで星を映すモード
