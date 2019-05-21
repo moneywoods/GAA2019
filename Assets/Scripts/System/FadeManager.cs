@@ -166,6 +166,7 @@ public class FadeManager : MonoBehaviour
             {
                 isFadeIn = false;
                 timeElapsed = 0.0f;
+                ClearState();
             }
         }
         else if(isFadeOut)
@@ -176,6 +177,7 @@ public class FadeManager : MonoBehaviour
             {
                 isFadeOut = false;
                 timeElapsed = 0.0f;
+                ClearState();
 
                 //次のシーンへ遷移
                 SceneManager.LoadScene(nextScene);
