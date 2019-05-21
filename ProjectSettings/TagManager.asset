@@ -5,6 +5,21 @@ TagManager:
   serializedVersion: 2
   tags:
   - Shootable
+  - SceneMaster
+  - PlayerCommand
+  - StarMaker
+  - MenuCanvas
+  - GridLine
+  - BlackHole
+  - GoalStar
+  - PlayerCharacter
+  - MilkyWay
+  - Land
+  - CellCollider
+  - StageSelect
+  - AbstructEffect
+  - MenuBotton
+  - MoveGuide
   layers:
   - Default
   - TransparentFX

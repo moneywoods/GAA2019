@@ -238,6 +238,8 @@ public class InGameMainCameraController : StateContex
                 cameraScript.target = tako;
                 tako.GetComponent<Tako.TakoController>().SetCurrentState(Tako.TakoController.StateName.Normal);
                 Context.TransitState(StateName.Following);
+
+                GameObject.FindWithTag("MoveGuide").GetComponent<ParticleSystem>().Play();
                 return;
             }
         }

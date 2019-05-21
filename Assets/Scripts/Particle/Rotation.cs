@@ -16,7 +16,7 @@ public class Rotation : MonoBehaviour
     {
         if(m_ObjTako == null) m_ObjTako = GameObject.FindWithTag("PlayerCharacter");
 
-        Vector3 pos =transform.position = m_ObjTako.transform.position;
+        Vector3 pos = gameObject.transform.position = m_ObjTako.transform.position;
         pos.y = 3f;
         transform.position = pos;
     }
