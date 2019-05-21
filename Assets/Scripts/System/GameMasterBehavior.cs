@@ -44,6 +44,7 @@ public class GameMasterBehavior : MonoBehaviour
 
         PauseTheGame.SetTimeScale(1.0f);
         FadeManager.FadeIn();
+        FadeManager.NextColor = Color.white;
 
         // ステージ情報を書いたテキストファイルの読み込み
         var mapData = MapLoader.LoadMap(initiatingStage);
