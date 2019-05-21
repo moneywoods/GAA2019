@@ -56,7 +56,7 @@ public void OnSelected()
         /* ----- タイトル画面のメニュー ----- */
         if (gameObject.name == "BeginGame")
         {// 初めから
-            FadeManager.NextColor = Color.blue;
+            FadeManager.NextColor = Color.clear;
             FadeManager.AddState(FadeManager.State.A_TO_ONE);
             FadeManager.SceneOut("scene0315");
         }
