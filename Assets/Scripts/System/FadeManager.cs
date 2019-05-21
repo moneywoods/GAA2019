@@ -45,6 +45,7 @@ public class FadeManager : MonoBehaviour
     public enum State
     {
         // fadeTimeの時間で行う処理。
+        NONE      = 0,
         BIGGER    = 1 << 1, // 0000_0001 イメージサイズが大きくなる。
         SMALLER   = 1 << 2, // 0000_0010 イメージサイズが小さくなる。
         A_TO_ZERO = 1 << 3, // 0000_0100 透明度が大きくなる。
@@ -85,16 +86,15 @@ public class FadeManager : MonoBehaviour
 	//フェードイン開始
 
 
-	public static void FadeIn()
+	public static void SceneIn()
 	{
 		if (fadeImage == null) Init();
         fadeImage.color = NextColor; //一応
 		isFadeIn = true;
-        AddState(State.A_TO_ZERO);
 	}
 
 	//フェードアウト開始
-	public static void FadeOut(string scene)
+	public static void SceneOut(string scene)
 	{
 		if (fadeImage == null) Init();
 		nextScene = scene;
@@ -106,7 +106,6 @@ public class FadeManager : MonoBehaviour
 
 		fadeCanvas.enabled = true;
         isFadeOut = true;
-        AddState(State.A_TO_ONE);
     }
 
 	void Update()
@@ -205,6 +204,10 @@ public class FadeManager : MonoBehaviour
         return CurrentState &= ~state;
     }
 
+    public static void ClearState()
+    {
+        CurrentState = State.NONE;
+    }
     // フラグが立っているか見る。
     public static bool CheckState(State state)
     {
