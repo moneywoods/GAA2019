@@ -23,6 +23,8 @@ using UnityEngine.SceneManagement;
 
 public class FadeManager : MonoBehaviour
 {
+    private static GameObject instance;
+
     //フェード用のCanvasとImage
     private static Canvas fadeCanvas;
 	private static Image fadeImage;
@@ -57,6 +59,20 @@ public class FadeManager : MonoBehaviour
     
     public static State CurrentState;
 
+    public enum ImageIndex
+    {
+        IMAGE0,
+        IMAGE1,
+        NONE,
+        OTHER
+    }
+
+    private static string[] imagePathArray = { "Image0", "Image1" };
+
+    private static List<Sprite> imageList;
+
+    public static ImageIndex currentImageIndex { get; private set; }
+
     //フェード用のCanvasとImage生成
     static void Init()
 	{
@@ -81,6 +97,18 @@ public class FadeManager : MonoBehaviour
 
         // 色の設定
         fadeImage.color = NextColor;
+
+        // インスタンスを保持
+        instance = FadeCanvasObject;
+
+        // イメージをリストに保持
+        imageList = new List<Sprite>();
+
+        for(int i = 0; i < imagePathArray.GetLength(0); i++)
+        {
+            imageList.Add(Resources.Load<Sprite>(imagePathArray[i])); 
+        }
+        
 	}
 
 	//フェードイン開始
@@ -219,5 +247,21 @@ public class FadeManager : MonoBehaviour
         }
 
         return true;
+    }
+
+    public static void SetSprite(ImageIndex index)
+    {
+        if(ImageIndex.NONE < index)
+        {
+            fadeImage.sprite = null;
+            return;
+        }
+
+        fadeImage.sprite = imageList[(int)index];
+    }
+
+    public static void SetSprite(Sprite sp)
+    {
+        fadeImage.sprite = sp;
     }
 }
