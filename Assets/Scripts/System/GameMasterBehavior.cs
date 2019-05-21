@@ -43,7 +43,8 @@ public class GameMasterBehavior : MonoBehaviour
         }
 
         PauseTheGame.SetTimeScale(1.0f);
-        FadeManager.FadeIn();
+        FadeManager.AddState(FadeManager.State.A_TO_ZERO);
+        FadeManager.SceneIn();
         FadeManager.NextColor = Color.white;
 
         // ステージ情報を書いたテキストファイルの読み込み

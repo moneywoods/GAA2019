@@ -34,7 +34,9 @@ public class GoalStarBehavior : LandStarController
             if(m_NextSceneTimer > TIME_OVER)
             {// 時間がたったら次のシーンへ
                 m_NextSceneTimer = 0;
-                FadeManager.FadeOut("scene0315");
+                FadeManager.NextColor = Color.blue;
+                FadeManager.AddState(FadeManager.State.A_TO_ONE);
+                FadeManager.SceneOut("scene0315");
             }
         }
     }

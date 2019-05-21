@@ -29,7 +29,9 @@ public class BeginningEventMasterBehaviour : MonoBehaviour
 
         if(isSceneEnding)
         {
-            FadeManager.FadeOut("scene0315");
+            FadeManager.NextColor = Color.blue;
+            FadeManager.AddState(FadeManager.State.A_TO_ONE);
+            FadeManager.SceneOut("scene0315");
         }
     }
 }

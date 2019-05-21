@@ -14,7 +14,8 @@ public class TitleMasterBehavior : MonoBehaviour
     void Start()
     {
         // フェードイン
-        FadeManager.FadeIn();
+        FadeManager.AddState(FadeManager.State.A_TO_ZERO);
+        FadeManager.SceneIn();
 
         // Event objectを生成. UIの前に必ず生成!
         Instantiate(m_EventObjectPrefab);

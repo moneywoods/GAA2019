@@ -70,7 +70,9 @@ public class GameMenuControl : MonoBehaviour
         if (gameObject.name == "BackToTitle")
         {// タイトルに戻る
             PauseTheGame.SetTimeScale(1.0f);
-            FadeManager.FadeOut("TitleScene");
+            FadeManager.NextColor = Color.red;
+            FadeManager.AddState(FadeManager.State.A_TO_ONE);
+            FadeManager.SceneOut("TitleScene");
         }
     }
 

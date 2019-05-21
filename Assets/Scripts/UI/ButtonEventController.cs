@@ -56,7 +56,9 @@ public void OnSelected()
         /* ----- タイトル画面のメニュー ----- */
         if (gameObject.name == "BeginGame")
         {// 初めから
-            FadeManager.FadeOut("scene0315");
+            FadeManager.NextColor = Color.blue;
+            FadeManager.AddState(FadeManager.State.A_TO_ONE);
+            FadeManager.SceneOut("scene0315");
         }
         if (gameObject.name == "ContinueGame")
         {// 続きから
@@ -88,7 +90,8 @@ public void OnSelected()
         if(gameObject.name == "BackToTitle")
         {// タイトルに戻る
             PauseTheGame.SetTimeScale(1.0f);
-            FadeManager.FadeOut("TitleScene");
+            FadeManager.AddState(FadeManager.State.A_TO_ONE);
+            FadeManager.SceneOut("TitleScene");
         }
 
         Debug.Log("Button click!" + gameObject.name );
