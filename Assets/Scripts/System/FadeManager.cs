@@ -61,17 +61,17 @@ public class FadeManager : MonoBehaviour
 
     public enum ImageIndex
     {
-        IMAGE0,
-        IMAGE1,
+        STAR_1_ALPHA,
+        MENDAKO_1_ALPHA,
         NONE,
         OTHER
     }
 
-    private static string[] imagePathArray = { "Image0", "Image1" };
+    private static string[] imagePathArray = { "Sprite/star_1_alpha", "Sprite/mendako_1_alpha" };
 
     private static List<Sprite> imageList;
 
-    public static ImageIndex currentImageIndex { get; private set; }
+    public static ImageIndex currentImageIndex { get; private set; } 
 
     //フェード用のCanvasとImage生成
     static void Init()
@@ -249,9 +249,11 @@ public class FadeManager : MonoBehaviour
         return true;
     }
 
-    public static void SetSprite(ImageIndex index)
+    public static void SetImage(ImageIndex index)
     {
-        if(ImageIndex.NONE < index)
+        if (fadeImage == null) Init();
+
+        if (ImageIndex.NONE < index)
         {
             fadeImage.sprite = null;
             return;
@@ -260,8 +262,10 @@ public class FadeManager : MonoBehaviour
         fadeImage.sprite = imageList[(int)index];
     }
 
-    public static void SetSprite(Sprite sp)
+    public static void SetImage(Sprite sp)
     {
+        if (fadeImage == null) Init();
+
         fadeImage.sprite = sp;
     }
 }
