@@ -14,9 +14,7 @@ FadeManager.FadeOut("遷移したいシーン名");
 
 参考サイト　https://onosendai.net/70/
 */
-
-
-
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,8 +23,7 @@ using UnityEngine.SceneManagement;
 
 public class FadeManager : MonoBehaviour
 {
-
-	//フェード用のCanvasとImage
+    //フェード用のCanvasとImage
 	private static Canvas fadeCanvas;
 	private static Image fadeImage;
 
@@ -43,12 +40,18 @@ public class FadeManager : MonoBehaviour
 	//遷移先のシーン名
 	private static string nextScene;
 
+    // 設定
+    public static Color NextColor = Color.black;
+
+    // 画像
+    
 	//フェード用のCanvasとImage生成
 	static void Init()
 	{
 		//フェード用のCanvas生成
 		GameObject FadeCanvasObject = new GameObject("CanvasFade");
-		fadeCanvas = FadeCanvasObject.AddComponent<Canvas>();
+
+        fadeCanvas = FadeCanvasObject.AddComponent<Canvas>();
 		FadeCanvasObject.AddComponent<GraphicRaycaster>();
 		fadeCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
 		FadeCanvasObject.AddComponent<FadeManager>();
@@ -63,13 +66,18 @@ public class FadeManager : MonoBehaviour
 
 		//Imageのサイズは適当に設定してください
 		fadeImage.rectTransform.sizeDelta = new Vector2(1920, 1080);
+
+        // 色の設定
+        fadeImage.color = NextColor;
 	}
 
 	//フェードイン開始
+
+
 	public static void FadeIn()
 	{
 		if (fadeImage == null) Init();
-		fadeImage.color = Color.black;
+        fadeImage.color = NextColor; //一応
 		isFadeIn = true;
 	}
 
@@ -78,7 +86,12 @@ public class FadeManager : MonoBehaviour
 	{
 		if (fadeImage == null) Init();
 		nextScene = scene;
-		fadeImage.color = Color.clear;
+
+        //色の設定
+		Color tmpColor = fadeImage.color;
+        tmpColor.a = 0.0f;
+        fadeImage.color = tmpColor;
+
 		fadeCanvas.enabled = true;
 		isFadeOut = true;
 	}
@@ -99,8 +112,10 @@ public class FadeManager : MonoBehaviour
 				fadeCanvas.enabled = false;
 			}
 
-			//フェード用Imageの透明度設定
-			fadeImage.color = new Color(0.0f, 0.0f, 0.0f, alpha);
+            //フェード用Imageの透明度設定
+            Color c = fadeImage.color;
+            c.a = alpha;
+			fadeImage.color = c;
 
 		}
 		else if (isFadeOut)
@@ -118,9 +133,12 @@ public class FadeManager : MonoBehaviour
 				SceneManager.LoadScene(nextScene);
 			}
 
-			//フェード用Imageの透明度設定
-			fadeImage.color = new Color(0.0f, 0.0f, 0.0f, alpha);
-		}
+            //フェード用Imageの透明度設定
+            Color c = fadeImage.color;
+            c.a = alpha;
+            fadeImage.color = c;
+
+        }
 
 	}
 
