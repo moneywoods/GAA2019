@@ -67,9 +67,9 @@ public class FadeManager : MonoBehaviour
         OTHER
     }
 
-    private static string[] imagePathArray = { "Sprite/star_1_alpha", "Sprite/mendako_1_alpha" };
+    private static string[] imagePathArray = { "FadeImages/star_1_alpha", "FadeImages/mendako_1_alpha" };
 
-    private static List<Sprite> imageList;
+    private static List<Material> imageList;
 
     public static ImageIndex currentImageIndex { get; private set; } 
 
@@ -102,11 +102,11 @@ public class FadeManager : MonoBehaviour
         instance = FadeCanvasObject;
 
         // イメージをリストに保持
-        imageList = new List<Sprite>();
+        imageList = new List<Material>();
 
         for(int i = 0; i < imagePathArray.GetLength(0); i++)
         {
-            imageList.Add(Resources.Load<Sprite>(imagePathArray[i])); 
+            imageList.Add(Resources.Load<Material>(imagePathArray[i])); 
         }
         
 	}
@@ -259,7 +259,7 @@ public class FadeManager : MonoBehaviour
             return;
         }
 
-        fadeImage.sprite = imageList[(int)index];
+        fadeImage.material = imageList[(int)index];
     }
 
     public static void SetImage(Sprite sp)
