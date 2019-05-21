@@ -24,18 +24,16 @@ using UnityEngine.SceneManagement;
 public class FadeManager : MonoBehaviour
 {
     //フェード用のCanvasとImage
-	private static Canvas fadeCanvas;
+    private static Canvas fadeCanvas;
 	private static Image fadeImage;
-
-	//フェード用Imageの透明度
-	private static float alpha = 0.0f;
-
+    
 	//フェードインアウトのフラグ
 	public static bool isFadeIn = false;
 	public static bool isFadeOut = false;
 
 	//フェードしたい時間（単位は秒）
 	private static float fadeTime = 0.5f;
+    private static float timeElapsed = 0.0f;
 
 	//遷移先のシーン名
 	private static string nextScene;
@@ -43,10 +41,23 @@ public class FadeManager : MonoBehaviour
     // 設定
     public static Color NextColor = Color.black;
 
-    // 画像
+    [Flags]
+    public enum State
+    {
+        // fadeTimeの時間で行う処理。
+        BIGGER    = 1 << 1, // 0000_0001 イメージサイズが大きくなる。
+        SMALLER   = 1 << 2, // 0000_0010 イメージサイズが小さくなる。
+        A_TO_ZERO = 1 << 3, // 0000_0100 透明度が大きくなる。
+        A_TO_ONE  = 1 << 4, // 0000_1000 透明度が小さくなる。
+
+        // チェック用
+        CHECKER_IS_ACTIVE = 15 // 0000_1111
+    }
     
-	//フェード用のCanvasとImage生成
-	static void Init()
+    public static State CurrentState;
+
+    //フェード用のCanvasとImage生成
+    static void Init()
 	{
 		//フェード用のCanvas生成
 		GameObject FadeCanvasObject = new GameObject("CanvasFade");
@@ -79,6 +90,7 @@ public class FadeManager : MonoBehaviour
 		if (fadeImage == null) Init();
         fadeImage.color = NextColor; //一応
 		isFadeIn = true;
+        AddState(State.A_TO_ZERO);
 	}
 
 	//フェードアウト開始
@@ -93,23 +105,24 @@ public class FadeManager : MonoBehaviour
         fadeImage.color = tmpColor;
 
 		fadeCanvas.enabled = true;
-		isFadeOut = true;
-	}
+        isFadeOut = true;
+        AddState(State.A_TO_ONE);
+    }
 
 	void Update()
 	{
 		//フラグ有効なら毎フレームフェードイン/アウト処理
-		if (isFadeIn)
+		if (CheckState(State.A_TO_ZERO))
 		{
-			//経過時間から透明度計算
+            //経過時間から透明度計算
+            float alpha = fadeImage.color.a;
 			alpha -= Time.deltaTime / fadeTime;
 
 			//フェードイン終了判定
 			if (alpha <= 0.0f)
 			{
-				isFadeIn = false;
-				alpha = 0.0f;
 				fadeCanvas.enabled = false;
+                RemoveState(State.A_TO_ZERO);
 			}
 
             //フェード用Imageの透明度設定
@@ -118,19 +131,16 @@ public class FadeManager : MonoBehaviour
 			fadeImage.color = c;
 
 		}
-		else if (isFadeOut)
+		else if (CheckState(State.A_TO_ONE))
 		{
-			//経過時間から透明度計算
-			alpha += Time.deltaTime / fadeTime;
+            //経過時間から透明度計算
+            float alpha = fadeImage.color.a;
+            alpha += Time.deltaTime / fadeTime;
 
 			//フェードアウト終了判定
 			if (alpha >= 1.0f)
 			{
-				isFadeOut = false;
-				alpha = 1.0f;
-
-				//次のシーンへ遷移
-				SceneManager.LoadScene(nextScene);
+                RemoveState(State.A_TO_ONE);
 			}
 
             //フェード用Imageの透明度設定
@@ -140,14 +150,69 @@ public class FadeManager : MonoBehaviour
 
         }
 
+        if(CheckState(State.BIGGER))
+        {
+
+        }
+        else if(CheckState(State.SMALLER))
+        {
+
+        }
+
+        if(isFadeIn)
+        {
+            timeElapsed += Time.deltaTime;
+
+            if(fadeTime < timeElapsed)
+            {
+                isFadeIn = false;
+                timeElapsed = 0.0f;
+            }
+        }
+        else if(isFadeOut)
+        {
+            timeElapsed += Time.deltaTime;
+
+            if (fadeTime < timeElapsed)
+            {
+                isFadeOut = false;
+                timeElapsed = 0.0f;
+
+                //次のシーンへ遷移
+                SceneManager.LoadScene(nextScene);
+            }
+        }
 	}
 
     // フェードイン/アウトのチェックフラグ
     public static bool CheckIsFade()
     {
-        // フェードイン/アウトが起動時はtrueを返す
-        if (isFadeIn || isFadeOut) return true;
+        // シーン遷移が起動時はtrueを返す
+        if (isFadeIn|| isFadeOut) return true;
 
         return false;
+    }
+
+    // フラグを追加する。
+    public static State AddState(State state)
+    {
+        return CurrentState |= state;
+    }
+
+    // フラグを取り除く
+    public static State RemoveState(State state)
+    {
+        return CurrentState &= ~state;
+    }
+
+    // フラグが立っているか見る。
+    public static bool CheckState(State state)
+    {
+        if((CurrentState & state) == 0)
+        {
+            return false;
+        }
+
+        return true;
     }
 }
