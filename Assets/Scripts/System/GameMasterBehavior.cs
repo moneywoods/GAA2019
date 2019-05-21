@@ -44,8 +44,9 @@ public class GameMasterBehavior : MonoBehaviour
 
         PauseTheGame.SetTimeScale(1.0f);
         FadeManager.AddState(FadeManager.State.A_TO_ZERO);
+        FadeManager.NextColor = Color.clear;
+        FadeManager.SetImage(FadeManager.ImageIndex.MENDAKO_1_ALPHA);
         FadeManager.SceneIn();
-        FadeManager.NextColor = Color.white;
 
         // ステージ情報を書いたテキストファイルの読み込み
         var mapData = MapLoader.LoadMap(initiatingStage);
@@ -69,6 +70,7 @@ public class GameMasterBehavior : MonoBehaviour
         // Camera
         var camera = GameObject.FindGameObjectWithTag(ObjectTag.MainCamera);
         var cameraScript = camera.GetComponent<InGameMainCameraController>();
+
         // ゲームスタート時イベント有り無し
         if(isInitiationEvent)
         {
