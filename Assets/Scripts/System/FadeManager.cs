@@ -67,7 +67,14 @@ public class FadeManager : MonoBehaviour
         OTHER
     }
 
-    private static string[] imagePathArray = { "FadeImages/star_1_alpha", "FadeImages/mendako_1_alpha" };
+    // 使用する画像（Material)のパス。
+    // 画像のαを利用するためシェーダはUnlit->Transparentに設定する。
+    // 上のImageIndexとの順序の一致を確認すること。
+    private static string[] imagePathArray = 
+    {
+        "FadeImages/star_1_alpha",
+        "FadeImages/mendako_1_alpha"
+    };
 
     private static List<Material> imageList;
 
