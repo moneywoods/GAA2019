@@ -1,20 +1,4 @@
-﻿/*
-フェード付画面遷移クラス
-
-
-＜使用法＞
-このファイルをプロジェクトのアセットフォルダに追加
-
-メニューのFile→Build Settings
-Scene in Buildに使用するシーンをドラッグで追加
-
-画面遷移したいタイミングで以下のコードを呼び出す
-FadeManager.FadeOut("遷移したいシーン名");
-
-
-参考サイト　https://onosendai.net/70/
-*/
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -115,12 +99,9 @@ public class FadeManager : MonoBehaviour
         {
             imageList.Add(Resources.Load<Material>(imagePathArray[i])); 
         }
-        
 	}
 
-	//フェードイン開始
-
-
+	//シーン導入開始
 	public static void SceneIn()
 	{
 		if (fadeImage == null) Init();
@@ -128,7 +109,7 @@ public class FadeManager : MonoBehaviour
 		isFadeIn = true;
 	}
 
-	//フェードアウト開始
+	//シーン遷移開始
 	public static void SceneOut(string scene)
 	{
 		if (fadeImage == null) Init();
@@ -197,6 +178,7 @@ public class FadeManager : MonoBehaviour
         {
             timeElapsed += Time.deltaTime;
 
+            // 終了判定
             if(fadeTime < timeElapsed)
             {
                 isFadeIn = false;
@@ -208,7 +190,8 @@ public class FadeManager : MonoBehaviour
         {
             timeElapsed += Time.deltaTime;
 
-            if (fadeTime < timeElapsed)
+            // 終了判定
+            if(fadeTime < timeElapsed)
             {
                 isFadeOut = false;
                 timeElapsed = 0.0f;
@@ -230,22 +213,27 @@ public class FadeManager : MonoBehaviour
     }
 
     // フラグを追加する。
+    // 戻り値: 処理後のステートフラグ
     public static State AddState(State state)
     {
         return CurrentState |= state;
     }
 
     // フラグを取り除く
+    // 戻り値: 処理後のステートフラグ
     public static State RemoveState(State state)
     {
         return CurrentState &= ~state;
     }
 
+    // フラグを全リセット
     public static void ClearState()
     {
         CurrentState = State.NONE;
     }
+
     // フラグが立っているか見る。
+    // 戻り値: 立っていたらture
     public static bool CheckState(State state)
     {
         if((CurrentState & state) == 0)
@@ -256,6 +244,7 @@ public class FadeManager : MonoBehaviour
         return true;
     }
 
+    // インデックスから表示する画像を選択する（同時に表示できるのは1枚）。
     public static void SetImage(ImageIndex index)
     {
         if (fadeImage == null) Init();
@@ -267,12 +256,17 @@ public class FadeManager : MonoBehaviour
         }
 
         fadeImage.material = imageList[(int)index];
+        currentImageIndex = index;
     }
 
-    public static void SetImage(Sprite sp)
+    // 直接マテリアルを設定する。
+    public static void SetImage(Material m)
     {
         if (fadeImage == null) Init();
 
-        fadeImage.sprite = sp;
+        fadeImage.material = m;
+
+        // インデックス外の画像を利用しているのでcurrentImageIndexにはOTHERを設定する。
+        currentImageIndex = ImageIndex.OTHER;
     }
 }
