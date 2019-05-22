@@ -28,8 +28,6 @@ public class UnityChanDemo : MonoBehaviour
 
         m_ObjCamera = GameObject.FindWithTag("MainCamera");
 
-        GameObject playerGuideLine = GameObject.FindWithTag("MoveGuide");
-        m_GuideLine = playerGuideLine.GetComponent<PlayerMoveGuide>();
     }
 
     // Update is called once per frame
@@ -40,6 +38,7 @@ public class UnityChanDemo : MonoBehaviour
         {
             animator.SetBool("is_wait", true);
 
+            Init();
             m_GuideLine.ParticleStart();
             PlayerRotate();
         }
@@ -108,7 +107,7 @@ public class UnityChanDemo : MonoBehaviour
         }
     }
 
-    private void Init()
+    public void Init()
     {
         if (m_GuideLine == null)
         {

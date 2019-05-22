@@ -23,6 +23,7 @@ public class InGameMainCameraController : StateContex
     [SerializeField] private float dist5x5;
     [SerializeField] private float degree = -130.0f;
 
+
     private void Awake()
     {
         AddState(new StateFollowing(this, gameObject));
@@ -30,6 +31,8 @@ public class InGameMainCameraController : StateContex
         AddState(new StateFloating(this, gameObject));
 
         SetCurrentState(StateName.Floating);
+
+
     }
     // Use this for initialization
     void Start ()
@@ -239,7 +242,6 @@ public class InGameMainCameraController : StateContex
                 tako.GetComponent<Tako.TakoController>().SetCurrentState(Tako.TakoController.StateName.Normal);
                 Context.TransitState(StateName.Following);
 
-                GameObject.FindWithTag("MoveGuide").GetComponent<ParticleSystem>().Play();
                 return;
             }
         }
