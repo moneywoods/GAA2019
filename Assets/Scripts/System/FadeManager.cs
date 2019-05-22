@@ -12,6 +12,7 @@ public class FadeManager : MonoBehaviour
     //フェード用のCanvasとImage
     private static Canvas fadeCanvas;
 	private static Image fadeImage;
+    private static Image subImage;
     
 	//フェードインアウトのフラグ
 	public static bool isFadeIn = false;
@@ -78,13 +79,18 @@ public class FadeManager : MonoBehaviour
 		//最前面になるよう適当なソートオーダー設定
 		fadeCanvas.sortingOrder = 100;
 
-		//フェード用のImage生成
-		fadeImage = new GameObject("ImageFade").AddComponent<Image>();
+        // サイズ変更時に裏に敷くのImage
+        subImage = new GameObject("ImageFade").AddComponent<Image>();
+        subImage.transform.SetParent(fadeCanvas.transform, false);
+        subImage.rectTransform.anchoredPosition = Vector3.zero;
+
+        //フェード用のImage生成
+        fadeImage = new GameObject("ImageFade").AddComponent<Image>();
 		fadeImage.transform.SetParent(fadeCanvas.transform, false);
 		fadeImage.rectTransform.anchoredPosition = Vector3.zero;
-
-		//Imageのサイズは適当に設定してください
-		fadeImage.rectTransform.sizeDelta = new Vector2(1920, 1080);
+        
+        //Imageのサイズは適当に設定してください
+        fadeImage.rectTransform.sizeDelta = new Vector2(1920, 1080);
 
         // 色の設定
         fadeImage.color = NextColor;
