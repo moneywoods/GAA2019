@@ -19,6 +19,8 @@ public class ObjectTag
     public static readonly string GridLine        = "GridLine";
     public static readonly string CellCollider    = "CellCollider";
     public static readonly string Rock            = "Rock";
+    public static readonly string CanvasText      = "CanvasText";
+    public static readonly string MessageText     = "MessageText";
 }
 public struct StageInfo
 {
