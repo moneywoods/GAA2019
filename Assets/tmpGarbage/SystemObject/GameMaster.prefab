@@ -49,6 +49,8 @@ MonoBehaviour:
     type: 3}
   m_MenuCanvas: {fileID: 5994316680908539326, guid: b2d8241d6bf37a943907181b450b7896,
     type: 3}
+  m_UiText: {fileID: 2976701870155842087, guid: cf3457b522bcb0c408e6d4784f98ba36,
+    type: 3}
   m_EventSystem: {fileID: 5180677182521021253, guid: 08f21c170233f0c4eb0ce2da4ca0a3f9,
     type: 3}
   m_GridLinePrefab: {fileID: 1204925341602613978, guid: c62f489ae3290094cab13de6270cdf32,
