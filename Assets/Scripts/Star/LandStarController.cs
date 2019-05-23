@@ -52,10 +52,6 @@ public class LandStarController : StarBase
         set;
     }
 
-    // 移住可能を示すエフェクト // 今後UIとかもっと他の物に置き換える予定
-    public GameObject m_EffectCanMoveTo;
-    protected bool m_isCanMoveToEffectEmitting;
-
     public LandStarController() : base(StarType.Land)
     {
         
@@ -65,7 +61,6 @@ public class LandStarController : StarBase
     protected override void Start()
     {
         timePast = 0.0f;
-        m_isCanMoveToEffectEmitting = false;
     }
 
     // Update is called once per frame
