@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class GameMasterBehavior : MonoBehaviour
 {
@@ -31,6 +32,7 @@ public class GameMasterBehavior : MonoBehaviour
     [SerializeField] private GameObject m_MenuCanvas;
     [SerializeField] private GameObject m_UiText;
     [SerializeField] private GameObject m_EventSystem;
+    [SerializeField] private GameObject m_GridCylinderPrefab;
     [SerializeField] private GameObject m_GridLinePrefab;
     [SerializeField] public static bool isInitiationEvent = false;
 
@@ -49,13 +51,14 @@ public class GameMasterBehavior : MonoBehaviour
 
         // ステージ情報を書いたテキストファイルの読み込み
         var mapData = MapLoader.LoadMap(initiatingStage);
-
-        // グリッド線を生成
-        Instantiate(m_GridLinePrefab);
-
+        
         // 世界を作る.
         GameObject starMaker = Instantiate(m_StarMakerPrefab);
         StarMaker.Instance.MakeWorld(mapData, Common.CellSize);
+
+        // グリッド線を生成する.
+        var gc = Instantiate(m_GridCylinderPrefab);
+        gc.GetComponent<GridCylinderBehaviour>().Init();
 
         // UIオブジェクトを生成.
         GameObject menu = Instantiate(m_MenuCanvas);
@@ -87,6 +90,10 @@ public class GameMasterBehavior : MonoBehaviour
             cameraScript.SetTarget(GameObject.FindGameObjectWithTag(ObjectTag.PlayerCharacter));
             cameraScript.SetCurrentState(InGameMainCameraController.StateName.Following);
         }
+
+        // 背景用のシーン読込
+        SceneManager.LoadScene("GameBackGround",LoadSceneMode.Additive);
+        
     }
 
     // Update is called once per frame

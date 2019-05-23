@@ -94,6 +94,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c88b314137a8ca94da524a301ea7df0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cellNum: {x: -1, y: -1}
 --- !u!54 &4692206616650588736
 Rigidbody:
   m_ObjectHideFlags: 0
