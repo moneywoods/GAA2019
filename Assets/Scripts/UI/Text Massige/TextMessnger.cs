@@ -27,7 +27,7 @@ public class TextMessnger : MonoBehaviour
         Textalpha = 0.0f;
         Timecount = 0.0f;
         textflag = 0;
-        texttime = 3.0f;
+        texttime = 3.1f;
         texttimer = 0.0f;
         TextCanvas = GameObject.FindWithTag(ObjectTag.CanvasText);
         Instantiate(TextCanvas);
@@ -40,8 +40,6 @@ public class TextMessnger : MonoBehaviour
         Vector3 trect = new Vector3(0.0f, 0.0f, 0.0f);
         Color tcolor = new Color(255.0f, 0.0f, 0.0f, 1.0f);
 
-        Debug.Log(textflag);
-        
         switch (textflag)
         {
             case 1:
@@ -54,7 +52,7 @@ public class TextMessnger : MonoBehaviour
             case 2:
                 {
                     texttimer += Time.deltaTime;
-                    MessngerUpdate("星が破壊された", trect, tcolor, 1);        
+                    MessngerUpdate("星が破壊された", trect, tcolor, 1);
                     break;
                 }
 
@@ -79,12 +77,6 @@ public class TextMessnger : MonoBehaviour
                     break;
                 }
         }
-
-        if (texttime <= texttimer)
-        {
-            texttimer = 0.0f;
-            textflag = 0;
-        }
     }
 
 
@@ -95,42 +87,46 @@ public class TextMessnger : MonoBehaviour
         Qtext.color = new Color(textcolor.r, textcolor.g, textcolor.b, Textalpha);  // Textの色変更
         Qtext.text = textset;                                                       // テキストの変更
          
-        // OnflagがtrueかつTextflagが0のときTextflagを1にする
+        // Textalphaflagが0のときTextflagを1にする
         if (Textalphaflag == 0)
         {
-            Textalphaflag = 1;
             Textalpha = 0.0f;
+            Textalphaflag = 1;
         }
 
-        // TimemaxよりもTimecountが大きくなった時、Textflagを2にする
+        // TimecountがTimemax以上のとき、Textflagを2に、Timecountを0にする
         if (Timemax <= Timecount)
         {
             Textalphaflag = 2;
+            Timecount = 0.0f;
         }
 
-        // Textflagが0以外の時に実行する
+        // Textalphaflagが0以外の時に実行する
         if (Textalphaflag == 1)
         {
             Textalpha += Time.deltaTime;
         }
-        else if (Textalphaflag == 2)
+
+        if (Textalphaflag == 2)
         {
             Textalpha -= Time.deltaTime;
         }
 
-        // Textalphaがtextcolor.aより大きいときTimecountを増やす
+        // Textalphaがtextcolor.a以上のときTimecountを増やす
         if (Textalpha >= textcolor.a)
         {
             Textalpha = textcolor.a;
             Timecount += Time.deltaTime;
         }
 
-        // Textalphaが0より小さいときTextalpha、Textflag、Timecountを0にする
+        // texttimerがtexttime以上のときTextalpha、Textalphaflag、texttimer、textflagを0にする
         if (texttime <= texttimer)
         {
             Textalpha = 0.0f;
             Textalphaflag = 0;
-            Timecount = 0.0f;
+            texttimer = 0.0f;
+            textflag = 0;
+
         }
     }
 }

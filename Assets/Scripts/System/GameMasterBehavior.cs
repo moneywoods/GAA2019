@@ -92,7 +92,7 @@ public class GameMasterBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        text.GetComponent<TextMessnger>().Update();
+
     }
     
     // ステージクリア用
