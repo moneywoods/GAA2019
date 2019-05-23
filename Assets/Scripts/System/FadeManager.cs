@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Coffee.UIExtensions;
 
 public class FadeManager : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class FadeManager : MonoBehaviour
     private static Canvas fadeCanvas;
 	private static Image fadeImage;
     private static Image subImage;
+    private static Image subUnmask;
     
 	//フェードインアウトのフラグ
 	public static bool isFadeIn = false;
@@ -80,9 +82,18 @@ public class FadeManager : MonoBehaviour
 		fadeCanvas.sortingOrder = 100;
 
         // サイズ変更時に裏に敷くのImage
-        subImage = new GameObject("ImageFade").AddComponent<Image>();
+        subImage = new GameObject("SubImage").AddComponent<Image>();
         subImage.transform.SetParent(fadeCanvas.transform, false);
         subImage.rectTransform.anchoredPosition = Vector3.zero;
+        subImage.gameObject.AddComponent<Mask>();
+
+        subImage.gameObject.SetActive(false);
+
+        // subImageのUnmask用
+        subUnmask = new GameObject("SubMask").AddComponent<Image>();
+        subUnmask.transform.SetParent(subImage.transform, false);
+        subUnmask.rectTransform.anchoredPosition = Vector3.zero;
+        subUnmask.gameObject.AddComponent<Unmask>();
 
         //フェード用のImage生成
         fadeImage = new GameObject("ImageFade").AddComponent<Image>();
@@ -128,6 +139,8 @@ public class FadeManager : MonoBehaviour
 
 		fadeCanvas.enabled = true;
         isFadeOut = true;
+
+        // 徐々にサイズが小さくなる場合は
     }
 
 	void Update()
