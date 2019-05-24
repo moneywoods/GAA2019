@@ -51,6 +51,14 @@ public class LandStarController : StarBase
         get;
         set;
     }
+    
+    
+    public GameObject uitext;   // テキストのスクリプト取得
+    private int textchange;     // テキストの表示フラグ
+
+    // 移住可能を示すエフェクト // 今後UIとかもっと他の物に置き換える予定
+    public GameObject m_EffectCanMoveTo;
+    protected bool m_isCanMoveToEffectEmitting;
 
     public LandStarController() : base(StarType.Land)
     {
@@ -60,33 +68,35 @@ public class LandStarController : StarBase
     // Start is called before the first frame update
     protected override void Start()
     {
+        uitext = GameObject.FindWithTag(ObjectTag.MessageText);
         timePast = 0.0f;
     }
 
     // Update is called once per frame
     protected override void Update()
     {
-        if(Mathf.Approximately(Time.timeScale, 0f))
+
+        if (Mathf.Approximately(Time.timeScale, 0f))
         {
             return;
         }
 
-        if(CheckFlag(LANDSTAR_STAT.MOVING) && !CheckFlag(LANDSTAR_STAT.IN_MILKYWAY_AREA)) // IN_MILKYWAY_AREA時はMW側が動かします。
+        if (CheckFlag(LANDSTAR_STAT.MOVING) && !CheckFlag(LANDSTAR_STAT.IN_MILKYWAY_AREA)) // IN_MILKYWAY_AREA時はMW側が動かします。
         {
             float time = Time.deltaTime;
 
-            if(timeToCirculate < Time.deltaTime + timePast) // 90度以上回らないように
+            if (timeToCirculate < Time.deltaTime + timePast) // 90度以上回らないように
             {
                 time = timeToCirculate - timePast;
             }
 
             float degree = 0.0f;
 
-            if(CheckFlag(LANDSTAR_STAT.MOVING_RIGHT)) // 左回りに移動中
+            if (CheckFlag(LANDSTAR_STAT.MOVING_RIGHT)) // 左回りに移動中
             {
                 degree = 90.0f / timeToCirculate * time;
             }
-            else if(CheckFlag(LANDSTAR_STAT.MOVING_LEFT)) // 右回りに移動中
+            else if (CheckFlag(LANDSTAR_STAT.MOVING_LEFT)) // 右回りに移動中
             {
                 degree = -90.0f / timeToCirculate * time;
             }
@@ -94,7 +104,7 @@ public class LandStarController : StarBase
 
             timePast += time;
 
-            if(timeToCirculate <= timePast)
+            if (timeToCirculate <= timePast)
             {
                 timePast = 0.0f;
                 timeToCirculate = 0.0f;
@@ -107,7 +117,9 @@ public class LandStarController : StarBase
             }
         }
 
-        if(!CheckFlag(LANDSTAR_STAT.ALIVE))
+        
+
+        if (!CheckFlag(LANDSTAR_STAT.ALIVE))
         {
             // 爆発エフェクト生成.
             Instantiate(explosionObject, transform.position, transform.rotation);
@@ -115,6 +127,9 @@ public class LandStarController : StarBase
             StarMaker.Instance.GetCellColliderBehavior(CellNum).RemoveManually(gameObject);
             Destroy(gameObject);
         }
+
+        textchange = uitext.GetComponent<TextMessnger>().Textflag;
+        
     }
 
     // --------------------------------------------------------------------------------------------
@@ -179,8 +194,10 @@ public class LandStarController : StarBase
         Vector2Int cp0 = CellNum;
         Vector2Int cp1 = CellNum;
 
+        
+
         // チェックするコマを算出.
-        if(isRight)
+        if (isRight)
         {
             if(direction == Direction.Right)
             {
@@ -275,32 +292,42 @@ public class LandStarController : StarBase
             }
         }
 
+
         // マップ領域内かチェック
-        if(!(starMaker.CheckLimitOfMap(cp0) && starMaker.CheckLimitOfMap(cp1)))
+        if (!(starMaker.CheckLimitOfMap(cp0) && starMaker.CheckLimitOfMap(cp1)))
         {
+            textchange = 1;
+            uitext.GetComponent<TextMessnger>().Textflag = textchange;
             return false;
         }
         
         // 絶対にtrueなパターンのチェック
         if(starMaker.GetStar(cp0,StarType.BlackHole)) // 先1マス目がブラックホール
         {
+            textchange = 2;
+            uitext.GetComponent<TextMessnger>().Textflag = textchange;
             return true;
         }
 
         // 移動経路に邪魔する要素があるかチェック
         if(0 < starMaker.GetStarList(cp0, StarType.Rock).Count) // 先1マスにRockがある
         {
+            textchange = 3;
+            uitext.GetComponent<TextMessnger>().Textflag = textchange;
             return false;
         }
         else if(starMaker.GetStarList(cp0, StarType.Land).Exists(obj => obj.GetComponent<LandStarController>().CheckFlag(LANDSTAR_STAT.STUCKED)) || // いずれのマスにミルキーウェイにつかまっているLandがある
             starMaker.GetStarList(cp1, StarType.Land).Exists(obj => obj.GetComponent<LandStarController>().CheckFlag(LANDSTAR_STAT.STUCKED)))
         {
+            textchange = 4;
+            uitext.GetComponent<TextMessnger>().Textflag = textchange;
             return false;
         }
         else if(starMaker.GetStarList(cp0, StarType.Land).Exists(obj => !obj.GetComponent<LandStarController>().CheckFlag(LANDSTAR_STAT.STUCKED)) && // 1マス先に動けるLandがいて、2マス先にミルキーウェイがある. 
             0 < starMaker.GetStarList(cp1, StarType.MilkyWay).Count)
         {
-            Debug.Log("couldnt initiate kinetic power because of cp0 = land, cp1 = MW");
+            textchange = 5;
+            uitext.GetComponent<TextMessnger>().Textflag = textchange;
             return false;
         }
 

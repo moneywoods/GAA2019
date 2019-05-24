@@ -95,6 +95,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1944c9f1a4139994daa4f398b932955a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cellNum: {x: -1, y: -1}
   explosionObject: {fileID: 6307091678883776270, guid: 6054c0bf48a9142459fc014c9126e8ea,
     type: 3}
   m_EffectCanMoveTo: {fileID: 7753743199728161334, guid: da937cf06755df643898e59216a1ad69,

@@ -25,6 +25,7 @@ public class ParticleScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*
         if (Star.CheckFlag(LandStarController.LANDSTAR_STAT.MOVING_LEFT))
         {
             transform.position = Land.transform.position;
@@ -33,6 +34,7 @@ public class ParticleScript : MonoBehaviour
            // var instantiateEffect = Instantiate(effectObject, transform.position + new Vector3(0f, 0f, 0f), Quaternion.identity) as GameObject;
           //  Destroy(instantiateEffect, deleteTime);
         }
+        */
     }
 
 
