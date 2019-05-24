@@ -14,9 +14,9 @@ public class PlayerMoveGuide : MonoBehaviour
         m_ObjPlayer = GameObject.FindWithTag("PlayerCharacter");
         m_TakoScript = m_ObjPlayer.GetComponent<TakoController>();
 
-//        Rotation();
-//        MiddlePoint();
-//        GetComponent<ParticleSystem>().Play();
+//        gameObject.GetComponent<ParticleSystem>().Stop();
+        //Rotation();
+        //MiddlePoint();
 
     }
 
@@ -27,6 +27,7 @@ public class PlayerMoveGuide : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
     }
 
     public void ParticleStart()
@@ -35,26 +36,26 @@ public class PlayerMoveGuide : MonoBehaviour
         {
             Rotation();
             MiddlePoint();
-            IsPlay();
+            gameObject.SetActive(true);
         }else
         {
-            IsStop();
+            gameObject.SetActive(false);
         }
     }
 
     public void ParticleStop()
     {
-        IsStop();
+        gameObject.SetActive(false);
     }
 
-//    private void OnEnable()
-//    {
-//        if (m_ObjPlayer != null)
-//        {
-//            Rotation();
-//            MiddlePoint();
-//        }
-//    }
+    private void OnEnable()
+    {
+        if (m_ObjPlayer != null)
+        {
+            Rotation();
+            MiddlePoint();
+        }
+    }
 
     private void MiddlePoint()
     {
@@ -82,19 +83,4 @@ public class PlayerMoveGuide : MonoBehaviour
         transform.rotation = Quaternion.AngleAxis(-deg, new Vector3(0, 1, 0));
     }
 
-    private void IsPlay()
-    {
-        if (!GetComponent<ParticleSystem>().IsAlive())
-        {
-            GetComponent<ParticleSystem>().Play();
-        }
-    }
-
-    private void IsStop()
-    {
-        if (!GetComponent<ParticleSystem>().isStopped)
-        {
-            GetComponent<ParticleSystem>().Stop();
-        }
-    }
 }
