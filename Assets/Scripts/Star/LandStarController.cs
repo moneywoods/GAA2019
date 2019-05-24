@@ -117,8 +117,6 @@ public class LandStarController : StarBase
             }
         }
 
-        textchange = uitext.GetComponent<TextMessnger>().Textflag;
-
         if (!CheckFlag(LANDSTAR_STAT.ALIVE))
         {
             // 爆発エフェクト生成.
@@ -128,7 +126,8 @@ public class LandStarController : StarBase
             textchange = 2;
             uitext.GetComponent<TextMessnger>().Textflag = textchange;
             Destroy(gameObject);
-        }   
+        }
+        textchange = uitext.GetComponent<TextMessnger>().Textflag;
     }
 
     // --------------------------------------------------------------------------------------------
