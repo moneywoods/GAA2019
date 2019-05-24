@@ -9,15 +9,7 @@ public class ParentMenuCanvasBehavior : MenuCanvasBehavior
     // Start is called before the first frame update
     void Start()
     {
-        if(this.name == "ParentMenuCanvasInTitle")
-        {
-            GetComponent<AudioSource>().Play();
-        }
-
-        if(this.name == "ParentMenuCanvasInGame")
-        {
-            GetComponent<AudioSource>().Play();
-        }
+        
     }
 
     // Update is called once per frame
