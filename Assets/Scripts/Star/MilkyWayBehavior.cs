@@ -77,7 +77,7 @@ public class MilkyWayBehavior : StarBase
             }
 
             LandList.Add(new LandInMW(other, diff));
-            Instantiate(m_ObjEatParticle, transform.position, transform.rotation);
+            Instantiate(m_ObjEatParticle, transform);
         }
     }
 }

@@ -95,6 +95,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cellNum: {x: -1, y: -1}
+  m_ObjEatParticle: {fileID: 8448895909957802734, guid: b7ad2dbf6f0410847a9ed77e422a6835,
+    type: 3}
 --- !u!54 &4862377175739001571
 Rigidbody:
   m_ObjectHideFlags: 0
