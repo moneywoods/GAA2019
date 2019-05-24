@@ -60,10 +60,6 @@ public class LandStarController : StarBase
     public GameObject m_EffectCanMoveTo;
     protected bool m_isCanMoveToEffectEmitting;
 
-    // 移住可能を示すエフェクト // 今後UIとかもっと他の物に置き換える予定
-    public GameObject m_EffectCanMoveTo;
-    protected bool m_isCanMoveToEffectEmitting;
-
     public LandStarController() : base(StarType.Land)
     {
         

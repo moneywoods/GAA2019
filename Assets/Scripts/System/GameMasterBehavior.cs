@@ -95,7 +95,6 @@ public class GameMasterBehavior : MonoBehaviour
         {
             cameraScript.SetTarget(GameObject.FindGameObjectWithTag(ObjectTag.PlayerCharacter));
             cameraScript.SetCurrentState(InGameMainCameraController.StateName.Following);
-
         }
 
         GetComponent<AudioSource>().Play();
@@ -147,7 +146,4 @@ public class GameMasterBehavior : MonoBehaviour
 
     }
 
-    private void ParticleStart()
-    {
-    }
 }
