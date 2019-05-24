@@ -117,19 +117,17 @@ public class LandStarController : StarBase
             }
         }
 
-        
-
         if (!CheckFlag(LANDSTAR_STAT.ALIVE))
         {
             // 爆発エフェクト生成.
             Instantiate(explosionObject, transform.position, transform.rotation);
             var i = StarMaker.Instance.GetCellColliderBehavior(new Vector2Int(3, 3));
             StarMaker.Instance.GetCellColliderBehavior(CellNum).RemoveManually(gameObject);
+            textchange = 2;
+            uitext.GetComponent<TextMessnger>().Textflag = textchange;
             Destroy(gameObject);
         }
-
         textchange = uitext.GetComponent<TextMessnger>().Textflag;
-        
     }
 
     // --------------------------------------------------------------------------------------------
@@ -304,8 +302,6 @@ public class LandStarController : StarBase
         // 絶対にtrueなパターンのチェック
         if(starMaker.GetStar(cp0,StarType.BlackHole)) // 先1マス目がブラックホール
         {
-            textchange = 2;
-            uitext.GetComponent<TextMessnger>().Textflag = textchange;
             return true;
         }
 
