@@ -50,7 +50,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76f2e540026fcaa48b1d0efd32a5f913, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cellNum: {x: -1, y: -1}
   explosionObject: {fileID: 6307091678883776270, guid: 6054c0bf48a9142459fc014c9126e8ea,
     type: 3}
   UiText: {fileID: 2976701870155842087, guid: cf3457b522bcb0c408e6d4784f98ba36, type: 3}
