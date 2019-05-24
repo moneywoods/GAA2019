@@ -100,7 +100,7 @@ public class GameMasterBehavior : MonoBehaviour
             cameraScript.SetCurrentState(InGameMainCameraController.StateName.Following);
         }
 
-        GetComponent<AudioSource>().Play();
+        // GetComponent<AudioSource>().Play(); 音だすやつ
 
         // 背景用のシーン読込
         SceneManager.LoadScene("GameBackGround",LoadSceneMode.Additive);
