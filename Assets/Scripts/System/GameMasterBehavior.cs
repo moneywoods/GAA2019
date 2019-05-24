@@ -34,10 +34,10 @@ public class GameMasterBehavior : MonoBehaviour
     [SerializeField] private GameObject m_EventSystem;
     [SerializeField] private GameObject m_GridCylinderPrefab;
     [SerializeField] private GameObject m_GridLinePrefab;
+
     [SerializeField] public static bool isInitiationEvent = false;
 
-    [SerializeField]
-    private GameObject m_Particle;
+    [SerializeField] private GameObject m_ParticleManagerPrefab;
 
     GameObject text;
 
@@ -79,10 +79,11 @@ public class GameMasterBehavior : MonoBehaviour
         // Camera
         var camera = GameObject.FindGameObjectWithTag(ObjectTag.MainCamera);
         var cameraScript = camera.GetComponent<InGameMainCameraController>();
+        
         // ゲームスタート時イベント有り無し
 
-        Instantiate(m_Particle);
-
+        Instantiate(m_ParticleManagerPrefab);
+        
         if(isInitiationEvent)
         {
             // ゴールからスタートまで星を映すモード
@@ -94,7 +95,10 @@ public class GameMasterBehavior : MonoBehaviour
         {
             cameraScript.SetTarget(GameObject.FindGameObjectWithTag(ObjectTag.PlayerCharacter));
             cameraScript.SetCurrentState(InGameMainCameraController.StateName.Following);
+
         }
+
+        GetComponent<AudioSource>().Play();
 
         // 背景用のシーン読込
         SceneManager.LoadScene("GameBackGround",LoadSceneMode.Additive);
@@ -128,8 +132,8 @@ public class GameMasterBehavior : MonoBehaviour
         chapter = num % 10;
         stage = num / 10;
 
-        rangeChapter = chapter < CHAPTER_MAX && chapter > 0;
-        rangeStage= stage < STAGE_MAX && stage > 0;
+        rangeChapter = chapter <= CHAPTER_MAX && chapter > 0;
+        rangeStage= stage <= STAGE_MAX && stage > 0;
         bool range = rangeChapter && rangeStage;
 
         if (range)
@@ -141,5 +145,9 @@ public class GameMasterBehavior : MonoBehaviour
             
         }
 
+    }
+
+    private void ParticleStart()
+    {
     }
 }
