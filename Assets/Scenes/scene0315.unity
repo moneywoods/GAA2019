@@ -5039,11 +5039,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: RandomLight
       objectReference: {fileID: 0}
-    - target: {fileID: 5905424573864129645, guid: 76351b5baa49ab24ab788c7c6f633f9b,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5905424573864129642, guid: 76351b5baa49ab24ab788c7c6f633f9b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5498,7 +5493,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!199 &1305586924
 ParticleSystemRenderer:
   serializedVersion: 6
