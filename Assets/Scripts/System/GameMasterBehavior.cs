@@ -80,9 +80,6 @@ public class GameMasterBehavior : MonoBehaviour
         var camera = GameObject.FindGameObjectWithTag(ObjectTag.MainCamera);
         var cameraScript = camera.GetComponent<InGameMainCameraController>();
 
-        // パーチクルを生成
-        Instantiate(m_StarIndexParticle);
-
         // ゲームスタート時イベント有り無し
 
         Instantiate(m_ParticleManagerPrefab);
