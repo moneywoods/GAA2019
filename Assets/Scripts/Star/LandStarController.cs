@@ -51,7 +51,7 @@ public class LandStarController : StarBase
         get;
         set;
     }
-
+    
     
     public GameObject uitext;   // テキストのスクリプト取得
     private int textchange;     // テキストの表示フラグ
@@ -70,7 +70,6 @@ public class LandStarController : StarBase
     {
         uitext = GameObject.FindWithTag(ObjectTag.MessageText);
         timePast = 0.0f;
-        m_isCanMoveToEffectEmitting = false;
     }
 
     // Update is called once per frame

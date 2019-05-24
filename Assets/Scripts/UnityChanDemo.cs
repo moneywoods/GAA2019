@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Tako;
 
+
 public class UnityChanDemo : MonoBehaviour
 {
     private Animator animator;
@@ -15,6 +16,7 @@ public class UnityChanDemo : MonoBehaviour
 
     private GameObject m_ObjCamera;
 
+    private PlayerMoveGuide m_GuideLine;
     // Start is called before the first frame update
     void Start()
     {
@@ -36,6 +38,8 @@ public class UnityChanDemo : MonoBehaviour
         {
             animator.SetBool("is_wait", true);
 
+            Init();
+            m_GuideLine.ParticleStart();
             PlayerRotate();
         }
 
@@ -49,6 +53,7 @@ public class UnityChanDemo : MonoBehaviour
         {
             animator.SetBool("is_run", true);
 
+            m_GuideLine.ParticleStop();
             PlayerRotate();
         }
 
@@ -62,6 +67,7 @@ public class UnityChanDemo : MonoBehaviour
         {
             animator.SetBool("is_starmove", true);
 
+            m_GuideLine.ParticleStop();
             CameraLockOn();
         }
 
@@ -98,6 +104,15 @@ public class UnityChanDemo : MonoBehaviour
             Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0f);
             transform.rotation = Quaternion.LookRotation(newDir);
 
+        }
+    }
+
+    public void Init()
+    {
+        if (m_GuideLine == null)
+        {
+            GameObject playerGuideLine = GameObject.FindWithTag("MoveGuide");
+            m_GuideLine = playerGuideLine.GetComponent<PlayerMoveGuide>();
         }
     }
 }

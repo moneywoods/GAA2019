@@ -26,6 +26,7 @@ public class InGameMainCameraController : StateContex
 
     [SerializeField] private Vector2Int ScreenSize;
 
+
     private void Awake()
     {
         AddState(new StateFollowing(this, gameObject));
@@ -33,6 +34,8 @@ public class InGameMainCameraController : StateContex
         AddState(new StateFloating(this, gameObject));
 
         SetCurrentState(StateName.Floating);
+
+
     }
     // Use this for initialization
     void Start ()
@@ -275,6 +278,7 @@ public class InGameMainCameraController : StateContex
                 cameraScript.target = tako;
                 tako.GetComponent<Tako.TakoController>().SetCurrentState(Tako.TakoController.StateName.Normal);
                 Context.TransitState(StateName.Following);
+
                 return;
             }
         }

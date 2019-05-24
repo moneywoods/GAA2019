@@ -16,7 +16,9 @@ public class MilkyWayBehavior : StarBase
         }
     }
     [SerializeField] private List<LandInMW> LandList; // 同じマスにいてIN_MILKYWAY_AREAフラグの立っているLandのリスト
-    
+
+    [SerializeField] private GameObject m_ObjEatParticle;
+
     public MilkyWayBehavior() : base(StarType.MilkyWay)
     {
 
@@ -75,8 +77,7 @@ public class MilkyWayBehavior : StarBase
             }
 
             LandList.Add(new LandInMW(other, diff));
-
-            other.GetComponent<Renderer>().material.color = Color.black;
+            Instantiate(m_ObjEatParticle, transform);
         }
     }
 }
