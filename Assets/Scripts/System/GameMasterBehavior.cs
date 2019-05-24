@@ -153,7 +153,6 @@ public class GameMasterBehavior : MonoBehaviour
     // 仮パーチクルまとめ鯖
     private void ParticlePackages()
     {
-        Instantiate(m_StarIndexParticle);
 
     }
 }
