@@ -4,7 +4,7 @@
 PlayerSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 15
-  productGUID: 00000000000000000000000000000000
+  productGUID: 3f39ebb2932b70341a73b648ae876d0f
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
   AndroidEnableSustainedPerformanceMode: 0
@@ -241,7 +241,6 @@ PlayerSettings:
   tvOSManualSigningProvisioningProfileType: 0
   appleEnableAutomaticSigning: 0
   iOSRequireARKit: 0
-  iOSAutomaticallyDetectAndAddCapabilities: 1
   appleEnableProMotion: 0
   clonedFromGUID: 91978008845431f4dbfdca1209e8fb66
   templatePackageId: 
@@ -698,7 +697,7 @@ PlayerSettings:
   apiCompatibilityLevel: 2
   cloudProjectId: 3e46c8e1-5ad4-4dc7-92ec-c200fcd8b6ac
   framebufferDepthMemorylessMode: 0
-  projectName: EffectsExamples
+  projectName: namai
   organizationId: shakedpotato
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
