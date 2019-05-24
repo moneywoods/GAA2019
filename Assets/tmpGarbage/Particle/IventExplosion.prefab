@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6071179365966414704}
   - component: {fileID: 5131059025207569418}
   - component: {fileID: 8085650577531909004}
+  - component: {fileID: 8429034849041403959}
   m_Layer: 0
   m_Name: IventExplosion
   m_TagString: Untagged
@@ -42,13 +43,13 @@ ParticleSystem:
   serializedVersion: 6
   lengthInSec: 5
   simulationSpeed: 1
-  stopAction: 2
+  stopAction: 1
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -4765,3 +4766,15 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &8429034849041403959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5641570553664482101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8522b5aeac3a5424c9e3e25a1d837bba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

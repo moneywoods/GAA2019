@@ -31,8 +31,6 @@ public class PlayerMoveGuide : MonoBehaviour
 
     public void ParticleStart()
     {
-        if (m_TakoScript == null) return; 
-
         if (m_TakoScript.nextStar != null)
         {
             Rotation();
