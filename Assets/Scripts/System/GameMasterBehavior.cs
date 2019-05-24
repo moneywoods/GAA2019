@@ -36,7 +36,6 @@ public class GameMasterBehavior : MonoBehaviour
     [SerializeField] private GameObject m_GridLinePrefab;
 
     [SerializeField] public static bool isInitiationEvent = false;
-
     [SerializeField] private GameObject m_ParticleManagerPrefab;
 
     GameObject text;
@@ -79,7 +78,6 @@ public class GameMasterBehavior : MonoBehaviour
         // Camera
         var camera = GameObject.FindGameObjectWithTag(ObjectTag.MainCamera);
         var cameraScript = camera.GetComponent<InGameMainCameraController>();
-
         // ゲームスタート時イベント有り無し
 
         Instantiate(m_ParticleManagerPrefab);
@@ -142,6 +140,5 @@ public class GameMasterBehavior : MonoBehaviour
         {
             
         }
-
     }
 }
