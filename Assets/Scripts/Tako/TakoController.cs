@@ -34,6 +34,9 @@ namespace Tako
         private Animator animator;
         private GameObject takoModel;
         TakoController takoScript;
+        // State内で使うものですが、SerializeFieldを利用したかったのでこちらで
+        [SerializeField] private float takoAltitude; // 移動時のTakoのモデルのジャンプの高さ 
+        [SerializeField] private float timeToWait = 0.0f;
 
         private class AnimationFlagName
         {
@@ -274,10 +277,12 @@ namespace Tako
                 if (AnimationFlagName.flagArray[i] == targetName)
                 {
                     animator.SetBool(AnimationFlagName.flagArray[i], true);
+                    Debug.Log(AnimationFlagName.flagArray[i] + " is true");
                 }
                 else
                 {
                     animator.SetBool(AnimationFlagName.flagArray[i], false);
+                    Debug.Log(AnimationFlagName.flagArray[i] + " is false");
                 }
             }
         }
@@ -287,6 +292,7 @@ namespace Tako
             for (int i = 0; i < AnimationFlagName.flagArray.GetLength(0); i++)
             {
                 animator.SetBool(AnimationFlagName.flagArray[i], false);
+                Debug.Log("tako animation flag is cleared");
             }
         }
 
@@ -331,6 +337,7 @@ namespace Tako
                 Name = StateName.Normal;
                 facingDirection = Direction.NONE;
                 OnEnter += CheckAndSelectStarInFacingCell;
+                OnEnter += takoScript.ClearAnimationFlag;
                 update += UpdateByCommand;
             }
 
@@ -347,9 +354,28 @@ namespace Tako
             {
                 IsNextStarCommand();
 
+                RotateCharacter();
+
                 IsJumpCommand();
 
                 IsKineticPowerCommand();
+            }
+
+            void RotateCharacter()
+            {
+                if(takoScript.nextStar == null)
+                {
+                    return;
+                }
+
+                // モデルの向きを調整
+                Transform target = takoScript.nextStar.transform;
+
+                Vector3 targetDir = target.position - tako.transform.position;
+                targetDir.y = tako.transform.position.y; //targetと高さが異なると体ごと上下を向いてしまうので制御
+                float step = 10.0f * Time.deltaTime;
+                Vector3 newDir = Vector3.RotateTowards(tako.transform.forward, targetDir, step, 0.0f);
+                tako.transform.rotation = Quaternion.LookRotation(newDir);
             }
 
             private void IsNextStarCommand()
@@ -513,7 +539,7 @@ namespace Tako
 
         private class StateMovingBetweenStars : TakoState
         {
-            public float EstimatedTimeToLand
+            public float EstimatedTimeToLand // Takoの移動時間 // なぜここに書いているのか
             {
                 get;
                 private set;
@@ -524,20 +550,21 @@ namespace Tako
             {
                 Name = StateName.MovingBetweenStars;
                 OnEnter += Init;
+                update += Update;
                 update += WaitingSmallWindow;
+                OnExit += AdjustTakoModelOnExitState;
             }
-
-            private float timeToWait = 0.15f;
+            
             private float timeExpired = 0.0f;
 
             void WaitingSmallWindow()
             {
-                timeExpired += Time.deltaTime;
-
-                if(timeToWait <= timeExpired)
+                if(takoScript.timeToWait <= timeExpired)
                  {
                     update -= WaitingSmallWindow;
+                    update += AdjustTakoModelAltitude;
                     update += MoveToStar;
+                    timeExpired = 0.0f;
                  }
 
             }
@@ -546,10 +573,43 @@ namespace Tako
             void MoveToStar()
             {
                 tako.transform.position += diff * Time.deltaTime;
+
+                // アニメーションステート遷移
+                if(!takoScript.animator.GetBool(AnimationFlagName.flagIsJump))
+                {
+                    takoScript.SetAnimationFlagTrue(AnimationFlagName.flagIsJump);
+                }
+
+                //// モデルの向きを調整 これいるっけ
+                //Transform target = takoScript.nextStar.transform;
+
+                //Vector3 targetDir = target.position - tako.transform.position;
+                //targetDir.y = tako.transform.position.y; //targetと高さが異なると体ごと上下を向いてしまうので制御
+                //float step = 10.0f * Time.deltaTime;
+                //Vector3 newDir = Vector3.RotateTowards(tako.transform.forward, targetDir, step, 0.0f);
+                //tako.transform.rotation = Quaternion.LookRotation(newDir);
+            }
+
+            void AdjustTakoModelAltitude()
+            {
+                if(timeExpired < EstimatedTimeToLand * 0.5f)
+                {
+                    var pos = takoScript.takoModel.transform.position;
+                    pos.y += takoScript.takoAltitude / EstimatedTimeToLand * 0.5f * Time.deltaTime;
+                    takoScript.takoModel.transform.position = pos;
+                }
+                else
+                {
+                    var pos = takoScript.takoModel.transform.position;
+                    pos.y -= takoScript.takoAltitude / EstimatedTimeToLand * 0.5f * Time.deltaTime;
+                    takoScript.takoModel.transform.position = pos;
+                }
             }
 
             void Init()
             {
+                timeExpired = 0.0f;
+
                 if (EstimatedTimeToLand == 0.0f)
                 {
                     EstimatedTimeToLand = 1.0f; // とりあえず
@@ -560,6 +620,16 @@ namespace Tako
                 }
 
                 diff = (takoScript.nextStar.transform.position - tako.transform.position) / EstimatedTimeToLand;
+            }
+
+            void Update()
+            {
+                timeExpired += Time.deltaTime;
+            }
+
+            void AdjustTakoModelOnExitState()
+            {
+                takoScript.takoModel.transform.localPosition = Vector3.zero;
             }
         }
 
