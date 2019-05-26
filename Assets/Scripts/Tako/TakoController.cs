@@ -259,6 +259,7 @@ namespace Tako
             }
         }
 
+        // ステート
         private class TakoState : State
         {
             public TakoState(StateContex stateContex, GameObject tako) : base(stateContex)
