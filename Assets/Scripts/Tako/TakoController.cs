@@ -551,7 +551,6 @@ namespace Tako
                 Name = StateName.MovingBetweenStars;
                 OnEnter += Init;
                 update += Update;
-                update += WaitingSmallWindow;
                 OnExit += AdjustTakoModelOnExitState;
             }
             
@@ -573,12 +572,6 @@ namespace Tako
             void MoveToStar()
             {
                 tako.transform.position += diff * Time.deltaTime;
-
-                // アニメーションステート遷移
-                if(!takoScript.animator.GetBool(AnimationFlagName.flagIsJump))
-                {
-                    takoScript.SetAnimationFlagTrue(AnimationFlagName.flagIsJump);
-                }
 
                 //// モデルの向きを調整 これいるっけ
                 //Transform target = takoScript.nextStar.transform;
@@ -609,6 +602,14 @@ namespace Tako
             void Init()
             {
                 timeExpired = 0.0f;
+                update = Update;
+                update += WaitingSmallWindow;
+
+                // アニメーションステート遷移
+                if (!takoScript.animator.GetBool(AnimationFlagName.flagIsJump))
+                {
+                    takoScript.SetAnimationFlagTrue(AnimationFlagName.flagIsJump);
+                }
 
                 if (EstimatedTimeToLand == 0.0f)
                 {
