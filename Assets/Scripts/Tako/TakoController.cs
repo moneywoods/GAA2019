@@ -35,8 +35,14 @@ namespace Tako
         private GameObject takoModel;
         TakoController takoScript;
 
-        string flagIsWait = "isWait";
-        string flagIsJump = "isJump";
+        private class AnimationFlagName
+        {
+            public static string flagIsJump = "isJump";
+            public static string[] flagArray =
+            {
+                flagIsJump
+            };
+        }
 
         protected void Awake()
         {
@@ -256,6 +262,31 @@ namespace Tako
                         MovingStarList.Add(neighvorStarList[i]);
                     }
                 }
+            }
+        }
+
+        // AnimationFlagName.flagArrayを参照して、指定されたbool型のアニメーションフラグをtrueに設定するだけ。
+        // 複合条件には対応してません。
+        void SetAnimationFlagTrue(string targetName)
+        {
+            for(int i = 0; i < AnimationFlagName.flagArray.GetLength(0); i++)
+            {
+                if (AnimationFlagName.flagArray[i] == targetName)
+                {
+                    animator.SetBool(AnimationFlagName.flagArray[i], true);
+                }
+                else
+                {
+                    animator.SetBool(AnimationFlagName.flagArray[i], false);
+                }
+            }
+        }
+
+        void ClearAnimationFlag()
+        {
+            for (int i = 0; i < AnimationFlagName.flagArray.GetLength(0); i++)
+            {
+                animator.SetBool(AnimationFlagName.flagArray[i], false);
             }
         }
 
