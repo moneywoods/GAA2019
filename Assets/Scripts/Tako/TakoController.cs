@@ -82,7 +82,6 @@ namespace Tako
                 }
 
                 TransitState(next);
-
             }
         }
 
