@@ -10,12 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 7812969628955110922}
   - component: {fileID: 9026137170962525332}
-  - component: {fileID: 2022741290142755996}
   - component: {fileID: 399107893205564343}
   - component: {fileID: 6573340101619167281}
-  - component: {fileID: 4144916568222963243}
+  - component: {fileID: 2022741290142755996}
   - component: {fileID: 2963613101676655682}
-  - component: {fileID: 8551231903727445274}
   m_Layer: 8
   m_Name: Tako
   m_TagString: PlayerCharacter
@@ -87,21 +85,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2022741290142755996
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3227633270504513355}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ece4e7551ead994287545347ada8e50, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentStarStaying: {fileID: 0}
-  takoAltitude: 2
-  timeToWait: 2
 --- !u!54 &399107893205564343
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -131,18 +114,21 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4144916568222963243
+--- !u!114 &2022741290142755996
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3227633270504513355}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4424d1e0009ba6849a5f7208d9c0ee9d, type: 3}
+  m_Script: {fileID: 11500000, guid: 9ece4e7551ead994287545347ada8e50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentStarStaying: {fileID: 0}
+  takoAltitude: 5
+  timeToWait: 0
 --- !u!114 &2963613101676655682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,18 +142,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cellNum: {x: -1, y: -1}
---- !u!114 &8551231903727445274
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3227633270504513355}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1881401508a008343a91a88dda866a29, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &2152737127581624789
 PrefabInstance:
   m_ObjectHideFlags: 0
