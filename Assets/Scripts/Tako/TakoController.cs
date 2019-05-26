@@ -334,6 +334,7 @@ namespace Tako
                 update += UpdateByCommand;
             }
 
+            // 向いている方のマスにLandがあるなら、そのLandをnextStarに設定する
             void CheckAndSelectStarInFacingCell()
             {
                 if(facingDirection != Direction.NONE)
@@ -364,7 +365,7 @@ namespace Tako
                 float moveX = Input.GetAxisRaw("Horizontal");
                 float moveY = Input.GetAxisRaw("Vertical");
 
-                // 入力を取得.
+                // 入力を取得
                 bool inputUp = (moveY >= INPUT_VERTICAL || Input.GetKeyDown(KeyCode.W));            // 上入力
                 bool inputDown = (moveY <= -INPUT_VERTICAL || Input.GetKeyDown(KeyCode.X));         // 下入力
                 bool inputLeft = (moveX <= -INPUT_HORIZONTAL || Input.GetKeyDown(KeyCode.A));       // 左入力
