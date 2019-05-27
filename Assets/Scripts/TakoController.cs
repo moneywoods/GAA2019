@@ -30,6 +30,8 @@ namespace Tako
 
         private List<GameObject> MovingStarList; // KineticPower適応中の星のリスト
 
+        private PlayerMoveGuide m_MoveGuide;
+
         protected void Awake()
         {
             MovingStarList = new List<GameObject>();
@@ -141,7 +143,14 @@ namespace Tako
 
             // 目的地を変更
             nextStar = newLand;
-            
+//            if(m_MoveGuide != null)
+//            {
+//                m_MoveGuide.ParticleStart();
+//            }else
+//            {
+//                GameObject objMoveGuide = GameObject.FindWithTag("MoveGuide");
+//                m_MoveGuide = objMoveGuide.GetComponent<PlayerMoveGuide>();
+//            }
             return true;
         }
 

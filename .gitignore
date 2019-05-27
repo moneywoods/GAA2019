@@ -118,3 +118,6 @@ sysinfo.txt #Unity3D Generated File On Crash Reports
 # ============ #
 .wav
 /Assets/Sounds/*
+Assets/TutorialInfo.meta
+Assets/Sounds.meta
+Assets/TutorialInfo/Icons.meta

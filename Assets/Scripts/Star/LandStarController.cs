@@ -56,10 +56,6 @@ public class LandStarController : StarBase
     public GameObject uitext;   // テキストのスクリプト取得
     private int textchange;     // テキストの表示フラグ
 
-    // 移住可能を示すエフェクト // 今後UIとかもっと他の物に置き換える予定
-    public GameObject m_EffectCanMoveTo;
-    protected bool m_isCanMoveToEffectEmitting;
-
     public LandStarController() : base(StarType.Land)
     {
         
@@ -70,7 +66,6 @@ public class LandStarController : StarBase
     {
         uitext = GameObject.FindWithTag(ObjectTag.MessageText);
         timePast = 0.0f;
-        m_isCanMoveToEffectEmitting = false;
     }
 
     // Update is called once per frame
@@ -122,6 +117,7 @@ public class LandStarController : StarBase
         {
             // 爆発エフェクト生成.
             Instantiate(explosionObject, transform.position, transform.rotation);
+
             var i = StarMaker.Instance.GetCellColliderBehavior(new Vector2Int(3, 3));
             StarMaker.Instance.GetCellColliderBehavior(CellNum).RemoveManually(gameObject);
             textchange = 2;

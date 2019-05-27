@@ -10,7 +10,8 @@ public class ParticleManagerBehaviour : SingletonPattern<ParticleManagerBehaviou
 {
     public enum ParticleIndex
     {
-        TEST
+        MOVEGUIDE,
+        MAX,
     }
 
     class MyParticle
@@ -28,13 +29,15 @@ public class ParticleManagerBehaviour : SingletonPattern<ParticleManagerBehaviou
 
 
     // Prefab置き場
-    [SerializeField] GameObject test;
+    [SerializeField] private GameObject m_ObjMoveGuide;
 
     // Start is called before the first frame update
     void Start()
     {
         ParticlePrefabList = new List<MyParticle>();
-        ParticlePrefabList.Add(new MyParticle(test, ParticleIndex.TEST));
+        ParticlePrefabList.Add(new MyParticle(m_ObjMoveGuide, ParticleIndex.MOVEGUIDE));
+
+        Instantiate(m_ObjMoveGuide);
     }
 
     // Update is called once per frame
