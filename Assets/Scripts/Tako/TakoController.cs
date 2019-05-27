@@ -588,13 +588,13 @@ namespace Tako
                 tako.transform.position += diff * Time.deltaTime;
 
                 //// モデルの向きを調整 これいるっけ
-                //Transform target = takoScript.nextStar.transform;
+                Transform target = takoScript.nextStar.transform;
 
-                //Vector3 targetDir = target.position - tako.transform.position;
-                //targetDir.y = tako.transform.position.y; //targetと高さが異なると体ごと上下を向いてしまうので制御
-                //float step = 10.0f * Time.deltaTime;
-                //Vector3 newDir = Vector3.RotateTowards(tako.transform.forward, targetDir, step, 0.0f);
-                //tako.transform.rotation = Quaternion.LookRotation(newDir);
+                Vector3 targetDir = target.position - tako.transform.position;
+                targetDir.y = tako.transform.position.y; //targetと高さが異なると体ごと上下を向いてしまうので制御
+                float step = 10.0f * Time.deltaTime;
+                Vector3 newDir = Vector3.RotateTowards(tako.transform.forward, targetDir, step, 0.0f);
+                tako.transform.rotation = Quaternion.LookRotation(newDir);
             }
 
             void AdjustTakoModelAltitude()
