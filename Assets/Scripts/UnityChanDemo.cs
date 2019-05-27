@@ -23,7 +23,7 @@ public class UnityChanDemo : MonoBehaviour
         Script = GetComponent<TakoController>();
 
         animator = ChildObject.GetComponent<Animator>();
-
+         
         m_ObjCamera = GameObject.FindWithTag("MainCamera");
 
     }
