@@ -41,9 +41,11 @@ namespace Tako
         private class AnimationFlagName
         {
             public static string flagIsJump = "isJump";
+            public static string flagIsMoveStar = "isMoveStar";
             public static string[] flagArray =
             {
-                flagIsJump
+                flagIsJump,
+                flagIsMoveStar
             };
         }
 
@@ -501,7 +503,19 @@ namespace Tako
             public StateWaitingForKineticPowerEnd(StateContex contex, GameObject tako) : base(contex, tako)
             {
                 Name = StateName.WaitingForKineticPowerEnd;
+                OnEnter += OnEnterEvent;
+                OnExit += OnExitEvent;
+
                 update += CheckMovingLand;
+            }
+            void OnEnterEvent()
+            {
+                takoScript.SetAnimationFlagTrue(AnimationFlagName.flagIsMoveStar);
+            }
+
+            void OnExitEvent()
+            {
+
             }
 
             void CheckMovingLand()
@@ -606,10 +620,11 @@ namespace Tako
                 update += WaitingSmallWindow;
 
                 // アニメーションステート遷移
-                if (!takoScript.animator.GetBool(AnimationFlagName.flagIsJump))
+                if (!takoScript.animator.GetBool(AnimationFlagName.flagIsJump))   //takoジャンプ
                 {
                     takoScript.SetAnimationFlagTrue(AnimationFlagName.flagIsJump);
                 }
+
 
                 if (EstimatedTimeToLand == 0.0f)
                 {
