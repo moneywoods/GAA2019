@@ -54,8 +54,6 @@ MonoBehaviour:
   explosionObject: {fileID: 5641570553664482101, guid: 9d5181cbd842c844085566d78896bc3f,
     type: 3}
   uitext: {fileID: 0}
-  m_EffectCanMoveTo: {fileID: 3344867807076006397, guid: 1f1a6d029c6263e468fa7305a8f4ff03,
-    type: 3}
 --- !u!54 &4467544344860732297
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -83,7 +81,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.00001
+  m_Radius: 0.1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &4373778066301911203
 MeshRenderer:

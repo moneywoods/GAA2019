@@ -143,14 +143,6 @@ namespace Tako
 
             // 目的地を変更
             nextStar = newLand;
-//            if(m_MoveGuide != null)
-//            {
-//                m_MoveGuide.ParticleStart();
-//            }else
-//            {
-//                GameObject objMoveGuide = GameObject.FindWithTag("MoveGuide");
-//                m_MoveGuide = objMoveGuide.GetComponent<PlayerMoveGuide>();
-//            }
             return true;
         }
 
