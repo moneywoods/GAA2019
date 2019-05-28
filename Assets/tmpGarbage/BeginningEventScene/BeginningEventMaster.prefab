@@ -44,3 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSceneEnding: 0
+  m_Octo: {fileID: 0}
+  m_VirtualCamera: {fileID: 0}
+  m_Speed: 0
+  TIMELIMIT: 0
