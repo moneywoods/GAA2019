@@ -8,9 +8,12 @@ public class BeginningEventMasterBehaviour : MonoBehaviour
     public bool isSceneEnding = false;
 
     [SerializeField]
-    private GameObject m_Octo;
+    private GameObject m_ObjOcto;
     [SerializeField]
-    private GameObject m_VirtualCamera;
+    private GameObject m_ObjVirtualCamera;
+
+    private GameObject m_MainCam;
+    
 
     [SerializeField]
     private float m_Speed;
@@ -35,12 +38,16 @@ public class BeginningEventMasterBehaviour : MonoBehaviour
         }
 
         // ゲームオブジェクト生成
-        m_Octo.transform.position = new Vector3(0f, 0f, 0f);
-        Instantiate(m_Octo, m_Octo.transform);
-        Instantiate(m_VirtualCamera);
+        m_ObjOcto.transform.position = new Vector3(0f, 0f, 0f);
+        Instantiate(m_ObjOcto);
+        Instantiate(m_ObjVirtualCamera);
 
         // 生成されたオクトのクローンのスクリプト
         m_OctoScript = GameObject.FindWithTag("PlayerCharacter").GetComponent<OctoStartMove>();
+
+        
+
+        m_MainCam = GameObject.FindWithTag("MainCamera");
     }
 
     // Update is called once per frame
@@ -62,6 +69,7 @@ public class BeginningEventMasterBehaviour : MonoBehaviour
         if (isSceneEnding)
         {
             m_Timer += Time.deltaTime;
+            Vector3 octoPos = m_OctoScript.GetPos();
 
         }
         if (TIMELIMIT < m_Timer)
