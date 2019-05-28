@@ -47,6 +47,7 @@ public class StageSelect : MonoBehaviour
         if (stagenum != 0)
         {// ステージが選択された
             PauseTheGame.SetTimeScale(1.0f);
+            GameMasterBehavior.isInitiationEvent = true;
             FadeManager.FadeOut("scene0315");
         }
     }

@@ -29,6 +29,7 @@ public class BeginningEventMasterBehaviour : MonoBehaviour
 
         if(isSceneEnding)
         {
+            GameMasterBehavior.isInitiationEvent = true;
             FadeManager.FadeOut("scene0315");
         }
     }
