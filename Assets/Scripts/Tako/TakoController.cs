@@ -577,6 +577,8 @@ namespace Tako
                     update -= WaitingSmallWindow;
                     update += AdjustTakoModelAltitude;
                     update += MoveToStar;
+
+                    // 変数のリセット
                     timeExpired = 0.0f;
                  }
 
@@ -587,7 +589,7 @@ namespace Tako
             {
                 tako.transform.position += diff * Time.deltaTime;
 
-                //// モデルの向きを調整 これいるっけ
+                //// モデルの向きを調整
                 Transform target = takoScript.nextStar.transform;
 
                 Vector3 targetDir = target.position - tako.transform.position;
@@ -597,6 +599,8 @@ namespace Tako
                 tako.transform.rotation = Quaternion.LookRotation(newDir);
             }
 
+            // Takoの3Dモデルのローカル座標の変更
+            // Takoの高さを変えて、ジャンプしているように見せたい
             void AdjustTakoModelAltitude()
             {
                 if(timeExpired < EstimatedTimeToLand * 0.5f)
