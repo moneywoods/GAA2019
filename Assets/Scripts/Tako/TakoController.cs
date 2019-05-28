@@ -587,7 +587,7 @@ namespace Tako
             {
                 tako.transform.position += diff * Time.deltaTime;
 
-                //// モデルの向きを調整 これいるっけ
+                // モデルの向きを調整 これいるっけ
                 Transform target = takoScript.nextStar.transform;
 
                 Vector3 targetDir = target.position - tako.transform.position;
