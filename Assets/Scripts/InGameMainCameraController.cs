@@ -10,6 +10,7 @@ public class InGameMainCameraController : StateContex
         public static readonly string Following = "Following";
         public static readonly string Floating = "Floating";
         public static readonly string MovingFromGoalToStart = "MovingFromGoalToStart";
+        public static readonly string GameClearEvent = "GameClearEvent";
     }
 
     public GameObject target // Camera follows Target.
@@ -25,6 +26,12 @@ public class InGameMainCameraController : StateContex
     [SerializeField] private float degree = -130.0f; // カメラとプレイヤーキャラクタを結ぶ線が水平と為す角度
 
     [SerializeField] private Vector2Int ScreenSize;
+
+
+    // StateGameClearEvent用
+    [SerializeField] private Vector3 angleOffset;
+    [SerializeField] private float radius;
+    [SerializeField] private float timeToApproach = 1;
 
     private void Awake()
     {
@@ -311,6 +318,52 @@ public class InGameMainCameraController : StateContex
             }
 
             camera.transform.position += vec;
+        }
+    }
+
+    private class StateGameClearEvent : CameraState
+    {
+        private Vector3 destination;
+        private GameObject tako;
+        private float timeExpired = 0.0f;
+
+        StateGameClearEvent(StateContex contex, GameObject camera) : base(contex, camera)
+        {
+            Name = StateName.GameClearEvent;
+            OnEnter = Init;
+        }
+
+        void Init()
+        {
+            tako = GameObject.FindWithTag(ObjectTag.PlayerCharacter);
+
+            if(tako == null)
+            {
+                Debug.Log("Camera failed to Init StateGameClearEvent.");
+                cameraScript.TransitState(StateName.Following);
+            }
+
+            timeExpired = 0.0f;
+
+            update += UpdateTime;
+            update += Approach;
+        }
+
+        void Approach()
+        {
+            // 目標位置を計算する
+            var vec = Vector3.forward * cameraScript.radius;
+            destination = Quaternion.Euler(cameraScript.angleOffset.x, cameraScript.angleOffset.y, cameraScript.angleOffset.z) * vec + tako.transform.position;
+
+            // このフレームで移動する距離を計算する
+            var diff = destination - camera.transform.position / (cameraScript.timeToApproach - timeExpired);
+
+            camera.transform.position += diff;
+        }
+        
+        void UpdateTime()
+        {
+            timeExpired += Time.deltaTime;
         }
     }
 }
