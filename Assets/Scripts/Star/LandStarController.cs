@@ -51,14 +51,10 @@ public class LandStarController : StarBase
         get;
         set;
     }
-
+    
     
     public GameObject uitext;   // テキストのスクリプト取得
     private int textchange;     // テキストの表示フラグ
-
-    // 移住可能を示すエフェクト // 今後UIとかもっと他の物に置き換える予定
-    public GameObject m_EffectCanMoveTo;
-    protected bool m_isCanMoveToEffectEmitting;
 
     public LandStarController() : base(StarType.Land)
     {
@@ -70,7 +66,6 @@ public class LandStarController : StarBase
     {
         uitext = GameObject.FindWithTag(ObjectTag.MessageText);
         timePast = 0.0f;
-        m_isCanMoveToEffectEmitting = false;
     }
 
     // Update is called once per frame
@@ -118,19 +113,18 @@ public class LandStarController : StarBase
             }
         }
 
-        
-
         if (!CheckFlag(LANDSTAR_STAT.ALIVE))
         {
             // 爆発エフェクト生成.
             Instantiate(explosionObject, transform.position, transform.rotation);
+
             var i = StarMaker.Instance.GetCellColliderBehavior(new Vector2Int(3, 3));
             StarMaker.Instance.GetCellColliderBehavior(CellNum).RemoveManually(gameObject);
+            textchange = 2;
+            uitext.GetComponent<TextMessnger>().Textflag = textchange;
             Destroy(gameObject);
         }
-
         textchange = uitext.GetComponent<TextMessnger>().Textflag;
-        
     }
 
     // --------------------------------------------------------------------------------------------
@@ -305,8 +299,6 @@ public class LandStarController : StarBase
         // 絶対にtrueなパターンのチェック
         if(starMaker.GetStar(cp0,StarType.BlackHole)) // 先1マス目がブラックホール
         {
-            textchange = 2;
-            uitext.GetComponent<TextMessnger>().Textflag = textchange;
             return true;
         }
 

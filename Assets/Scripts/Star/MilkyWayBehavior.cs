@@ -16,7 +16,9 @@ public class MilkyWayBehavior : StarBase
         }
     }
     [SerializeField] private List<LandInMW> LandList; // 同じマスにいてIN_MILKYWAY_AREAフラグの立っているLandのリスト
-    
+
+    [SerializeField] private GameObject m_EatParticle;
+
     public MilkyWayBehavior() : base(StarType.MilkyWay)
     {
 
@@ -63,20 +65,22 @@ public class MilkyWayBehavior : StarBase
 
     public override void TriggerOtherComeToSameCell(GameObject other)
     {
-        if(other.tag == ObjectTag.Land)
+        if (other.tag == ObjectTag.Land)
         {
             var otherScript = other.GetComponent<LandStarController>();
             otherScript.AddStat(LandStarController.LANDSTAR_STAT.IN_MILKYWAY_AREA);
             var diff = (transform.position - other.gameObject.transform.position) / (otherScript.timeToCirculate - otherScript.timePast);
 
-            if(LandList == null) // 生まれたときにStart関数を通っているときと通っていないときがあるので.
+            if (LandList == null) // 生まれたときにStart関数を通っているときと通っていないときがあるので.
             {
                 Init();
             }
 
             LandList.Add(new LandInMW(other, diff));
-
             other.GetComponent<Renderer>().material.color = Color.black;
+
+            // 吸い込みパーティクル
+            Instantiate(m_EatParticle, transform);
         }
     }
 }

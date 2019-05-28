@@ -34,10 +34,9 @@ public class GameMasterBehavior : MonoBehaviour
     [SerializeField] private GameObject m_EventSystem;
     [SerializeField] private GameObject m_GridCylinderPrefab;
     [SerializeField] private GameObject m_GridLinePrefab;
-    [SerializeField] public static bool isInitiationEvent = false;
 
-    [SerializeField]
-    private GameObject m_Particle;
+    [SerializeField] public static bool isInitiationEvent = false;
+    [SerializeField] private GameObject m_ParticleManagerPrefab;
 
     GameObject text;
 
@@ -85,8 +84,8 @@ public class GameMasterBehavior : MonoBehaviour
 
         // ゲームスタート時イベント有り無し
 
-        Instantiate(m_Particle);
-
+        Instantiate(m_ParticleManagerPrefab);
+        
         if(isInitiationEvent)
         {
             // ゴールからスタートまで星を映すモード
@@ -100,9 +99,10 @@ public class GameMasterBehavior : MonoBehaviour
             cameraScript.SetCurrentState(InGameMainCameraController.StateName.Following);
         }
 
+        // GetComponent<AudioSource>().Play(); 音だすやつ
+
         // 背景用のシーン読込
         SceneManager.LoadScene("GameBackGround",LoadSceneMode.Additive);
-        
     }
 
     // Update is called once per frame
@@ -144,6 +144,5 @@ public class GameMasterBehavior : MonoBehaviour
         {
             
         }
-
     }
 }

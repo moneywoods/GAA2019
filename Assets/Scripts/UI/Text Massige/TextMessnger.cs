@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class TextMessnger : MonoBehaviour
 {
     public Text Qtext;              // Text取得
-    private GameObject TextCanvas;  // TextCanvas取得
     private RectTransform Area;     // テキストの座標取得
     private int Textalphaflag;      // Textのalpha値管理フラグ
     private float Textalpha;        // Textのalpha値変更
@@ -29,8 +28,6 @@ public class TextMessnger : MonoBehaviour
         textflag = 0;
         texttime = 3.1f;
         texttimer = 0.0f;
-        TextCanvas = GameObject.FindWithTag(ObjectTag.CanvasText);
-        Instantiate(TextCanvas);
         Area = GetComponent<RectTransform>();                       // テキストの座標位置取得の仕方 
         Qtext = GetComponentInChildren<Text>();                     // UIのテキストの取得の仕方
     }

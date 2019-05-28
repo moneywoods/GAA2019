@@ -40,11 +40,13 @@ public class TitleMenuControl : MonoBehaviour
         {// 初めから
             GameMasterBehavior.InitiatingStage = new StageInfo(1, 1);
             FadeManager.AddState(FadeManager.State.A_TO_ONE);
+            GameMasterBehavior.isInitiationEvent = true;
             FadeManager.SceneOut("scene0315");
         }
         if (gameObject.name == "ContinueGame")
         {// 続きから
             FadeManager.AddState(FadeManager.State.A_TO_ONE);
+            GameMasterBehavior.isInitiationEvent = true;
             FadeManager.SceneOut("scene0315");
         }
         if (gameObject.name == "SelectStage")
