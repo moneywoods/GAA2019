@@ -30,6 +30,8 @@ public class BeginningEventMasterBehaviour : MonoBehaviour
         if(isSceneEnding)
         {
             GameMasterBehavior.isInitiationEvent = true;
+            FadeManager.ClearState();
+            FadeManager.AddState(FadeManager.State.A_TO_ONE);
             FadeManager.SceneOut("scene0315");
         }
     }

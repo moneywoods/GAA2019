@@ -71,7 +71,9 @@ public class GameMenuControl : MonoBehaviour
         {// タイトルに戻る
             PauseTheGame.SetTimeScale(1.0f);
             FadeManager.NextColor = Color.black;
+            FadeManager.ClearState();
             FadeManager.AddState(FadeManager.State.A_TO_ONE);
+            FadeManager.SetImage(FadeManager.ImageIndex.MENDAKO_1_ALPHA);
             FadeManager.SceneOut("TitleScene");
         }
     }
