@@ -12,9 +12,9 @@ public class FadeManager : MonoBehaviour
 
     //フェード用のCanvasとImage
     private static Canvas fadeCanvas;
-	private static Image fadeImage;
-    private static Image subImage;
-    private static Image subUnmask;
+	private static Image mask;
+    private static Image unmask;
+    private static Image image;
     
 	//フェードインアウトのフラグ
 	public static bool isFadeIn = false;
@@ -35,10 +35,11 @@ public class FadeManager : MonoBehaviour
     {
         // fadeTimeの時間で行う処理。
         NONE      = 0,
-        BIGGER    = 1 << 1, // 0000_0001 イメージサイズが大きくなる。
-        SMALLER   = 1 << 2, // 0000_0010 イメージサイズが小さくなる。
-        A_TO_ZERO = 1 << 3, // 0000_0100 透明度が大きくなる。
-        A_TO_ONE  = 1 << 4, // 0000_1000 透明度が小さくなる。
+        BIGGER    = 1 << 1, // 0000_0001 イメージサイズが大きくなる
+        SMALLER   = 1 << 2, // 0000_0010 イメージサイズが小さくな
+        A_TO_ZERO = 1 << 3, // 0000_0100 透明度が大きくなる
+        A_TO_ONE  = 1 << 4, // 0000_1000 透明度が小さくなる
+        UNMASK    = 1 << 5, // 0001_0000 Unmaskを利用する
 
         // チェック用
         CHECKER_IS_ACTIVE = 15 // 0000_1111
@@ -59,88 +60,108 @@ public class FadeManager : MonoBehaviour
     // 上のImageIndexとの順序の一致を確認すること。
     private static string[] imagePathArray = 
     {
-        "FadeImages/star_1_alpha",
-        "FadeImages/mendako_1_alpha"
+        "FadeImages/Sprites/star_1_alpha",
+        "FadeImages/Sprites/mendako_1_alpha"
     };
 
-    private static List<Material> imageList;
-
-    public static ImageIndex currentImageIndex { get; private set; } 
+    private static List<Sprite> imageList;
+    private static ImageIndex CurrentImage = ImageIndex.NONE;
+    private static ImageIndex CurrentUnmask = ImageIndex.NONE;
 
     //フェード用のCanvasとImage生成
     static void Init()
 	{
-		//フェード用のCanvas生成
-		GameObject FadeCanvasObject = new GameObject("CanvasFade");
+        // イメージをリストに保持
+        if(imageList == null)
+        {
+            imageList = new List<Sprite>();
+        }
+
+        for (int i = 0; i < imagePathArray.GetLength(0); i++)
+        {
+            imageList.Add(Resources.Load<Sprite>(imagePathArray[i]));
+        }
+
+        // GameObjectの生成
+        //フェード用のCanvas生成
+        GameObject FadeCanvasObject = new GameObject("CanvasFade");
 
         fadeCanvas = FadeCanvasObject.AddComponent<Canvas>();
 		FadeCanvasObject.AddComponent<GraphicRaycaster>();
 		fadeCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
 		FadeCanvasObject.AddComponent<FadeManager>();
 
+        // mask
+        //  +unmask imageにアルファのある画像を設定する
+        //  +image ここから下のimageがunmaskで切り抜きされる
 		//最前面になるよう適当なソートオーダー設定
 		fadeCanvas.sortingOrder = 100;
 
-        // サイズ変更時に裏に敷くのImage
-        subImage = new GameObject("SubImage").AddComponent<Image>();
-        subImage.transform.SetParent(fadeCanvas.transform, false);
-        subImage.rectTransform.anchoredPosition = Vector3.zero;
-        subImage.gameObject.AddComponent<Mask>();
+        // mask Maskコンポーネントが必須
+        mask = new GameObject("mask").AddComponent<Image>();
+        mask.transform.SetParent(fadeCanvas.transform, false);
+        mask.rectTransform.anchoredPosition = Vector3.zero;
+        mask.rectTransform.sizeDelta = new Vector2(1920, 1080);
+        mask.gameObject.AddComponent<Mask>();
+        mask.GetComponent<Mask>().showMaskGraphic = false;
+        mask.gameObject.SetActive(true);
 
-        subImage.gameObject.SetActive(false);
+        // unmask Maskコンポーネントのついたオブジェクトの子にする
+        unmask = new GameObject("unmask").AddComponent<Image>();
+        unmask.transform.SetParent(mask.transform, false);
+        unmask.rectTransform.anchoredPosition = Vector3.zero;
+        unmask.gameObject.AddComponent<Unmask>();
+        unmask.gameObject.SetActive(false);
+        unmask.rectTransform.sizeDelta = new Vector2(1920, 1080);
 
-        // subImageのUnmask用
-        subUnmask = new GameObject("SubMask").AddComponent<Image>();
-        subUnmask.transform.SetParent(subImage.transform, false);
-        subUnmask.rectTransform.anchoredPosition = Vector3.zero;
-        subUnmask.gameObject.AddComponent<Unmask>();
+        if(CurrentUnmask != ImageIndex.NONE)
+        {
+            unmask.sprite = imageList[(int)CurrentUnmask];
+        }
 
-        //フェード用のImage生成
-        fadeImage = new GameObject("ImageFade").AddComponent<Image>();
-		fadeImage.transform.SetParent(fadeCanvas.transform, false);
-		fadeImage.rectTransform.anchoredPosition = Vector3.zero;
-        
+        //image unmaskで切り抜かれるimage
+        image = new GameObject("image").AddComponent<Image>();
+		image.transform.SetParent(mask.transform, false);
+		image.rectTransform.anchoredPosition = Vector3.zero;
+
+        if (CurrentImage != ImageIndex.NONE)
+        {
+            image.sprite = imageList[(int)CurrentUnmask];
+        }
+
         //Imageのサイズは適当に設定してください
-        fadeImage.rectTransform.sizeDelta = new Vector2(1920, 1080);
+        image.rectTransform.sizeDelta = new Vector2(1920, 1080);
 
         // 色の設定
-        fadeImage.color = NextColor;
+        image.color = NextColor;
 
         // インスタンスを保持
         instance = FadeCanvasObject;
 
-        // イメージをリストに保持
-        imageList = new List<Material>();
 
-        for(int i = 0; i < imagePathArray.GetLength(0); i++)
-        {
-            imageList.Add(Resources.Load<Material>(imagePathArray[i])); 
-        }
 	}
 
 	//シーン導入開始
 	public static void SceneIn()
 	{
-		if (fadeImage == null) Init();
-        fadeImage.color = NextColor; //一応
+		if (mask == null) Init();
+        image.color = NextColor; //一応
 		isFadeIn = true;
 	}
 
 	//シーン遷移開始
 	public static void SceneOut(string scene)
 	{
-		if (fadeImage == null) Init();
+		if (mask == null) Init();
 		nextScene = scene;
 
         //色の設定
-		Color tmpColor = fadeImage.color;
+		Color tmpColor = image.color;
         tmpColor.a = 0.0f;
-        fadeImage.color = tmpColor;
+        image.color = tmpColor;
 
 		fadeCanvas.enabled = true;
         isFadeOut = true;
-
-        // 徐々にサイズが小さくなる場合は
     }
 
 	void Update()
@@ -149,7 +170,7 @@ public class FadeManager : MonoBehaviour
 		if (CheckState(State.A_TO_ZERO))
 		{
             //経過時間から透明度計算
-            float alpha = fadeImage.color.a;
+            float alpha = image.color.a;
 			alpha -= Time.deltaTime / fadeTime;
 
 			//フェードイン終了判定
@@ -160,15 +181,15 @@ public class FadeManager : MonoBehaviour
 			}
 
             //フェード用Imageの透明度設定
-            Color c = fadeImage.color;
+            Color c = image.color;
             c.a = alpha;
-			fadeImage.color = c;
+            image.color = c;
 
 		}
 		else if (CheckState(State.A_TO_ONE))
 		{
             //経過時間から透明度計算
-            float alpha = fadeImage.color.a;
+            float alpha = image.color.a;
             alpha += Time.deltaTime / fadeTime;
 
 			//フェードアウト終了判定
@@ -178,9 +199,9 @@ public class FadeManager : MonoBehaviour
 			}
 
             //フェード用Imageの透明度設定
-            Color c = fadeImage.color;
+            Color c = image.color;
             c.a = alpha;
-            fadeImage.color = c;
+            image.color = c;
 
         }
 
@@ -235,14 +256,28 @@ public class FadeManager : MonoBehaviour
     // 戻り値: 処理後のステートフラグ
     public static State AddState(State state)
     {
-        return CurrentState |= state;
+        CurrentState |= state;
+
+        if(CheckState(State.UNMASK))
+        {
+            unmask.gameObject.SetActive(true);
+        }
+
+        return CurrentState;
     }
 
     // フラグを取り除く
     // 戻り値: 処理後のステートフラグ
     public static State RemoveState(State state)
     {
-        return CurrentState &= ~state;
+        CurrentState &= ~state;
+
+        if (!CheckState(State.UNMASK))
+        {
+            unmask.gameObject.SetActive(false);
+        }
+
+        return CurrentState;
     }
 
     // フラグを全リセット
@@ -266,26 +301,42 @@ public class FadeManager : MonoBehaviour
     // インデックスから表示する画像を選択する（同時に表示できるのは1枚）。
     public static void SetImage(ImageIndex index)
     {
-        if (fadeImage == null) Init();
+        if (mask == null) Init();
 
         if (ImageIndex.NONE < index)
         {
-            fadeImage.sprite = null;
+            image.sprite = null;
             return;
         }
 
-        fadeImage.material = imageList[(int)index];
-        currentImageIndex = index;
+        image.sprite = imageList[(int)index];
     }
 
     // 直接マテリアルを設定する。
-    public static void SetImage(Material m)
+    public static void SetImage(Sprite s)
     {
-        if (fadeImage == null) Init();
+        if (mask == null) Init();
 
-        fadeImage.material = m;
+        image.sprite = s;
+    }
 
-        // インデックス外の画像を利用しているのでcurrentImageIndexにはOTHERを設定する。
-        currentImageIndex = ImageIndex.OTHER;
+    public static void SetUnmaskImage(ImageIndex index)
+    {
+        if (mask == null) Init();
+
+        if (ImageIndex.NONE < index)
+        {
+            unmask.sprite = null;
+            return;
+        }
+
+        unmask.sprite = imageList[(int)index];
+    }
+
+    public static void SetUnmaskImage(Sprite s)
+    {
+        if (mask == null) Init();
+
+        unmask.sprite = s;
     }
 }
