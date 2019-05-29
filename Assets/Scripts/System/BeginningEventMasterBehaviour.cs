@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Cinemachine;
 
 public class BeginningEventMasterBehaviour : MonoBehaviour
 {
@@ -12,8 +13,7 @@ public class BeginningEventMasterBehaviour : MonoBehaviour
     [SerializeField]
     private GameObject m_ObjVirtualCamera;
 
-    private GameObject m_MainCam;
-    
+    private VCam m_VCamScript;
 
     [SerializeField]
     private float m_Speed;
@@ -40,14 +40,15 @@ public class BeginningEventMasterBehaviour : MonoBehaviour
         // ゲームオブジェクト生成
         m_ObjOcto.transform.position = new Vector3(0f, 0f, 0f);
         Instantiate(m_ObjOcto);
-        Instantiate(m_ObjVirtualCamera);
+
+        GameObject m_VCam = Instantiate(m_ObjVirtualCamera);
+        m_VCamScript = m_VCam.GetComponentInChildren<VCam>();
 
         // 生成されたオクトのクローンのスクリプト
         m_OctoScript = GameObject.FindWithTag("PlayerCharacter").GetComponent<OctoStartMove>();
 
         
-
-        m_MainCam = GameObject.FindWithTag("MainCamera");
+        
     }
 
     // Update is called once per frame
@@ -58,7 +59,7 @@ public class BeginningEventMasterBehaviour : MonoBehaviour
 
     private void OctoAdmissionScene()
     {
-        if (IsMove())
+        if (IsMoveMax())
         {
             isSceneEnding = true;
         }else
@@ -68,18 +69,15 @@ public class BeginningEventMasterBehaviour : MonoBehaviour
 
         if (isSceneEnding)
         {
-            m_Timer += Time.deltaTime;
-            Vector3 octoPos = m_OctoScript.GetPos();
-
-        }
-        if (TIMELIMIT < m_Timer)
-        {
-            FadeManager.FadeOut("scene0315");
+            if (m_VCamScript.MoveVCam())
+            {
+                 FadeManager.FadeOut("scene0315");
+            }
         }
     }
 
 
-    private bool IsMove()
+    private bool IsMoveMax()
     {
         Vector3 octoPos = m_OctoScript.GetPos();
 

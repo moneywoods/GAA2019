@@ -50,9 +50,9 @@ MonoBehaviour:
     width: 0.2
   m_Looped: 0
   m_Waypoints:
-  - position: {x: 0, y: 0, z: 0}
+  - position: {x: 0, y: 0, z: -6.225455}
     roll: 0
-  - position: {x: 0, y: 1, z: -5}
+  - position: {x: 0, y: 5.888485, z: -10.19557}
     roll: 0
-  - position: {x: 0, y: 7, z: -10}
+  - position: {x: 0, y: 15, z: -5.2197137}
     roll: 0
