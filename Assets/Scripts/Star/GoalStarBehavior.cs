@@ -7,6 +7,8 @@ public class GoalStarBehavior : LandStarController
 {
     // シーン遷移までの時間
     private float m_NextSceneTimer = 0;
+    [SerializeField]
+    private GameObject m_StageClearEvent;
 
     Tako.TakoController m_TakoControllerScript;
 
@@ -22,21 +24,12 @@ public class GoalStarBehavior : LandStarController
         m_NextSceneTimer = 0;
         GameObject objTako = GameObject.FindWithTag("PlayerCharacter");
         m_TakoControllerScript = objTako.GetComponent<Tako.TakoController>();
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(m_NextSceneTimer != 0)
-        {
-        float TIME_OVER = 3f;
-        m_NextSceneTimer += Time.deltaTime;
-            if(m_NextSceneTimer > TIME_OVER)
-            {// 時間がたったら次のシーンへ
-                m_NextSceneTimer = 0;
-                FadeManager.FadeOut("scene0315");
-            }
-        }
     }
     
     public override void TriggerOtherComeToSameCell(GameObject other)
@@ -45,13 +38,19 @@ public class GoalStarBehavior : LandStarController
         {
             GameObject.FindWithTag("Finish").transform.position = transform.position;
 
-            if(m_NextSceneTimer == 0) m_NextSceneTimer = Time.deltaTime;
-
             GameMasterBehavior.InitiatingChapter = GameMasterBehavior.InitiatingChapter + 1;
+            Instantiate(m_StageClearEvent);
         }
     }
     private void OnTriggerExit(Collider collision)
     {
         
+    }
+
+    public void EventMove()
+    {
+        Vector3 pos = transform.position;
+        pos = new Vector3(0f, 1f, 0f) * 1f;
+        transform.position += pos;
     }
 }
