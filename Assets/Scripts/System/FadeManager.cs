@@ -29,8 +29,9 @@ public class FadeManager : MonoBehaviour
 
     // 設定
     public static Color NextColor = Color.black;
+    public static Vector2 SizeRatio = new Vector2(1.0f, 1.0f);
 
-    [Flags]
+    [Flags, Serializable]
     public enum State
     {
         // fadeTimeの時間で行う処理。
@@ -47,6 +48,7 @@ public class FadeManager : MonoBehaviour
     
     public static State CurrentState;
 
+    [Serializable]
     public enum ImageIndex
     {
         STAR_1_ALPHA,
@@ -65,8 +67,12 @@ public class FadeManager : MonoBehaviour
     };
 
     private static List<Sprite> imageList;
-    private static ImageIndex CurrentImage = ImageIndex.NONE;
-    private static ImageIndex CurrentUnmask = ImageIndex.NONE;
+    [SerializeField] private static ImageIndex CurrentImage = ImageIndex.NONE;
+    [SerializeField] private static ImageIndex CurrentUnmask = ImageIndex.NONE;
+
+    // 処理用の変数
+    private static Vector2 diff;
+    private static Vector2 originImageSize;
 
     //フェード用のCanvasとImage生成
     static void Init()
@@ -126,7 +132,7 @@ public class FadeManager : MonoBehaviour
 
         if (CurrentImage != ImageIndex.NONE)
         {
-            image.sprite = imageList[(int)CurrentUnmask];
+            image.sprite = imageList[(int)CurrentImage];
         }
 
         //Imageのサイズは適当に設定してください
@@ -141,13 +147,32 @@ public class FadeManager : MonoBehaviour
 
 	}
 
+    private static void CalcDiff()
+    {
+        originImageSize = image.rectTransform.sizeDelta;
+        diff = originImageSize * (new Vector2(SizeRatio.x - 1, SizeRatio.y - 1)) / fadeTime;
+    }
+
+    private static void ResetSize()
+    {
+        mask.rectTransform.sizeDelta = new Vector2(Screen.width, Screen.height);
+        image.rectTransform.sizeDelta = new Vector2(Screen.width, Screen.height);
+        unmask.rectTransform.sizeDelta = new Vector2(Screen.width, Screen.height);
+    }
+
 	//シーン導入開始
 	public static void SceneIn()
 	{
 		if (mask == null) Init();
         image.color = NextColor; //一応
+        fadeCanvas.enabled = true;
 		isFadeIn = true;
-	}
+
+        if(CheckState(State.BIGGER) || CheckState(State.SMALLER))
+        {
+            CalcDiff();
+        }
+    }
 
 	//シーン遷移開始
 	public static void SceneOut(string scene)
@@ -162,6 +187,11 @@ public class FadeManager : MonoBehaviour
 
 		fadeCanvas.enabled = true;
         isFadeOut = true;
+
+        if(CheckState(State.BIGGER) || CheckState(State.SMALLER))
+        {
+            CalcDiff();
+        }
     }
 
 	void Update()
@@ -205,13 +235,12 @@ public class FadeManager : MonoBehaviour
 
         }
 
-        if(CheckState(State.BIGGER))
+        if(CheckState(State.BIGGER) || CheckState(State.SMALLER))
         {
-
-        }
-        else if(CheckState(State.SMALLER))
-        {
-
+            var size = mask.rectTransform.sizeDelta + diff * Time.deltaTime;
+            mask.rectTransform.sizeDelta = size;
+            image.rectTransform.sizeDelta = size;
+            unmask.rectTransform.sizeDelta = size;
         }
 
         if(isFadeIn)
@@ -224,6 +253,7 @@ public class FadeManager : MonoBehaviour
                 isFadeIn = false;
                 timeElapsed = 0.0f;
                 ClearState();
+                ResetSize();
             }
         }
         else if(isFadeOut)
@@ -236,7 +266,7 @@ public class FadeManager : MonoBehaviour
                 isFadeOut = false;
                 timeElapsed = 0.0f;
                 ClearState();
-
+                ResetSize();
                 //次のシーンへ遷移
                 SceneManager.LoadScene(nextScene);
             }
@@ -303,13 +333,14 @@ public class FadeManager : MonoBehaviour
     {
         if (mask == null) Init();
 
-        if (ImageIndex.NONE < index)
+        if (ImageIndex.NONE <= index)
         {
             image.sprite = null;
             return;
         }
 
         image.sprite = imageList[(int)index];
+        CurrentImage = index;
     }
 
     // 直接マテリアルを設定する。
@@ -318,19 +349,21 @@ public class FadeManager : MonoBehaviour
         if (mask == null) Init();
 
         image.sprite = s;
+        CurrentImage = ImageIndex.NONE;
     }
 
     public static void SetUnmaskImage(ImageIndex index)
     {
         if (mask == null) Init();
 
-        if (ImageIndex.NONE < index)
+        if (ImageIndex.NONE <= index)
         {
             unmask.sprite = null;
             return;
         }
 
         unmask.sprite = imageList[(int)index];
+        CurrentUnmask = index;
     }
 
     public static void SetUnmaskImage(Sprite s)
@@ -338,5 +371,6 @@ public class FadeManager : MonoBehaviour
         if (mask == null) Init();
 
         unmask.sprite = s;
+        CurrentUnmask = ImageIndex.NONE;
     }
 }
