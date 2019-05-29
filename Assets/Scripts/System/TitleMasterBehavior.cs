@@ -12,6 +12,7 @@ public class TitleMasterBehavior : MonoBehaviour
     void Start()
     {
         // フェードイン
+        FadeManager.ClearState();
         FadeManager.AddState(FadeManager.State.A_TO_ZERO);
         FadeManager.SceneIn();
 
