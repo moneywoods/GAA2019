@@ -1,4 +1,14 @@
-﻿using System;
+﻿/* 
+ * 使い方
+ * AddState関数でやりたいことを設定する。
+ * 徐々に大きさを変化させる場合 AddStateの引数を BIGGER か SMALLER にして、SizeRatio変数に各倍率を入れる
+ * NextColorで色の変更ができます
+ * ・画像の変更 Resources/SpritesフォルダにSpriteを追加して、imagePathArray配列にパス、ImageIndexにインデックスを書き込む
+ *   SetImage関数でイメージの設定ができます
+ * Unmaskについてもほぼ同様
+ */
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
