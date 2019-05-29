@@ -51,6 +51,6 @@ public class GoalStarBehavior : LandStarController
     {
         Vector3 pos = transform.position;
         pos = new Vector3(0f, 1f, 0f) * 1f;
-        transform.position += pos;
+        transform.position -= pos;
     }
 }

@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class GoalEventScene : MonoBehaviour
 {
-    [SerializeField]
     private GameObject m_ObjTako;
 
-    [SerializeField]
     private GameObject m_ObjGoalStar;
 
     // Start is called before the first frame update
     void Start()
     {
+        m_ObjTako = GameObject.FindWithTag("PlayerCharacter");
+        m_ObjGoalStar = GameObject.FindWithTag("GoalStar");
         
     }
 
