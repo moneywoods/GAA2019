@@ -22,6 +22,7 @@ TagManager:
   - StageSelect
   - CanvasText
   - MessageText
+  - VCamera
   layers:
   - Default
   - TransparentFX
