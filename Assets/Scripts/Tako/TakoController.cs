@@ -35,7 +35,7 @@ namespace Tako
         private GameObject takoModel;
         TakoController takoScript;
         // State内で使うものですが、SerializeFieldを利用したかったのでこちらで
-        [SerializeField] private float takoAltitude; // 移動時のTakoのモデルのジャンプの高さ 
+        [SerializeField] private float takoAltitude; // 移動時のTakoのモデルのジャンプの高さ
         [SerializeField] private float timeToWait = 0.0f;
 
         private class AnimationFlagName
@@ -164,7 +164,7 @@ namespace Tako
 
             // 目的地を変更
             nextStar = newLand;
-            
+
             return true;
         }
 
@@ -383,12 +383,12 @@ namespace Tako
             private void IsNextStarCommand()
             {
                 // スティックのしきい値
-                float INPUT_HORIZONTAL = 0.7f;
-                float INPUT_VERTICAL = 0.7f;
-                float INPUT_UP = 0.8f;
-                float INPUT_DOWN = -0.8f;
-                float INPUT_LEFT = -0.8f;
-                float INPUT_RIGHT = 0.8f;
+                float INPUT_HORIZONTAL = 0.9f;
+                float INPUT_VERTICAL = 0.9f;
+                float INPUT_UP = 0.5f;
+                float INPUT_DOWN = -0.5f;
+                float INPUT_LEFT = -0.5f;
+                float INPUT_RIGHT = 0.5f;
 
                 float moveX = Input.GetAxisRaw("Horizontal");
                 float moveY = Input.GetAxisRaw("Vertical");
@@ -567,7 +567,7 @@ namespace Tako
                 update += Update;
                 OnExit += AdjustTakoModelOnExitState;
             }
-            
+
             private float timeExpired = 0.0f;
 
             void WaitingSmallWindow()
