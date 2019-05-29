@@ -6,32 +6,25 @@ using Cinemachine;
 
 public class BeginningEventMasterBehaviour : MonoBehaviour
 {
-    public bool isSceneEnding = false;
-
+    // ゲームオブジェクトの生成用
     [SerializeField]
     private GameObject m_ObjOcto;
     [SerializeField]
     private GameObject m_ObjVirtualCamera;
-
-    private VCam m_VCamScript;
-
     [SerializeField]
-    private float m_Speed;
-
-    [SerializeField]
-    private  float TIMELIMIT;
-
-    private OctoStartMove m_OctoScript;
-    private float m_Timer;
+    private GameObject m_ObjEventRelation;
+    
+    private OctoStartMove m_OctoScript;     // オクトちゃんのスクリプト
+    private VCam m_VCamScript;              // VirtualCameraのスクリプト
 
     void Awake()
     {
-        
+
     }
     // Start is called before the first frame update
     void Start()
     {
-        if(GameMasterBehavior.InitiatingStage.Stage == 1 || GameMasterBehavior.InitiatingStage.Stage == 0)
+        if (GameMasterBehavior.InitiatingStage.Stage == 1 || GameMasterBehavior.InitiatingStage.Stage == 0)
         {
             // 背景用のシーン読込
             SceneManager.LoadScene("GameBackGround", LoadSceneMode.Additive);
@@ -42,46 +35,8 @@ public class BeginningEventMasterBehaviour : MonoBehaviour
         Instantiate(m_ObjOcto);
 
         GameObject m_VCam = Instantiate(m_ObjVirtualCamera);
-        m_VCamScript = m_VCam.GetComponentInChildren<VCam>();
 
-        // 生成されたオクトのクローンのスクリプト
-        m_OctoScript = GameObject.FindWithTag("PlayerCharacter").GetComponent<OctoStartMove>();
+        Instantiate(m_ObjEventRelation);
 
-        
-        
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        OctoAdmissionScene();
-    }
-
-    private void OctoAdmissionScene()
-    {
-        if (IsMoveMax())
-        {
-            isSceneEnding = true;
-        }else
-        {
-            m_OctoScript.OctoAdmission(m_Speed);
-        }
-
-        if (isSceneEnding)
-        {
-            if (m_VCamScript.MoveVCam())
-            {
-                 FadeManager.FadeOut("scene0315");
-            }
-        }
-    }
-
-
-    private bool IsMoveMax()
-    {
-        Vector3 octoPos = m_OctoScript.GetPos();
-
-        return octoPos.y <= 5f;
-    }
-    
 }

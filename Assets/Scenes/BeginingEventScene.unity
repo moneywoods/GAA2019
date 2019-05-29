@@ -263,7 +263,7 @@ PrefabInstance:
     - target: {fileID: 289207601674919270, guid: e96992c0a5dfd18499a33a00d457752b,
         type: 3}
       propertyPath: TIMELIMIT
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 289207601674919270, guid: e96992c0a5dfd18499a33a00d457752b,
         type: 3}
@@ -287,6 +287,22 @@ PrefabInstance:
       propertyPath: m_ObjVCam
       value: 
       objectReference: {fileID: 4880242439879436523, guid: 69a5ce5f9f70ddf43ae1afa02abb037a,
+        type: 3}
+    - target: {fileID: 289207601674919270, guid: e96992c0a5dfd18499a33a00d457752b,
+        type: 3}
+      propertyPath: m_CameraStartPos
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 289207601674919270, guid: e96992c0a5dfd18499a33a00d457752b,
+        type: 3}
+      propertyPath: m_TakoMoveSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 289207601674919270, guid: e96992c0a5dfd18499a33a00d457752b,
+        type: 3}
+      propertyPath: m_ObjEventRelation
+      value: 
+      objectReference: {fileID: 6993812097482421950, guid: 39594e49df9cec440938a7f494ca087c,
         type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e96992c0a5dfd18499a33a00d457752b, type: 3}
@@ -330,12 +346,12 @@ PrefabInstance:
     - target: {fileID: 5832974778256760271, guid: 0ef23fa4d38575348993f88fad1664fb,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5832974778256760271, guid: 0ef23fa4d38575348993f88fad1664fb,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -8
       objectReference: {fileID: 0}
     - target: {fileID: 5832974778256760271, guid: 0ef23fa4d38575348993f88fad1664fb,
         type: 3}

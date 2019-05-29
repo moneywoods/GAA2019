@@ -31,14 +31,16 @@ public class VCam : MonoBehaviour
     {        
     }
 
-    public bool MoveVCam()
+    public void MoveVCam()
     {
         m_Dolly.m_PathPosition += m_CameraSpeed * Time.deltaTime;
-
-        bool isEndScene = m_Dolly.m_PathPosition >= m_Dolly.m_Path.MaxPos;
-        
-        return (isEndScene) ? true : false;
     }
 
+    public bool VCamLimitPos()
+    {
+        bool isEndScene = m_Dolly.m_PathPosition >= m_Dolly.m_Path.MaxPos;
+
+        return (isEndScene) ? true : false;
+    }
 }
 
