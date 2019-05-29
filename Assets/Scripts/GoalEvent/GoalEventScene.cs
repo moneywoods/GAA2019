@@ -20,6 +20,6 @@ public class GoalEventScene : MonoBehaviour
     void Update()
     {
         GoalStarBehavior goalScript = m_ObjGoalStar.GetComponent<GoalStarBehavior>();
-        goalScript.EventMove();
+//        goalScript.EventMove();
     }
 }
