@@ -260,6 +260,7 @@ public class FadeManager : MonoBehaviour
             if(fadeTime < timeElapsed)
             {
                 isFadeIn = false;
+                fadeCanvas.enabled = false;
                 timeElapsed = 0.0f;
                 ClearState();
                 ResetSize();
@@ -273,6 +274,7 @@ public class FadeManager : MonoBehaviour
             if(fadeTime < timeElapsed)
             {
                 isFadeOut = false;
+                fadeCanvas.enabled = false;
                 timeElapsed = 0.0f;
                 ClearState();
                 ResetSize();

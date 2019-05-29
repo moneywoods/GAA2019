@@ -52,9 +52,10 @@ public class GameMasterBehavior : MonoBehaviour
         FadeManager.SetImage(FadeManager.ImageIndex.MENDAKO_1_ALPHA);
         FadeManager.ClearState();
         FadeManager.NextColor = Color.black;
-        FadeManager.SizeRatio = new Vector2(2.0f, 2.0f);
+        FadeManager.ImageSize_Start = new Vector2(0, 0);
+        FadeManager.ImageSize_End = new Vector2(Screen.width * 3, Screen.height * 3);
         FadeManager.AddState(FadeManager.State.BIGGER);
-        FadeManager.AddState(FadeManager.State.A_TO_ZERO);
+        // FadeManager.AddState(FadeManager.State.A_TO_ZERO);
         FadeManager.SceneIn();
 
         // ステージ情報を書いたテキストファイルの読み込み
