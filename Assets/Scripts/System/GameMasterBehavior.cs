@@ -51,6 +51,9 @@ public class GameMasterBehavior : MonoBehaviour
         FadeManager.NextColor = Color.white;
         FadeManager.SetImage(FadeManager.ImageIndex.MENDAKO_1_ALPHA);
         FadeManager.ClearState();
+        FadeManager.NextColor = Color.black;
+        FadeManager.SizeRatio = new Vector2(2.0f, 2.0f);
+        FadeManager.AddState(FadeManager.State.BIGGER);
         FadeManager.AddState(FadeManager.State.A_TO_ZERO);
         FadeManager.SceneIn();
 
