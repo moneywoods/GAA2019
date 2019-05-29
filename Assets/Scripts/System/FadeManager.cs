@@ -1,7 +1,7 @@
 ﻿/* 
  * 使い方
  * AddState関数でやりたいことを設定する。
- * 徐々に大きさを変化させる場合 AddStateの引数を BIGGER か SMALLER にして、SizeRatio変数に各倍率を入れる
+ * 徐々に大きさを変化させる場合 AddStateの引数を BIGGER か SMALLER にして呼び出し、Size_StartとSize_Endをそれぞれ指定する（Unmaskのサイズも同様に指定可能）
  * NextColorで色の変更ができます
  * ・画像の変更 Resources/SpritesフォルダにSpriteを追加して、imagePathArray配列にパス、ImageIndexにインデックスを書き込む
  *   SetImage関数でイメージの設定ができます
@@ -18,6 +18,14 @@ using Coffee.UIExtensions;
 
 public class FadeManager : MonoBehaviour
 {
+
+    // 設定
+    public static Color NextColor = Color.black;
+    public static Vector2 ImageSize_Start;
+    public static Vector2 ImageSize_End;
+
+    public static Vector2 UnmaskSize_Start;
+    public static Vector2 UnmaskSize_End;
     private static GameObject instance;
 
     //フェード用のCanvasとImage
@@ -37,9 +45,6 @@ public class FadeManager : MonoBehaviour
 	//遷移先のシーン名
 	private static string nextScene;
 
-    // 設定
-    public static Color NextColor = Color.black;
-    public static Vector2 SizeRatio = new Vector2(1.0f, 1.0f);
 
     [Flags, Serializable]
     public enum State
@@ -57,7 +62,6 @@ public class FadeManager : MonoBehaviour
     }
     
     public static State CurrentState;
-
     [Serializable]
     public enum ImageIndex
     {
@@ -81,8 +85,8 @@ public class FadeManager : MonoBehaviour
     [SerializeField] private static ImageIndex CurrentUnmask = ImageIndex.NONE;
 
     // 処理用の変数
-    private static Vector2 diff;
-    private static Vector2 originImageSize;
+    private static Vector2 imageDiff;
+    private static Vector2 unmaskDiff;
 
     //フェード用のCanvasとImage生成
     static void Init()
@@ -117,7 +121,7 @@ public class FadeManager : MonoBehaviour
         mask = new GameObject("mask").AddComponent<Image>();
         mask.transform.SetParent(fadeCanvas.transform, false);
         mask.rectTransform.anchoredPosition = Vector3.zero;
-        mask.rectTransform.sizeDelta = new Vector2(1920, 1080);
+        mask.rectTransform.sizeDelta = new Vector2(Screen.width, Screen.height);
         mask.gameObject.AddComponent<Mask>();
         mask.GetComponent<Mask>().showMaskGraphic = false;
         mask.gameObject.SetActive(true);
@@ -128,7 +132,7 @@ public class FadeManager : MonoBehaviour
         unmask.rectTransform.anchoredPosition = Vector3.zero;
         unmask.gameObject.AddComponent<Unmask>();
         unmask.gameObject.SetActive(false);
-        unmask.rectTransform.sizeDelta = new Vector2(1920, 1080);
+        unmask.rectTransform.sizeDelta = new Vector2(Screen.width, Screen.height);
 
         if(CurrentUnmask != ImageIndex.NONE)
         {
@@ -146,23 +150,12 @@ public class FadeManager : MonoBehaviour
         }
 
         //Imageのサイズは適当に設定してください
-        image.rectTransform.sizeDelta = new Vector2(1920, 1080);
+        image.rectTransform.sizeDelta = new Vector2(Screen.width, Screen.height);
 
         // 色の設定
         image.color = NextColor;
-
-        // インスタンスを保持
-        instance = FadeCanvasObject;
-
-
-	}
-
-    private static void CalcDiff()
-    {
-        originImageSize = image.rectTransform.sizeDelta;
-        diff = originImageSize * (new Vector2(SizeRatio.x - 1, SizeRatio.y - 1)) / fadeTime;
     }
-
+    
     private static void ResetSize()
     {
         mask.rectTransform.sizeDelta = new Vector2(Screen.width, Screen.height);
@@ -170,18 +163,26 @@ public class FadeManager : MonoBehaviour
         unmask.rectTransform.sizeDelta = new Vector2(Screen.width, Screen.height);
     }
 
-	//シーン導入開始
-	public static void SceneIn()
+    private static void InitFade()
+    {
+        // サイズの初期化
+        image.rectTransform.sizeDelta = ImageSize_Start;
+        unmask.rectTransform.sizeDelta = UnmaskSize_Start;
+
+        // 差分の計算
+        imageDiff = (ImageSize_End - ImageSize_Start) / fadeTime;
+        unmaskDiff = (UnmaskSize_End - UnmaskSize_Start) / fadeTime;
+    }
+
+    //シーン導入開始
+    public static void SceneIn()
 	{
 		if (mask == null) Init();
         image.color = NextColor; //一応
         fadeCanvas.enabled = true;
 		isFadeIn = true;
-
-        if(CheckState(State.BIGGER) || CheckState(State.SMALLER))
-        {
-            CalcDiff();
-        }
+        
+        InitFade();
     }
 
 	//シーン遷移開始
@@ -198,10 +199,7 @@ public class FadeManager : MonoBehaviour
 		fadeCanvas.enabled = true;
         isFadeOut = true;
 
-        if(CheckState(State.BIGGER) || CheckState(State.SMALLER))
-        {
-            CalcDiff();
-        }
+        InitFade();
     }
 
 	void Update()
@@ -247,10 +245,11 @@ public class FadeManager : MonoBehaviour
 
         if(CheckState(State.BIGGER) || CheckState(State.SMALLER))
         {
-            var size = mask.rectTransform.sizeDelta + diff * Time.deltaTime;
+            var size = mask.rectTransform.sizeDelta + imageDiff * Time.deltaTime; // maskとimage用のサイズ
             mask.rectTransform.sizeDelta = size;
             image.rectTransform.sizeDelta = size;
-            unmask.rectTransform.sizeDelta = size;
+
+            unmask.rectTransform.sizeDelta = unmask.rectTransform.sizeDelta + unmaskDiff * Time.deltaTime;
         }
 
         if(isFadeIn)
@@ -359,7 +358,7 @@ public class FadeManager : MonoBehaviour
         if (mask == null) Init();
 
         image.sprite = s;
-        CurrentImage = ImageIndex.NONE;
+        CurrentImage = ImageIndex.OTHER;
     }
 
     public static void SetUnmaskImage(ImageIndex index)
@@ -369,6 +368,7 @@ public class FadeManager : MonoBehaviour
         if (ImageIndex.NONE <= index)
         {
             unmask.sprite = null;
+            unmask.gameObject.SetActive(false);
             return;
         }
 
@@ -381,6 +381,6 @@ public class FadeManager : MonoBehaviour
         if (mask == null) Init();
 
         unmask.sprite = s;
-        CurrentUnmask = ImageIndex.NONE;
+        CurrentUnmask = ImageIndex.OTHER;
     }
 }
