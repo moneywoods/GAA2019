@@ -33,8 +33,18 @@ public class GoalEventScene : MonoBehaviour
 
 
         m_Timer += Time.deltaTime;
-        if (m_Timer >= TIME_LIMIT)
+        if (m_Timer >= TIME_LIMIT && !FadeManager.CheckIsFade())
         {
+            // 一時的にFadeの表現をこれにしてます
+            FadeManager.BeginSetting();
+            FadeManager.NextColor = Color.black;
+            FadeManager.SetUnmaskImage(FadeManager.ImageIndex.STAR);
+            FadeManager.AddState(FadeManager.State.UNMASK);
+            FadeManager.AddState(FadeManager.State.UNMASK_BIGGER);
+            FadeManager.UnmaskSize_Start = new Vector2(Screen.width * 10, Screen.height * 10);
+            FadeManager.UnmaskSize_End = new Vector2(0.01f, 0.01f);
+            GameMasterBehavior.isInitiationEvent = true;
+            // ------ ここまで
             FadeManager.SceneOut("Scene0315");
         }
     }
