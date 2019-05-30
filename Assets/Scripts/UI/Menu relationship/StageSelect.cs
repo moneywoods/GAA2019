@@ -52,11 +52,14 @@ public class StageSelect : MonoBehaviour
         if (stagenum != 0)
         {// ステージが選択された
             PauseTheGame.SetTimeScale(1.0f);
-            GameMasterBehavior.isInitiationEvent = true;
             FadeManager.BeginSetting();
             FadeManager.NextColor = Color.black;
-            FadeManager.NextColor.a = 0.0f;
-            FadeManager.AddState(FadeManager.State.A_TO_ONE);
+            FadeManager.SetUnmaskImage(FadeManager.ImageIndex.STAR_6);
+            FadeManager.AddState(FadeManager.State.UNMASK);
+            FadeManager.AddState(FadeManager.State.UNMASK_BIGGER);
+            FadeManager.UnmaskSize_Start = new Vector2(Screen.width * 10, Screen.height * 10);
+            FadeManager.UnmaskSize_End = new Vector2(0.01f, 0.01f);
+            GameMasterBehavior.isInitiationEvent = true;
             FadeManager.SceneOut("scene0315");
         }
     }
