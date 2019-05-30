@@ -17,7 +17,10 @@ public class GoalEventScene : MonoBehaviour
     bool CheckFlag = false;
     // 次のステージへの切り替え方修正してほちぃ
     float m_Timer = 0f;
-    readonly float TIME_LIMIT = 8f;
+    [SerializeField]
+    private float TIME_TO_SCENE_TRANSITION = 8f;
+
+    private GameObject m_CloneMainVCam;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +30,8 @@ public class GoalEventScene : MonoBehaviour
         Instantiate(m_EventVCam);
 
         CheckFlag = false;
+        m_CloneMainVCam = GameObject.FindWithTag("MainVCam");
+
     }
 
     // Update is called once per frame
@@ -35,22 +40,7 @@ public class GoalEventScene : MonoBehaviour
         // オクトちゃんぐるぐる回転
         m_ObjTako.transform.Rotate(new Vector3(0, 1, 0), 4);
 
-
-        m_Timer += Time.deltaTime;
-        if (m_Timer >= TIME_LIMIT && CheckFlag != true)
-        {
-            if (IsCheckStageChange())
-            {
-                FadeManager.SceneOut("BeginingEventScene");
-                CheckFlag = true;
-            }
-            else
-            {
-                FadeManager.SceneOut("Scene0315");
-                CheckFlag = true;
-            }
-
-        }
+        SceneChange();
     }
 
     bool IsCheckStageChange()
@@ -60,6 +50,26 @@ public class GoalEventScene : MonoBehaviour
             return true;
         }
         return false;
+    }    
+
+    void SceneChange()
+    {
+        if (!m_CloneMainVCam.activeSelf)
+        {
+            m_Timer += Time.deltaTime;
+            if (m_Timer >= TIME_TO_SCENE_TRANSITION && CheckFlag != true)
+            {
+                if (IsCheckStageChange())
+                {
+                    FadeManager.SceneOut("BeginingEventScene");
+                    CheckFlag = true;
+                }
+                else
+                {
+                    FadeManager.SceneOut("Scene0315");
+                    CheckFlag = true;
+                }
+            }
+        }
     }
-    
 }

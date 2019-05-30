@@ -5,8 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class GoalStarBehavior : LandStarController
 {
-    // シーン遷移までの時間
-    private float m_NextSceneTimer = 0;
     [SerializeField]
     private GameObject m_StageClearEvent;
 
@@ -21,7 +19,6 @@ public class GoalStarBehavior : LandStarController
     // Start is called before the first frame update
     void Start()
     {
-        m_NextSceneTimer = 0;
         GameObject objTako = GameObject.FindWithTag("PlayerCharacter");
         m_TakoControllerScript = objTako.GetComponent<Tako.TakoController>();
 
