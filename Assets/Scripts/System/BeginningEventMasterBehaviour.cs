@@ -13,7 +13,7 @@ public class BeginningEventMasterBehaviour : MonoBehaviour
     private GameObject m_ObjVirtualCamera;
     [SerializeField]
     private GameObject m_ObjEventRelation;
-    
+
     private OctoStartMove m_OctoScript;     // オクトちゃんのスクリプト
     private VCam m_VCamScript;              // VirtualCameraのスクリプト
 
@@ -46,17 +46,17 @@ public class BeginningEventMasterBehaviour : MonoBehaviour
         if (GameMasterBehavior.InitiatingStage.Stage == 2)
         {
             // 背景用のシーン読込
-//            SceneManager.LoadScene("シーンの名前", LoadSceneMode.Additive);
+            SceneManager.LoadScene("GameBackGround2", LoadSceneMode.Additive);
         }
         if (GameMasterBehavior.InitiatingStage.Stage == 3)
         {
             // 背景用のシーン読込
-//            SceneManager.LoadScene("GameBackGround", LoadSceneMode.Additive);
+            SceneManager.LoadScene("GameBackGround3", LoadSceneMode.Additive);
         }
         if (GameMasterBehavior.InitiatingStage.Stage == 4)
         {
             // 背景用のシーン読込
-//            SceneManager.LoadScene("GameBackGround", LoadSceneMode.Additive);
+            SceneManager.LoadScene("GameBackGround3", LoadSceneMode.Additive);
         }
 
 
