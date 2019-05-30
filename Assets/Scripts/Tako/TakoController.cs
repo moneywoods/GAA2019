@@ -127,7 +127,7 @@ namespace Tako
                 var pos = currentStarStaying.GetComponent<StarBase>().CellNum;
                 if (!star.GetComponent<StarBase>().CheckKineticPowerCanBeUsed(currentStarStaying.GetComponent<StarBase>().CellNum, isRight))
                 {
-                    SetAnimationFlagTrue(AnimationFlagName.flagIsJump);
+                    SetAnimationFlagTrue(AnimationFlagName.flagIsMoveStar);
                     result = false;
                 }
                 else
