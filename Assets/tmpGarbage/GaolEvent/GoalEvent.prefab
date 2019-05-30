@@ -43,7 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d37f30baf77daaf4fa11b266d5ed44b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ObjTako: {fileID: 3227633270504513355, guid: 44bca1824f9b1684db3587e26f97ab0c,
-    type: 3}
-  m_ObjGoalStar: {fileID: 8112558533587871894, guid: 61830842644e90e4494a09ce61d61994,
+  m_MainVCam: {fileID: 2512074639296744, guid: 565c6c20e1a7825469aa91a2cf27775d, type: 3}
+  m_EventVCam: {fileID: 6782032019203196264, guid: 1e271494377943f4d851e7e70b492cad,
     type: 3}

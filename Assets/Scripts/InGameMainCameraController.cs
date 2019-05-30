@@ -34,6 +34,7 @@ public class InGameMainCameraController : StateContex
 
         SetCurrentState(StateName.Floating);
     }
+
     // Use this for initialization
     void Start ()
     {
