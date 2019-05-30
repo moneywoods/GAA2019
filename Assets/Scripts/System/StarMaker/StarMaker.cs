@@ -148,6 +148,9 @@ public class StarMaker : SingletonPattern<StarMaker>
     public void ResetWorld()
     {
         GameMasterBehavior.isInitiationEvent = false;
+        FadeManager.BeginSetting();
+        FadeManager.NextColor = Color.black;
+        FadeManager.NextColor.a = 0.0f;
         FadeManager.AddState(FadeManager.State.A_TO_ONE);
         FadeManager.SceneOut("scene0315");
     }
