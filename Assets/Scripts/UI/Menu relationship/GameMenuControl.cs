@@ -55,7 +55,10 @@ public class GameMenuControl : MonoBehaviour
         if (gameObject.name == "RestartStage")
         {// ステージをやり直す
             PauseTheGame.SetTimeScale(1.0f);
+            FadeManager.BeginSetting();
             FadeManager.NextColor = Color.black;
+            FadeManager.NextColor.a = 0.0f;
+            FadeManager.AddState(FadeManager.State.A_TO_ONE);
             FadeManager.SetImage(FadeManager.ImageIndex.NONE);
             m_ObjPlayerCmdBhv.GetComponent<PlayerCommandBehavior>().RedoTheStage();
             m_MenuDelete.SwitchActive();
@@ -72,8 +75,9 @@ public class GameMenuControl : MonoBehaviour
         if (gameObject.name == "BackToTitle")
         {// タイトルに戻る
             PauseTheGame.SetTimeScale(1.0f);
-            FadeManager.ClearState();
+            FadeManager.BeginSetting();
             FadeManager.NextColor = Color.black;
+            FadeManager.NextColor.a = 0.0f;
             FadeManager.AddState(FadeManager.State.A_TO_ONE);
             FadeManager.SetImage(FadeManager.ImageIndex.NONE);
             FadeManager.SceneOut("TitleScene");
