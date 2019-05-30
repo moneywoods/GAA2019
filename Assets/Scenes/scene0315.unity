@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 119ec07f1c7ed204db46bd8465fd5a50, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -336,6 +336,41 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8882525647747989673, guid: 0ef23fa4d38575348993f88fad1664fb,
+        type: 3}
+      propertyPath: m_projectionMatrixMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8882525647747989673, guid: 0ef23fa4d38575348993f88fad1664fb,
+        type: 3}
+      propertyPath: field of view
+      value: 65
+      objectReference: {fileID: 0}
+    - target: {fileID: 8882525647747989673, guid: 0ef23fa4d38575348993f88fad1664fb,
+        type: 3}
+      propertyPath: m_SensorSize.x
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 8882525647747989673, guid: 0ef23fa4d38575348993f88fad1664fb,
+        type: 3}
+      propertyPath: m_SensorSize.y
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 8882525647747989673, guid: 0ef23fa4d38575348993f88fad1664fb,
+        type: 3}
+      propertyPath: m_FocalLength
+      value: 15.696855
+      objectReference: {fileID: 0}
+    - target: {fileID: 8882525647747989673, guid: 0ef23fa4d38575348993f88fad1664fb,
+        type: 3}
+      propertyPath: m_ClearFlags
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8882525647747989673, guid: 0ef23fa4d38575348993f88fad1664fb,
+        type: 3}
+      propertyPath: orthographic
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7268236978553708184, guid: 0ef23fa4d38575348993f88fad1664fb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -420,31 +455,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OcclusionCulling
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8882525647747989673, guid: 0ef23fa4d38575348993f88fad1664fb,
-        type: 3}
-      propertyPath: m_projectionMatrixMode
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8882525647747989673, guid: 0ef23fa4d38575348993f88fad1664fb,
-        type: 3}
-      propertyPath: field of view
-      value: 65
-      objectReference: {fileID: 0}
-    - target: {fileID: 8882525647747989673, guid: 0ef23fa4d38575348993f88fad1664fb,
-        type: 3}
-      propertyPath: m_SensorSize.x
-      value: 45
-      objectReference: {fileID: 0}
-    - target: {fileID: 8882525647747989673, guid: 0ef23fa4d38575348993f88fad1664fb,
-        type: 3}
-      propertyPath: m_SensorSize.y
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 8882525647747989673, guid: 0ef23fa4d38575348993f88fad1664fb,
-        type: 3}
-      propertyPath: m_FocalLength
-      value: 15.696855
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0ef23fa4d38575348993f88fad1664fb, type: 3}
