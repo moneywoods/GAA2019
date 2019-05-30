@@ -39,13 +39,20 @@ public class TitleMenuControl : MonoBehaviour
         if (gameObject.name == "BeginGame")
         {// 初めから
             GameMasterBehavior.InitiatingStage = new StageInfo(1, 1);
+            FadeManager.BeginSetting();
+            FadeManager.SetImage(FadeManager.ImageIndex.STAR_6);
+            FadeManager.ImageSize_Start = new Vector2(0, 0);
+            FadeManager.ImageSize_End = new Vector2(Screen.width * 10, Screen.height * 10);
+            FadeManager.AddState(FadeManager.State.BIGGER);
             GameMasterBehavior.isInitiationEvent = true;
-            FadeManager.FadeOut("scene0315");
+            FadeManager.SceneOut("scene0315");
         }
         if (gameObject.name == "ContinueGame")
         {// 続きから
+            FadeManager.BeginSetting();
+            FadeManager.AddState(FadeManager.State.A_TO_ONE);
             GameMasterBehavior.isInitiationEvent = true;
-            FadeManager.FadeOut("scene0315");
+            FadeManager.SceneOut("scene0315");
         }
         if (gameObject.name == "SelectStage")
         {// ステージ選択

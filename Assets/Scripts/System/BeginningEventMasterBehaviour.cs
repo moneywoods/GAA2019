@@ -37,6 +37,5 @@ public class BeginningEventMasterBehaviour : MonoBehaviour
         GameObject m_VCam = Instantiate(m_ObjVirtualCamera);
 
         Instantiate(m_ObjEventRelation);
-
     }
 }
