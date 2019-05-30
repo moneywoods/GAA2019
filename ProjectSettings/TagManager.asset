@@ -23,6 +23,9 @@ TagManager:
   - CanvasText
   - MessageText
   - VCamera
+  - MoveGuide
+  - MainVCam
+  - EventVCam
   layers:
   - Default
   - TransparentFX

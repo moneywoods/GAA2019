@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
+
 public class GameMasterBehavior : MonoBehaviour
 {
     [SerializeField] private GameObject m_StarMakerPrefab = null;
@@ -37,6 +38,10 @@ public class GameMasterBehavior : MonoBehaviour
 
     [SerializeField] public static bool isInitiationEvent = false;
     [SerializeField] private GameObject m_ParticleManagerPrefab;
+
+//    [SerializeField] private GameObject m_MainVCam;
+//    [SerializeField] private GameObject m_EventVCam;
+
 
     GameObject text;
 
@@ -75,13 +80,18 @@ public class GameMasterBehavior : MonoBehaviour
         var scriptPlayerController = playerController.GetComponent<PlayerCommandBehavior>();
         scriptPlayerController.SetCurrentSceneMenu(menu);
 
+        // バーチャルカメラのクローン生成
+//        Instantiate(m_MainVCam);
+//        Instantiate(m_EventVCam);
+
         // Camera
         var camera = GameObject.FindGameObjectWithTag(ObjectTag.MainCamera);
         var cameraScript = camera.GetComponent<InGameMainCameraController>();
-        // ゲームスタート時イベント有り無し
+
 
         Instantiate(m_ParticleManagerPrefab);
 
+        // ゲームスタート時イベント有り無し
         if(isInitiationEvent)
         {
             // ゴールからスタートまで星を映すモード
@@ -92,7 +102,8 @@ public class GameMasterBehavior : MonoBehaviour
         else
         {
             cameraScript.SetTarget(GameObject.FindGameObjectWithTag(ObjectTag.PlayerCharacter));
-            cameraScript.SetCurrentState(InGameMainCameraController.StateName.Following);
+
+            cameraScript.SetCurrentState(InGameMainCameraController.StateName.Following);            
         }
 
         // GetComponent<AudioSource>().Play(); 音だすやつ
