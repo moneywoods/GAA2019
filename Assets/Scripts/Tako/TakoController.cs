@@ -42,10 +42,12 @@ namespace Tako
         {
             public static string flagIsJump = "isJump";
             public static string flagIsMoveStar = "isMoveStar";
+            public static string flagIsNotMoveStar = "isNotMoveStar";
             public static string[] flagArray =
             {
-                flagIsJump,
-                flagIsMoveStar
+                flagIsJump,          //ジャンプ
+                flagIsMoveStar,　　　//☆を動かす
+                flagIsNotMoveStar　　//☆が行動不能の時に☆を動かすやつ
             };
         }
 
