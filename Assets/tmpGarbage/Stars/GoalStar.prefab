@@ -97,7 +97,8 @@ MonoBehaviour:
   cellNum: {x: -1, y: -1}
   explosionObject: {fileID: 6307091678883776270, guid: 6054c0bf48a9142459fc014c9126e8ea,
     type: 3}
-  m_EffectCanMoveTo: {fileID: 7753743199728161334, guid: da937cf06755df643898e59216a1ad69,
+  uitext: {fileID: 0}
+  m_StageClearEvent: {fileID: 839650473771267428, guid: 632fb0ec36a83874e8e7de1c93ffb3b2,
     type: 3}
 --- !u!54 &3093867695013271764
 Rigidbody:

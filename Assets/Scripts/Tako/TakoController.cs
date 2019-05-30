@@ -81,18 +81,18 @@ namespace Tako
         {
             if (other.gameObject == nextStar && CurrentState.Name == StateName.MovingBetweenStars)
             {
-                transform.position = other.transform.position;
-                currentStarStaying = other.gameObject;
-                nextStar = null;
+                //transform.position = other.transform.position;
+                //currentStarStaying = other.gameObject;
+                //nextStar = null;
 
-                string next = StateName.Normal;
+                //string next = StateName.Normal;
 
-                if (other.tag == ObjectTag.GoalStar)
-                {
-                    next = StateName.StayingGoal;
-                }
+                //if (other.tag == ObjectTag.GoalStar)
+                //{
+                //    next = StateName.StayingGoal;
+                //}
 
-                TransitState(next);
+                //TransitState(next);
             }
         }
 
@@ -577,6 +577,8 @@ namespace Tako
                     update -= WaitingSmallWindow;
                     update += AdjustTakoModelAltitude;
                     update += MoveToStar;
+
+                    // 経過時間のリセット
                     timeExpired = 0.0f;
                  }
 
@@ -587,7 +589,7 @@ namespace Tako
             {
                 tako.transform.position += diff * Time.deltaTime;
 
-                //// モデルの向きを調整 これいるっけ
+                //// モデルの向きを調整
                 Transform target = takoScript.nextStar.transform;
 
                 Vector3 targetDir = target.position - tako.transform.position;
@@ -595,8 +597,36 @@ namespace Tako
                 float step = 10.0f * Time.deltaTime;
                 Vector3 newDir = Vector3.RotateTowards(tako.transform.forward, targetDir, step, 0.0f);
                 tako.transform.rotation = Quaternion.LookRotation(newDir);
+                
+                // 経過時間が予定時間を過ぎている場合、次の☆についているはずなのでチェックして、着地
+                if (EstimatedTimeToLand <= timeExpired)
+                {
+                    //// ありえないけど、一応距離が離れすぎていないかチェック
+                    //if(!(Vector3.Distance(takoScript.nextStar.transform.position, tako.transform.position) < 1.0f))
+                    //{
+                    //    Debug.Log("予定時間を過ぎてるのにTakoが星についてないぞ！");
+                    //    return;
+                    //}
+
+                    tako.transform.position = takoScript.nextStar.transform.position;　// 位置の調整　一応ね 
+                    takoScript.currentStarStaying = takoScript.nextStar.gameObject; // 滞在星を更新
+
+                    // ステートを遷移
+                    string next = StateName.Normal;
+
+                    // ゴールに
+                    if (takoScript.nextStar.tag == ObjectTag.GoalStar)
+                    {
+                        next = StateName.StayingGoal;
+                    }
+
+                    takoScript.nextStar = null; // nextStarはnullへ
+                    takoScript.TransitState(next);
+                }
             }
 
+            // Takoの3Dモデルのローカル座標の変更
+            // Takoの高さを変えて、ジャンプしているように見せたい
             void AdjustTakoModelAltitude()
             {
                 if(timeExpired < EstimatedTimeToLand * 0.5f)
@@ -638,6 +668,8 @@ namespace Tako
                 diff = (takoScript.nextStar.transform.position - tako.transform.position) / EstimatedTimeToLand;
             }
 
+            // 定例更新処理
+            // 時間を足すだけ
             void Update()
             {
                 timeExpired += Time.deltaTime;
