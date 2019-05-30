@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using UnityEngine.SceneManagement;
+
 public class GoalEventScene : MonoBehaviour
 {
     [SerializeField]
@@ -12,6 +14,7 @@ public class GoalEventScene : MonoBehaviour
     private GameObject m_ObjTako;
 
 
+    bool CheckFlag = false;
     // 次のステージへの切り替え方修正してほちぃ
     float m_Timer = 0f;
     readonly float TIME_LIMIT = 8f;
@@ -22,7 +25,8 @@ public class GoalEventScene : MonoBehaviour
         m_ObjTako = GameObject.FindWithTag("PlayerCharacter");
         Instantiate(m_MainVCam);
         Instantiate(m_EventVCam);
-        
+
+        CheckFlag = false;
     }
 
     // Update is called once per frame
@@ -33,10 +37,29 @@ public class GoalEventScene : MonoBehaviour
 
 
         m_Timer += Time.deltaTime;
-        if (m_Timer >= TIME_LIMIT)
+        if (m_Timer >= TIME_LIMIT && CheckFlag != true)
         {
-            FadeManager.SceneOut("Scene0315");
+            if (IsCheckStageChange())
+            {
+                FadeManager.SceneOut("BeginingEventScene");
+                CheckFlag = true;
+            }
+            else
+            {
+                FadeManager.SceneOut("Scene0315");
+                CheckFlag = true;
+            }
+
         }
+    }
+
+    bool IsCheckStageChange()
+    {
+        if (GameMasterBehavior.InitiatingChapter == 1)
+        {
+            return true;
+        }
+        return false;
     }
     
 }

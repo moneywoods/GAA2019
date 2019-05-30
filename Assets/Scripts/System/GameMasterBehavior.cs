@@ -134,8 +134,8 @@ public class GameMasterBehavior : MonoBehaviour
         chapter = num % 10;
         stage = num / 10;
 
-        rangeChapter = chapter < CHAPTER_MAX && chapter > 0;
-        rangeStage= stage < STAGE_MAX && stage > 0;
+        rangeChapter = chapter <= CHAPTER_MAX && chapter > 0;
+        rangeStage= stage <= STAGE_MAX && stage > 0;
         bool range = rangeChapter && rangeStage;
 
         if (range)
