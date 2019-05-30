@@ -13,12 +13,15 @@ public class VCam : MonoBehaviour
     [SerializeField]
     private float m_CameraSpeed = 0.8f;
 
+    [SerializeField]
+    private float m_TsuchiyaSpeed;
+
     // Start is called before the first frame update
     void Start()
     {
         GameObject objOcto = GameObject.FindWithTag("PlayerCharacter");
         m_VCam = GetComponent<CinemachineVirtualCamera>();
-        
+
 
         m_VCam.LookAt = objOcto.transform;
 //        m_VCam.Follow = objOcto.transform;
@@ -28,7 +31,8 @@ public class VCam : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {        
+    {
+        m_TsuchiyaSpeed = m_Dolly.m_Path.MaxPos;
     }
 
     public void MoveVCam()
