@@ -31,7 +31,6 @@ public class GameMasterBehavior : MonoBehaviour
     private readonly static int CHAPTER_MAX = 4;
 
     [SerializeField] private GameObject m_MenuCanvas;
-    [SerializeField] private GameObject m_UiText;
     [SerializeField] private GameObject m_EventSystem;
     [SerializeField] private GameObject m_GridCylinderPrefab;
     [SerializeField] private GameObject m_GridLinePrefab;
@@ -69,11 +68,6 @@ public class GameMasterBehavior : MonoBehaviour
         // UIオブジェクトを生成.
         GameObject menu = Instantiate(m_MenuCanvas);
         menu.SetActive(false);
-        text = Instantiate(m_UiText);
-        text.SetActive(true);
-
-        text = GameObject.FindWithTag(ObjectTag.MessageText);
-        text.GetComponent<TextMessnger>().MessngerInit();
 
         // プレイヤーコントローラを生成し,にプレイヤーキャラクターをセット.
         GameObject playerController = Instantiate(m_PlayerCommand);
