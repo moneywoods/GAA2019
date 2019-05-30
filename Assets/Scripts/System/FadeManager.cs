@@ -1,11 +1,11 @@
 ﻿/* 
  * 使い方
- * AddState関数でやりたいことを設定する。
- * 徐々に大きさを変化させる場合 AddStateの引数を BIGGER か SMALLER にして呼び出し、Size_StartとSize_Endをそれぞれ指定する（Unmaskのサイズも同様に指定可能）
+ * まずBeginSetting関数を呼ぶ（初期化のため）
+ * AddState関数でやりたいことを設定する
+ * 徐々に大きさを変化させる場合 AddStateの引数を BIGGER か SMALLER にして呼び出し、ImageSize_StartとImageSize_Endをそれぞれ指定する
  * NextColorで色の変更ができます
  * ・画像の変更 Resources/SpritesフォルダにSpriteを追加して、imagePathArray配列にパス、ImageIndexにインデックスを書き込む
  *   SetImage関数でイメージの設定ができます
- * Unmaskについてもほぼ同様
  */
 
 using System;
@@ -18,7 +18,6 @@ using Coffee.UIExtensions;
 
 public class FadeManager : MonoBehaviour
 {
-
     // 設定
     public static Color NextColor = Color.black;
     public static Vector2 ImageSize_Start;
@@ -39,7 +38,7 @@ public class FadeManager : MonoBehaviour
 	public static bool isFadeOut = false;
 
 	//フェードしたい時間（単位は秒）
-	private static float fadeTime = 0.5f;
+	private static float fadeTime = 1.0f;
     private static float timeElapsed = 0.0f;
 
 	//遷移先のシーン名
@@ -67,6 +66,7 @@ public class FadeManager : MonoBehaviour
     {
         STAR_1_ALPHA,
         MENDAKO_1_ALPHA,
+        STAR_6,
         NONE,
         OTHER
     }
@@ -77,7 +77,8 @@ public class FadeManager : MonoBehaviour
     private static string[] imagePathArray = 
     {
         "FadeImages/Sprites/star_1_alpha",
-        "FadeImages/Sprites/mendako_1_alpha"
+        "FadeImages/Sprites/mendako_1_alpha",
+        "FadeImages/Sprites/star_6"
     };
 
     private static List<Sprite> imageList;
@@ -85,8 +86,19 @@ public class FadeManager : MonoBehaviour
     [SerializeField] private static ImageIndex CurrentUnmask = ImageIndex.NONE;
 
     // 処理用の変数
+    private static bool isInited = false; // FadeCanvasの初期化が終わっているかどうか
     private static Vector2 imageDiff;
     private static Vector2 unmaskDiff;
+
+    public static void BeginSetting()
+    {
+        if (mask == null) Init();
+        ResetSize();
+        ResetSizeTransition();
+        SetImage(ImageIndex.NONE);
+        SetUnmaskImage(ImageIndex.NONE);
+        ClearState();
+    }
 
     //フェード用のCanvasとImage生成
     static void Init()
@@ -110,6 +122,7 @@ public class FadeManager : MonoBehaviour
 		FadeCanvasObject.AddComponent<GraphicRaycaster>();
 		fadeCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
 		FadeCanvasObject.AddComponent<FadeManager>();
+        fadeCanvas.enabled = false;
 
         // mask
         //  +unmask imageにアルファのある画像を設定する
@@ -143,6 +156,7 @@ public class FadeManager : MonoBehaviour
         image = new GameObject("image").AddComponent<Image>();
 		image.transform.SetParent(mask.transform, false);
 		image.rectTransform.anchoredPosition = Vector3.zero;
+        image.rectTransform.sizeDelta = new Vector2(Screen.width, Screen.height);
 
         if (CurrentImage != ImageIndex.NONE)
         {
@@ -151,9 +165,15 @@ public class FadeManager : MonoBehaviour
 
         //Imageのサイズは適当に設定してください
         image.rectTransform.sizeDelta = new Vector2(Screen.width, Screen.height);
+        image.rectTransform.sizeDelta = new Vector2(Screen.width, Screen.height);
 
-        // 色の設定
-        image.color = NextColor;
+        // シーン中初使用、且つ、サイズの遷移が指定されていない場合、サイズ遷移用変数をウィンドウサイズに合わせる
+        var deltasize_0_0 = new Vector2(0.0f, 0.0f); 
+        if(ImageSize_Start == deltasize_0_0 && ImageSize_End == deltasize_0_0 &&
+            UnmaskSize_Start == deltasize_0_0 && UnmaskSize_End == deltasize_0_0)
+        {
+            ImageSize_Start = ImageSize_End = UnmaskSize_Start = UnmaskSize_End = new Vector2(Screen.width, Screen.height);
+        }
     }
     
     private static void ResetSize()
@@ -161,6 +181,11 @@ public class FadeManager : MonoBehaviour
         mask.rectTransform.sizeDelta = new Vector2(Screen.width, Screen.height);
         image.rectTransform.sizeDelta = new Vector2(Screen.width, Screen.height);
         unmask.rectTransform.sizeDelta = new Vector2(Screen.width, Screen.height);
+    }
+
+    private static void ResetSizeTransition()
+    {
+        ImageSize_Start = ImageSize_End = UnmaskSize_Start = UnmaskSize_End = new Vector2(Screen.width, Screen.height);
     }
 
     private static void InitFade()
@@ -192,9 +217,9 @@ public class FadeManager : MonoBehaviour
 		nextScene = scene;
 
         //色の設定
-		Color tmpColor = image.color;
-        tmpColor.a = 0.0f;
-        image.color = tmpColor;
+		// Color tmpColor = image.color;
+        // tmpColor.a = 0.0f;
+        image.color = NextColor;
 
 		fadeCanvas.enabled = true;
         isFadeOut = true;
@@ -204,8 +229,38 @@ public class FadeManager : MonoBehaviour
 
 	void Update()
 	{
-		//フラグ有効なら毎フレームフェードイン/アウト処理
-		if (CheckState(State.A_TO_ZERO))
+        if (isFadeIn)
+        {
+            timeElapsed += Time.deltaTime;
+
+            // 終了判定
+            if (fadeTime < timeElapsed)
+            {
+                isFadeIn = false;
+                fadeCanvas.enabled = false;
+                timeElapsed = 0.0f;
+                ClearState();
+                ResetSizeTransition();
+            }
+        }
+        else if (isFadeOut)
+        {
+            timeElapsed += Time.deltaTime;
+
+            // 終了判定
+            if (fadeTime < timeElapsed)
+            {
+                isFadeOut = false;
+                // fadeCanvas.enabled = false;
+                timeElapsed = 0.0f;
+                ClearState();
+                //次のシーンへ遷移
+                SceneManager.LoadScene(nextScene);
+            }
+        }
+
+        //フラグ有効なら毎フレームフェードイン/アウト処理
+        if (CheckState(State.A_TO_ZERO))
 		{
             //経過時間から透明度計算
             float alpha = image.color.a;
@@ -214,6 +269,7 @@ public class FadeManager : MonoBehaviour
 			//フェードイン終了判定
 			if (alpha <= 0.0f)
 			{
+                alpha = 0.0f;
 				fadeCanvas.enabled = false;
                 RemoveState(State.A_TO_ZERO);
 			}
@@ -232,7 +288,8 @@ public class FadeManager : MonoBehaviour
 
 			//フェードアウト終了判定
 			if (alpha >= 1.0f)
-			{
+            {
+                alpha = 1.0f;
                 RemoveState(State.A_TO_ONE);
 			}
 
@@ -240,47 +297,18 @@ public class FadeManager : MonoBehaviour
             Color c = image.color;
             c.a = alpha;
             image.color = c;
-
         }
 
         if(CheckState(State.BIGGER) || CheckState(State.SMALLER))
         {
-            var size = mask.rectTransform.sizeDelta + imageDiff * Time.deltaTime; // maskとimage用のサイズ
-            mask.rectTransform.sizeDelta = size;
-            image.rectTransform.sizeDelta = size;
+            if((mask.rectTransform.sizeDelta + imageDiff) != ImageSize_End)
+            {
+                var size = mask.rectTransform.sizeDelta + imageDiff * Time.deltaTime; // maskとimage用のサイズ
+                mask.rectTransform.sizeDelta = size;
+                image.rectTransform.sizeDelta = size;
+            }
 
             unmask.rectTransform.sizeDelta = unmask.rectTransform.sizeDelta + unmaskDiff * Time.deltaTime;
-        }
-
-        if(isFadeIn)
-        {
-            timeElapsed += Time.deltaTime;
-
-            // 終了判定
-            if(fadeTime < timeElapsed)
-            {
-                isFadeIn = false;
-                fadeCanvas.enabled = false;
-                timeElapsed = 0.0f;
-                ClearState();
-                ResetSize();
-            }
-        }
-        else if(isFadeOut)
-        {
-            timeElapsed += Time.deltaTime;
-
-            // 終了判定
-            if(fadeTime < timeElapsed)
-            {
-                isFadeOut = false;
-                fadeCanvas.enabled = false;
-                timeElapsed = 0.0f;
-                ClearState();
-                ResetSize();
-                //次のシーンへ遷移
-                SceneManager.LoadScene(nextScene);
-            }
         }
 	}
 
