@@ -41,8 +41,6 @@ public class GoalStarBehavior : LandStarController
             GameMasterBehavior.InitiatingChapter = GameMasterBehavior.InitiatingChapter + 1;
             Instantiate(m_StageClearEvent);
             
-            // あとで消す　のでてきとう
-            FadeManager.SceneOut("scene0315");
         }
     }
     private void OnTriggerExit(Collider collision)
