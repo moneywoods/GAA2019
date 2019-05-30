@@ -18,7 +18,7 @@ public class GoalEventScene : MonoBehaviour
     // 次のステージへの切り替え方修正してほちぃ
     float m_Timer = 0f;
     [SerializeField]
-    private float TIME_TO_SCENE_TRANSITION = 8f;
+    private float TIME_TO_SCENE_TRANSITION = 5f;
 
     private GameObject m_CloneMainVCam;
 
@@ -50,7 +50,7 @@ public class GoalEventScene : MonoBehaviour
             return true;
         }
         return false;
-    }    
+    }
 
     void SceneChange()
     {
