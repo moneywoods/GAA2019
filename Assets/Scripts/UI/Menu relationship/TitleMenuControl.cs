@@ -49,7 +49,15 @@ public class TitleMenuControl : MonoBehaviour
             FadeManager.ImageSize_End = new Vector2(Screen.width * 10, Screen.height * 10);
             FadeManager.AddState(FadeManager.State.BIGGER);
             GameMasterBehavior.isInitiationEvent = true;
-            FadeManager.SceneOut("scene0315");
+
+            if (GameMasterBehavior.InitiatingStage.Chapter == 1)
+            {
+                FadeManager.SceneOut("BeginingEventScene");
+            }
+            else
+            {
+                FadeManager.SceneOut("scene0315");
+            }
         }
         if (gameObject.name == "ContinueGame")
         {// 続きから
@@ -58,7 +66,14 @@ public class TitleMenuControl : MonoBehaviour
             FadeManager.NextColor.a = 0;
             FadeManager.AddState(FadeManager.State.A_TO_ONE);
             GameMasterBehavior.isInitiationEvent = true;
-            FadeManager.SceneOut("scene0315");
+            if (GameMasterBehavior.InitiatingStage.Chapter == 1)
+            {
+                FadeManager.SceneOut("BeginingEventScene");
+            }
+            else
+            {
+                FadeManager.SceneOut("scene0315");
+            }
         }
         if (gameObject.name == "SelectStage")
         {// ステージ選択
