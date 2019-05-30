@@ -44,12 +44,12 @@ namespace Tako
         {
             public static string flagIsJump = "isJump";
             public static string flagIsMoveStar = "isMoveStar";
-            public static string flagIsNotMoveStar = "isNotMoveStar";
+            public static string flagIsCannotKineticPower = "isCannotKineticPower";
             public static string[] flagArray =
             {
                 flagIsJump,          //ジャンプ
                 flagIsMoveStar,　　　//☆を動かす
-                flagIsNotMoveStar　　//☆が行動不能の時に☆を動かすやつ
+                flagIsCannotKineticPower　　//☆が行動不能の時に☆を動かすやつ
             };
         }
 
@@ -131,7 +131,6 @@ namespace Tako
                 var pos = currentStarStaying.GetComponent<StarBase>().CellNum;
                 if (!star.GetComponent<StarBase>().CheckKineticPowerCanBeUsed(currentStarStaying.GetComponent<StarBase>().CellNum, isRight))
                 {
-                    SetAnimationFlagTrue(AnimationFlagName.flagIsJump);
                     result = false;
 
                     
@@ -361,6 +360,13 @@ namespace Tako
 
             void UpdateByCommand()
             {
+                // アニメーションステートの管理
+                AnimatorStateInfo anistate =  takoScript.animator.GetCurrentAnimatorStateInfo(0);
+                if(anistate.IsName("CannnotKineticPower") && 1.0f < anistate.normalizedTime)
+                {
+                    takoScript.animator.SetBool(AnimationFlagName.flagIsCannotKineticPower, false);
+                }
+
                 IsNextStarCommand();
 
                 RotateCharacter();
@@ -486,6 +492,7 @@ namespace Tako
                     else
                     {
                         // できなかった時の処理
+                        takoScript.animator.SetBool(AnimationFlagName.flagIsCannotKineticPower, true);
                     }
                 }
                 else if (inputLeft)
@@ -500,6 +507,7 @@ namespace Tako
                     else
                     {
                         // できなかった時の処理
+                        takoScript.animator.SetBool(AnimationFlagName.flagIsCannotKineticPower, true);
                     }
                 }
             }
