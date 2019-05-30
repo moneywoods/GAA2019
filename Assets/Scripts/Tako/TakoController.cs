@@ -38,6 +38,8 @@ namespace Tako
         [SerializeField] private float takoAltitude; // 移動時のTakoのモデルのジャンプの高さ
         [SerializeField] private float timeToWait = 0.0f;
 
+        private float NotMoveStar = 0.0f;
+
         private class AnimationFlagName
         {
             public static string flagIsJump = "isJump";
@@ -131,6 +133,8 @@ namespace Tako
                 {
                     SetAnimationFlagTrue(AnimationFlagName.flagIsJump);
                     result = false;
+
+                    
                 }
                 else
                 {
