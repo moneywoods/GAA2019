@@ -46,3 +46,4 @@ MonoBehaviour:
   m_MainVCam: {fileID: 2512074639296744, guid: 565c6c20e1a7825469aa91a2cf27775d, type: 3}
   m_EventVCam: {fileID: 6782032019203196264, guid: 1e271494377943f4d851e7e70b492cad,
     type: 3}
+  TIME_TO_SCENE_TRANSITION: 3
