@@ -40,6 +40,11 @@ public class StageSelect : MonoBehaviour
 
     public void OnClick(int stagenum)
     {
+        if(FadeManager.CheckIsFade())
+        {
+            return;
+        }
+
         GameMasterBehavior.SetStageAndChapter(stagenum);
 
         if (stagenum == 0) BackMenu();
@@ -48,7 +53,9 @@ public class StageSelect : MonoBehaviour
         {// ステージが選択された
             PauseTheGame.SetTimeScale(1.0f);
             GameMasterBehavior.isInitiationEvent = true;
-            FadeManager.ClearState();
+            FadeManager.BeginSetting();
+            FadeManager.NextColor = Color.black;
+            FadeManager.NextColor.a = 0.0f;
             FadeManager.AddState(FadeManager.State.A_TO_ONE);
             FadeManager.SceneOut("scene0315");
         }

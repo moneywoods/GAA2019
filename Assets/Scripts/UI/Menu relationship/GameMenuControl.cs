@@ -47,6 +47,11 @@ public class GameMenuControl : MonoBehaviour
 
     public void OnClick()
     {
+        if(FadeManager.CheckIsFade())
+        {
+            return;
+
+        }
         if (gameObject.name == "ReturnToGame")
         {// ゲームに戻る
             PauseTheGame.SetTimeScale(1.0f);

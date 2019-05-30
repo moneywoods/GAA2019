@@ -36,6 +36,10 @@ public class TitleMenuControl : MonoBehaviour
 
     public void OnClick()
     {
+        if(FadeManager.CheckIsFade())
+        {
+            return;
+        }
         if (gameObject.name == "BeginGame")
         {// 初めから
             GameMasterBehavior.InitiatingStage = new StageInfo(1, 1);
@@ -50,6 +54,8 @@ public class TitleMenuControl : MonoBehaviour
         if (gameObject.name == "ContinueGame")
         {// 続きから
             FadeManager.BeginSetting();
+            FadeManager.NextColor = Color.black;
+            FadeManager.NextColor.a = 0;
             FadeManager.AddState(FadeManager.State.A_TO_ONE);
             GameMasterBehavior.isInitiationEvent = true;
             FadeManager.SceneOut("scene0315");
