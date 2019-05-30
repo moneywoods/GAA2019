@@ -37,10 +37,9 @@ public class GoalStarBehavior : LandStarController
     {
         if(other.tag == ObjectTag.PlayerCharacter)
         {
-
-            GameMasterBehavior.InitiatingChapter = GameMasterBehavior.InitiatingChapter + 1;
             Instantiate(m_StageClearEvent);
-            
+            GameMasterBehavior.InitiatingChapter = GameMasterBehavior.InitiatingChapter + 1;
+
         }
     }
     private void OnTriggerExit(Collider collision)
