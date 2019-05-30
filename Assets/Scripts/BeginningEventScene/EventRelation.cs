@@ -62,7 +62,14 @@ public class EventRelation : MonoBehaviour
         if (m_VCamScript.VCamLimitPos())
         {
             if ((m_Timer += Time.deltaTime) >= TIMELIMIT)
-                FadeManager.FadeOut("scene0315");
+            {
+                GameMasterBehavior.isInitiationEvent = true;
+                FadeManager.BeginSetting();
+                FadeManager.NextColor = Color.black;
+                FadeManager.NextColor.a = 0.0f;
+                FadeManager.AddState(FadeManager.State.A_TO_ONE);
+                FadeManager.SceneOut("scene0315");
+            }
         }
     }
 }

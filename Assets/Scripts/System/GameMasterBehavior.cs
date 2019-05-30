@@ -25,7 +25,7 @@ public class GameMasterBehavior : MonoBehaviour
         get { return initiatingStage; }
         set { initiatingStage = value; }
     }
-
+    
     private readonly static int STAGE_MAX = 4;
     private readonly static int CHAPTER_MAX = 4;
 
@@ -48,11 +48,15 @@ public class GameMasterBehavior : MonoBehaviour
         }
 
         PauseTheGame.SetTimeScale(1.0f);
-        FadeManager.FadeIn();
+        FadeManager.BeginSetting();
+        FadeManager.NextColor = Color.black;
+        FadeManager.SetImage(FadeManager.ImageIndex.NONE);
+        FadeManager.AddState(FadeManager.State.A_TO_ZERO);
+        FadeManager.SceneIn();
 
         // ステージ情報を書いたテキストファイルの読み込み
         var mapData = MapLoader.LoadMap(initiatingStage);
-
+        
         // 世界を作る.
         GameObject starMaker = Instantiate(m_StarMakerPrefab);
         StarMaker.Instance.MakeWorld(mapData, Common.CellSize);
@@ -78,10 +82,11 @@ public class GameMasterBehavior : MonoBehaviour
         // Camera
         var camera = GameObject.FindGameObjectWithTag(ObjectTag.MainCamera);
         var cameraScript = camera.GetComponent<InGameMainCameraController>();
+
         // ゲームスタート時イベント有り無し
 
         Instantiate(m_ParticleManagerPrefab);
-
+        
         if(isInitiationEvent)
         {
             // ゴールからスタートまで星を映すモード
@@ -106,7 +111,7 @@ public class GameMasterBehavior : MonoBehaviour
     {
 
     }
-
+    
     // ステージクリア用
     private static void IsChapterOver()
     {
@@ -128,8 +133,8 @@ public class GameMasterBehavior : MonoBehaviour
         chapter = num % 10;
         stage = num / 10;
 
-        rangeChapter = chapter <= CHAPTER_MAX && chapter > 0;
-        rangeStage= stage <= STAGE_MAX && stage > 0;
+        rangeChapter = chapter < CHAPTER_MAX && chapter > 0;
+        rangeStage= stage < STAGE_MAX && stage > 0;
         bool range = rangeChapter && rangeStage;
 
         if (range)
@@ -138,7 +143,7 @@ public class GameMasterBehavior : MonoBehaviour
             initiatingStage.Stage = stage;
         }else
         {
-
+            
         }
     }
 }
