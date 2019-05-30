@@ -148,7 +148,11 @@ public class StarMaker : SingletonPattern<StarMaker>
     public void ResetWorld()
     {
         GameMasterBehavior.isInitiationEvent = false;
-        FadeManager.FadeOut("scene0315");
+        FadeManager.BeginSetting();
+        FadeManager.NextColor = Color.black;
+        FadeManager.NextColor.a = 0.0f;
+        FadeManager.AddState(FadeManager.State.A_TO_ONE);
+        FadeManager.SceneOut("scene0315");
     }
 
     public void DestroyWorld() // このスクリプトで生成した(であろう)オブジェクト達を消す.

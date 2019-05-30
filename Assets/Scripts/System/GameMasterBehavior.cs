@@ -1,10 +1,10 @@
+
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
-
 
 public class GameMasterBehavior : MonoBehaviour
 {
@@ -26,7 +26,7 @@ public class GameMasterBehavior : MonoBehaviour
         get { return initiatingStage; }
         set { initiatingStage = value; }
     }
-
+    
     private readonly static int STAGE_MAX = 4;
     private readonly static int CHAPTER_MAX = 4;
 
@@ -39,10 +39,6 @@ public class GameMasterBehavior : MonoBehaviour
     [SerializeField] public static bool isInitiationEvent = false;
     [SerializeField] private GameObject m_ParticleManagerPrefab;
 
-//    [SerializeField] private GameObject m_MainVCam;
-//    [SerializeField] private GameObject m_EventVCam;
-
-
     GameObject text;
 
     private void Start()
@@ -53,11 +49,15 @@ public class GameMasterBehavior : MonoBehaviour
         }
 
         PauseTheGame.SetTimeScale(1.0f);
-        FadeManager.FadeIn();
+        FadeManager.BeginSetting();
+        FadeManager.NextColor = Color.black;
+        FadeManager.SetImage(FadeManager.ImageIndex.NONE);
+        FadeManager.AddState(FadeManager.State.A_TO_ZERO);
+        FadeManager.SceneIn();
 
         // ステージ情報を書いたテキストファイルの読み込み
         var mapData = MapLoader.LoadMap(initiatingStage);
-
+        
         // 世界を作る.
         GameObject starMaker = Instantiate(m_StarMakerPrefab);
         StarMaker.Instance.MakeWorld(mapData, Common.CellSize);
@@ -80,18 +80,14 @@ public class GameMasterBehavior : MonoBehaviour
         var scriptPlayerController = playerController.GetComponent<PlayerCommandBehavior>();
         scriptPlayerController.SetCurrentSceneMenu(menu);
 
-        // バーチャルカメラのクローン生成
-//        Instantiate(m_MainVCam);
-//        Instantiate(m_EventVCam);
-
         // Camera
         var camera = GameObject.FindGameObjectWithTag(ObjectTag.MainCamera);
         var cameraScript = camera.GetComponent<InGameMainCameraController>();
 
+        // ゲームスタート時イベント有り無し
 
         Instantiate(m_ParticleManagerPrefab);
-
-        // ゲームスタート時イベント有り無し
+        
         if(isInitiationEvent)
         {
             // ゴールからスタートまで星を映すモード
@@ -102,8 +98,7 @@ public class GameMasterBehavior : MonoBehaviour
         else
         {
             cameraScript.SetTarget(GameObject.FindGameObjectWithTag(ObjectTag.PlayerCharacter));
-
-            cameraScript.SetCurrentState(InGameMainCameraController.StateName.Following);            
+            cameraScript.SetCurrentState(InGameMainCameraController.StateName.Following);
         }
 
         // GetComponent<AudioSource>().Play(); 音だすやつ
@@ -117,7 +112,7 @@ public class GameMasterBehavior : MonoBehaviour
     {
 
     }
-
+    
     // ステージクリア用
     private static void IsChapterOver()
     {
@@ -139,8 +134,8 @@ public class GameMasterBehavior : MonoBehaviour
         chapter = num % 10;
         stage = num / 10;
 
-        rangeChapter = chapter <= CHAPTER_MAX && chapter > 0;
-        rangeStage= stage <= STAGE_MAX && stage > 0;
+        rangeChapter = chapter < CHAPTER_MAX && chapter > 0;
+        rangeStage= stage < STAGE_MAX && stage > 0;
         bool range = rangeChapter && rangeStage;
 
         if (range)
@@ -149,7 +144,7 @@ public class GameMasterBehavior : MonoBehaviour
             initiatingStage.Stage = stage;
         }else
         {
-
+            
         }
     }
 }

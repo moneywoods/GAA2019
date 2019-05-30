@@ -35,7 +35,7 @@ namespace Tako
         private GameObject takoModel;
         TakoController takoScript;
         // State内で使うものですが、SerializeFieldを利用したかったのでこちらで
-        [SerializeField] private float takoAltitude; // 移動時のTakoのモデルのジャンプの高さ 
+        [SerializeField] private float takoAltitude; // 移動時のTakoのモデルのジャンプの高さ
         [SerializeField] private float timeToWait = 0.0f;
 
         private class AnimationFlagName
@@ -127,6 +127,7 @@ namespace Tako
                 var pos = currentStarStaying.GetComponent<StarBase>().CellNum;
                 if (!star.GetComponent<StarBase>().CheckKineticPowerCanBeUsed(currentStarStaying.GetComponent<StarBase>().CellNum, isRight))
                 {
+                    SetAnimationFlagTrue(AnimationFlagName.flagIsJump);
                     result = false;
                 }
                 else
@@ -164,7 +165,7 @@ namespace Tako
 
             // 目的地を変更
             nextStar = newLand;
-            
+
             return true;
         }
 
@@ -383,12 +384,13 @@ namespace Tako
             private void IsNextStarCommand()
             {
                 // スティックのしきい値
-                float INPUT_HORIZONTAL = 0.7f;
-                float INPUT_VERTICAL = 0.7f;
-                float INPUT_UP = 0.8f;
-                float INPUT_DOWN = -0.8f;
-                float INPUT_LEFT = -0.8f;
-                float INPUT_RIGHT = 0.8f;
+                float INPUT_HORIZONTAL = 0.9f;
+                float INPUT_VERTICAL = 0.9f;
+                float INPUT_UP = 0.5f;
+                float INPUT_DOWN = -0.5f;
+                float INPUT_LEFT = -0.5f;
+                float INPUT_RIGHT = 0.5f;
+
 
                 float moveX = Input.GetAxisRaw("Horizontal");
                 float moveY = Input.GetAxisRaw("Vertical");
@@ -567,7 +569,7 @@ namespace Tako
                 update += Update;
                 OnExit += AdjustTakoModelOnExitState;
             }
-            
+
             private float timeExpired = 0.0f;
 
             void WaitingSmallWindow()
@@ -597,7 +599,7 @@ namespace Tako
                 float step = 10.0f * Time.deltaTime;
                 Vector3 newDir = Vector3.RotateTowards(tako.transform.forward, targetDir, step, 0.0f);
                 tako.transform.rotation = Quaternion.LookRotation(newDir);
-                
+
                 // 経過時間が予定時間を過ぎている場合、次の☆についているはずなのでチェックして、着地
                 if (EstimatedTimeToLand <= timeExpired)
                 {
@@ -608,7 +610,7 @@ namespace Tako
                     //    return;
                     //}
 
-                    tako.transform.position = takoScript.nextStar.transform.position;　// 位置の調整　一応ね 
+                    tako.transform.position = takoScript.nextStar.transform.position;　// 位置の調整　一応ね
                     takoScript.currentStarStaying = takoScript.nextStar.gameObject; // 滞在星を更新
 
                     // ステートを遷移
