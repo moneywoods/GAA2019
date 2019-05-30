@@ -37,13 +37,10 @@ public class GoalStarBehavior : LandStarController
     {
         if(other.tag == ObjectTag.PlayerCharacter)
         {
-            GameObject.FindWithTag("Finish").transform.position = transform.position;
 
             GameMasterBehavior.InitiatingChapter = GameMasterBehavior.InitiatingChapter + 1;
             Instantiate(m_StageClearEvent);
             
-            // あとで消す　のでてきとう
-            FadeManager.SceneOut("scene0315");
         }
     }
     private void OnTriggerExit(Collider collision)
@@ -51,10 +48,5 @@ public class GoalStarBehavior : LandStarController
         
     }
 
-    public void EventMove()
-    {
-        Vector3 pos = transform.position;
-        pos = new Vector3(0f, 1f, 0f) * 1f;
-        transform.position -= pos;
-    }
+
 }
