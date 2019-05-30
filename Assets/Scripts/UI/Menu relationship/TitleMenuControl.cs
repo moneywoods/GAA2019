@@ -42,6 +42,8 @@ public class TitleMenuControl : MonoBehaviour
         }
         if (gameObject.name == "BeginGame")
         {// 初めから
+            GameMasterBehavior.InitiatingStage = new StageInfo(1, 1);
+
             FadeManager.BeginSetting();
             FadeManager.NextColor = Color.black;
             FadeManager.SetUnmaskImage(FadeManager.ImageIndex.STAR);
