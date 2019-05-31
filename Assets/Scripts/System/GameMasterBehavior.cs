@@ -26,7 +26,7 @@ public class GameMasterBehavior : MonoBehaviour
         get { return initiatingStage; }
         set { initiatingStage = value; }
     }
-    
+
     private readonly static int STAGE_MAX = 4;
     private readonly static int CHAPTER_MAX = 4;
 
@@ -56,7 +56,7 @@ public class GameMasterBehavior : MonoBehaviour
 
         // ステージ情報を書いたテキストファイルの読み込み
         var mapData = MapLoader.LoadMap(initiatingStage);
-        
+
         // 世界を作る.
         GameObject starMaker = Instantiate(m_StarMakerPrefab);
         StarMaker.Instance.MakeWorld(mapData, Common.CellSize);
@@ -81,7 +81,7 @@ public class GameMasterBehavior : MonoBehaviour
         // ゲームスタート時イベント有り無し
 
         Instantiate(m_ParticleManagerPrefab);
-        
+
         if(isInitiationEvent)
         {
             // ゴールからスタートまで星を映すモード
@@ -97,8 +97,28 @@ public class GameMasterBehavior : MonoBehaviour
 
         // GetComponent<AudioSource>().Play(); 音だすやつ
 
-        // 背景用のシーン読込
-        SceneManager.LoadScene("GameBackGround",LoadSceneMode.Additive);
+
+        // 土屋君、ここの"ステージ == 数値"を増やしてほしいにゃぁ。コピー版
+        if (GameMasterBehavior.InitiatingStage.Stage == 1 || GameMasterBehavior.InitiatingStage.Stage == 0)
+        {
+            // 背景用のシーン読込
+            SceneManager.LoadScene("GameBackGround", LoadSceneMode.Additive);
+        }
+        else if (GameMasterBehavior.InitiatingStage.Stage == 2)
+        {
+            // 背景用のシーン読込
+            SceneManager.LoadScene("GameBackGround 2", LoadSceneMode.Additive);
+        }
+        else if (GameMasterBehavior.InitiatingStage.Stage == 3)
+        {
+            // 背景用のシーン読込
+            SceneManager.LoadScene("GameBackGround 3", LoadSceneMode.Additive);
+        }
+        else if (GameMasterBehavior.InitiatingStage.Stage == 4)
+        {
+            // 背景用のシーン読込
+            SceneManager.LoadScene("GameBackGround 3", LoadSceneMode.Additive);
+        }
     }
 
     // Update is called once per frame
@@ -106,7 +126,7 @@ public class GameMasterBehavior : MonoBehaviour
     {
 
     }
-    
+
     // ステージクリア用
     private static void IsChapterOver()
     {
@@ -138,7 +158,7 @@ public class GameMasterBehavior : MonoBehaviour
             initiatingStage.Stage = stage;
         }else
         {
-            
+
         }
     }
 }
