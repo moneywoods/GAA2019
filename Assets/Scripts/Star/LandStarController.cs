@@ -52,10 +52,6 @@ public class LandStarController : StarBase
         set;
     }
 
-
-    public GameObject uitext;   // テキストのスクリプト取得
-    private int textchange;     // テキストの表示フラグ
-
     public LandStarController() : base(StarType.Land)
     {
 
@@ -64,7 +60,6 @@ public class LandStarController : StarBase
     // Start is called before the first frame update
     protected override void Start()
     {
-        uitext = GameObject.FindWithTag(ObjectTag.MessageText);
         timePast = 0.0f;
     }
 

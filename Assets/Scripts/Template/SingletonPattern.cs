@@ -5,6 +5,9 @@ using System.Collections.Generic;
 
 public class SingletonPattern<T> : MonoBehaviour where T : MonoBehaviour
 {
+    /// <summary>
+    /// これ活かされてなくない？
+    /// </summary>
     // インスタンス
     private static volatile T instance;
 
@@ -35,8 +38,7 @@ public class SingletonPattern<T> : MonoBehaviour where T : MonoBehaviour
                     GameObject obj = new GameObject();
                     obj.name = typeof(T).ToString() + "(singleton)";
                     instance = obj.AddComponent<T>();
-                    DontDestroyOnLoad(obj); // シーン変更時に破棄させない。
-
+                    // DontDestroyOnLoad(obj); // シーン変更時に破棄させない。
                 }
             }
             return instance;

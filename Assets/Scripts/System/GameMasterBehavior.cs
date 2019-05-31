@@ -36,7 +36,7 @@ public class GameMasterBehavior : MonoBehaviour
 
     [SerializeField] public static bool isInitiationEvent = false;
     [SerializeField] private GameObject m_ParticleManagerPrefab;
-    
+    [SerializeField] private GameObject m_SoundManagerPrefab;
     GameObject text;
 
 
@@ -91,9 +91,12 @@ public class GameMasterBehavior : MonoBehaviour
         var cameraScript = camera.GetComponent<InGameMainCameraController>();
 
         // ゲームスタート時イベント有り無し
-
         Instantiate(m_ParticleManagerPrefab);
+        
+        // サウンド
+        Instantiate(m_SoundManagerPrefab);
 
+        // カメラとかの設定
         if(isInitiationEvent)
         {
             // ゴールからスタートまで星を映すモード
@@ -107,27 +110,28 @@ public class GameMasterBehavior : MonoBehaviour
             cameraScript.SetCurrentState(InGameMainCameraController.StateName.Following);
         }
 
-        // GetComponent<AudioSource>().Play(); 音だすやつ
-
-
         // 土屋君、ここの"ステージ == 数値"を増やしてほしいにゃぁ。コピー版
         if (GameMasterBehavior.InitiatingStage.Stage == 1 || GameMasterBehavior.InitiatingStage.Stage == 0)
         {
+            SoundManagerBehaviour.Instance.Play(SoundManagerBehaviour.AudioIndex.BGM_Stage1, true, false);
             // 背景用のシーン読込
             SceneManager.LoadScene("GameBackGround", LoadSceneMode.Additive);
         }
         else if (GameMasterBehavior.InitiatingStage.Stage == 2)
         {
+            SoundManagerBehaviour.Instance.Play(SoundManagerBehaviour.AudioIndex.BGM_Stage2, true, false);
             // 背景用のシーン読込
             SceneManager.LoadScene("GameBackGround 2", LoadSceneMode.Additive);
         }
         else if (GameMasterBehavior.InitiatingStage.Stage == 3)
         {
+            SoundManagerBehaviour.Instance.Play(SoundManagerBehaviour.AudioIndex.BGM_Stage3, true, false);
             // 背景用のシーン読込
             SceneManager.LoadScene("GameBackGround 3", LoadSceneMode.Additive);
         }
         else if (GameMasterBehavior.InitiatingStage.Stage == 4)
         {
+            SoundManagerBehaviour.Instance.Play(SoundManagerBehaviour.AudioIndex.BGM_Stage3, true, false);
             // 背景用のシーン読込
             SceneManager.LoadScene("GameBackGround 4", LoadSceneMode.Additive);
         }

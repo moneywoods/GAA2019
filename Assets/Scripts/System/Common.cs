@@ -21,6 +21,7 @@ public class ObjectTag
     public static readonly string Rock            = "Rock";
     public static readonly string CanvasText      = "CanvasText";
     public static readonly string MessageText     = "MessageText";
+    public static readonly string SoundManager    = "SoundManager";
 }
 public struct StageInfo
 {

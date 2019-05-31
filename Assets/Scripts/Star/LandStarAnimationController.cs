@@ -13,7 +13,10 @@ public class LandStarAnimationController : MonoBehaviour
 
     private Animator animator;
     LandStarController Script;
-
+    [SerializeField]
+    float rotM = 200.0f;
+    [SerializeField]
+    float rotN = 100.0f;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,14 +31,14 @@ public class LandStarAnimationController : MonoBehaviour
         //☆が動く時
         if (Script.CheckFlag(LandStarController.LANDSTAR_STAT.MOVING) )
         {
-            transform.Rotate(0, 50000 * Time.deltaTime, 0);
+            transform.Rotate(0, rotM * Time.deltaTime, 0);
 
         }
 
         //障害物につかまってる時
         if (Script.CheckFlag(LandStarController.LANDSTAR_STAT.STUCKED))
         {
-            transform.Rotate(0, 100 * Time.deltaTime, 0);
+            transform.Rotate(0, 0 * Time.deltaTime, 0);
 
         }
 
@@ -44,13 +47,13 @@ public class LandStarAnimationController : MonoBehaviour
         //プレイヤーが乗ってる時
         if (Script.CheckFlag(LandStarController.LANDSTAR_STAT.PLAYER_STAYING))
         {
-            transform.Rotate(0, 0 * Time.deltaTime, 0);
+            transform.Rotate(0, rotN * Time.deltaTime, 0);
         }
 
         //待機中
         else
         {
-            transform.Rotate(0, 300 * Time.deltaTime, 0);
+            transform.Rotate(0, rotN * Time.deltaTime, 0);
         }
     }
 }
