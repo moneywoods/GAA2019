@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3049337531459953036}
   - component: {fileID: 3049337531459953035}
+  - component: {fileID: 5630692559947104591}
   m_Layer: 0
   m_Name: ParticleManager
   m_TagString: Untagged
@@ -46,9 +47,24 @@ MonoBehaviour:
   ParticlePrefabList:
   - ParticleObj: {fileID: 6068810248393405571, guid: f9622a150e8bee849b80d0bf6ed3171f,
       type: 3}
+    isInstatiateOnStart: 0
     index: 0
-  - ParticleObj: {fileID: 4123886738429333972, guid: 3254d0ad2b91ab14eacc8d41d2e1f600,
+  - ParticleObj: {fileID: 3913557138059799464, guid: 3254d0ad2b91ab14eacc8d41d2e1f600,
       type: 3}
+    isInstatiateOnStart: 0
     index: 1
   m_ObjMoveGuide: {fileID: 6068810248393405571, guid: f9622a150e8bee849b80d0bf6ed3171f,
     type: 3}
+--- !u!114 &5630692559947104591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3049337531459953034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb3b993435ab4364c82259d17996fbd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cellNum: {x: -1, y: -1}
