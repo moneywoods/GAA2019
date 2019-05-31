@@ -15,6 +15,8 @@ public class GoalEventScene : MonoBehaviour
     
 
     bool CheckFlag = false;
+
+    bool GameEnd = false;
     // 次のステージへの切り替え方修正してほちぃ
     float m_Timer = 0f;
     [SerializeField]
@@ -53,6 +55,11 @@ public class GoalEventScene : MonoBehaviour
 
     void SceneChange()
     {
+        if (GameEnd)
+        {
+            return;
+        }
+
         if (!m_CloneMainVCam.activeSelf)
         {
             m_Timer += Time.deltaTime;
@@ -68,6 +75,7 @@ public class GoalEventScene : MonoBehaviour
                         FadeManager.NextColor.a = 0f;
                         FadeManager.AddState(FadeManager.State.A_TO_ZERO);
                         FadeManager.SceneOut("TitleScene");
+                        GameEnd = true;
                     }
                     else
                     {
