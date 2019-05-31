@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameBackGround 3.unity
     guid: 12a3831da47d5fe4e9ef6909c2013dc0
+  - enabled: 1
+    path: Assets/Scenes/GameBackGround 4.unity
+    guid: 52333d77c6dcaad469f45a6eeef90943
   m_configObjects: {}

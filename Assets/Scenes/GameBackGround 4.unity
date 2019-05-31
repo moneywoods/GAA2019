@@ -241,7 +241,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 1
-  m_Color: {r: 0.16602883, g: 0.40679258, b: 0.8584906, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -277,7 +277,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1212434670}
   m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
-  m_LocalPosition: {x: 1.74, y: 7.15, z: -3.01}
+  m_LocalPosition: {x: 4.61, y: 13.99, z: -7.98}
   m_LocalScale: {x: 1, y: 1.0000001, z: 0.99999994}
   m_Children: []
   m_Father: {fileID: 0}
@@ -359,11 +359,11 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: e2600aed73e810042b215ca705002deb, type: 2}
     - target: {fileID: 11499528, guid: 14ef3cb01b069fd40b26bc617c43783b, type: 3}
       propertyPath: fogIntensityA
-      value: 0.523
+      value: 0.322
       objectReference: {fileID: 0}
     - target: {fileID: 11499528, guid: 14ef3cb01b069fd40b26bc617c43783b, type: 3}
       propertyPath: fogIntensityB
-      value: 0.702
+      value: 0.73
       objectReference: {fileID: 0}
     - target: {fileID: 11499528, guid: 14ef3cb01b069fd40b26bc617c43783b, type: 3}
       propertyPath: fogPositionA
@@ -387,7 +387,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11499528, guid: 14ef3cb01b069fd40b26bc617c43783b, type: 3}
       propertyPath: causticsBoost
-      value: 0.19
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 11499528, guid: 14ef3cb01b069fd40b26bc617c43783b, type: 3}
       propertyPath: causticsSpeed
@@ -395,15 +395,35 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11499528, guid: 14ef3cb01b069fd40b26bc617c43783b, type: 3}
       propertyPath: fogColorB.r
-      value: 0.013082955
+      value: 0.012148457
       objectReference: {fileID: 0}
     - target: {fileID: 11499528, guid: 14ef3cb01b069fd40b26bc617c43783b, type: 3}
       propertyPath: fogColorB.g
-      value: 0.18109097
+      value: 0.09374524
       objectReference: {fileID: 0}
     - target: {fileID: 11499528, guid: 14ef3cb01b069fd40b26bc617c43783b, type: 3}
       propertyPath: fogColorB.b
-      value: 0.3962264
+      value: 0.1981132
+      objectReference: {fileID: 0}
+    - target: {fileID: 11499528, guid: 14ef3cb01b069fd40b26bc617c43783b, type: 3}
+      propertyPath: fogColorA.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11499528, guid: 14ef3cb01b069fd40b26bc617c43783b, type: 3}
+      propertyPath: fogColorA.g
+      value: 0.29121146
+      objectReference: {fileID: 0}
+    - target: {fileID: 11499528, guid: 14ef3cb01b069fd40b26bc617c43783b, type: 3}
+      propertyPath: fogColorA.b
+      value: 0.3207547
+      objectReference: {fileID: 0}
+    - target: {fileID: 11499528, guid: 14ef3cb01b069fd40b26bc617c43783b, type: 3}
+      propertyPath: causticsIntensityA
+      value: 0.261
+      objectReference: {fileID: 0}
+    - target: {fileID: 11499528, guid: 14ef3cb01b069fd40b26bc617c43783b, type: 3}
+      propertyPath: causticsIntensityB
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 442108, guid: 14ef3cb01b069fd40b26bc617c43783b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -646,7 +666,7 @@ PrefabInstance:
     - target: {fileID: 240326883394128482, guid: dd09b2dfffea7c7438c6882b74815340,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 13.8
+      value: 14.88
       objectReference: {fileID: 0}
     - target: {fileID: 240326883394128482, guid: dd09b2dfffea7c7438c6882b74815340,
         type: 3}
@@ -761,17 +781,17 @@ PrefabInstance:
     - target: {fileID: 240326883394128483, guid: dd09b2dfffea7c7438c6882b74815340,
         type: 3}
       propertyPath: m_Color.r
-      value: 0.39551443
+      value: 0.16037738
       objectReference: {fileID: 0}
     - target: {fileID: 240326883394128483, guid: dd09b2dfffea7c7438c6882b74815340,
         type: 3}
       propertyPath: m_Color.g
-      value: 0.82176226
+      value: 0.15156642
       objectReference: {fileID: 0}
     - target: {fileID: 240326883394128483, guid: dd09b2dfffea7c7438c6882b74815340,
         type: 3}
       propertyPath: m_Color.b
-      value: 0.8301887
+      value: 0.13541298
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd09b2dfffea7c7438c6882b74815340, type: 3}

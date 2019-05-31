@@ -124,6 +124,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameMaster
       objectReference: {fileID: 0}
+    - target: {fileID: 684050371811413216, guid: 545876662b98320419beabdcaa72f325,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 684050371811413217, guid: 545876662b98320419beabdcaa72f325,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -372,6 +377,26 @@ PrefabInstance:
         type: 3}
       propertyPath: orthographic size
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8882525647747989673, guid: 0ef23fa4d38575348993f88fad1664fb,
+        type: 3}
+      propertyPath: m_BackGroundColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8882525647747989673, guid: 0ef23fa4d38575348993f88fad1664fb,
+        type: 3}
+      propertyPath: m_BackGroundColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8882525647747989673, guid: 0ef23fa4d38575348993f88fad1664fb,
+        type: 3}
+      propertyPath: m_BackGroundColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8882525647747989673, guid: 0ef23fa4d38575348993f88fad1664fb,
+        type: 3}
+      propertyPath: m_BackGroundColor.a
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7268236978553708184, guid: 0ef23fa4d38575348993f88fad1664fb,
         type: 3}
