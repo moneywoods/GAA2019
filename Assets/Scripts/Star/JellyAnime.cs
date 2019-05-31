@@ -2,16 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(LandStarController))]
+
 public class JellyAnime : MonoBehaviour
 {
 
     private Animator animator;
-    LandStarController Script;
+    LandStarController Sprit;
 
     // Start is called before the first frame update
     void Start()
     {
-        Script = GetComponent<LandStarController>();
+        Sprit = GetComponent<LandStarController>();
 
         animator = GetComponent<Animator>();
     }
@@ -21,15 +23,16 @@ public class JellyAnime : MonoBehaviour
     {
 
         //障害物につかまってる時
-        if (Script.CheckFlag(LandStarController.LANDSTAR_STAT.STUCKED))
+        if (Sprit.CheckFlag(LandStarController.LANDSTAR_STAT.STUCKED))
         {
-            animator.SetBool("is_catch", true);
+            animator.SetBool("test", true);
+            Debug.Log(Sprit.CheckFlag(LandStarController.LANDSTAR_STAT.STUCKED));
 
         }
 
         else
         {
-            animator.SetBool("is_catch", false);
+            animator.SetBool("test", false);
         }
     }
 }
