@@ -531,6 +531,7 @@ namespace Tako
                 {
                     effect = Instantiate(ParticleManagerBehaviour.Instance.GetParticle(ParticleManagerBehaviour.ParticleIndex.KINETICEFFECT), tako.transform.position, Quaternion.identity);
                 }
+                effect.transform.position = tako.transform.position;
                 effect.GetComponent<ParticleSystem>().Play();
             }
 
