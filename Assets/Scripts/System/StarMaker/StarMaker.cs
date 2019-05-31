@@ -209,9 +209,7 @@ public class StarMaker : SingletonPattern<StarMaker>
 
     public Vector3 GetCenterPositionOfCell(Vector2Int cellNum)
     {
-        var size = CurrentMapInfo.CellSize;
-        var offset = CurrentMapInfo.DeffaultOffset;
-        return new Vector3(size.x * cellNum.x + offset.x, offset.y, size.y * cellNum.y + offset.z);
+        return new Vector3(currentMapInfo.CellSize.x * cellNum.x, 0.0f, -currentMapInfo.CellSize.y * cellNum.y) + currentMapInfo.DeffaultOffset;
     }
 
     public bool CheckLimitOfMap(Vector2Int cellNum)

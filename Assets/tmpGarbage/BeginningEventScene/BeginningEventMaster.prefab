@@ -43,8 +43,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61bd84334fb045c4cba34a7960493930, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isSceneEnding: 0
-  m_Octo: {fileID: 0}
-  m_VirtualCamera: {fileID: 0}
-  m_Speed: 0
-  TIMELIMIT: 0
+  m_ObjOcto: {fileID: 0}
+  m_ObjVirtualCamera: {fileID: 0}
+  m_ObjEventRelation: {fileID: 0}
+  m_Stage1: {fileID: 2100000, guid: 85cf0b004bc4a654b9e501efcce47902, type: 2}
+  m_Stage2: {fileID: 2100000, guid: 119ec07f1c7ed204db46bd8465fd5a50, type: 2}
+  m_Stage3: {fileID: 0}
+  m_Stage4: {fileID: 0}
