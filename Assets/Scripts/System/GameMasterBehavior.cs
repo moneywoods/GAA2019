@@ -107,17 +107,17 @@ public class GameMasterBehavior : MonoBehaviour
         else if (GameMasterBehavior.InitiatingStage.Stage == 2)
         {
             // 背景用のシーン読込
-            SceneManager.LoadScene("GameBackGround2", LoadSceneMode.Additive);
+            SceneManager.LoadScene("GameBackGround 2", LoadSceneMode.Additive);
         }
         else if (GameMasterBehavior.InitiatingStage.Stage == 3)
         {
             // 背景用のシーン読込
-            SceneManager.LoadScene("GameBackGround3", LoadSceneMode.Additive);
+            SceneManager.LoadScene("GameBackGround 3", LoadSceneMode.Additive);
         }
         else if (GameMasterBehavior.InitiatingStage.Stage == 4)
         {
             // 背景用のシーン読込
-            SceneManager.LoadScene("GameBackGround3", LoadSceneMode.Additive);
+            SceneManager.LoadScene("GameBackGround 3", LoadSceneMode.Additive);
         }
     }
 
