@@ -57,8 +57,7 @@ public class BeginningEventMasterBehaviour : MonoBehaviour
         if (GameMasterBehavior.InitiatingStage.Stage == 2)
         {
             // 背景用のシーン読込
-//            SceneManager.LoadScene("シーンの名前", LoadSceneMode.Additive);
-
+//            SceneManager.LoadScene("GameBackGround", LoadSceneMode.Additive);
             // Skyboxを変更する
             RenderSettings.skybox = m_Stage2;
         }
