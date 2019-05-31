@@ -63,7 +63,7 @@ public class GoalEventScene : MonoBehaviour
                     FadeManager.BeginSetting();
                     FadeManager.NextColor = Color.black;
                     FadeManager.NextColor.a = 0f;
-                    FadeManager.AddState(FadeManager.State.A_TO_ZERO);
+                    FadeManager.AddState(FadeManager.State.A_TO_ONE);
                     FadeManager.SceneOut("BeginingEventScene");
                     CheckFlag = true;
                 }
@@ -72,7 +72,7 @@ public class GoalEventScene : MonoBehaviour
                     FadeManager.BeginSetting();
                     FadeManager.NextColor = Color.black;
                     FadeManager.NextColor.a = 0f;
-                    FadeManager.AddState(FadeManager.State.A_TO_ZERO);
+                    FadeManager.AddState(FadeManager.State.A_TO_ONE);
                     FadeManager.SceneOut("Scene0315");
                     CheckFlag = true;
                 }
