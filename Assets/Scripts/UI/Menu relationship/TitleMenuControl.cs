@@ -50,7 +50,7 @@ public class TitleMenuControl : MonoBehaviour
             FadeManager.UnmaskSize_Start = new Vector2(Screen.width * 10, Screen.height * 10);
             FadeManager.UnmaskSize_End = new Vector2(0.01f, 0.01f);
             GameMasterBehavior.isInitiationEvent = true;
-            FadeManager.SceneOut("scene0315");
+            FadeManager.SceneOut("BeginingEventScene");
         }
         if (gameObject.name == "ContinueGame")
         {// 続きから

@@ -61,11 +61,19 @@ public class GoalEventScene : MonoBehaviour
             {
                 if (IsCheckStageChange())
                 {
+                    FadeManager.BeginSetting();
+                    FadeManager.NextColor = Color.black;
+                    FadeManager.NextColor.a = 0f;
+                    FadeManager.AddState(FadeManager.State.A_TO_ZERO);
                     FadeManager.SceneOut("BeginingEventScene");
                     CheckFlag = true;
                 }
                 else
                 {
+                    FadeManager.BeginSetting();
+                    FadeManager.NextColor = Color.black;
+                    FadeManager.NextColor.a = 0f;
+                    FadeManager.AddState(FadeManager.State.A_TO_ZERO);
                     FadeManager.SceneOut("Scene0315");
                     CheckFlag = true;
                 }
