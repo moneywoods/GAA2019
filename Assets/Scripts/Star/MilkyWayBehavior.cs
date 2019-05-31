@@ -81,6 +81,7 @@ public class MilkyWayBehavior : StarBase
 
             // 吸い込みパーティクル
             Instantiate(m_EatParticle, transform);
+            
         }
     }
 }
