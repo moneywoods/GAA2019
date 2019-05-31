@@ -21,7 +21,7 @@ public class TitleMasterBehavior : MonoBehaviour
         // UI objectを生成.
         GameObject menu = Instantiate(m_ParentCanvasPrefab);
         menu.GetComponent<ParentMenuCanvasBehavior>().SetActivateSelectionCursor();
-        
+
         // 背景用のシーン読込
         SceneManager.LoadScene("GameBackGround", LoadSceneMode.Additive);
     }

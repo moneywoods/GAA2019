@@ -132,8 +132,6 @@ namespace Tako
                 if (!star.GetComponent<StarBase>().CheckKineticPowerCanBeUsed(currentStarStaying.GetComponent<StarBase>().CellNum, isRight))
                 {
                     result = false;
-
-                    
                 }
                 else
                 {
