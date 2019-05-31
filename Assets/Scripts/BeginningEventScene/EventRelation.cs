@@ -61,7 +61,7 @@ public class EventRelation : MonoBehaviour
     {
         if (m_VCamScript.VCamLimitPos())
         {
-            if ((m_Timer += Time.deltaTime) >= TIMELIMIT)
+            if ((m_Timer += Time.deltaTime) >= TIMELIMIT && !FadeManager.CheckIsFade())
             {
                 GameMasterBehavior.isInitiationEvent = true;
                 FadeManager.BeginSetting();
