@@ -46,11 +46,14 @@ public class TitleMenuControl : MonoBehaviour
         if (gameObject.name == "BeginGame")
         {// 初めから
             SettingScene();
+            GameMasterBehavior.InitiatingStage = new StageInfo(1, 1);
+
             FadeManager.SceneOut("BeginingEventScene");
         }
         if (gameObject.name == "ContinueGame")
         {// 続きから
             SettingScene();
+
             FadeManager.SceneOut("scene0315");
         }
         if (gameObject.name == "SelectStage")
@@ -68,7 +71,7 @@ public class TitleMenuControl : MonoBehaviour
     {
         FadeManager.BeginSetting();
         FadeManager.NextColor = Color.black;
-        FadeManager.SetUnmaskImage(FadeManager.ImageIndex.STAR_6);
+        FadeManager.SetUnmaskImage(FadeManager.ImageIndex.STAR);
         FadeManager.AddState(FadeManager.State.UNMASK);
         FadeManager.AddState(FadeManager.State.UNMASK_BIGGER);
         FadeManager.UnmaskSize_Start = new Vector2(Screen.width * 10, Screen.height * 10);

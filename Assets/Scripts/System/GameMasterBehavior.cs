@@ -1,5 +1,4 @@
-
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -41,7 +40,7 @@ public class GameMasterBehavior : MonoBehaviour
     GameObject text;
 
 
-    public  Material InitSkyBox;
+    public  Material InitSkyBox;/* ! ｺｺ! */
 
     private void Start()
     {

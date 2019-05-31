@@ -5,44 +5,40 @@ using UnityEngine;
 public class SharkAnim : MonoBehaviour
 {
     private Animator animator;
-    private GameObject SharkModel;
-
-    private class AnimationFlagName
-    {
-        public static string flagIsEat = "isEat";
-        public static string[] flagArray =
-        {
-                flagIsEat,          //ジャンプ
-        };
-    }
+    private bool IsCatch = false;
+    private float m_Timer = 0f;
+    private readonly float ENDANIM = 0.5f;
 
     // Start is called before the first frame update
     void Start()
     {
-        SharkModel = gameObject;
-        animator = SharkModel.GetComponent<Animator>();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-    }
-
-    public void PlayAnim(string targetName)
-    {
-        for (int i = 0; i < AnimationFlagName.flagArray.GetLength(0); i++)
+        if(IsCatch)
         {
-            if (AnimationFlagName.flagArray[i] == targetName)
+            m_Timer += Time.deltaTime;
+            if(m_Timer >= ENDANIM)
             {
-                animator.SetBool(AnimationFlagName.flagArray[i], true);
-                Debug.Log(AnimationFlagName.flagArray[i] + " is true");
-            }
-            else
-            {
-                animator.SetBool(AnimationFlagName.flagArray[i], false);
-                Debug.Log(AnimationFlagName.flagArray[i] + " is false");
+                StopAnim();
+                m_Timer = 0f;
             }
         }
+    }
+
+    public void EatAnim()
+    {
+        //障害物につかまってる時
+        animator.SetBool("isShark", true);
+        IsCatch = true;
+    }
+
+    private void StopAnim()
+    {
+        animator.SetBool("isShark", false);
+        IsCatch = false;
     }
 }

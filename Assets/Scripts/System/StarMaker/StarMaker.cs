@@ -149,7 +149,7 @@ public class StarMaker : SingletonPattern<StarMaker>
     {
         FadeManager.BeginSetting();
         FadeManager.NextColor = Color.black;
-        FadeManager.SetUnmaskImage(FadeManager.ImageIndex.STAR_6);
+        FadeManager.SetUnmaskImage(FadeManager.ImageIndex.STAR);
         FadeManager.AddState(FadeManager.State.UNMASK);
         FadeManager.AddState(FadeManager.State.UNMASK_BIGGER);
         FadeManager.UnmaskSize_Start = new Vector2(Screen.width * 10, Screen.height * 10);
@@ -209,9 +209,7 @@ public class StarMaker : SingletonPattern<StarMaker>
 
     public Vector3 GetCenterPositionOfCell(Vector2Int cellNum)
     {
-        var size = CurrentMapInfo.CellSize;
-        var offset = CurrentMapInfo.DeffaultOffset;
-        return new Vector3(size.x * cellNum.x + offset.x, offset.y, size.y * cellNum.y + offset.z);
+        return new Vector3(currentMapInfo.CellSize.x * cellNum.x, 0.0f, -currentMapInfo.CellSize.y * cellNum.y) + currentMapInfo.DeffaultOffset;
     }
 
     public bool CheckLimitOfMap(Vector2Int cellNum)

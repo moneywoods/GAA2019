@@ -80,7 +80,7 @@ public class GameMenuControl : MonoBehaviour
             PauseTheGame.SetTimeScale(1.0f);
             FadeManager.BeginSetting();
             FadeManager.NextColor = Color.black;
-            FadeManager.SetUnmaskImage(FadeManager.ImageIndex.STAR_6);
+            FadeManager.SetUnmaskImage(FadeManager.ImageIndex.STAR);
             FadeManager.AddState(FadeManager.State.UNMASK);
             FadeManager.AddState(FadeManager.State.UNMASK_BIGGER);
             FadeManager.UnmaskSize_Start = new Vector2(Screen.width * 10, Screen.height * 10);

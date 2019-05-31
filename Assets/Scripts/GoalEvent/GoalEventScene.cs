@@ -42,7 +42,6 @@ public class GoalEventScene : MonoBehaviour
 
         SceneChange();
     }
-
     bool IsCheckStageChange()
     {
         if (GameMasterBehavior.InitiatingChapter == 1)
