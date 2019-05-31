@@ -31,6 +31,7 @@ public class GoalEventScene : MonoBehaviour
 
         CheckFlag = false;
         m_CloneMainVCam = GameObject.FindWithTag("MainVCam");
+        SoundManagerBehaviour.Instance.Play(SoundManagerBehaviour.AudioIndex.Fanfare, false, false);
 
     }
 

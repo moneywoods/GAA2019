@@ -25,7 +25,6 @@ public class TitleMenuControl : MonoBehaviour
 
         int stageSelectCanvas = 2;
         m_ObjStageSelectCanvas = transform.root.GetChild(stageSelectCanvas).gameObject;
-
     }
 
     // Update is called once per frame
