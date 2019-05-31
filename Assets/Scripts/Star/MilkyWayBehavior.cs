@@ -19,6 +19,8 @@ public class MilkyWayBehavior : StarBase
 
     [SerializeField] private GameObject m_EatParticle;
 
+    private JellyAnime m_JlleyAnim;
+    
     public MilkyWayBehavior() : base(StarType.MilkyWay)
     {
 
@@ -61,6 +63,8 @@ public class MilkyWayBehavior : StarBase
     void Init()
     {
         LandList = new List<LandInMW>();
+
+        m_JlleyAnim = GetComponentInChildren<JellyAnime>();
     }
 
     public override void TriggerOtherComeToSameCell(GameObject other)
@@ -81,7 +85,9 @@ public class MilkyWayBehavior : StarBase
 
             // 吸い込みパーティクル
             Instantiate(m_EatParticle, transform);
-            
+
+            m_JlleyAnim.CatchAnim();
+
         }
     }
 }
