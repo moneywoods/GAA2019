@@ -26,12 +26,12 @@ public class LandStarController : StarBase
         ALIVE                  = 1 << 8, // 0001_0000_0000  // 破壊された.
         // フラグ抽出用
         MOVING                 = 6,      // 0000_0000_0110 // MOVING_LEFT | MOVING_RIGHT
-        STUCKED                = CAUGHT_BY_MILKYWAY, 
+        STUCKED                = CAUGHT_BY_MILKYWAY,
         ENUM_MAX
     }
 
     public LANDSTAR_STAT CurrentStat { get; protected set; }
-    
+
     public Vector3 centerOfCircular
     {
         get;
@@ -51,14 +51,14 @@ public class LandStarController : StarBase
         get;
         set;
     }
-    
-    
+
+
     public GameObject uitext;   // テキストのスクリプト取得
     private int textchange;     // テキストの表示フラグ
 
     public LandStarController() : base(StarType.Land)
     {
-        
+
     }
 
     // Start is called before the first frame update
@@ -183,7 +183,7 @@ public class LandStarController : StarBase
         Vector2Int cp0 = CellNum;
         Vector2Int cp1 = CellNum;
 
-        
+
 
         // チェックするコマを算出.
         if (isRight)
@@ -287,7 +287,7 @@ public class LandStarController : StarBase
         {
             return false;
         }
-        
+
         // 絶対にtrueなパターンのチェック
         if(starMaker.GetStar(cp0,StarType.BlackHole)) // 先1マス目がブラックホール
         {
@@ -304,7 +304,7 @@ public class LandStarController : StarBase
         {
             return false;
         }
-        else if(starMaker.GetStarList(cp0, StarType.Land).Exists(obj => !obj.GetComponent<LandStarController>().CheckFlag(LANDSTAR_STAT.STUCKED)) && // 1マス先に動けるLandがいて、2マス先にミルキーウェイがある. 
+        else if(starMaker.GetStarList(cp0, StarType.Land).Exists(obj => !obj.GetComponent<LandStarController>().CheckFlag(LANDSTAR_STAT.STUCKED)) && // 1マス先に動けるLandがいて、2マス先にミルキーウェイがある.
             0 < starMaker.GetStarList(cp1, StarType.MilkyWay).Count)
         {
             return false;

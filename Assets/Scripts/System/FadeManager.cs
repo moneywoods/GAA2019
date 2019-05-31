@@ -1,4 +1,4 @@
-﻿/* 
+﻿/*
  * 使い方
  * まずBeginSetting関数を呼ぶ（初期化のため）
  * AddState関数でやりたいことを設定する
@@ -32,7 +32,7 @@ public class FadeManager : MonoBehaviour
 	private static Image mask;
     private static Image unmask;
     private static Image image;
-    
+
 	//フェードインアウトのフラグ
 	public static bool isFadeIn = false;
 	public static bool isFadeOut = false;
@@ -61,7 +61,7 @@ public class FadeManager : MonoBehaviour
         // チェック用
         CHECKER_IS_ACTIVE = 15 // 0000_1111
     }
-    
+
     public static State CurrentState;
     [Serializable]
     public enum ImageIndex
@@ -74,7 +74,7 @@ public class FadeManager : MonoBehaviour
     // 使用する画像（Material)のパス。
     // 画像のαを利用するためシェーダはUnlit->Transparentに設定する。
     // 上のImageIndexとの順序の一致を確認すること。
-    private static string[] imagePathArray = 
+    private static string[] imagePathArray =
     {
         "FadeImages/Sprites/hosi"
     };
@@ -166,14 +166,14 @@ public class FadeManager : MonoBehaviour
         image.rectTransform.sizeDelta = new Vector2(Screen.width, Screen.height);
 
         // シーン中初使用、且つ、サイズの遷移が指定されていない場合、サイズ遷移用変数をウィンドウサイズに合わせる
-        var deltasize_0_0 = new Vector2(0.0f, 0.0f); 
+        var deltasize_0_0 = new Vector2(0.0f, 0.0f);
         if(ImageSize_Start == deltasize_0_0 && ImageSize_End == deltasize_0_0 &&
             UnmaskSize_Start == deltasize_0_0 && UnmaskSize_End == deltasize_0_0)
         {
             ImageSize_Start = ImageSize_End = UnmaskSize_Start = UnmaskSize_End = new Vector2(Screen.width, Screen.height);
         }
     }
-    
+
     private static void ResetSize()
     {
         mask.rectTransform.sizeDelta = new Vector2(Screen.width, Screen.height);
@@ -204,7 +204,7 @@ public class FadeManager : MonoBehaviour
         image.color = NextColor; //一応
         fadeCanvas.enabled = true;
 		isFadeIn = true;
-        
+
         InitFade();
     }
 
