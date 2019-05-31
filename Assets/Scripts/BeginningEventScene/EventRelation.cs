@@ -54,14 +54,17 @@ public class EventRelation : MonoBehaviour
     {
         Vector3 octoPos = m_OctoScript.GetPos();
 
-        if (octoPos.y <= m_CameraStartPos) m_VCamScript.MoveVCam();
+        if (octoPos.y <= m_CameraStartPos)
+        {
+            m_VCamScript.MoveVCam();
+        }
     }
 
     private void IsChangeScene()
     {
         if (m_VCamScript.VCamLimitPos())
         {
-            if ((m_Timer += Time.deltaTime) >= TIMELIMIT)
+            if ((m_Timer += Time.deltaTime) >= TIMELIMIT && !FadeManager.CheckIsFade())
             {
                 GameMasterBehavior.isInitiationEvent = true;
                 FadeManager.BeginSetting();

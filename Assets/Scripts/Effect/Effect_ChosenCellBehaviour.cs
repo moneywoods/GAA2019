@@ -29,21 +29,30 @@ public class Effect_ChosenCellBehaviour : MonoBehaviour
         // TakoにnextStarが設定されていないときは表示しない
         if(takoCon.nextStar == null)
         {
-            transform.position = new Vector3(114, 514, 1919);
+            for(int i = 0; i < transform.childCount; i++)
+            {
+                transform.GetChild(i).gameObject.SetActive(false);
+            }
             return;
+        }
+        if( takoCon.nextStar.GetComponent<StarBase>().CellNum == new Vector2Int(-1, -1) ||
+            takoCon.nextStar.GetComponent<LandStarController>().CheckFlag(LandStarController.LANDSTAR_STAT.MOVING))
+        {
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                transform.GetChild(i).gameObject.SetActive(false);
+            }
+            return;
+        }
+
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            transform.GetChild(i).gameObject.SetActive(true);
         }
 
         // 場所の更新
         cellNum = takoCon.nextStar.GetComponent<StarBase>().CellNum;
-        if(cellNum == new Vector2Int(-1, -1))
-        {
-            Debug.Log("cellnum = -1, -1");
-            return;
-        }
-
-        var pos = StarMaker.Instance.GetCenterPositionOfCell(cellNum);
+        var pos = StarMaker.Instance.GetCenterPositionOfCell(takoCon.nextStar.GetComponent<StarBase>().CellNum);
         transform.position = pos;
     }
-
-
 }
