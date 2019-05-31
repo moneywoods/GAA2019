@@ -45,5 +45,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ParentCanvasPrefab: {fileID: 7026004317540345786, guid: 712d6ad4872c3c348b893b190164de1f,
     type: 3}
-  m_EventObjectPrefab: {fileID: 4291774886772678557, guid: cb95f5da654afdd4f8b4d501f90b7ae0,
+  m_SoundManagerPrefab: {fileID: 9148442467120355095, guid: c05b80726676e7c49ba553d38d210128,
     type: 3}

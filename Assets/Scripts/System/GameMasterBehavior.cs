@@ -37,6 +37,7 @@ public class GameMasterBehavior : MonoBehaviour
 
     [SerializeField] public static bool isInitiationEvent = false;
     [SerializeField] private GameObject m_ParticleManagerPrefab;
+    [SerializeField] private GameObject m_SoundManagerPrefab;
 
     GameObject text;
 
@@ -79,9 +80,12 @@ public class GameMasterBehavior : MonoBehaviour
         var cameraScript = camera.GetComponent<InGameMainCameraController>();
 
         // ゲームスタート時イベント有り無し
-
         Instantiate(m_ParticleManagerPrefab);
-        
+
+        // サウンド
+        Instantiate(m_SoundManagerPrefab);
+
+        // カメラとかの設定
         if(isInitiationEvent)
         {
             // ゴールからスタートまで星を映すモード
@@ -95,10 +99,28 @@ public class GameMasterBehavior : MonoBehaviour
             cameraScript.SetCurrentState(InGameMainCameraController.StateName.Following);
         }
 
-        // GetComponent<AudioSource>().Play(); 音だすやつ
-
         // 背景用のシーン読込
         SceneManager.LoadScene("GameBackGround",LoadSceneMode.Additive);
+
+        // ステージ１
+        if(InitiatingStage.Stage == 1)
+        {
+            SoundManagerBehaviour.Instance.Play(SoundManagerBehaviour.AudioIndex.BGM_Stage1, true, false);
+        }
+        else if (InitiatingStage.Stage == 2)
+        {
+            SoundManagerBehaviour.Instance.Play(SoundManagerBehaviour.AudioIndex.BGM_Stage2, true, false);
+
+        }
+        else if (InitiatingStage.Stage == 3)
+        {
+            SoundManagerBehaviour.Instance.Play(SoundManagerBehaviour.AudioIndex.BGM_Stage3, true, false);
+
+        }
+        else if (InitiatingStage.Stage == 4)
+        {
+            SoundManagerBehaviour.Instance.Play(SoundManagerBehaviour.AudioIndex.BGM_Stage3, true, false);
+        }
     }
 
     // Update is called once per frame
