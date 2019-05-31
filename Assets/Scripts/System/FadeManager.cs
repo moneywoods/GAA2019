@@ -49,12 +49,14 @@ public class FadeManager : MonoBehaviour
     public enum State
     {
         // fadeTimeの時間で行う処理。
-        NONE      = 0,
-        BIGGER    = 1 << 1, // 0000_0001 イメージサイズが大きくなる
-        SMALLER   = 1 << 2, // 0000_0010 イメージサイズが小さくな
-        A_TO_ZERO = 1 << 3, // 0000_0100 透明度が大きくなる
-        A_TO_ONE  = 1 << 4, // 0000_1000 透明度が小さくなる
-        UNMASK    = 1 << 5, // 0001_0000 Unmaskを利用する
+        NONE           = 0,
+        BIGGER         = 1 << 1, // 0000_0001 イメージサイズが大きくなる
+        SMALLER        = 1 << 2, // 0000_0010 イメージサイズが小さくな
+        A_TO_ZERO      = 1 << 3, // 0000_0100 透明度が大きくなる
+        A_TO_ONE       = 1 << 4, // 0000_1000 透明度が小さくなる
+        UNMASK         = 1 << 5, // 0001_0000 Unmaskを利用する
+        UNMASK_BIGGER  = 1 << 6, // 0010_0000 Unmaskのイメージのサイズが大きくなる
+        UNMASK_SMALLER = 1 << 7, // 0100_0000 Unmaskのイメージのサイズが小さくなる
 
         // チェック用
         CHECKER_IS_ACTIVE = 15 // 0000_1111
@@ -301,16 +303,21 @@ public class FadeManager : MonoBehaviour
 
         if(CheckState(State.BIGGER) || CheckState(State.SMALLER))
         {
-            if((mask.rectTransform.sizeDelta + imageDiff) != ImageSize_End)
-            {
-                var size = mask.rectTransform.sizeDelta + imageDiff * Time.deltaTime; // maskとimage用のサイズ
-                mask.rectTransform.sizeDelta = size;
-                image.rectTransform.sizeDelta = size;
-            }
+            var size = mask.rectTransform.sizeDelta + imageDiff * Time.deltaTime; // maskとimage用のサイズ
+            image.rectTransform.sizeDelta = size;
+        }
 
+        if(CheckState(State.UNMASK_BIGGER) || CheckState(State.UNMASK_SMALLER))
+        {
             unmask.rectTransform.sizeDelta = unmask.rectTransform.sizeDelta + unmaskDiff * Time.deltaTime;
         }
-	}
+
+        // maskのサイズのアジャスト
+        var maxSize = new Vector2();
+        maxSize.x = Mathf.Max(unmask.rectTransform.sizeDelta.x, image.rectTransform.sizeDelta.x);
+        maxSize.y = Mathf.Max(unmask.rectTransform.sizeDelta.y, image.rectTransform.sizeDelta.y);
+        mask.rectTransform.sizeDelta = maxSize;
+    }
 
     // フェードイン/アウトのチェックフラグ
     public static bool CheckIsFade()

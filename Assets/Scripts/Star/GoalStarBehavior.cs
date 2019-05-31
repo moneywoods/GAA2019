@@ -5,8 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class GoalStarBehavior : LandStarController
 {
-    // シーン遷移までの時間
-    private float m_NextSceneTimer = 0;
     [SerializeField]
     private GameObject m_StageClearEvent;
 
@@ -21,7 +19,6 @@ public class GoalStarBehavior : LandStarController
     // Start is called before the first frame update
     void Start()
     {
-        m_NextSceneTimer = 0;
         GameObject objTako = GameObject.FindWithTag("PlayerCharacter");
         m_TakoControllerScript = objTako.GetComponent<Tako.TakoController>();
 
@@ -37,13 +34,9 @@ public class GoalStarBehavior : LandStarController
     {
         if(other.tag == ObjectTag.PlayerCharacter)
         {
-            GameObject.FindWithTag("Finish").transform.position = transform.position;
-
-            GameMasterBehavior.InitiatingChapter = GameMasterBehavior.InitiatingChapter + 1;
             Instantiate(m_StageClearEvent);
-            
-            // あとで消す　のでてきとう
-            FadeManager.SceneOut("scene0315");
+            GameMasterBehavior.InitiatingChapter = GameMasterBehavior.InitiatingChapter + 1;
+
         }
     }
     private void OnTriggerExit(Collider collision)
@@ -51,10 +44,5 @@ public class GoalStarBehavior : LandStarController
         
     }
 
-    public void EventMove()
-    {
-        Vector3 pos = transform.position;
-        pos = new Vector3(0f, 1f, 0f) * 1f;
-        transform.position -= pos;
-    }
+
 }
