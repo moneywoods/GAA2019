@@ -60,7 +60,8 @@ public class StageSelect : MonoBehaviour
             FadeManager.UnmaskSize_Start = new Vector2(Screen.width * 10, Screen.height * 10);
             FadeManager.UnmaskSize_End = new Vector2(0.01f, 0.01f);
             GameMasterBehavior.isInitiationEvent = true;
-            FadeManager.SceneOut("scene0315");
+
+            NextSceneIndex(stagenum);
         }
     }
 
@@ -69,5 +70,20 @@ public class StageSelect : MonoBehaviour
     {
         m_StageCanvas.SetActive(false);
         m_MenuCanvas.SetActive(true);
+    }
+
+    // 必要ないなら消しましょう。
+    private void NextSceneIndex(int num)
+    {
+        int chapter = num % 10;
+
+        if (chapter == 1)
+        {
+            FadeManager.SceneOut("BeginingEventScene");
+        }else
+        {
+            FadeManager.SceneOut("scene0315");
+        }
+
     }
 }
