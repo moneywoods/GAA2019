@@ -27,12 +27,27 @@ public class Effect_ChosenCellBehaviour : MonoBehaviour
     void Update()
     {
         // TakoにnextStarが設定されていないときは表示しない
-        if(takoCon.nextStar == null ||
-            takoCon.nextStar.GetComponent<StarBase>().CellNum == new Vector2Int(-1, -1) ||
+        if(takoCon.nextStar == null)
+        {
+            for(int i = 0; i < transform.childCount; i++)
+            {
+                transform.GetChild(i).gameObject.SetActive(false);
+            }
+            return;
+        }
+        if( takoCon.nextStar.GetComponent<StarBase>().CellNum == new Vector2Int(-1, -1) ||
             takoCon.nextStar.GetComponent<LandStarController>().CheckFlag(LandStarController.LANDSTAR_STAT.MOVING))
         {
-            transform.position = new Vector3(114, 514, 1919);
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                transform.GetChild(i).gameObject.SetActive(false);
+            }
             return;
+        }
+
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            transform.GetChild(i).gameObject.SetActive(true);
         }
 
         // 場所の更新
