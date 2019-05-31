@@ -45,12 +45,13 @@ public class BeginningEventMasterBehaviour : MonoBehaviour
         BackGroundLoad();
 
         // ゲームオブジェクト生成
-        m_ObjOcto.transform.position = new Vector3(0f, 0f, 0f);
+        m_ObjOcto.transform.position = new Vector3(0f, 20f, 0f);
         Instantiate(m_ObjOcto);
 
         GameObject m_VCam = Instantiate(m_ObjVirtualCamera);
 
         Instantiate(m_ObjEventRelation);
+
     }
 
     void BackGroundLoad()

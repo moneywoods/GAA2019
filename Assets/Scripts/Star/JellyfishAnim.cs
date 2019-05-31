@@ -23,5 +23,6 @@ public class JellyfishAnim : MonoBehaviour
 
     private void PlayAnim()
     {
+
     }
 }

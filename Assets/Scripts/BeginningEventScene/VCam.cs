@@ -19,7 +19,7 @@ public class VCam : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameObject objOcto = GameObject.FindWithTag("PlayerCharacter");
+        GameObject objOcto = GameObject.FindWithTag("PlayerCharacter").gameObject;
         m_VCam = GetComponent<CinemachineVirtualCamera>();
 
 
@@ -33,6 +33,7 @@ public class VCam : MonoBehaviour
     void Update()
     {
         m_TsuchiyaSpeed = m_Dolly.m_Path.MaxPos;
+//        Debug.Break();
     }
 
     public void MoveVCam()
