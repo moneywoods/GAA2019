@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class SharkAnim : MonoBehaviour
 {
-
     private Animator animator;
     private bool IsCatch = false;
     private float m_Timer = 0f;
