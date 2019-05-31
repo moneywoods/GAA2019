@@ -17,6 +17,15 @@ public class BeginningEventMasterBehaviour : MonoBehaviour
     private OctoStartMove m_OctoScript;     // オクトちゃんのスクリプト
     private VCam m_VCamScript;              // VirtualCameraのスクリプト
 
+    // ステージのSkyBoxを変更しますよ。
+    [SerializeField]
+    private Material m_Stage1;
+    [SerializeField]
+    private Material m_Stage2;
+    [SerializeField]
+    private Material m_Stage3;
+    [SerializeField]
+    private Material m_Stage4;
     void Awake()
     {
 
@@ -42,21 +51,31 @@ public class BeginningEventMasterBehaviour : MonoBehaviour
         {
             // 背景用のシーン読込
             SceneManager.LoadScene("GameBackGround", LoadSceneMode.Additive);
+            // Skyboxを変更する
+            RenderSettings.skybox = m_Stage1;
         }
         if (GameMasterBehavior.InitiatingStage.Stage == 2)
         {
             // 背景用のシーン読込
-//            SceneManager.LoadScene("シーンの名前", LoadSceneMode.Additive);
+//            SceneManager.LoadScene("GameBackGround", LoadSceneMode.Additive);
+            // Skyboxを変更する
+            RenderSettings.skybox = m_Stage2;
         }
         if (GameMasterBehavior.InitiatingStage.Stage == 3)
         {
             // 背景用のシーン読込
 //            SceneManager.LoadScene("GameBackGround", LoadSceneMode.Additive);
+
+            // Skyboxを変更する
+            RenderSettings.skybox = m_Stage3;
         }
         if (GameMasterBehavior.InitiatingStage.Stage == 4)
         {
             // 背景用のシーン読込
 //            SceneManager.LoadScene("GameBackGround", LoadSceneMode.Additive);
+
+            // Skyboxを変更する
+            RenderSettings.skybox = m_Stage4;
         }
 
 
