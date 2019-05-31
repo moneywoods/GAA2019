@@ -37,6 +37,7 @@ public class GoalStarBehavior : LandStarController
             Instantiate(m_StageClearEvent);
             GameMasterBehavior.InitiatingChapter = GameMasterBehavior.InitiatingChapter + 1;
 
+
         }
     }
     private void OnTriggerExit(Collider collision)

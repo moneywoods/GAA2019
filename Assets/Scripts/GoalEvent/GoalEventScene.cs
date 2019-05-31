@@ -12,9 +12,11 @@ public class GoalEventScene : MonoBehaviour
     private GameObject m_EventVCam;
 
     private GameObject m_ObjTako;
-
+    
 
     bool CheckFlag = false;
+
+    bool GameEnd = false;
     // 次のステージへの切り替え方修正してほちぃ
     float m_Timer = 0f;
     [SerializeField]
@@ -31,8 +33,8 @@ public class GoalEventScene : MonoBehaviour
 
         CheckFlag = false;
         m_CloneMainVCam = GameObject.FindWithTag("MainVCam");
-        SoundManagerBehaviour.Instance.Play(SoundManagerBehaviour.AudioIndex.Fanfare, false, false);
 
+        SoundManagerBehaviour.Instance.Play(SoundManagerBehaviour.AudioIndex.Fanfare, false, false);
     }
 
     // Update is called once per frame
@@ -54,6 +56,11 @@ public class GoalEventScene : MonoBehaviour
 
     void SceneChange()
     {
+        if (GameEnd)
+        {
+            return;
+        }
+
         if (!m_CloneMainVCam.activeSelf)
         {
             m_Timer += Time.deltaTime;
@@ -61,12 +68,26 @@ public class GoalEventScene : MonoBehaviour
             {
                 if (IsCheckStageChange())
                 {
-                    FadeManager.BeginSetting();
-                    FadeManager.NextColor = Color.black;
-                    FadeManager.NextColor.a = 0f;
-                    FadeManager.AddState(FadeManager.State.A_TO_ONE);
-                    FadeManager.SceneOut("BeginingEventScene");
-                    CheckFlag = true;
+
+                    if (GameMasterBehavior.EndingGame())
+                    {
+                        FadeManager.BeginSetting();
+                        FadeManager.NextColor = Color.black;
+                        FadeManager.NextColor.a = 0f;
+                        FadeManager.AddState(FadeManager.State.A_TO_ZERO);
+                        FadeManager.SceneOut("TitleScene");
+                        GameEnd = true;
+                    }
+                    else
+                    {
+                        FadeManager.BeginSetting();
+                        FadeManager.NextColor = Color.black;
+                        FadeManager.NextColor.a = 0f;
+                        FadeManager.AddState(FadeManager.State.A_TO_ZERO);
+                        FadeManager.SceneOut("BeginingEventScene");
+                        CheckFlag = true;
+
+                    }
                 }
                 else
                 {
