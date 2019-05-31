@@ -514,8 +514,6 @@ namespace Tako
 
         private class StateWaitingForKineticPowerEnd : TakoState
         {
-            GameObject effect;
-
             public StateWaitingForKineticPowerEnd(StateContex contex, GameObject tako) : base(contex, tako)
             {
                 Name = StateName.WaitingForKineticPowerEnd;
@@ -527,17 +525,11 @@ namespace Tako
             void OnEnterEvent()
             {
                 takoScript.SetAnimationFlagTrue(AnimationFlagName.flagIsMoveStar);
-                if(effect == null)
-                {
-                    effect = Instantiate(ParticleManagerBehaviour.Instance.GetParticle(ParticleManagerBehaviour.ParticleIndex.KINETICEFFECT), tako.transform.position, Quaternion.identity);
-                }
-                effect.transform.position = tako.transform.position;
-                effect.GetComponent<ParticleSystem>().Play();
             }
 
             void OnExitEvent()
             {
-                effect.GetComponent<ParticleSystem>().Stop();
+
             }
 
             void CheckMovingLand()
