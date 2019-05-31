@@ -36,8 +36,10 @@ public class LandStarAnimationController : MonoBehaviour
         if (Script.CheckFlag(LandStarController.LANDSTAR_STAT.STUCKED))
         {
             transform.Rotate(0, 100 * Time.deltaTime, 0);
-            
+
         }
+
+
 
         //プレイヤーが乗ってる時
         if (Script.CheckFlag(LandStarController.LANDSTAR_STAT.PLAYER_STAYING))

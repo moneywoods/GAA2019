@@ -11,7 +11,8 @@ public class ParticleManagerBehaviour : SingletonPattern<ParticleManagerBehaviou
     public enum ParticleIndex
     {
         MOVEGUIDE,
-        CHOSENCELL
+        CHOSENCELL,
+        KINETICEFFECT
     }
 
     [System.Serializable]
@@ -29,11 +30,6 @@ public class ParticleManagerBehaviour : SingletonPattern<ParticleManagerBehaviou
 
     [SerializeField]
     List<MyParticle> ParticlePrefabList;
-
-
-    // Prefab置き場
-    [SerializeField]
-    private GameObject m_ObjMoveGuide;
 
     // Start is called before the first frame update
     void Start()

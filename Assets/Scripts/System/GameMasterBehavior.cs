@@ -1,5 +1,4 @@
-
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -26,7 +25,7 @@ public class GameMasterBehavior : MonoBehaviour
         get { return initiatingStage; }
         set { initiatingStage = value; }
     }
-    
+
     private readonly static int STAGE_MAX = 4;
     private readonly static int CHAPTER_MAX = 4;
 
@@ -38,8 +37,10 @@ public class GameMasterBehavior : MonoBehaviour
     [SerializeField] public static bool isInitiationEvent = false;
     [SerializeField] private GameObject m_ParticleManagerPrefab;
     [SerializeField] private GameObject m_SoundManagerPrefab;
-
     GameObject text;
+
+
+    public  Material InitSkyBox;/* ! ｺｺ! */
 
     private void Start()
     {
@@ -47,6 +48,16 @@ public class GameMasterBehavior : MonoBehaviour
         {
             initiatingStage = new StageInfo(1, 1);
         }
+
+        if(BeginningEventMasterBehaviour.skyBox == null)
+        {
+            RenderSettings.skybox = BeginningEventMasterBehaviour.skyBox = InitSkyBox;;
+        }
+        else
+        {
+           RenderSettings.skybox = BeginningEventMasterBehaviour.skyBox;
+        }
+
 
         PauseTheGame.SetTimeScale(1.0f);
         FadeManager.BeginSetting();
@@ -57,7 +68,7 @@ public class GameMasterBehavior : MonoBehaviour
 
         // ステージ情報を書いたテキストファイルの読み込み
         var mapData = MapLoader.LoadMap(initiatingStage);
-        
+
         // 世界を作る.
         GameObject starMaker = Instantiate(m_StarMakerPrefab);
         StarMaker.Instance.MakeWorld(mapData, Common.CellSize);
@@ -81,7 +92,7 @@ public class GameMasterBehavior : MonoBehaviour
 
         // ゲームスタート時イベント有り無し
         Instantiate(m_ParticleManagerPrefab);
-
+        
         // サウンド
         Instantiate(m_SoundManagerPrefab);
 
@@ -99,27 +110,30 @@ public class GameMasterBehavior : MonoBehaviour
             cameraScript.SetCurrentState(InGameMainCameraController.StateName.Following);
         }
 
-        // 背景用のシーン読込
-        SceneManager.LoadScene("GameBackGround",LoadSceneMode.Additive);
-
-        // ステージ１
-        if(InitiatingStage.Stage == 1)
+        // 土屋君、ここの"ステージ == 数値"を増やしてほしいにゃぁ。コピー版
+        if (GameMasterBehavior.InitiatingStage.Stage == 1 || GameMasterBehavior.InitiatingStage.Stage == 0)
         {
             SoundManagerBehaviour.Instance.Play(SoundManagerBehaviour.AudioIndex.BGM_Stage1, true, false);
+            // 背景用のシーン読込
+            SceneManager.LoadScene("GameBackGround", LoadSceneMode.Additive);
         }
-        else if (InitiatingStage.Stage == 2)
+        else if (GameMasterBehavior.InitiatingStage.Stage == 2)
         {
             SoundManagerBehaviour.Instance.Play(SoundManagerBehaviour.AudioIndex.BGM_Stage2, true, false);
-
+            // 背景用のシーン読込
+            SceneManager.LoadScene("GameBackGround 2", LoadSceneMode.Additive);
         }
-        else if (InitiatingStage.Stage == 3)
+        else if (GameMasterBehavior.InitiatingStage.Stage == 3)
         {
             SoundManagerBehaviour.Instance.Play(SoundManagerBehaviour.AudioIndex.BGM_Stage3, true, false);
-
+            // 背景用のシーン読込
+            SceneManager.LoadScene("GameBackGround 3", LoadSceneMode.Additive);
         }
-        else if (InitiatingStage.Stage == 4)
+        else if (GameMasterBehavior.InitiatingStage.Stage == 4)
         {
             SoundManagerBehaviour.Instance.Play(SoundManagerBehaviour.AudioIndex.BGM_Stage3, true, false);
+            // 背景用のシーン読込
+            SceneManager.LoadScene("GameBackGround 4", LoadSceneMode.Additive);
         }
     }
 
@@ -128,7 +142,7 @@ public class GameMasterBehavior : MonoBehaviour
     {
 
     }
-    
+
     // ステージクリア用
     private static void IsChapterOver()
     {
@@ -160,7 +174,7 @@ public class GameMasterBehavior : MonoBehaviour
             initiatingStage.Stage = stage;
         }else
         {
-            
+
         }
     }
 }

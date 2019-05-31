@@ -1,0 +1,330 @@
+fileFormatVersion: 2
+guid: 49cea29a43e8e2e418474a904cc26adf
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: joint1
+    100004: joint10
+    100006: joint11
+    100008: joint12
+    100010: joint13
+    100012: joint14
+    100014: joint15
+    100016: joint16
+    100018: joint17
+    100020: joint18
+    100022: joint18 1
+    100024: joint18 2
+    100026: joint18 3
+    100028: joint18 4
+    100030: joint18 5
+    100032: joint18 6
+    100034: joint18 7
+    100036: joint19
+    100038: joint19 1
+    100040: joint19 2
+    100042: joint19 3
+    100044: joint19 4
+    100046: joint19 5
+    100048: joint19 6
+    100050: joint19 7
+    100052: joint2
+    100054: joint20
+    100056: joint20 1
+    100058: joint20 2
+    100060: joint20 3
+    100062: joint20 4
+    100064: joint20 5
+    100066: joint20 6
+    100068: joint20 7
+    100070: joint21
+    100072: joint22
+    100074: joint23
+    100076: joint24
+    100078: joint25
+    100080: joint26
+    100082: joint27
+    100084: joint28
+    100086: joint29
+    100088: joint29 1
+    100090: joint29 2
+    100092: joint29 3
+    100094: joint3
+    100096: joint30
+    100098: joint30 1
+    100100: joint30 2
+    100102: joint30 3
+    100104: joint31
+    100106: joint31 1
+    100108: joint31 2
+    100110: joint31 3
+    100112: joint32
+    100114: joint33
+    100116: joint34
+    100118: joint4
+    100120: joint5
+    100122: joint6
+    100124: joint7
+    100126: joint8
+    100128: joint9
+    100130: nurbsCircle1
+    100132: nurbsCircle10
+    100134: nurbsCircle10 1
+    100136: nurbsCircle10 2
+    100138: nurbsCircle10 3
+    100140: nurbsCircle11
+    100142: nurbsCircle12
+    100144: nurbsCircle13
+    100146: nurbsCircle14
+    100148: nurbsCircle15
+    100150: nurbsCircle15 1
+    100152: nurbsCircle15 2
+    100154: nurbsCircle15 3
+    100156: nurbsCircle15 4
+    100158: nurbsCircle15 5
+    100160: nurbsCircle15 6
+    100162: nurbsCircle15 7
+    100164: nurbsCircle16
+    100166: nurbsCircle16 1
+    100168: nurbsCircle16 2
+    100170: nurbsCircle16 3
+    100172: nurbsCircle16 4
+    100174: nurbsCircle16 5
+    100176: nurbsCircle16 6
+    100178: nurbsCircle16 7
+    100180: nurbsCircle17
+    100182: nurbsCircle17 1
+    100184: nurbsCircle17 2
+    100186: nurbsCircle17 3
+    100188: nurbsCircle17 4
+    100190: nurbsCircle17 5
+    100192: nurbsCircle17 6
+    100194: nurbsCircle17 7
+    100196: nurbsCircle18
+    100198: nurbsCircle19
+    100200: nurbsCircle2
+    100202: nurbsCircle20
+    100204: nurbsCircle21
+    100206: nurbsCircle22
+    100208: nurbsCircle23
+    100210: nurbsCircle24
+    100212: nurbsCircle3
+    100214: nurbsCircle4
+    100216: nurbsCircle5
+    100218: nurbsCircle6
+    100220: nurbsCircle7
+    100222: nurbsCircle8
+    100224: nurbsCircle9
+    100226: nurbsCircle9 1
+    100228: nurbsCircle9 2
+    100230: nurbsCircle9 3
+    100232: pCube1
+    400000: //RootNode
+    400002: joint1
+    400004: joint10
+    400006: joint11
+    400008: joint12
+    400010: joint13
+    400012: joint14
+    400014: joint15
+    400016: joint16
+    400018: joint17
+    400020: joint18
+    400022: joint18 1
+    400024: joint18 2
+    400026: joint18 3
+    400028: joint18 4
+    400030: joint18 5
+    400032: joint18 6
+    400034: joint18 7
+    400036: joint19
+    400038: joint19 1
+    400040: joint19 2
+    400042: joint19 3
+    400044: joint19 4
+    400046: joint19 5
+    400048: joint19 6
+    400050: joint19 7
+    400052: joint2
+    400054: joint20
+    400056: joint20 1
+    400058: joint20 2
+    400060: joint20 3
+    400062: joint20 4
+    400064: joint20 5
+    400066: joint20 6
+    400068: joint20 7
+    400070: joint21
+    400072: joint22
+    400074: joint23
+    400076: joint24
+    400078: joint25
+    400080: joint26
+    400082: joint27
+    400084: joint28
+    400086: joint29
+    400088: joint29 1
+    400090: joint29 2
+    400092: joint29 3
+    400094: joint3
+    400096: joint30
+    400098: joint30 1
+    400100: joint30 2
+    400102: joint30 3
+    400104: joint31
+    400106: joint31 1
+    400108: joint31 2
+    400110: joint31 3
+    400112: joint32
+    400114: joint33
+    400116: joint34
+    400118: joint4
+    400120: joint5
+    400122: joint6
+    400124: joint7
+    400126: joint8
+    400128: joint9
+    400130: nurbsCircle1
+    400132: nurbsCircle10
+    400134: nurbsCircle10 1
+    400136: nurbsCircle10 2
+    400138: nurbsCircle10 3
+    400140: nurbsCircle11
+    400142: nurbsCircle12
+    400144: nurbsCircle13
+    400146: nurbsCircle14
+    400148: nurbsCircle15
+    400150: nurbsCircle15 1
+    400152: nurbsCircle15 2
+    400154: nurbsCircle15 3
+    400156: nurbsCircle15 4
+    400158: nurbsCircle15 5
+    400160: nurbsCircle15 6
+    400162: nurbsCircle15 7
+    400164: nurbsCircle16
+    400166: nurbsCircle16 1
+    400168: nurbsCircle16 2
+    400170: nurbsCircle16 3
+    400172: nurbsCircle16 4
+    400174: nurbsCircle16 5
+    400176: nurbsCircle16 6
+    400178: nurbsCircle16 7
+    400180: nurbsCircle17
+    400182: nurbsCircle17 1
+    400184: nurbsCircle17 2
+    400186: nurbsCircle17 3
+    400188: nurbsCircle17 4
+    400190: nurbsCircle17 5
+    400192: nurbsCircle17 6
+    400194: nurbsCircle17 7
+    400196: nurbsCircle18
+    400198: nurbsCircle19
+    400200: nurbsCircle2
+    400202: nurbsCircle20
+    400204: nurbsCircle21
+    400206: nurbsCircle22
+    400208: nurbsCircle23
+    400210: nurbsCircle24
+    400212: nurbsCircle3
+    400214: nurbsCircle4
+    400216: nurbsCircle5
+    400218: nurbsCircle6
+    400220: nurbsCircle7
+    400222: nurbsCircle8
+    400224: nurbsCircle9
+    400226: nurbsCircle9 1
+    400228: nurbsCircle9 2
+    400230: nurbsCircle9 3
+    400232: pCube1
+    2100000: lambert3
+    4300000: pCube1
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: pCube1
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 0.01
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

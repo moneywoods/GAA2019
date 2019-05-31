@@ -132,8 +132,6 @@ namespace Tako
                 if (!star.GetComponent<StarBase>().CheckKineticPowerCanBeUsed(currentStarStaying.GetComponent<StarBase>().CellNum, isRight))
                 {
                     result = false;
-
-                    
                 }
                 else
                 {
@@ -352,6 +350,7 @@ namespace Tako
             // 向いている方のマスにLandがあるなら、そのLandをnextStarに設定する
             void CheckAndSelectStarInFacingCell()
             {
+                takoScript.nextStar = null;
                 if(facingDirection != Direction.NONE)
                 {
                     takoScript.CheckLandInDirection(facingDirection);
@@ -402,8 +401,7 @@ namespace Tako
                 float INPUT_DOWN = -0.5f;
                 float INPUT_LEFT = -0.5f;
                 float INPUT_RIGHT = 0.5f;
-
-
+                
                 float moveX = Input.GetAxisRaw("Horizontal");
                 float moveY = Input.GetAxisRaw("Vertical");
 
@@ -516,6 +514,8 @@ namespace Tako
 
         private class StateWaitingForKineticPowerEnd : TakoState
         {
+            GameObject effect;
+
             public StateWaitingForKineticPowerEnd(StateContex contex, GameObject tako) : base(contex, tako)
             {
                 Name = StateName.WaitingForKineticPowerEnd;
@@ -527,11 +527,16 @@ namespace Tako
             void OnEnterEvent()
             {
                 takoScript.SetAnimationFlagTrue(AnimationFlagName.flagIsMoveStar);
+                if(effect == null)
+                {
+                    effect = Instantiate(ParticleManagerBehaviour.Instance.GetParticle(ParticleManagerBehaviour.ParticleIndex.KINETICEFFECT), tako.transform.position, Quaternion.identity);
+                }
+                effect.GetComponent<ParticleSystem>().Play();
             }
 
             void OnExitEvent()
             {
-
+                effect.GetComponent<ParticleSystem>().Stop();
             }
 
             void CheckMovingLand()

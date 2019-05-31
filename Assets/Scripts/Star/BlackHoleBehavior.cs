@@ -9,16 +9,18 @@ public class BlackHoleBehavior : StarBase
         
     }
 
+    private SharkAnim m_SharkAnim;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        m_SharkAnim = GetComponentInChildren<SharkAnim>();
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        
     }
     
     public override bool CheckKineticPowerCanBeUsed(Vector2Int originCellNum, bool isRight)
@@ -43,6 +45,9 @@ public class BlackHoleBehavior : StarBase
             LandStarController landScript = other.GetComponent<LandStarController>();
             landScript.RemoveFlag(LandStarController.LANDSTAR_STAT.ALIVE);
             landScript.RemoveFlag(LandStarController.LANDSTAR_STAT.MOVING);
+
+            m_SharkAnim.EatAnim();
+
         }
     }
 

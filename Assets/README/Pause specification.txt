@@ -9,7 +9,7 @@ if (Mathf.Approximately(Time.timeScale, 0f))
 
 Çí«â¡Ç∑ÇÈÅBÇ†ÇÈÇ¢ÇÕ
 
-void FixedUpdate() 
+void FixedUpdate()
 {
 }
 
