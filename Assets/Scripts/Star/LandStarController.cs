@@ -104,10 +104,6 @@ public class LandStarController : StarBase
             {
                 timePast = 0.0f;
                 timeToCirculate = 0.0f;
-                //if(CheckFlag(LANDSTAR_STAT.IN_MILKYWAY_AREA))
-                //{
-                //    AddStat(LANDSTAR_STAT.GET_CAUGHT_BY_MILKYWAY);
-                //}
 
                 RemoveFlag(LANDSTAR_STAT.MOVING);
             }
@@ -120,11 +116,9 @@ public class LandStarController : StarBase
 
             var i = StarMaker.Instance.GetCellColliderBehavior(new Vector2Int(3, 3));
             StarMaker.Instance.GetCellColliderBehavior(CellNum).RemoveManually(gameObject);
-            textchange = 2;
-            uitext.GetComponent<TextMessnger>().Textflag = textchange;
+
             Destroy(gameObject);
         }
-        textchange = uitext.GetComponent<TextMessnger>().Textflag;
     }
 
     // --------------------------------------------------------------------------------------------
@@ -291,8 +285,6 @@ public class LandStarController : StarBase
         // マップ領域内かチェック
         if (!(starMaker.CheckLimitOfMap(cp0) && starMaker.CheckLimitOfMap(cp1)))
         {
-            textchange = 1;
-            uitext.GetComponent<TextMessnger>().Textflag = textchange;
             return false;
         }
         
@@ -305,22 +297,16 @@ public class LandStarController : StarBase
         // 移動経路に邪魔する要素があるかチェック
         if(0 < starMaker.GetStarList(cp0, StarType.Rock).Count) // 先1マスにRockがある
         {
-            textchange = 3;
-            uitext.GetComponent<TextMessnger>().Textflag = textchange;
             return false;
         }
         else if(starMaker.GetStarList(cp0, StarType.Land).Exists(obj => obj.GetComponent<LandStarController>().CheckFlag(LANDSTAR_STAT.STUCKED)) || // いずれのマスにミルキーウェイにつかまっているLandがある
             starMaker.GetStarList(cp1, StarType.Land).Exists(obj => obj.GetComponent<LandStarController>().CheckFlag(LANDSTAR_STAT.STUCKED)))
         {
-            textchange = 4;
-            uitext.GetComponent<TextMessnger>().Textflag = textchange;
             return false;
         }
         else if(starMaker.GetStarList(cp0, StarType.Land).Exists(obj => !obj.GetComponent<LandStarController>().CheckFlag(LANDSTAR_STAT.STUCKED)) && // 1マス先に動けるLandがいて、2マス先にミルキーウェイがある. 
             0 < starMaker.GetStarList(cp1, StarType.MilkyWay).Count)
         {
-            textchange = 5;
-            uitext.GetComponent<TextMessnger>().Textflag = textchange;
             return false;
         }
 
