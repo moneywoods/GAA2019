@@ -12,7 +12,7 @@ public class GoalEventScene : MonoBehaviour
     private GameObject m_EventVCam;
 
     private GameObject m_ObjTako;
-
+    
 
     bool CheckFlag = false;
     // 次のステージへの切り替え方修正してほちぃ
@@ -31,7 +31,7 @@ public class GoalEventScene : MonoBehaviour
 
         CheckFlag = false;
         m_CloneMainVCam = GameObject.FindWithTag("MainVCam");
-
+        
     }
 
     // Update is called once per frame
@@ -60,12 +60,26 @@ public class GoalEventScene : MonoBehaviour
             {
                 if (IsCheckStageChange())
                 {
-                    FadeManager.BeginSetting();
-                    FadeManager.NextColor = Color.black;
-                    FadeManager.NextColor.a = 0f;
-                    FadeManager.AddState(FadeManager.State.A_TO_ZERO);
-                    FadeManager.SceneOut("BeginingEventScene");
-                    CheckFlag = true;
+
+                    if (GameMasterBehavior.EndingGame())
+                    {
+                        FadeManager.BeginSetting();
+                        FadeManager.NextColor = Color.black;
+                        FadeManager.NextColor.a = 0f;
+                        FadeManager.AddState(FadeManager.State.A_TO_ZERO);
+                        FadeManager.SceneOut("TitleScene");
+                    }
+                    else
+                    {
+                        FadeManager.BeginSetting();
+                        FadeManager.NextColor = Color.black;
+                        FadeManager.NextColor.a = 0f;
+                        FadeManager.AddState(FadeManager.State.A_TO_ZERO);
+                        FadeManager.SceneOut("BeginingEventScene");
+                        CheckFlag = true;
+
+                    }
+
                 }
                 else
                 {

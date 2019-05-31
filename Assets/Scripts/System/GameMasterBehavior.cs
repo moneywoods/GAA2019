@@ -153,4 +153,20 @@ public class GameMasterBehavior : MonoBehaviour
             
         }
     }
+
+    public static bool EndingGame()
+    {
+        int GAME_END = 5;
+
+        if(InitiatingStage.Stage == GAME_END)
+        {
+            InitiatingStage = new StageInfo(1, 1);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
+    }
 }
