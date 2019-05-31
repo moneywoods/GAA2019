@@ -9,6 +9,7 @@ public class GoalStarBehavior : LandStarController
     private GameObject m_StageClearEvent;
 
     Tako.TakoController m_TakoControllerScript;
+    GameObject effect;
 
     public GoalStarBehavior()
     {
@@ -22,6 +23,7 @@ public class GoalStarBehavior : LandStarController
         GameObject objTako = GameObject.FindWithTag("PlayerCharacter");
         m_TakoControllerScript = objTako.GetComponent<Tako.TakoController>();
 
+        effect = Instantiate(ParticleManagerBehaviour.Instance.GetParticle(ParticleManagerBehaviour.ParticleIndex.KINETICEFFECT), transform.position, Quaternion.identity);
     }
 
     // Update is called once per frame
