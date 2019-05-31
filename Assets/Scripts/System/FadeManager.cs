@@ -66,9 +66,7 @@ public class FadeManager : MonoBehaviour
     [Serializable]
     public enum ImageIndex
     {
-        STAR_1_ALPHA,
-        MENDAKO_1_ALPHA,
-        STAR_6,
+        STAR,
         NONE,
         OTHER
     }
@@ -78,9 +76,7 @@ public class FadeManager : MonoBehaviour
     // 上のImageIndexとの順序の一致を確認すること。
     private static string[] imagePathArray = 
     {
-        "FadeImages/Sprites/star_1_alpha",
-        "FadeImages/Sprites/mendako_1_alpha",
-        "FadeImages/Sprites/star_6"
+        "FadeImages/Sprites/hosi"
     };
 
     private static List<Sprite> imageList;
