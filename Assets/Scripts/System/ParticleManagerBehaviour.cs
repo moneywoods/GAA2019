@@ -14,7 +14,6 @@ public class ParticleManagerBehaviour : SingletonPattern<ParticleManagerBehaviou
         MAX,
     }
 
-    [System.Serializable]
     class MyParticle
     {
         public GameObject ParticleObj;
@@ -26,7 +25,6 @@ public class ParticleManagerBehaviour : SingletonPattern<ParticleManagerBehaviou
         }
     }
 
-    [SerializeField]
     List<MyParticle> ParticlePrefabList;
 
 
