@@ -26,6 +26,15 @@ public class BeginningEventMasterBehaviour : MonoBehaviour
     private Material m_Stage3;
     [SerializeField]
     private Material m_Stage4;
+
+
+    private static Material m_SkyBox;
+    public static Material skyBox
+    {
+        get { return m_SkyBox; }
+        set { m_SkyBox = value; }
+    }
+
     void Awake()
     {
 
@@ -36,12 +45,13 @@ public class BeginningEventMasterBehaviour : MonoBehaviour
         BackGroundLoad();
 
         // ゲームオブジェクト生成
-        m_ObjOcto.transform.position = new Vector3(0f, 0f, 0f);
+        m_ObjOcto.transform.position = new Vector3(0f, 20f, 0f);
         Instantiate(m_ObjOcto);
 
         GameObject m_VCam = Instantiate(m_ObjVirtualCamera);
 
         Instantiate(m_ObjEventRelation);
+
     }
 
     void BackGroundLoad()
@@ -52,32 +62,34 @@ public class BeginningEventMasterBehaviour : MonoBehaviour
             // 背景用のシーン読込
             SceneManager.LoadScene("GameBackGround", LoadSceneMode.Additive);
             // Skyboxを変更する
-            RenderSettings.skybox = m_Stage1;
+            RenderSettings.skybox = m_SkyBox = m_Stage1;
         }
+
         if (GameMasterBehavior.InitiatingStage.Stage == 2)
         {
             // 背景用のシーン読込
-//            SceneManager.LoadScene("GameBackGround", LoadSceneMode.Additive);
+            //            SceneManager.LoadScene("GameBackGround", LoadSceneMode.Additive);
             // Skyboxを変更する
-            RenderSettings.skybox = m_Stage2;
+            RenderSettings.skybox = m_SkyBox = m_Stage2;
         }
+
         if (GameMasterBehavior.InitiatingStage.Stage == 3)
         {
             // 背景用のシーン読込
-//            SceneManager.LoadScene("GameBackGround", LoadSceneMode.Additive);
+            //            SceneManager.LoadScene("GameBackGround", LoadSceneMode.Additive);
 
             // Skyboxを変更する
-            RenderSettings.skybox = m_Stage3;
+            RenderSettings.skybox = m_SkyBox = m_Stage3;
         }
+
         if (GameMasterBehavior.InitiatingStage.Stage == 4)
         {
             // 背景用のシーン読込
-//            SceneManager.LoadScene("GameBackGround", LoadSceneMode.Additive);
+            //            SceneManager.LoadScene("GameBackGround", LoadSceneMode.Additive);
 
             // Skyboxを変更する
-            RenderSettings.skybox = m_Stage4;
+            RenderSettings.skybox = m_SkyBox = m_Stage4;
         }
-
-
     }
+
 }

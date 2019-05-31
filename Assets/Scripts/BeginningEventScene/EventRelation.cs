@@ -54,7 +54,10 @@ public class EventRelation : MonoBehaviour
     {
         Vector3 octoPos = m_OctoScript.GetPos();
 
-        if (octoPos.y <= m_CameraStartPos) m_VCamScript.MoveVCam();
+        if (octoPos.y <= m_CameraStartPos)
+        {
+            m_VCamScript.MoveVCam();
+        }
     }
 
     private void IsChangeScene()
