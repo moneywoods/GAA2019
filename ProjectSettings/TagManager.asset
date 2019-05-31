@@ -26,6 +26,7 @@ TagManager:
   - MoveGuide
   - MainVCam
   - EventVCam
+  - SoundManager
   layers:
   - Default
   - TransparentFX
