@@ -40,6 +40,11 @@ public class StageSelect : MonoBehaviour
 
     public void OnClick(int stagenum)
     {
+        if(FadeManager.CheckIsFade())
+        {
+            return;
+        }
+
         GameMasterBehavior.SetStageAndChapter(stagenum);
 
         if (stagenum == 0) BackMenu();
@@ -47,9 +52,14 @@ public class StageSelect : MonoBehaviour
         if (stagenum != 0)
         {// ステージが選択された
             PauseTheGame.SetTimeScale(1.0f);
+            FadeManager.BeginSetting();
+            FadeManager.NextColor = Color.black;
+            FadeManager.SetUnmaskImage(FadeManager.ImageIndex.STAR_6);
+            FadeManager.AddState(FadeManager.State.UNMASK);
+            FadeManager.AddState(FadeManager.State.UNMASK_BIGGER);
+            FadeManager.UnmaskSize_Start = new Vector2(Screen.width * 10, Screen.height * 10);
+            FadeManager.UnmaskSize_End = new Vector2(0.01f, 0.01f);
             GameMasterBehavior.isInitiationEvent = true;
-            FadeManager.ClearState();
-            FadeManager.AddState(FadeManager.State.A_TO_ONE);
             FadeManager.SceneOut("scene0315");
         }
     }
