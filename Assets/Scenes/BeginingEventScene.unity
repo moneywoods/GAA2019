@@ -304,6 +304,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6993812097482421950, guid: 39594e49df9cec440938a7f494ca087c,
         type: 3}
+    - target: {fileID: 289207601674919270, guid: e96992c0a5dfd18499a33a00d457752b,
+        type: 3}
+      propertyPath: InitSkyBox
+      value: 
+      objectReference: {fileID: 2100000, guid: 85cf0b004bc4a654b9e501efcce47902, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e96992c0a5dfd18499a33a00d457752b, type: 3}
 --- !u!1001 &6401114225635485779

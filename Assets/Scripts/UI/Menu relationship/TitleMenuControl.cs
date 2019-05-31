@@ -10,6 +10,9 @@ public class TitleMenuControl : MonoBehaviour
 
     GameObject m_ObjStageSelectCanvas;
 
+
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,26 +45,12 @@ public class TitleMenuControl : MonoBehaviour
         }
         if (gameObject.name == "BeginGame")
         {// 初めから
-            FadeManager.BeginSetting();
-            FadeManager.NextColor = Color.black;
-            FadeManager.SetUnmaskImage(FadeManager.ImageIndex.STAR_6);
-            FadeManager.AddState(FadeManager.State.UNMASK);
-            FadeManager.AddState(FadeManager.State.UNMASK_BIGGER);
-            FadeManager.UnmaskSize_Start = new Vector2(Screen.width * 10, Screen.height * 10);
-            FadeManager.UnmaskSize_End = new Vector2(0.01f, 0.01f);
-            GameMasterBehavior.isInitiationEvent = true;
+            SettingScene();
             FadeManager.SceneOut("BeginingEventScene");
         }
         if (gameObject.name == "ContinueGame")
         {// 続きから
-            FadeManager.BeginSetting();
-            FadeManager.NextColor = Color.black;
-            FadeManager.SetUnmaskImage(FadeManager.ImageIndex.STAR_6);
-            FadeManager.AddState(FadeManager.State.UNMASK);
-            FadeManager.AddState(FadeManager.State.UNMASK_BIGGER);
-            FadeManager.UnmaskSize_Start = new Vector2(Screen.width * 10, Screen.height * 10);
-            FadeManager.UnmaskSize_End = new Vector2(0.01f, 0.01f); 
-            GameMasterBehavior.isInitiationEvent = true;
+            SettingScene();
             FadeManager.SceneOut("scene0315");
         }
         if (gameObject.name == "SelectStage")
@@ -75,6 +64,17 @@ public class TitleMenuControl : MonoBehaviour
         }
     }
 
+    private void SettingScene()
+    {
+        FadeManager.BeginSetting();
+        FadeManager.NextColor = Color.black;
+        FadeManager.SetUnmaskImage(FadeManager.ImageIndex.STAR_6);
+        FadeManager.AddState(FadeManager.State.UNMASK);
+        FadeManager.AddState(FadeManager.State.UNMASK_BIGGER);
+        FadeManager.UnmaskSize_Start = new Vector2(Screen.width * 10, Screen.height * 10);
+        FadeManager.UnmaskSize_End = new Vector2(0.01f, 0.01f);
+        GameMasterBehavior.isInitiationEvent = true;
+    }
     //==================
     // ボタンを選んでいる
     //==================

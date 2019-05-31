@@ -37,8 +37,11 @@ public class GameMasterBehavior : MonoBehaviour
 
     [SerializeField] public static bool isInitiationEvent = false;
     [SerializeField] private GameObject m_ParticleManagerPrefab;
-
+    
     GameObject text;
+
+
+    public  Material InitSkyBox;
 
     private void Start()
     {
@@ -46,6 +49,16 @@ public class GameMasterBehavior : MonoBehaviour
         {
             initiatingStage = new StageInfo(1, 1);
         }
+
+        if(BeginningEventMasterBehaviour.skyBox == null)
+        {
+            RenderSettings.skybox = BeginningEventMasterBehaviour.skyBox = InitSkyBox;;
+        }
+        else
+        {
+           RenderSettings.skybox = BeginningEventMasterBehaviour.skyBox;
+        }
+
 
         PauseTheGame.SetTimeScale(1.0f);
         FadeManager.BeginSetting();
