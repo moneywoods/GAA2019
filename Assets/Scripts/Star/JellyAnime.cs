@@ -6,15 +6,10 @@ public class JellyAnime : MonoBehaviour
 {
 
     private Animator animator;
-    LandStarController Sprit;
 
     // Start is called before the first frame update
     void Start()
     {
-        GameObject objLand = GameObject.FindWithTag("Land");
-        
-        Sprit = objLand.GetComponent<LandStarController>();
-
         animator = GetComponent<Animator>();
     }
 
@@ -23,18 +18,14 @@ public class JellyAnime : MonoBehaviour
     {
     }
 
-    public void EatAnim()
+    public void CatchAnim()
     {
         //障害物につかまってる時
-        if (Sprit.CheckFlag(LandStarController.LANDSTAR_STAT.STUCKED))
-        {
-            animator.SetBool("is_Catch", true);
-            Debug.Log(Sprit.CheckFlag(LandStarController.LANDSTAR_STAT.STUCKED));
+        animator.SetBool("is_Catch", true);        
+    }
 
-        }
-        else
-        {
-            animator.SetBool("is_Catch", false);
-        }
+    public void StopAnim()
+    {
+        animator.SetBool("is_Catch", false);
     }
 }
