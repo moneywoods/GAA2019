@@ -42,21 +42,25 @@ public class TitleMenuControl : MonoBehaviour
         }
         if (gameObject.name == "BeginGame")
         {// 初めから
-            GameMasterBehavior.InitiatingStage = new StageInfo(1, 1);
             FadeManager.BeginSetting();
-            FadeManager.SetImage(FadeManager.ImageIndex.STAR_6);
-            FadeManager.ImageSize_Start = new Vector2(0, 0);
-            FadeManager.ImageSize_End = new Vector2(Screen.width * 10, Screen.height * 10);
-            FadeManager.AddState(FadeManager.State.BIGGER);
+            FadeManager.NextColor = Color.black;
+            FadeManager.SetUnmaskImage(FadeManager.ImageIndex.STAR_6);
+            FadeManager.AddState(FadeManager.State.UNMASK);
+            FadeManager.AddState(FadeManager.State.UNMASK_BIGGER);
+            FadeManager.UnmaskSize_Start = new Vector2(Screen.width * 10, Screen.height * 10);
+            FadeManager.UnmaskSize_End = new Vector2(0.01f, 0.01f);
             GameMasterBehavior.isInitiationEvent = true;
-            FadeManager.SceneOut("scene0315");
+            FadeManager.SceneOut("BeginingEventScene");
         }
         if (gameObject.name == "ContinueGame")
         {// 続きから
             FadeManager.BeginSetting();
             FadeManager.NextColor = Color.black;
-            FadeManager.NextColor.a = 0;
-            FadeManager.AddState(FadeManager.State.A_TO_ONE);
+            FadeManager.SetUnmaskImage(FadeManager.ImageIndex.STAR_6);
+            FadeManager.AddState(FadeManager.State.UNMASK);
+            FadeManager.AddState(FadeManager.State.UNMASK_BIGGER);
+            FadeManager.UnmaskSize_Start = new Vector2(Screen.width * 10, Screen.height * 10);
+            FadeManager.UnmaskSize_End = new Vector2(0.01f, 0.01f); 
             GameMasterBehavior.isInitiationEvent = true;
             FadeManager.SceneOut("scene0315");
         }
