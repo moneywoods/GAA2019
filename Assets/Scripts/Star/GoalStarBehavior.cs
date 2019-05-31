@@ -10,6 +10,7 @@ public class GoalStarBehavior : LandStarController
 
     Tako.TakoController m_TakoControllerScript;
     GameObject effect;
+    [SerializeField] float speed = 0.01f;
 
     public GoalStarBehavior()
     {
@@ -29,7 +30,7 @@ public class GoalStarBehavior : LandStarController
     // Update is called once per frame
     void Update()
     {
-
+        transform.GetChild(0).transform.Rotate(0.0f, speed * Time.deltaTime, 0.0f);
     }
     
     public override void TriggerOtherComeToSameCell(GameObject other)
@@ -38,8 +39,6 @@ public class GoalStarBehavior : LandStarController
         {
             Instantiate(m_StageClearEvent);
             GameMasterBehavior.InitiatingChapter = GameMasterBehavior.InitiatingChapter + 1;
-
-
         }
     }
     private void OnTriggerExit(Collider collision)
