@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Land
+  - NeighvorFinder
+  - GoalStar
+  - StarMaker
+  - BlackHole
+  - MilkyWay
+  - PlayerCharacter
+  - AbstructEffect
+  - MenuCanvas
+  - MenuBotton
+  - SceneMaster
+  - PlayerCommand
+  - GridLine
+  - CellCollider
+  - Rock
+  - StageSelect
+  - CanvasText
+  - MessageText
+  - VCamera
+  - MoveGuide
+  - MainVCam
+  - EventVCam
+  - SoundManager
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - Player
+  - Star
+  - CellCollider
+  - Grid
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: LowerEffect
+    uniqueID: 1059792967
+    locked: 0
+  - name: Tako
+    uniqueID: 929057531
+    locked: 0
+  - name: Other star
+    uniqueID: 4289411083
+    locked: 0
+  - name: Land
+    uniqueID: 1006657235
+    locked: 0
+  - name: UpperEffect
+    uniqueID: 2716496389
+    locked: 0
+  - name: UI
+    uniqueID: 3493539685
+    locked: 0

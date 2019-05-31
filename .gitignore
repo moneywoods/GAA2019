@@ -112,3 +112,12 @@ Thumbs.db
 *.log #log files, for some plugins
 *.pyc #python bytecode cache, for some plugins.
 sysinfo.txt #Unity3D Generated File On Crash Reports
+
+# ============ #
+# my setting   #
+# ============ #
+.wav
+/Assets/Sounds/*
+Assets/TutorialInfo.meta
+Assets/Sounds.meta
+Assets/TutorialInfo/Icons.meta
