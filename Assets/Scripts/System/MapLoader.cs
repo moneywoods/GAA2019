@@ -27,8 +27,16 @@ public class MapLoader : MonoBehaviour
         fileName += stageInfo.Stage.ToString() + "_" + stageInfo.Chapter.ToString();
         TextAsset textAsset = new TextAsset(); //テキストファイルのデータを取得するインスタンスを作成
         textAsset = Resources.Load(fileName, typeof(TextAsset)) as TextAsset; //Resourcesフォルダから対象テキストを取得
-        string[] tmp = textAsset.text.Split('\n'); //テキスト全体をstring型で入れる変数を用意して入れる.
 
+        // 改行コード'\n'を取り除く
+        string[] tmp = textAsset.text.Split('\n'); //テキスト全体をstring型で入れる変数を用意して入れる.
+        
+        // '\r'を取り除く
+        for(int i = 0; i < tmp.GetLength(0); i++)
+        {
+            tmp[i] = tmp[i].TrimEnd('\r');
+        }
+        
         var data = new char[tmp.GetLength(0) - 1, tmp[0].Length];
 
         for( int row = 0; row < data.GetLength(0); row++ )
