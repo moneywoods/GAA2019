@@ -89,5 +89,11 @@ public class MilkyWayBehavior : StarBase
             m_JlleyAnim.CatchAnim();
 
         }
+
+    }
+
+    public void AddLand(GameObject land)
+    {
+        land.GetComponent<LandStarController>().AddStat(LandStarController.LANDSTAR_STAT.CAUGHT_BY_MILKYWAY);
     }
 }
