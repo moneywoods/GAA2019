@@ -122,6 +122,8 @@ public class StarMaker : SingletonPattern<StarMaker>
                     PlaceStar(m_MilkyWayPrefab, rc, cc);
                     GameObject star = PlaceStar(m_LandStarPrefab, rc, cc);
                     star.GetComponent<LandStarController>().AddStat(LandStarController.LANDSTAR_STAT.ALIVE);
+                    star.GetComponent<LandStarController>().AddStat(LandStarController.LANDSTAR_STAT.CAUGHT_BY_MILKYWAY);
+                    CellColliderBehaviourScript[rc, cc].AddManually(star);
 
                 }
                 else if(mapData[rc, cc] == 'W')
