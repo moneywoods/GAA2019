@@ -3,9 +3,9 @@
 Underwater Shaders http://www.unityfreaks.com/asset.php?id=4174  
 Unity-chan (テスト用)
 
-![whatisthis](https://i.imgur.com/7cXxhaT.png "howtoplay")
-
-# ゴールを目指して星を回転、飛び乗ろう!
+# ゴールを目指して星を回転、飛び乗ろう! 
+概略  
+![whatisthis](https://i.imgur.com/WjiQnSj.png "howtoplay")  
 
 # 操作 
 数字キー[1], [3]:　周りの星を左/右回転  
